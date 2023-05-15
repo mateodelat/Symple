@@ -1,24 +1,7 @@
-# Project name
-Project description
-
-# Requirements
-
-
-# Deadline
-**Date**
-
-# Schedule
-![Schedule](cronograma.png)
-
----
-
-# Nombre del proyecto
-Descripción
+# Grow to go
+Grow to go es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.
 
 # Requerimientos
 
-# Tiempos de entrega
-**Fecha**
 
-# Cronograma
-![Cronograma](cronograma.png)
+# Tiempos de entrega
