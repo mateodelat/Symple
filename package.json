@@ -1,0 +1,20 @@
+{
+  "name": "growtogo",
+  "version": "1.0.0",
+  "description": "Grow to go es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.",
+  "main": "index.js",
+  "workspaces":[
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "co": "sui-mono commit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@s-ui/mono": "^2.35.0"
+  }
+}
