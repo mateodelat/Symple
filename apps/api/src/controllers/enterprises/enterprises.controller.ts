@@ -1,23 +1,50 @@
-import { Controller, Get, Post, Body } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Query,
+  Body,
+  HttpStatus,
+  HttpCode
+} from '@nestjs/common'
+import { EnterprisesService } from '../../services/enterprises/enterprises.service'
+import { ParseIntPipe } from '../../common/parse-int/parse-int.pipe'
+import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from '../../dtos/enterprises.dto'
 
 @Controller('enterprises')
 export class EnterprisesController {
-  @Get()
-  getAll () {
-    const enterprises: Array<{ name: string, image?: string, turn: string, telephone: string, address: string }> = [
-      { name: 'Empresa 1', turn: 'Giro 1', telephone: 'Teléfono 1', address: 'Dirección 1' },
-      { name: 'Empresa 2', turn: 'Giro 2', telephone: 'Teléfono 2', address: 'Dirección 2' },
-      { name: 'Empresa 3', turn: 'Giro 3', telephone: 'Teléfono 3', address: 'Dirección 3' },
-      { name: 'Empresa 4', turn: 'Giro 4', telephone: 'Teléfono 4', address: 'Dirección 4' }
-    ]
+  constructor (private readonly enterprisesService: EnterprisesService) {}
 
-    return enterprises
+  @Get()
+  getAll (
+    @Query('limit') limit = 100,
+    @Query('offset') offset = 0,
+    @Query('turn') turn: string
+  ) {
+    return this.enterprisesService.getAll({ limit, offset, turn })
+  }
+
+  @Get(':id')
+  getOne (@Param('id', ParseIntPipe) id: number) {
+    return this.enterprisesService.getOne(id)
   }
 
   @Post()
-  create () {
-    return {
-      message: 'Empresa creada'
-    }
+  create (@Body() payload: CreateEnterpriseDTO) {
+    return this.enterprisesService.create(payload)
+  }
+
+  @Put(':id')
+  update (@Body() payload: UpdateEnterpriseDTO, @Param('id', ParseIntPipe) id: number) {
+    return this.enterprisesService.update({ payload, id })
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete (@Param('id', ParseIntPipe) id: number) {
+    return this.enterprisesService.delete(id)
   }
 }
