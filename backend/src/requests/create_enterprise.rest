@@ -1,8 +1,0 @@
-POST http://localhost:3001/api/enterprises
-Content-Type: application/json
-
-{
-  "name": "Empresa 1",
-  "telephone": "1",
-  "address": "Dirección 1",
-}

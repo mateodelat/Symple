@@ -1,0 +1,40 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "clean": "rm -rf dist",
+    "lint": "npm run clean & ts-standard"
+  },
+  "dependencies": {
+    "@types/node": "20.4.1",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "next": "13.4.9",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "apps/client/tsconfig.json",
+      "sourceType": "module"
+    },
+    "extends": [
+      "../../node_modules/ts-standard/eslintrc.json"
+    ],
+    "root": true,
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "rules": {
+      "@typescript-eslint/interface-name-prefix": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-explicit-any": "off"
+    }
+  }
+}

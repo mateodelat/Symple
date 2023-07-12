@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/enterprises
+Content-Type: application/json
+
+{
+  "content": "Empresa 3",
+  "important": true
+}
