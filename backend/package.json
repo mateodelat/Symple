@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=production node build/index.js",
     "lint": "ts-standard",
     "tsc": "tsc",
-    "test": "cross-env NODE_ENV=test vitest --config ../vitest.config.ts --silent",
+    "test": "cross-env NODE_ENV=test vitest --config ../vitest.config.ts",
     "test:coverage": "npm run test -- --coverage"
   },
   "dependencies": {
@@ -33,6 +33,9 @@
     },
     "extends": [
       "../node_modules/ts-standard/eslintrc.json"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/no-misused-promises": "off"
+    }
   }
 }

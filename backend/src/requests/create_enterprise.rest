@@ -2,6 +2,7 @@ POST http://localhost:3001/api/enterprises
 Content-Type: application/json
 
 {
-  "content": "Empresa 3",
-  "important": true
+  "name": "Empresa 1",
+  "telephone": "1",
+  "address": "Dirección 1",
 }

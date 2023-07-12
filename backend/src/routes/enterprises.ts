@@ -1,14 +1,11 @@
 import express from 'express'
 import Enterprise from '../models/Enterprise'
-
+import { toNewEnterprise } from '../utils/index'
 const router = express.Router()
 
-router.get('/', (_, res) => {
-  Enterprise.find({}).then(enterprise => {
-    res.json(enterprise)
-  }).catch(() => {
-    res.status(404).end()
-  })
+router.get('/', async (_, res) => {
+  const enterprises = await Enterprise.find({})
+  res.json(enterprises)
 })
 
 router.get('/:id', (req, res, next) => {
@@ -23,31 +20,18 @@ router.get('/:id', (req, res, next) => {
     })
 })
 
-router.delete('/:id', (req, res, next) => {
-  const { id } = req.params
-
-  Enterprise.findByIdAndDelete(id).then(del => {
-    if (del == null) return res.status(404).end()
-    return res.status(204).end()
-  }).catch(err => {
-    next(err)
-  })
-})
-
-router.post('/', (req, res, next) => {
-  const data: { content: String, important: true } = req.body
-  const { content, important } = data
-  if (data.content === '') {
-    return res.status(400).json({
-      error: 'required "content" field is missing'
-    })
+router.post('/', async (req, res, _next) => {
+  try {
+    const newEnterprise = toNewEnterprise(req.body)
+    console.log(newEnterprise)
+    // const enterprise = new Enterprise({ ...newEnterprise, date: new Date() })
+    // const savedEnterprise = await enterprise.save()
+    // res.json(savedEnterprise)
+  } catch (e) {
+    console.log(e)
+    // const errorResponse = { error: (e as Error).message }
+    res.status(400).send(e)
   }
-  const enterprise = new Enterprise({ content, date: new Date(), important: important ?? false })
-  enterprise.save().then(savedEnterprise => {
-    return res.json(savedEnterprise)
-  }).catch(err => {
-    next(err)
-  })
 })
 
 router.put('/:id', (req, res, next) => {
@@ -56,6 +40,17 @@ router.put('/:id', (req, res, next) => {
 
   Enterprise.findByIdAndUpdate(id, enterprise, { new: true }).then(updatedEnterprise => {
     res.json(updatedEnterprise)
+  }).catch(err => {
+    next(err)
+  })
+})
+
+router.delete('/:id', (req, res, next) => {
+  const { id } = req.params
+
+  Enterprise.findByIdAndDelete(id).then(del => {
+    if (del == null) return res.status(404).end()
+    return res.status(204).end()
   }).catch(err => {
     next(err)
   })
