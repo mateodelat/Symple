@@ -1,17 +1,7 @@
-'use client'
-
-import React from 'react'
-
-export default function Home (): JSX.Element {
+export default function HomePage (): JSX.Element {
   return (
-    <button onClick={() => {
-      fetch('/api')
-        .then(async response => await response.text())
-        .then(data => console.log(data))
-        .catch(error => console.error(error))
-    }}
-    >
-      Click me
-    </button>
+    <div>
+      <h1>Explicación Next.js 13</h1>
+    </div>
   )
 }

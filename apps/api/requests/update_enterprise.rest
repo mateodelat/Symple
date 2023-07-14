@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/enterprises/64b07dcc5b1be9a77a2eed24
+Content-Type: application/json
+
+{
+  "name": "empresa 10"
+}

@@ -6,16 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "clean": "rm -rf dist",
-    "lint": "npm run clean & ts-standard"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.4.1",
-    "@types/react": "18.2.14",
-    "@types/react-dom": "18.2.6",
+    "@types/node": "20.4.2",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "eslint": "8.44.0",
+    "eslint-config-next": "13.4.9",
     "next": "13.4.9",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.63.6",
+    "typescript": "5.1.6"
   },
   "eslintConfig": {
     "parserOptions": {
@@ -23,18 +26,8 @@
       "sourceType": "module"
     },
     "extends": [
-      "../../node_modules/ts-standard/eslintrc.json"
-    ],
-    "root": true,
-    "env": {
-      "node": true,
-      "jest": true
-    },
-    "rules": {
-      "@typescript-eslint/interface-name-prefix": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "off"
-    }
+      "../../node_modules/ts-standard/eslintrc.json",
+      "next/core-web-vitals"
+    ]
   }
 }

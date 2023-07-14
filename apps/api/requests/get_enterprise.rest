@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/enterprises/64b06af0c11fe7d3987e8c50

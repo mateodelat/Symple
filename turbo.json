@@ -16,6 +16,11 @@
       "dependsOn": [
         "^lint"
       ]
+    },
+    "clean": {
+      "dependsOn": [
+        "^clean"
+      ]
     }
   }
 }

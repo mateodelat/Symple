@@ -1,6 +1,0 @@
-PUT http://localhost:3001/api/enterprises/4
-Content-Type: application/json
-
-{
-  "turn": "Giro 3"
-}
