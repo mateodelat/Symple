@@ -5,5 +5,7 @@ Content-Type: application/json
   "name": "Empresa 5",
   "turn": "Giro 5",
   "address": "Dirección 5",
-  "telephone": "Teléfono 5"
+  "telephone": "Teléfono 5",
+  "amountOfEmployees": "fa",
+  "admins": ["1"]
 }

@@ -10,30 +10,22 @@ import { Document } from 'mongoose'
     }
   }
 })
-export class Enterprise extends Document {
+
+export class User extends Document {
   @Prop({ required: true })
     name: string
 
+  @Prop({ required: true })
+    lastName: string
+
   @Prop()
-    image: string
+    email: string
 
   @Prop({ required: true })
-    turn: string
-
-  @Prop({ required: true })
-    telephone: string
-
-  @Prop({ required: true })
-    address: string
-
-  @Prop({ required: true })
-    amountOfEmployees: string
-
-  @Prop({ required: true })
-    admins: string[]
+    password: string
 
   @Prop({ required: true })
     createdAt: Date
 }
 
-export const EnterpriseSchema = SchemaFactory.createForClass(Enterprise)
+export const UserSchema = SchemaFactory.createForClass(User)
