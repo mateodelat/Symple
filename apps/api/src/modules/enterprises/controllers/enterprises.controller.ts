@@ -30,32 +30,32 @@ export class EnterprisesController {
   */
 
   async getAll (
-    /* @Query('limit') limit: number = 10,
+  /* @Query('limit') limit: number = 10,
     @Query('offset') offset: number = 0,
     @Query('turn') turn: string */
-  ) {
+  ): Promise<any> {
     return await this.enterprisesService.getAll()
   }
 
   @Get(':id')
-  async getOne (@Param('id', CheckObjectIdPipe) id: string) {
+  async getOne (@Param('id', CheckObjectIdPipe) id: string): Promise<any> {
     const element = this.enterprisesService.getOne(id)
     return await element
   }
 
   @Post()
-  async create (@Body() payload: CreateEnterpriseDTO) {
+  async create (@Body() payload: CreateEnterpriseDTO): Promise<any> {
     return await this.enterprisesService.create(payload)
   }
 
   @Put(':id')
-  async update (@Body() payload: UpdateEnterpriseDTO, @Param('id', CheckObjectIdPipe) id: string) {
+  async update (@Body() payload: UpdateEnterpriseDTO, @Param('id', CheckObjectIdPipe) id: string): Promise<any> {
     return await this.enterprisesService.update({ id, payload })
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete (@Param('id', CheckObjectIdPipe) id: string) {
-    return this.enterprisesService.delete(id)
+  async delete (@Param('id', CheckObjectIdPipe) id: string): Promise<any> {
+    return await this.enterprisesService.delete(id)
   }
 }

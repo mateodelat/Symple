@@ -1,0 +1,47 @@
+@use "@styles/variables";
+
+.container{
+  width: 85%;
+  background-color: white;
+  
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 4rem;
+  background-color: white;
+  will-change: transform, visibility;
+  border-right: 1px solid black;
+
+  &_image {
+    display: flex;
+    width: 100%;
+    padding: 2rem;
+    // border: 2px solid black;
+    justify-content: center;
+  }
+
+  &_departments {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    // border: 2px solid black;
+    border-top: none;
+    &_list{
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      &_element{
+        // text-align: center;
+        // border: 2px solid black;
+        &_active{
+          width: 80%;
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}

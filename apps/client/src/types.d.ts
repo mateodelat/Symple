@@ -1,3 +1,5 @@
+import React from 'react'
+
 export interface Field {
   name: string
   type: string
@@ -15,6 +17,27 @@ export interface User {
   lastName: string
   email: string
   password: string
+}
+
+export interface Link {
+  label: string
+  href: string
+}
+
+export interface NavigationProps {
+  topLinks: Link[]
+  bottomLinks: Link[]
+  toggleAside?: () => void
+}
+
+export interface AsideProps {
+  links: NavigationProps
+}
+
+export interface ButtonProps {
+  children: React.ReactNode
+  onClick?: () => void
+  className?: string
 }
 
 export type UserState = Omit<User, 'id' | 'name' | 'lastName'>

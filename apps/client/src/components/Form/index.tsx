@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { Field } from '@/../types'
+import { Field } from '@/types'
 import styles from './Form.module.scss'
 interface Props {
   fields: Field[]

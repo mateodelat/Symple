@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Field, FieldProps } from '@/../types'
+import { Field, FieldProps } from '@/types'
 
 export const useField = ({ type, placeholder, name, required }: FieldProps): Field => {
   const [value, setValue] = useState('')

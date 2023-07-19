@@ -8,38 +8,38 @@ import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from '../dtos/enterprises.dt
 @Injectable()
 export class EnterprisesService {
   constructor (
-    @InjectModel(Enterprise.name) private readonly enterpriseModel: Model<Enterprise>
+    @InjectModel(Enterprise.name) private readonly EnterpriseModel: Model<Enterprise>
   ) {}
 
-  async checkEnterpriseExists (id: string) {
-    const element = await this.enterpriseModel.findById(id).exec()
+  async checkEnterpriseExists (id: string): Promise<Enterprise> {
+    const element = await this.EnterpriseModel.findById(id).exec()
     if (element === null) throw new NotFoundException(`Enterprise with id #${id} not found`)
     return element
   }
 
-  async getAll () {
-    const elements = this.enterpriseModel.find({}).exec()
+  async getAll (): Promise<Enterprise[]> {
+    const elements = this.EnterpriseModel.find({}).exec()
     return await elements
   }
 
-  async getOne (id: string) {
+  async getOne (id: string): Promise<Enterprise> {
     const element = await this.checkEnterpriseExists(id)
     return element
   }
 
-  async create (payload: CreateEnterpriseDTO) {
+  async create (payload: CreateEnterpriseDTO): Promise<Enterprise> {
     const object = { ...payload, createdAt: new Date() }
-    const newEnterprise = new this.enterpriseModel(object)
+    const newEnterprise = new this.EnterpriseModel(object)
     return await newEnterprise.save()
   }
 
-  async update ({ id, payload }: { id: string, payload: UpdateEnterpriseDTO }) {
+  async update ({ id, payload }: { id: string, payload: UpdateEnterpriseDTO }): Promise<Enterprise> {
     const elementToUpdate = await this.checkEnterpriseExists(id)
     elementToUpdate.$set(payload)
     return await elementToUpdate.save()
   }
 
-  async delete (id: string) {
+  async delete (id: string): Promise<{ message: string }> {
     const element = await this.checkEnterpriseExists(id)
     await element.deleteOne()
     return { message: `Enterprise with id #${id} deleted successfully` }

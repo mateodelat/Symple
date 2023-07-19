@@ -2,9 +2,8 @@ import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from
 
 @Injectable()
 export class ParseIntPipe implements PipeTransform {
-  transform (value: string, metadata: ArgumentMetadata) {
+  transform (value: string, metadata: ArgumentMetadata): void {
     const number = Number(value)
     if (isNaN(number)) throw new BadRequestException(`Validation failed. "${value}" is not a number.`)
-    return number
   }
 }
