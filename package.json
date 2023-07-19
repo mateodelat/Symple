@@ -2,7 +2,7 @@
   "name": "growtogo",
   "version": "1.0.0",
   "private": true,
-  "description": "Grow to go es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.",
+  "description": "Symple es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.",
   "main": "index.js",
   "scripts": {
     "co": "sui-mono commit",

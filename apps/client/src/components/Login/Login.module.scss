@@ -1,0 +1,21 @@
+@use "@styles/variables";
+
+.login {
+  display: flex;
+  width: 60%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 1rem;
+  &_title {
+    font-size: 3.2rem;
+    color: variables.$primary-blue-color;
+  }
+  &_description {
+    color: variables.$secondary-blue-color;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+}
