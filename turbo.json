@@ -12,9 +12,29 @@
         "dis/**"
       ]
     },
+    "format": {
+      "dependsOn": [
+        "^format"
+      ]
+    },
+    "format:check": {
+      "dependsOn": [
+        "^format:check"
+      ]
+    },
+    "test": {
+      "dependsOn": [
+        "^test"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"
+      ]
+    },
+    "lint:fix": {
+      "dependsOn": [
+        "^lint:fix"
       ]
     },
     "clean": {

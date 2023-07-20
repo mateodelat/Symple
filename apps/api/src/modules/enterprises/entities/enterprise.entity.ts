@@ -1,33 +1,40 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Document } from 'mongoose'
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { User } from "@modules/users/entities/user.entity";
+import mongoose, { Document } from "mongoose";
 
 @Schema({
   toJSON: {
     transform: (_document, returnedObject) => {
-      returnedObject.id = returnedObject._id
-      delete returnedObject._id
-      delete returnedObject.__v
-    }
-  }
+      returnedObject.id = returnedObject._id;
+      delete returnedObject._id;
+      delete returnedObject.__v;
+    },
+  },
 })
 export class Enterprise extends Document {
   @Prop({ required: true })
-    name: string
+  name: string;
 
   @Prop()
-    image: string
+  image: string;
 
   @Prop({ required: true })
-    turn: string
+  turn: string;
 
   @Prop({ required: true })
-    telephone: string
+  telephone: string;
 
   @Prop({ required: true })
-    address: string
+  address: string;
 
   @Prop({ required: true })
-    createdAt: Date
+  amountOfEmployees: string;
+
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: "User" })
+  admins: string[];
+
+  @Prop({ required: true })
+  createdAt: Date;
 }
 
-export const EnterpriseSchema = SchemaFactory.createForClass(Enterprise)
+export const EnterpriseSchema = SchemaFactory.createForClass(Enterprise);

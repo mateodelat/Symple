@@ -1,16 +1,19 @@
-'use client'
+"use client";
+import type React from "react";
+import { useState } from "react";
+import { type Field, type FieldProps } from "@/types";
 
-import React, { useState } from 'react'
+export const useField = ({
+  type,
+  placeholder,
+  name,
+  required,
+}: FieldProps): Field => {
+  const [value, setValue] = useState("");
 
-export const useField = (type: string): {
-  value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  type: string
-} => {
-  const [value, setValue] = useState('')
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setValue(e.target.value);
+  };
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setValue(e.target.value)
-
-  return { value, onChange, type }
-}
+  return { type, placeholder, name, required, value, onChange };
+};

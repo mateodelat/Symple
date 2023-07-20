@@ -1,0 +1,9 @@
+PUT http://localhost:3001/api/users/64b870f79faf3af3d4adc6fe
+Content-Type: application/json
+
+{
+  "name": "Efrn",
+  "lastName": "Rubio",
+  "email": "efren2823@outlook.es",
+  "password": "123456"
+}
