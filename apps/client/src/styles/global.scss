@@ -1,3 +1,5 @@
+@use "@styles/variables";
+
 * {
   margin: 0;
   padding: 0;
@@ -11,6 +13,7 @@ html {
 body {
   font-size: 1.6rem;
   padding: 1rem;
+  background-color: variables.$primary-background-color;
 }
 
 a {
@@ -28,12 +31,19 @@ button{
 
 @media screen and (min-width: 768px) {
   body{
-    padding: 1rem 2rem;
+    padding: 2rem;
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   body{
-    padding: 1rem 4rem;
+    padding: 2rem 4rem;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  body{
+    padding: 4rem 8rem;
+    font-size: 2rem;
   }
 }

@@ -25,13 +25,8 @@ export interface Link {
 }
 
 export interface NavigationProps {
-  topLinks: Link[]
-  bottomLinks: Link[]
+  links: Link[]
   toggleAside?: () => void
-}
-
-export interface AsideProps {
-  links: NavigationProps
 }
 
 export interface ButtonProps {
@@ -40,8 +35,19 @@ export interface ButtonProps {
   className?: string
 }
 
+export interface Enterprise {
+  id: string
+  name: string
+  image: string
+  turn: string
+  telephone: string
+  address: string
+  createdAt: Date
+}
+
 export type UserState = Omit<User, 'id' | 'name' | 'lastName'>
 
 export interface AppState {
   user: UserState
+  enterprises: Enterprise[]
 }

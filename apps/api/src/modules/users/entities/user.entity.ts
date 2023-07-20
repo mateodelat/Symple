@@ -25,6 +25,9 @@ export class User extends Document {
     password: string
 
   @Prop({ required: true })
+    enterprises: string[]
+
+  @Prop({ required: true })
     createdAt: Date
 }
 

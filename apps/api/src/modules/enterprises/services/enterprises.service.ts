@@ -1,20 +1,26 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
+import { Model, isValidObjectId } from 'mongoose'
 
 import { Enterprise } from '../entities/enterprise.entity'
+import { User } from '@modules/users/entities/user.entity'
 import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from '../dtos/enterprises.dto'
 
 @Injectable()
 export class EnterprisesService {
   constructor (
-    @InjectModel(Enterprise.name) private readonly EnterpriseModel: Model<Enterprise>
+    @InjectModel(Enterprise.name) private readonly EnterpriseModel: Model<Enterprise>,
+    @InjectModel(User.name) private readonly UserModel: Model<User>
   ) {}
 
   async checkEnterpriseExists (id: string): Promise<Enterprise> {
     const element = await this.EnterpriseModel.findById(id).exec()
     if (element === null) throw new NotFoundException(`Enterprise with id #${id} not found`)
     return element
+  }
+
+  checkObjectId (id: string): boolean {
+    return isValidObjectId(id)
   }
 
   async getAll (): Promise<Enterprise[]> {
@@ -28,9 +34,18 @@ export class EnterprisesService {
   }
 
   async create (payload: CreateEnterpriseDTO): Promise<Enterprise> {
+    const areValidObjectIds = payload.admins.every((id: string) => this.checkObjectId(id))
+    if (!areValidObjectIds) throw new BadRequestException('Invalid or malformed ObjectId.')
     const object = { ...payload, createdAt: new Date() }
-    const newEnterprise = new this.EnterpriseModel(object)
-    return await newEnterprise.save()
+    const element = new this.EnterpriseModel(object)
+    const newEnterprise = await element.save()
+    for (const id of payload.admins) {
+      const user = await this.UserModel.findById(id).exec()
+      user?.enterprises.concat(newEnterprise._id)
+      await user?.save()
+    }
+
+    return newEnterprise
   }
 
   async update ({ id, payload }: { id: string, payload: UpdateEnterpriseDTO }): Promise<Enterprise> {

@@ -6,6 +6,6 @@ Content-Type: application/json
   "turn": "Giro 5",
   "address": "Dirección 5",
   "telephone": "Teléfono 5",
-  "amountOfEmployees": "fa",
-  "admins": ["1"]
+  "amountOfEmployees": "1-10",
+  "admins": ["64b1914628ac82e3bdd6aa93"]
 }

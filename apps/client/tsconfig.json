@@ -24,6 +24,7 @@
       "@/*": ["*"],
       "@styles/*": ["styles/*"],
       "@components/*": ["components/*"],
+      "@services/*": ["services/*"],
       "@constants/*": ["constants/*"],
       "@hooks/*": ["hooks/*"],
     },

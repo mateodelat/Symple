@@ -1,17 +1,13 @@
-import { NavigationProps } from '@/types'
+import { Link } from '@/types'
 
-const headerNavLinks: NavigationProps = {
-  topLinks: [
-    { href: '/departments', label: 'Departamentos Gerente' },
-    { href: '/my-mentoring', label: 'Mis mentorías' },
-    { href: '/accounts-to-pay', label: 'Cuentas por pagar' }
-  ],
-  bottomLinks: [
-    { href: '/admin-panel', label: 'Admin panel' },
-    { href: '/enterprise-configuration', label: 'Configuración empresa' },
-    { href: '/my-profile', label: 'Mi perfil' }
-  ]
-}
+const headerNavLinks: Link[] = [
+  { href: '/enterprises', label: 'Empresas' },
+  { href: '/departments', label: 'Departamentos' },
+  { href: '/my-mentoring', label: 'Mis mentorías' },
+  { href: '/enterprise-settings', label: 'Configuración empresa' },
+  { href: '/admin-panel', label: 'Admin panel' },
+  { href: '/my-profile', label: 'Mi perfil' }
+]
 
 export const links = {
   headerNavLinks

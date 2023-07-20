@@ -25,7 +25,7 @@ export default function Form ({ fields, buttonSave = 'Enviar' }: Props): JSX.Ele
           Change this Link to a button that executes the method to authenticate the user
         */
       }
-      <Link href='/dashboard' className={styles.form_button}>{buttonSave}</Link>
+      <Link href='/enterprises' className={styles.form_button}>{buttonSave}</Link>
     </form>
   )
 }

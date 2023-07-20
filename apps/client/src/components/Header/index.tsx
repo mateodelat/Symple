@@ -1,7 +1,5 @@
 'use client'
 
-import Image from 'next/image'
-
 import { Aside, Button } from '../index'
 import { links } from '@/constants/index'
 import styles from './Header.module.scss'
@@ -10,7 +8,7 @@ export default function Header (): JSX.Element {
   return (
     <header className={styles.header}>
       <Aside links={links.headerNavLinks} />
-      <div className={styles.header_image}>
+      {/* <div className={styles.header_image}>
         <Image
           src='https://unavatar.io/sindresorhus@gmail.com'
           width={100}
@@ -18,7 +16,7 @@ export default function Header (): JSX.Element {
           alt='Enterprise logo'
           className={styles.nav_image_container}
         />
-      </div>
+      </div> */}
       <div className={styles.header_buttons}>
         <Button className={styles.header_buttons_btn}>
           <svg
@@ -40,7 +38,7 @@ export default function Header (): JSX.Element {
             />
           </svg>
         </Button>
-        <Button className={styles.header_buttons_btn}>
+        <Button className={`${styles.header_buttons_btn} ${styles.header_buttons_btn_text}`}>
           Cerrar sesión
         </Button>
       </div>
