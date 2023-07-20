@@ -3,14 +3,14 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model, isValidObjectId } from 'mongoose'
 
 import { Enterprise } from '../entities/enterprise.entity'
-import { User } from '@modules/users/entities/user.entity'
+import { UsersService } from '@/modules/users/services/users.service'
 import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from '../dtos/enterprises.dto'
 
 @Injectable()
 export class EnterprisesService {
   constructor (
     @InjectModel(Enterprise.name) private readonly EnterpriseModel: Model<Enterprise>,
-    @InjectModel(User.name) private readonly UserModel: Model<User>
+    private readonly usersService: UsersService
   ) {}
 
   async checkEnterpriseExists (id: string): Promise<Enterprise> {
@@ -40,11 +40,10 @@ export class EnterprisesService {
     const element = new this.EnterpriseModel(object)
     const newEnterprise = await element.save()
     for (const id of payload.admins) {
-      const user = await this.UserModel.findById(id).exec()
-      user?.enterprises.concat(newEnterprise._id)
-      await user?.save()
+      const user = await this.usersService.checkUserExits(id)
+      user.enterprises.push(newEnterprise._id)
+      await user.save()
     }
-
     return newEnterprise
   }
 
