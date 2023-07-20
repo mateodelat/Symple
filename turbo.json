@@ -22,6 +22,11 @@
         "^format:check"
       ]
     },
+    "test": {
+      "dependsOn": [
+        "^test"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"

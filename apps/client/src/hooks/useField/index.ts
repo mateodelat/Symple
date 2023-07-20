@@ -11,8 +11,9 @@ export const useField = ({
 }: FieldProps): Field => {
   const [value, setValue] = useState("");
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    { setValue(e.target.value); };
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setValue(e.target.value);
+  };
 
   return { type, placeholder, name, required, value, onChange };
 };

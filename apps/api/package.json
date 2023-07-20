@@ -16,11 +16,7 @@
     "clean": "rm -rf dist",
     "lint": "eslint ./**/*.{ts,tsx}",
     "lint:fix": "eslint ./**/*.{ts,tsx} --fix",
-    "test": "cross-env NODE_ENV=test jest --watch",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test": "vitest --run"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

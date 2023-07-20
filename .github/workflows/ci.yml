@@ -1,0 +1,24 @@
+name: Pipeline/CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, dev, release/*]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    timeout-minutes: 20
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm install
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
