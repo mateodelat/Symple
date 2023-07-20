@@ -7,5 +7,5 @@ Content-Type: application/json
   "address": "Dirección 5",
   "telephone": "Teléfono 5",
   "amountOfEmployees": "1-10",
-  "admins": ["64b1914628ac82e3bdd6aa93"]
+  "admins": ["64b95e54addfcdb2b35ca973"]
 }
