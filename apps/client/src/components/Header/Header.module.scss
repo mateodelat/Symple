@@ -6,13 +6,13 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  &_image{
+  &_image {
     display: none;
   }
-  &_buttons{
+  &_buttons {
     display: flex;
     gap: 1rem;
-    &_btn{
+    &_btn {
       width: fit-content !important;
       border: none;
       color: black !important;
@@ -32,8 +32,8 @@
 
 @media screen and (min-width: 1024px) {
   .header {
-    &_buttons{
-      &_btn{
+    &_buttons {
+      &_btn {
         font-size: 1.8rem;
       }
     }
@@ -42,8 +42,8 @@
 
 @media screen and (min-width: 2560px) {
   .header {
-    &_buttons{
-      &_btn{
+    &_buttons {
+      &_btn {
         font-size: 2rem;
       }
     }

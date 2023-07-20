@@ -2,27 +2,27 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true
+    node: true,
   },
-  extends: ['standard-with-typescript', 'prettier'],
-  ignorePatterns: ['.eslintrc.js'],
+  extends: ["standard-with-typescript", "prettier"],
+  ignorePatterns: [".eslintrc.js"],
   overrides: [
     {
       env: {
-        node: true
+        node: true,
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: [".eslintrc.{js,cjs}"],
       parserOptions: {
-        sourceType: 'script'
-      }
-    }
+        sourceType: "script",
+      },
+    },
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json']
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json"],
   },
   rules: {
-    'no-unused-vars': 'off'
-  }
-}
+    "no-unused-vars": "off",
+  },
+};

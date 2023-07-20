@@ -1,1 +1,1 @@
-export { enterpriseService } from './enterprises'
+export { enterpriseService } from "./enterprises";

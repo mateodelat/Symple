@@ -1,16 +1,19 @@
-import Image from 'next/image'
+import Image from "next/image";
 
-import { Enterprise } from '@/types'
+import { type Enterprise } from "@/types";
 
-export default function EnterpriseCard ({ enterprise }: { enterprise: Enterprise }): JSX.Element {
+export default function EnterpriseCard({
+  enterprise,
+}: {
+  enterprise: Enterprise;
+}): JSX.Element {
   return (
     <article>
       <h2>{enterprise.name}</h2>
       <Image
         src={
-          enterprise.image === undefined ||
-          enterprise.image === ''
-            ? '/placeholder.svg'
+          enterprise.image === undefined || enterprise.image === ""
+            ? "/placeholder.svg"
             : enterprise.image
         }
         width={100}
@@ -18,5 +21,5 @@ export default function EnterpriseCard ({ enterprise }: { enterprise: Enterprise
         alt={`Foto de empresa ${enterprise.name}`}
       />
     </article>
-  )
+  );
 }

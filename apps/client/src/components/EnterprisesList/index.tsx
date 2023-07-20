@@ -1,13 +1,13 @@
-import { enterpriseService } from '@services/index'
-import { EnterpriseCard } from '@components/index'
+import { enterpriseService } from "@services/index";
+import { EnterpriseCard } from "@components/index";
 
-export default async function EnterprisesList (): Promise<JSX.Element> {
-  const enterprises = await enterpriseService.getAll()
+export default async function EnterprisesList(): Promise<JSX.Element> {
+  const enterprises = await enterpriseService.getAll();
   return (
     <div>
-      {enterprises.map(enterprise => (
+      {enterprises.map((enterprise) => (
         <EnterpriseCard enterprise={enterprise} key={enterprise.id} />
       ))}
     </div>
-  )
+  );
 }

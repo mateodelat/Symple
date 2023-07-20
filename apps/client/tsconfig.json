@@ -26,8 +26,8 @@
       "@components/*": ["components/*"],
       "@services/*": ["services/*"],
       "@constants/*": ["constants/*"],
-      "@hooks/*": ["hooks/*"],
-    },
+      "@hooks/*": ["hooks/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

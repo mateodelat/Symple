@@ -4,7 +4,11 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["standard-with-typescript", "plugin:@next/next/recommended", "prettier"],
+  extends: [
+    "standard-with-typescript",
+    "plugin:@next/next/recommended",
+    "prettier",
+  ],
   overrides: [
     {
       env: {

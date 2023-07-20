@@ -13,7 +13,7 @@
     "paths": {
       "@/*": ["*"],
       "@modules/*": ["modules/*"],
-      "@common/*": ["common/*"],
+      "@common/*": ["common/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

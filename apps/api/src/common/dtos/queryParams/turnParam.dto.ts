@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from "@nestjs/swagger";
 
 export class turnParamDTO {
   @ApiProperty({ default: 10, required: false })
-    limit: Number
+  limit: number;
 }

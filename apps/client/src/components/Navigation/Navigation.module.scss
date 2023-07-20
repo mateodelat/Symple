@@ -1,85 +1,83 @@
 @use "@styles/variables";
 
-.main{
+.main {
   width: 85%;
   background-color: white;
   box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.25);
   &_nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 4rem;
+    background-color: white;
+    will-change: transform, visibility;
+
+    &_image {
+      display: flex;
+      width: 100%;
+      padding: 2rem;
+      justify-content: center;
+      border-bottom: 1px solid variables.$secondary-blue-color;
+    }
+
+    &_list {
       display: flex;
       flex-direction: column;
       height: 100%;
-      padding: 4rem;
-      background-color: white;
-      will-change: transform, visibility;
-  
-      &_image {
-        display: flex;
-        width: 100%;
-        padding: 2rem;
-        justify-content: center;
-        border-bottom: 1px solid variables.$secondary-blue-color;
-      }
-  
-      &_list {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        border-top: none;
-        padding: 1rem;
-        gap: 1rem;
-        &_element {
-          &_link {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            border-radius: 1.5rem;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: variables.$secondary-gray-color;
+      border-top: none;
+      padding: 1rem;
+      gap: 1rem;
+      &_element {
+        &_link {
+          display: block;
+          width: 100%;
+          padding: 1rem;
+          border-radius: 1.5rem;
+          font-size: 1.4rem;
+          font-weight: 600;
+          color: variables.$secondary-gray-color;
 
-            &:hover {
-              transition: all 200ms ease-in-out;
-              background-color: variables.$primary-gray-color;
-            }
+          &:hover {
+            transition: all 200ms ease-in-out;
+            background-color: variables.$primary-gray-color;
+          }
 
-            &_active {
-              background-color: variables.$primary-gray-color;
-              color: black;
-            }
+          &_active {
+            background-color: variables.$primary-gray-color;
+            color: black;
           }
         }
       }
     }
+  }
 }
 
-
-
-@media screen and (min-width: 768px){
-   .main{
+@media screen and (min-width: 768px) {
+  .main {
     width: 50%;
-   }
+  }
 }
 
-@media screen and (min-width: 1024px){
-   .main{
+@media screen and (min-width: 1024px) {
+  .main {
     width: 40%;
-   }
+  }
 }
 
-@media screen and (min-width: 1440px){
-   .main{
+@media screen and (min-width: 1440px) {
+  .main {
     width: 30%;
-   }
+  }
 }
 
-@media screen and (min-width: 2560px){
-  .main{
-    &_nav{
-      &_list{
-        &_element{
-          &_link{
+@media screen and (min-width: 2560px) {
+  .main {
+    &_nav {
+      &_list {
+        &_element {
+          &_link {
             font-size: 2rem;
           }
         }
