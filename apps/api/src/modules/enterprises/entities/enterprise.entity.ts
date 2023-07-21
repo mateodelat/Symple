@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { User } from "@modules/users/entities/user.entity";
-import mongoose, { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 @Schema({
   toJSON: {
@@ -11,6 +10,7 @@ import mongoose, { Document } from "mongoose";
     },
   },
 })
+
 export class Enterprise extends Document {
   @Prop({ required: true })
   name: string;
@@ -30,8 +30,8 @@ export class Enterprise extends Document {
   @Prop({ required: true })
   amountOfEmployees: string;
 
-  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: "User" })
-  admins: string[];
+  @Prop({ required: true, type: [{ type: Types.ObjectId, ref: "User" }] })
+  admins: Types.ObjectId[];
 
   @Prop({ required: true })
   createdAt: Date;

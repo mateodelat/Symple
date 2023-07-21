@@ -4,7 +4,8 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, type Types } from "mongoose";
+import * as bcrypt from "bcrypt";
 
 import { User } from "../entities/user.entity";
 import { type CreateUserDTO, type UpdateUserDTO } from "../dtos/user.dto";
@@ -15,10 +16,10 @@ export class UsersService {
     @InjectModel(User.name) private readonly UserModel: Model<User>,
   ) {}
 
-  async checkUserExits(id: string): Promise<User> {
+  async checkUserExits(id: Types.ObjectId): Promise<User> {
     const user = await this.UserModel.findById(id).exec();
     if (user === null)
-      throw new NotFoundException(`Enterprise with id #${id} not found`);
+      throw new NotFoundException(`User with id #${id.toString()} not found`);
     return user;
   }
 
@@ -29,11 +30,11 @@ export class UsersService {
   }
 
   async getAll(): Promise<User[]> {
-    const users = await this.UserModel.find({}).exec();
+    const users = await this.UserModel.find({}).populate('enterprises').exec();
     return users;
   }
 
-  async getOne(id: string): Promise<User> {
+  async getOne(id: Types.ObjectId): Promise<User> {
     const user = await this.checkUserExits(id);
     return user;
   }
@@ -41,7 +42,10 @@ export class UsersService {
   async create(payload: CreateUserDTO): Promise<User | undefined> {
     const exists = await this.checkEmailExists(payload.email);
     if (!exists) {
-      const object = { ...payload, createdAt: new Date() };
+      const {password, ...rest} = payload;
+      const salt = 10;
+      const passwordHash = await bcrypt.hash(password, salt);
+      const object = { ...rest, password: passwordHash, createdAt: new Date() };
       const newUser = new this.UserModel(object);
       return await newUser.save();
     }
@@ -51,7 +55,7 @@ export class UsersService {
     id,
     payload,
   }: {
-    id: string;
+    id: Types.ObjectId;
     payload: UpdateUserDTO;
   }): Promise<User> {
     const user = await this.checkUserExits(id);
@@ -59,9 +63,9 @@ export class UsersService {
     return await user.save();
   }
 
-  async delete(id: string): Promise<{ message: string }> {
+  async delete(id: Types.ObjectId): Promise<{ message: string }> {
     const user = await this.checkUserExits(id);
     await user.deleteOne();
-    return { message: `User with id #${id} deleted successfully` };
+    return { message: `User with id #${id.toString()} deleted successfully` };
   }
 }

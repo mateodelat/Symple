@@ -4,8 +4,12 @@ import {
   IsOptional,
   IsUrl,
   IsEnum,
+  IsArray,
+  ArrayNotEmpty,
+  ArrayUnique,
 } from "class-validator";
 import { PartialType, ApiProperty } from "@nestjs/swagger";
+import { type Types } from "mongoose";
 
 export enum AmountOfEmployees {
   "OneToTen" = "1-10",
@@ -50,13 +54,11 @@ export class CreateEnterpriseDTO {
   })
   readonly amountOfEmployees: AmountOfEmployees;
 
-  @IsNotEmpty()
-  @IsString({ each: true })
-  @ApiProperty({
-    description:
-      "Arreglo con los ObjectIds de los administradores de la empresa; Campo obligatorio.",
-  })
-  readonly admins: string[];
+  @IsArray()
+  @ArrayNotEmpty()
+  @ArrayUnique()
+  @ApiProperty({ description:"Arreglo con los ObjectIds de los administradores de la empresa; Campo obligatorio." })
+  readonly admins: Types.ObjectId[];
 }
 
 export class UpdateEnterpriseDTO extends PartialType(CreateEnterpriseDTO) {}

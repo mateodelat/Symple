@@ -14,19 +14,20 @@ import { ApiTags, ApiOperation } from "@nestjs/swagger";
 import { UsersService } from "../services/users.service";
 import { CreateUserDTO, UpdateUserDTO } from "../dtos/user.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
+import { Types } from "mongoose";
 
 @ApiTags("Users")
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get()
-  @ApiOperation({ summary: "Lista de empresas" })
+  @ApiOperation({ summary: "Lista de usuarios" })
   async getAll(): Promise<any> {
     return await this.usersService.getAll();
   }
 
   @Get(":id")
-  async getOne(@Param("id", CheckObjectIdPipe) id: string): Promise<any> {
+  async getOne(@Param("id", CheckObjectIdPipe) id: Types.ObjectId): Promise<any> {
     const element = this.usersService.getOne(id);
     return await element;
   }
@@ -39,14 +40,14 @@ export class UsersController {
   @Put(":id")
   async update(
     @Body() payload: UpdateUserDTO,
-    @Param("id", CheckObjectIdPipe) id: string,
+    @Param("id", CheckObjectIdPipe) id: Types.ObjectId,
   ): Promise<any> {
     return await this.usersService.update({ id, payload });
   }
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param("id", CheckObjectIdPipe) id: string): Promise<any> {
+  async delete(@Param("id", CheckObjectIdPipe) id: Types.ObjectId): Promise<any> {
     return await this.usersService.delete(id);
   }
 }

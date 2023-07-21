@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model, isValidObjectId } from "mongoose";
+import { Model, type Types, isValidObjectId } from "mongoose";
 
 import { Enterprise } from "../entities/enterprise.entity";
 import { UsersService } from "@/modules/users/services/users.service";
@@ -28,12 +28,18 @@ export class EnterprisesService {
     return element;
   }
 
-  checkObjectId(id: string): boolean {
+  checkObjectId(id: Types.ObjectId): boolean {
     return isValidObjectId(id);
   }
 
   async getAll(): Promise<Enterprise[]> {
-    const elements = this.EnterpriseModel.find({}).exec();
+    const elements = this.EnterpriseModel.find({}).populate('admins', {
+      name: 1,
+      lastName: 1,
+      email: 1,
+      role: 1,
+      createdAt: 1
+    }).exec();
     return await elements;
   }
 
@@ -43,18 +49,18 @@ export class EnterprisesService {
   }
 
   async create(payload: CreateEnterpriseDTO): Promise<Enterprise> {
-    const areValidObjectIds = payload.admins.every((id: string) =>
+    const areValidObjectIds = payload.admins.every((id: Types.ObjectId) =>
       this.checkObjectId(id),
     );
     if (!areValidObjectIds)
       throw new BadRequestException("Invalid or malformed ObjectId.");
     const object = { ...payload, createdAt: new Date() };
     const element = new this.EnterpriseModel(object);
-    const newEnterprise = await element.save();
+    const newEnterprise: Enterprise = await element.save();
     for (const id of payload.admins) {
-      const user = await this.usersService.checkUserExits(id);
-      user.enterprises.push(newEnterprise._id);
-      await user.save();
+      const user = await this.usersService.checkUserExits(id)
+      const enterprises = user.enterprises
+      await this.usersService.update({ id, payload: { enterprises: [...enterprises, newEnterprise._id] }})
     }
     return newEnterprise;
   }
