@@ -24,15 +24,5 @@
     "react-dom": "18.2.0",
     "sass": "^1.63.6",
     "typescript": "5.1.6"
-  },
-  "eslintConfig": {
-    "parserOptions": {
-      "project": "apps/client/tsconfig.json",
-      "sourceType": "module"
-    },
-    "extends": [
-      "../../node_modules/ts-standard/eslintrc.json",
-      "next/core-web-vitals"
-    ]
   }
 }

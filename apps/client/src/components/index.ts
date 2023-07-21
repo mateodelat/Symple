@@ -4,8 +4,7 @@ import Header from "./Header";
 import Navigation from "./Navigation";
 import Aside from "./Aside";
 import Button from "./Button";
-import EnterprisesList from "./EnterprisesList";
-import EnterpriseCard from "./EnterpriseCard";
+import EnterpriseComponents from './Enterprise';
 
 export {
   Login,
@@ -14,6 +13,5 @@ export {
   Navigation,
   Aside,
   Button,
-  EnterprisesList,
-  EnterpriseCard,
+  EnterpriseComponents,
 };

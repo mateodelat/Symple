@@ -6,7 +6,11 @@ const getAll = async (): Promise<Enterprise[]> => {
     next: {
       revalidate: 60,
     },
-  }).then(async (res) => await res.json());
+  }).then(async (res) => {
+    const response = await res.json()
+    console.log(response)
+    return response
+  });
 };
 
 export const enterpriseService = {
