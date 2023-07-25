@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import Button from "../Button";
 import { type Enterprise } from "@/types";
 import styles from "./Card.module.scss"
 
@@ -8,6 +9,7 @@ export default function EnterpriseCard({
 }: {
   enterprise: Enterprise;
 }): JSX.Element {
+  const admins = enterprise.admins.filter(admin => admin.role !== 'admin')
   return (
     <article className={styles.card}>
       <Image
@@ -23,23 +25,21 @@ export default function EnterpriseCard({
       />
       <div className={styles.card_text}>
         <h2>{enterprise.name}</h2>
+        <p>{(admins.length > 0) && admins.map((admin, i) => {
+          if(i === 0) return `@${admin.name}`
+          else if (i === 1) return ",..."
+          return ""
+          })}</p>
       </div>
       <div className={styles.card_buttons}>
         <Image
           src={'/toggle_button.svg'}
           width={30}
           height={30}
-          alt={`Foto de empresa ${enterprise.name}`}
+          alt={`Apagar empresa ${enterprise.name}`}
         />
-        <Image
-          src={'/vertical_button.svg'}
-          width={30}
-          height={30}
-          alt={`Foto de empresa ${enterprise.name}`}
-        />
+        <Button alt={enterprise.name} />
       </div>
-
-
     </article>
   );
 }

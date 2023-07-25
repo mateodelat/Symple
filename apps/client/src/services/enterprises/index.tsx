@@ -8,7 +8,6 @@ const getAll = async (): Promise<Enterprise[]> => {
     },
   }).then(async (res) => {
     const response = await res.json()
-    console.log(response)
     return response
   });
 };

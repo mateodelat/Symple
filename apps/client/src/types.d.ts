@@ -11,12 +11,24 @@ export interface Field {
 
 export type FieldProps = Omit<FieldProps, "value" | "onChange">;
 
+export interface Enterprise {
+  id: string;
+  name: string;
+  image: string;
+  turn: string;
+  telephone: string;
+  address: string;
+  admins: User[];
+  createdAt: Date;
+}
+
 export interface User {
   id: number;
   name: string;
   lastName: string;
   email: string;
-  password: string;
+  role: string;
+  enterprises: Enterprise[];
 }
 
 export interface Link {
@@ -35,15 +47,6 @@ export interface ButtonProps {
   className?: string;
 }
 
-export interface Enterprise {
-  id: string;
-  name: string;
-  image: string;
-  turn: string;
-  telephone: string;
-  address: string;
-  createdAt: Date;
-}
 
 export type UserState = Omit<User, "id" | "name" | "lastName">;
 
