@@ -1,6 +1,6 @@
 import { enterpriseService } from "@services/index";
 import Card from "../Card";
-import styles from './List.module.scss'
+import styles from "./List.module.scss";
 
 export default async function EnterprisesList(): Promise<JSX.Element> {
   const enterprises = await enterpriseService.getAll();

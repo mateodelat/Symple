@@ -1,0 +1,36 @@
+.button{
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  &_vertical{
+    display: block;
+    position: relative;
+    &::before,
+    &::after,
+    & {
+      width: 0.39rem;
+      height: 0.39rem;
+      border-radius: 50%;
+      background-color: black;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+
+    &::before {
+      top: 6px;
+    }
+
+    &::after {
+      bottom: 6px;
+    }
+  }
+}
