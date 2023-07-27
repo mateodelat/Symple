@@ -4,9 +4,9 @@ import { useState } from "react";
 
 import { Navigation } from "../index";
 import styles from "./Aside.module.scss";
-import { type Link } from "@/types";
+import { type AsideProps } from "@/types";
 
-export default function Aside({ links }: { links: Link[] }): JSX.Element {
+export default function Aside({ links }: AsideProps): JSX.Element {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleToggleAside = (): void => {

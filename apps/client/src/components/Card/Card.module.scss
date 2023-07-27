@@ -1,0 +1,22 @@
+@use "@styles/variables";
+
+.card{
+  position: relative;
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+  border: 1px solid black;
+}
+
+.popup_open{
+  visibility: visible !important;
+}
+
+.togglePopup{
+  background: transparent;
+  border: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  cursor: default;
+}

@@ -9,7 +9,7 @@ export interface Field {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export type FieldProps = Omit<FieldProps, "value" | "onChange">;
+export type FieldProps = Omit<Field, "value" | "onChange">;
 
 export interface Enterprise {
   id: string;
@@ -20,10 +20,11 @@ export interface Enterprise {
   address: string;
   admins: User[];
   createdAt: Date;
+  // departments: Department[]
 }
 
 export interface User {
-  id: number;
+  id: string;
   name: string;
   lastName: string;
   email: string;
@@ -41,16 +42,34 @@ export interface NavigationProps {
   toggleAside?: () => void;
 }
 
+export type AsideProps = Omit<NavigationProps, "toggleAside">;
+
 export interface ButtonProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick: () => void;
   className?: string;
 }
 
+export type VerticalButtonProps = Omit<ButtonProps, "children">;
 
-export type UserState = Omit<User, "id" | "name" | "lastName">;
+export interface UseToggle {
+  value: boolean;
+  toggle: (val?: boolean) => void;
+}
 
-export interface AppState {
-  user: UserState;
-  enterprises: Enterprise[];
+export enum CardType {
+  EnterpriseCard = "EnterpriseCard",
+  UserCard = "UserCard",
+}
+
+export interface EnterpriseCardComponentProps {
+  element: Enterprise;
+  isPopupOpen: boolean;
+  togglePopup: () => void;
+}
+
+export interface UserCardComponentProps {
+  element: User;
+  isPopupOpen: boolean;
+  togglePopup: () => void;
 }

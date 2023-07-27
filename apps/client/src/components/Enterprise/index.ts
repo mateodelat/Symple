@@ -1,6 +1,4 @@
-import List from "./List";
-import Card from "./Card";
-import Modal from "./Modal";
+import Popup from "./Popup";
 
-const EnterpriseComponents = { List, Card, Modal };
+const EnterpriseComponents = { Popup };
 export default EnterpriseComponents;

@@ -58,7 +58,7 @@ export class EnterprisesController {
   }
 
   @Delete(":id")
-  @HttpCode(HttpStatus.NO_CONTENT)
+  @HttpCode(HttpStatus.OK)
   async delete(@Param("id", CheckObjectIdPipe) id: string): Promise<any> {
     return await this.enterprisesService.delete(id);
   }

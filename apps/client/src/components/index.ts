@@ -4,8 +4,10 @@ import Header from "./Header";
 import Navigation from "./Navigation";
 import Aside from "./Aside";
 import Button from "./Button";
+import List from "./List";
+import Card from "./Card";
+import Modal from "./Modal";
 import VerticalButton from "./VerticalButton";
-import Popup from "./Popup";
 import EnterpriseComponents from "./Enterprise";
 
 export {
@@ -15,7 +17,9 @@ export {
   Navigation,
   Aside,
   Button,
+  List,
+  Card,
+  Modal,
   VerticalButton,
-  Popup,
   EnterpriseComponents,
 };

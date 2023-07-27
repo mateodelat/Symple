@@ -1,30 +1,36 @@
 import Image from "next/image";
 
+import { VerticalButton } from "@components/index";
 import { type Enterprise } from "@/types";
-import styles from "./Card.module.scss";
-import Modal from "../Modal";
+import styles from "./EnterpriseCard.module.scss";
 
 export default function EnterpriseCard({
-  enterprise,
+  element,
+  isPopupOpen,
+  togglePopup,
 }: {
-  enterprise: Enterprise;
+  element: Enterprise;
+  isPopupOpen: boolean;
+  togglePopup: () => void;
 }): JSX.Element {
-  const admins = enterprise.admins.filter((admin) => admin.role !== "admin");
+  console.log(isPopupOpen);
+  const admins = element.admins.filter((admin) => admin.role !== "admin");
+
   return (
-    <article className={styles.card}>
+    <>
       <Image
         src={
-          enterprise.image === undefined || enterprise.image === ""
+          element.image === undefined || element.image === ""
             ? "/placeholder.svg"
-            : enterprise.image
+            : element.image
         }
         width={100}
         height={100}
-        alt={`Foto de empresa ${enterprise.name}`}
+        alt={`Foto de empresa ${element.name}`}
         className={styles.card_image}
       />
       <div className={styles.card_text}>
-        <h2>{enterprise.name}</h2>
+        <h2>{element.name}</h2>
         <p>
           {admins.length > 0 &&
             admins.map((admin, i) => {
@@ -39,10 +45,15 @@ export default function EnterpriseCard({
           src={"/toggle_button.svg"}
           width={30}
           height={30}
-          alt={`Apagar empresa ${enterprise.name}`}
+          alt={`Apagar empresa ${element.name}`}
         />
-        <Modal />
+        <VerticalButton
+          onClick={() => {
+            togglePopup();
+          }}
+          className={isPopupOpen ? styles.card_buttons_vertical : ""}
+        />
       </div>
-    </article>
+    </>
   );
 }

@@ -1,13 +1,15 @@
+"use client";
+
 import { type ButtonProps } from "@/types";
 import styles from "./Button.module.scss";
 
 export default function Button({
-  children,
-  onClick = () => {},
   className = "",
+  onClick,
+  children,
 }: ButtonProps): JSX.Element {
   return (
-    <button onClick={onClick} className={`${styles.button} ${className}`}>
+    <button className={`${styles.button} ${className}`} onClick={onClick}>
       {children}
     </button>
   );

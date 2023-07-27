@@ -3,12 +3,12 @@ import type React from "react";
 import { useState } from "react";
 import { type Field, type FieldProps } from "@/types";
 
-export const useField = ({
+export default function useField ({
   type,
   placeholder,
   name,
   required,
-}: FieldProps): Field => {
+}: FieldProps): Field {
   const [value, setValue] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

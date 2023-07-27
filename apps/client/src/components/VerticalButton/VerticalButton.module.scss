@@ -1,10 +1,11 @@
 .button{
   display: grid;
-  place-items: center;
-  background: none;
-  border: none;
   width: 20px;
   height: 20px;
+  place-items: center;
+  z-index: 1;
+  background: none;
+  border: none;
   &_vertical{
     display: block;
     position: relative;
