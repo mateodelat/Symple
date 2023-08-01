@@ -22,13 +22,18 @@ export default function Login(): JSX.Element {
     required: true,
   });
 
+  const link = {
+    href: "/admin-panel",
+    label: "Iniciar sesión",
+  };
+
   return (
     <section className={styles.login}>
       <h1 className={styles.login_title}>Bienvenido a Symple.</h1>
       <p className={styles.login_description}>
         Inicia sesión con tu correo y contraseña.
       </p>
-      <Form fields={[email, password]} buttonSave="Iniciar sesión" />
+      <Form fields={[email, password]} isLink={true} link={link} />
     </section>
   );
 }

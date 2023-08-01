@@ -1,12 +1,12 @@
-.button{
+.button {
   display: grid;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   place-items: center;
   z-index: 1;
   background: none;
   border: none;
-  &_vertical{
+  &_vertical {
     display: block;
     position: relative;
     &::before,

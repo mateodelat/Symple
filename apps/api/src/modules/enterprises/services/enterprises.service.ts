@@ -33,13 +33,15 @@ export class EnterprisesService {
   }
 
   async getAll(): Promise<Enterprise[]> {
-    const elements = this.EnterpriseModel.find({}).populate('admins', {
-      name: 1,
-      lastName: 1,
-      email: 1,
-      role: 1,
-      createdAt: 1
-    }).exec();
+    const elements = this.EnterpriseModel.find({})
+      .populate("admins", {
+        name: 1,
+        lastName: 1,
+        email: 1,
+        role: 1,
+        createdAt: 1,
+      })
+      .exec();
     return await elements;
   }
 
@@ -58,9 +60,12 @@ export class EnterprisesService {
     const element = new this.EnterpriseModel(object);
     const newEnterprise: Enterprise = await element.save();
     for (const id of payload.admins) {
-      const user = await this.usersService.checkUserExits(id)
-      const enterprises = user.enterprises
-      await this.usersService.update({ id, payload: { enterprises: [...enterprises, newEnterprise._id] }})
+      const user = await this.usersService.checkUserExits(id);
+      const enterprises = user.enterprises;
+      await this.usersService.update({
+        id,
+        payload: { enterprises: [...enterprises, newEnterprise._id] },
+      });
     }
     return newEnterprise;
   }

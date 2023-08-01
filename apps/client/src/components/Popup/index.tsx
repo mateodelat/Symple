@@ -1,15 +1,10 @@
 import Link from "next/link";
 
-import { Button, Modal } from "@components/index";
-import { useToggle } from "@hooks/index";
+import { Button } from "@components/index";
 import styles from "./Popup.module.scss";
+import { type PopupProps } from "@/types";
 
-export default function Popup({ id }: { id: string }): JSX.Element {
-  const { value: isModalOpen, toggle } = useToggle();
-
-  const handleIsModalOpen = (value: boolean): void => {
-    toggle(value);
-  };
+export default function Popup({ id, toggleModal }: PopupProps): JSX.Element {
   return (
     <>
       <div className={styles.popup}>
@@ -24,20 +19,13 @@ export default function Popup({ id }: { id: string }): JSX.Element {
           <Button
             className={styles.popup_content_action}
             onClick={(): void => {
-              handleIsModalOpen(true);
+              toggleModal(true);
             }}
           >
             Eliminar
           </Button>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal
-          toggle={() => {
-            handleIsModalOpen(false);
-          }}
-        />
-      )}
     </>
   );
 }

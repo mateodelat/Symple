@@ -1,3 +1,46 @@
-.modal{
-  z-index: 3;
+.modal {
+  display: none;
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    margin: auto;
+    gap: 1rem;
+    z-index: 3;
+    animation: fadein 150ms ease-in forwards;
+    &::backdrop {
+      animation: fadein 150ms ease-in forwards;
+    }
+  }
+  &_close[open] {
+    animation: fadeout 150ms ease-in forwards;
+    &::backdrop {
+      animation: fadeout 150ms ease-in forwards;
+    }
+  }
+
+  &_wrapper {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

@@ -7,9 +7,14 @@ export default function Button({
   className = "",
   onClick,
   children,
+  type = "button",
 }: ButtonProps): JSX.Element {
   return (
-    <button className={`${styles.button} ${className}`} onClick={onClick}>
+    <button
+      className={`${styles.button} ${className}`}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

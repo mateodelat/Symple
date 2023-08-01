@@ -1,19 +1,27 @@
 @use "@styles/variables";
 
-.card{
-  &_image{
+.card {
+  &_image {
     width: 50px;
     height: 50px;
   }
-  &_buttons{
+  &_text {
+    &_title {
+      cursor: pointer;
+    }
+    &_user {
+      color: variables.$secondary-blue-color;
+    }
+  }
+  &_buttons {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     place-items: center;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 10px;
 
-    &_vertical{
+    &_vertical {
       z-index: 4 !important;
     }
   }

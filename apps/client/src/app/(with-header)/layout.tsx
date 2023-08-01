@@ -1,5 +1,7 @@
-import { Header } from "@components/index";
 import React from "react";
+
+import { Header } from "@components/index";
+import styles from "@styles/WithHeader.module.scss";
 
 export default function WithHeaderLayout({
   children,
@@ -7,9 +9,9 @@ export default function WithHeaderLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <div>
+    <main className={styles.main}>
       <Header />
       {children}
-    </div>
+    </main>
   );
 }

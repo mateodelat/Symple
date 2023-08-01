@@ -1,13 +1,10 @@
-import { type User } from "@/types";
+import { type CardUser } from "@/types";
 
-export default function UserCard({
-  element,
-  isPopupOpen,
-  togglePopup,
-}: {
-  element: User;
-  isPopupOpen: boolean;
-  togglePopup: () => void;
-}): JSX.Element {
-  return <h1>UserCard</h1>;
+export default function UserCard({ element }: CardUser): JSX.Element {
+  return (
+    <div>
+      <h1>UserCard</h1>
+      <p>{element.name}</p>
+    </div>
+  );
 }

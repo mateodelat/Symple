@@ -1,0 +1,13 @@
+@use "@styles/variables";
+
+.button {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid variables.$primary-gray-color;
+  border-radius: 1.5rem;
+  color: variables.$tertiary-blue-color;
+  background: none;
+}

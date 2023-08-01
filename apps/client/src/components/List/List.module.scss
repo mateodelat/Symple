@@ -1,10 +1,9 @@
-.list{
+.list {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
 
-  &_button{
-    justify-self: flex-end;
-    width: 50%;
+  &_button {
+    text-align: center;
   }
 }

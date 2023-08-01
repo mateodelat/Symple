@@ -1,19 +1,17 @@
 import Image from "next/image";
 
-import { VerticalButton } from "@components/index";
-import { type Enterprise } from "@/types";
+import { VerticalButton, Popup } from "@components/index";
+import { type CardEnterprise } from "@/types";
 import styles from "./EnterpriseCard.module.scss";
+import DeleteEnterprise from "@/components/DeleteEnterprise";
 
 export default function EnterpriseCard({
   element,
   isPopupOpen,
   togglePopup,
-}: {
-  element: Enterprise;
-  isPopupOpen: boolean;
-  togglePopup: () => void;
-}): JSX.Element {
-  console.log(isPopupOpen);
+  isModalOpen,
+  toggleModal,
+}: CardEnterprise): JSX.Element {
   const admins = element.admins.filter((admin) => admin.role !== "admin");
 
   return (
@@ -30,8 +28,8 @@ export default function EnterpriseCard({
         className={styles.card_image}
       />
       <div className={styles.card_text}>
-        <h2>{element.name}</h2>
-        <p>
+        <h2 className={styles.card_text_title}>{element.name}</h2>
+        <p className={styles.card_text_user}>
           {admins.length > 0 &&
             admins.map((admin, i) => {
               if (i === 0) return `@${admin.name}`;
@@ -41,12 +39,6 @@ export default function EnterpriseCard({
         </p>
       </div>
       <div className={styles.card_buttons}>
-        <Image
-          src={"/toggle_button.svg"}
-          width={30}
-          height={30}
-          alt={`Apagar empresa ${element.name}`}
-        />
         <VerticalButton
           onClick={() => {
             togglePopup();
@@ -54,6 +46,14 @@ export default function EnterpriseCard({
           className={isPopupOpen ? styles.card_buttons_vertical : ""}
         />
       </div>
+      {isPopupOpen && <Popup id={element.id} toggleModal={toggleModal} />}
+      {isModalOpen && (
+        <DeleteEnterprise
+          isOpen={isModalOpen}
+          toggle={toggleModal}
+          enterpriseId={element.id}
+        />
+      )}
     </>
   );
 }

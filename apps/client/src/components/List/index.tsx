@@ -1,21 +1,23 @@
-import { Card } from "@components/index";
-import styles from "./List.module.scss";
-import { type CardType, type Enterprise } from "@/types";
+"use client";
 
-export default async function List({
+import { Card, LinkButton } from "@components/index";
+import { type ListProps } from "@/types";
+import styles from "./List.module.scss";
+
+export default function List({
   list,
   newElement,
+  newElementPage,
   listEmptyMessage,
   typeOfCard,
-}: {
-  list: Enterprise[];
-  newElement: string;
-  listEmptyMessage: string;
-  typeOfCard: CardType;
-}): Promise<JSX.Element> {
+}: ListProps): JSX.Element {
   return (
-    <div className={styles.list}>
-      <button className={styles.list_button}>{newElement}</button>
+    <section className={styles.list}>
+      <LinkButton
+        className={styles.list_button}
+        href={newElementPage}
+        label={newElement}
+      />
       {list.length > 0 ? (
         list.map((element) => (
           <Card element={element} key={element.id} type={typeOfCard} />
@@ -23,6 +25,6 @@ export default async function List({
       ) : (
         <h2>{listEmptyMessage}</h2>
       )}
-    </div>
+    </section>
   );
 }

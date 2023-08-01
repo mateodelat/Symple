@@ -17,6 +17,7 @@ import {
   UpdateEnterpriseDTO,
 } from "../dtos/enterprises.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
+import { type Enterprise } from "../entities/enterprise.entity";
 
 @ApiTags("Enterprises")
 @Controller("enterprises")
@@ -39,13 +40,15 @@ export class EnterprisesController {
   }
 
   @Get(":id")
-  async getOne(@Param("id", CheckObjectIdPipe) id: string): Promise<any> {
+  async getOne(
+    @Param("id", CheckObjectIdPipe) id: string,
+  ): Promise<Enterprise> {
     const element = this.enterprisesService.getOne(id);
     return await element;
   }
 
   @Post()
-  async create(@Body() payload: CreateEnterpriseDTO): Promise<any> {
+  async create(@Body() payload: CreateEnterpriseDTO): Promise<Enterprise> {
     return await this.enterprisesService.create(payload);
   }
 
@@ -53,7 +56,7 @@ export class EnterprisesController {
   async update(
     @Body() payload: UpdateEnterpriseDTO,
     @Param("id", CheckObjectIdPipe) id: string,
-  ): Promise<any> {
+  ): Promise<Enterprise> {
     return await this.enterprisesService.update({ id, payload });
   }
 

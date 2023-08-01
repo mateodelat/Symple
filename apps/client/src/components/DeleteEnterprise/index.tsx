@@ -1,0 +1,35 @@
+"use client";
+
+import { type DeleteEnterpriseProps } from "@/types";
+import { Modal } from "@components/index";
+import enterpriseService from "@services/enterprises";
+import { useEnterpriseContext } from "@contexts/Enterprise/context";
+import { toast } from "react-hot-toast";
+
+export default function DeleteEnterprise({
+  isOpen,
+  toggle,
+  enterpriseId,
+}: DeleteEnterpriseProps): JSX.Element {
+  const { deleteEnterprise } = useEnterpriseContext();
+
+  const deleteElement = async (): Promise<void> => {
+    const response = await enterpriseService.deleteOne(enterpriseId);
+    if (response.statusCode === 404) toast.error(response.message);
+    else {
+      toggle();
+      deleteEnterprise(enterpriseId);
+      toast.success(response.message);
+    }
+  };
+
+  return (
+    <Modal isOpen={isOpen} toggle={toggle} onConfirm={deleteElement}>
+      <h2>Alerta</h2>
+      <p>
+        ¿Seguro que quieres borrar la empresa?, Este cambio no se puede
+        deshacer.
+      </p>
+    </Modal>
+  );
+}

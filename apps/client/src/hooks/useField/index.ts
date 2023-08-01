@@ -3,11 +3,13 @@ import type React from "react";
 import { useState } from "react";
 import { type Field, type FieldProps } from "@/types";
 
-export default function useField ({
+export default function useField({
   type,
   placeholder,
   name,
   required,
+  props,
+  options,
 }: FieldProps): Field {
   const [value, setValue] = useState("");
 
@@ -15,5 +17,5 @@ export default function useField ({
     setValue(e.target.value);
   };
 
-  return { type, placeholder, name, required, value, onChange };
-};
+  return { type, placeholder, name, required, value, onChange, props, options };
+}
