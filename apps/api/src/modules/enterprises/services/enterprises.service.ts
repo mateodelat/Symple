@@ -58,7 +58,13 @@ export class EnterprisesService {
       throw new BadRequestException("Invalid or malformed ObjectId.");
     const object = { ...payload, createdAt: new Date() };
     const element = new this.EnterpriseModel(object);
-    const newEnterprise: Enterprise = await element.save();
+    const users = payload.admins;
+
+    for (const id of users) {
+      await this.usersService.checkUserExits(id);
+    }
+
+    const newEnterprise = await element.save();
     for (const id of payload.admins) {
       const user = await this.usersService.checkUserExits(id);
       const enterprises = user.enterprises;
