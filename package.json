@@ -1,5 +1,5 @@
 {
-  "name": "growtogo",
+  "name": "symple",
   "version": "1.0.0",
   "private": true,
   "description": "Symple es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.",
@@ -13,6 +13,7 @@
     "lint:fix": "turbo lint:fix",
     "format": "turbo format",
     "format:check": "turbo format:check",
+    "start": "turbo start",
     "clean": "turbo clean"
   },
   "keywords": [],
@@ -31,7 +32,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.0",
     "jsdom": "^22.1.0",
-    "turbo": "1.10.9",
+    "turbo": "^1.10.12",
     "typescript": "^5.1.6",
     "vitest": "^0.33.0"
   },

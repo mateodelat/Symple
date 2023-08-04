@@ -33,7 +33,14 @@ export default function Login(): JSX.Element {
       <p className={styles.login_description}>
         Inicia sesión con tu correo y contraseña.
       </p>
-      <Form fields={[email, password]} isLink={true} link={link} />
+      <Form
+        fields={[email, password]}
+        isLink={true}
+        link={link}
+        onSubmit={() => {
+          console.log("handle login submit");
+        }}
+      />
     </section>
   );
 }

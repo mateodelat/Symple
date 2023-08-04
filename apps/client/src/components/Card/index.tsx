@@ -6,12 +6,17 @@ import { CardType, type CardProps, type Enterprise, type User } from "@/types";
 import styles from "./Card.module.scss";
 import React from "react";
 
-export default function Card({ element, type }: CardProps): JSX.Element {
+export default function Card({
+  element,
+  type,
+  className = "",
+  onClick = () => {},
+}: CardProps): JSX.Element {
   const { value: popup, toggle: togglePopup } = useToggle();
   const { value: modal, toggle: toggleModal } = useToggle();
 
   return (
-    <article className={styles.card}>
+    <article className={`${styles.card} ${className}`} onClick={onClick}>
       {type === CardType.EnterpriseCard && (
         <Cards.EnterpriseCard
           element={element as Enterprise}

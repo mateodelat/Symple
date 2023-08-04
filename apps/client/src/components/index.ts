@@ -8,6 +8,8 @@ import List from "./List";
 import LinkButton from "./LinkButton";
 import EnterpriseList from "./EntepriseList";
 import CreateEnterprise from "./CreateEnterprise";
+import AddUsers from "./AddUsers";
+import SearchBar from "./SearchBar";
 import DeleteEnterprise from "./DeleteEnterprise";
 import Card from "./Card";
 import Popup from "./Popup";
@@ -25,6 +27,8 @@ export {
   LinkButton,
   EnterpriseList,
   CreateEnterprise,
+  AddUsers,
+  SearchBar,
   DeleteEnterprise,
   Card,
   Modal,

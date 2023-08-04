@@ -12,10 +12,33 @@ export default function useField({
   options,
 }: FieldProps): Field {
   const [value, setValue] = useState("");
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ): void => {
     setValue(e.target.value);
   };
 
-  return { type, placeholder, name, required, value, onChange, props, options };
+  const handleErrors = (errors: string[]): void => {
+    setErrors(errors);
+  };
+
+  const clearErrors = (): void => {
+    setErrors([]);
+  };
+
+  return {
+    type,
+    placeholder,
+    name,
+    required,
+    value,
+    onChange,
+    props,
+    options,
+    errors,
+    handleErrors,
+    clearErrors,
+  };
 }

@@ -4,6 +4,7 @@ import {
   Post,
   Put,
   Delete,
+  Query,
   Param,
   Body,
   HttpStatus,
@@ -22,12 +23,14 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get()
   @ApiOperation({ summary: "Lista de usuarios" })
-  async getAll(): Promise<any> {
-    return await this.usersService.getAll();
+  async getAll(@Query("role") role: string = ""): Promise<any> {
+    return await this.usersService.getAll(role);
   }
 
   @Get(":id")
-  async getOne(@Param("id", CheckObjectIdPipe) id: Types.ObjectId): Promise<any> {
+  async getOne(
+    @Param("id", CheckObjectIdPipe) id: Types.ObjectId,
+  ): Promise<any> {
     const element = this.usersService.getOne(id);
     return await element;
   }
@@ -47,7 +50,9 @@ export class UsersController {
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param("id", CheckObjectIdPipe) id: Types.ObjectId): Promise<any> {
+  async delete(
+    @Param("id", CheckObjectIdPipe) id: Types.ObjectId,
+  ): Promise<any> {
     return await this.usersService.delete(id);
   }
 }

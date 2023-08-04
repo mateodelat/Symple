@@ -1,13 +1,14 @@
-import { 
+import {
   IsString,
   IsNotEmpty,
   IsEmail,
   IsEnum,
-  IsArray
+  IsArray,
+  IsOptional,
+  IsUrl,
 } from "class-validator";
 import { PartialType, ApiProperty } from "@nestjs/swagger";
 import { type Types } from "mongoose";
-
 
 export enum Roles {
   Admin = "admin",
@@ -26,19 +27,32 @@ export class CreateUserDTO {
   readonly lastName: string;
 
   @IsString()
+  @IsOptional()
+  @IsUrl()
+  @ApiProperty({
+    description: "Avatar del usuario; No es un campo obligatorio.",
+  })
+  readonly avatar?: string;
+
+  @IsString()
   @IsNotEmpty()
   @IsEmail()
-  @ApiProperty({ description: "Correo electrónico del usuario; Campo obligatorio." })
+  @ApiProperty({
+    description: "Correo electrónico del usuario; Campo obligatorio.",
+  })
   readonly email: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: "Contraseña del usuario; Campo obligatorio." })
   readonly password: string;
-  
+
   @IsNotEmpty()
   @IsEnum(Roles)
-  @ApiProperty({ description: "Estado del usuario: Es administrador general o usuario; Campo obligatorio." })
+  @ApiProperty({
+    description:
+      "Estado del usuario: Es administrador general o usuario; Campo obligatorio.",
+  })
   readonly role: Roles;
 }
 
@@ -46,6 +60,9 @@ export class UpdateUserDTO extends PartialType(CreateUserDTO) {
   @IsArray()
   @IsNotEmpty()
   @IsString({ each: true })
-  @ApiProperty({ description: "Estado del usuario: Es administrador general o usuario; Campo obligatorio." })
-  readonly enterprises: Types.ObjectId[] 
+  @ApiProperty({
+    description:
+      "Estado del usuario: Es administrador general o usuario; Campo obligatorio.",
+  })
+  readonly enterprises: Types.ObjectId[];
 }

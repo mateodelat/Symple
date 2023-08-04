@@ -10,4 +10,8 @@
   border-radius: 1.5rem;
   color: variables.$tertiary-blue-color;
   background: none;
+  &_error {
+    padding: 0 0.5rem;
+    color: red;
+  }
 }

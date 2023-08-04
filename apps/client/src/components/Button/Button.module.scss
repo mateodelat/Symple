@@ -6,4 +6,8 @@
   border-radius: 1.5rem;
   color: white;
   background-color: variables.$primary-blue-color;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

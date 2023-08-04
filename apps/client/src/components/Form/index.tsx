@@ -7,6 +7,7 @@ import styles from "./Form.module.scss";
 
 export default function Form({
   fields,
+  customFields = [],
   buttonSubmit = "Enviar",
   title,
   isLink = false,
@@ -23,28 +24,42 @@ export default function Form({
       {title !== undefined && <h2>{title}</h2>}
 
       <form onSubmit={handleSubmit} className={styles.container_form}>
-        {fields.map(({ name, type, props, ...field }) => {
-          return type === "select" ? (
-            <select
-              name={name}
-              {...field}
-              {...props}
-              className={styles.container_form_input}
-            >
-              {field.options?.map(({ label, value }) => (
-                <option value={value}>{label}</option>
-              ))}
-            </select>
-          ) : (
-            <input
-              key={name}
-              type={type}
-              {...field}
-              {...props}
-              className={styles.container_form_input}
-            />
-          );
-        })}
+        {fields.map(
+          ({
+            name,
+            type,
+            props,
+            errors,
+            clearErrors,
+            handleErrors,
+            ...field
+          }) => {
+            return type === "select" ? (
+              <select
+                key={name}
+                name={name}
+                {...field}
+                {...props}
+                className={styles.container_form_input}
+              >
+                <option value={""}>-</option>
+                {field.options?.map(({ label, value }) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                key={name}
+                type={type}
+                {...field}
+                {...props}
+                className={styles.container_form_input}
+              />
+            );
+          },
+        )}
         {children}
         {/*
               --- TODO ---
@@ -57,7 +72,16 @@ export default function Form({
             className={styles.container_form_button}
           />
         ) : (
-          <Button onClick={onSubmit} type="submit">
+          <Button
+            onClick={onSubmit}
+            type="submit"
+            props={{
+              disabled:
+                fields.some((field) => field.required && field.value === "") ||
+                customFields.length === 0 ||
+                customFields.some((field) => field.value === ""),
+            }}
+          >
             {buttonSubmit}
           </Button>
         )}

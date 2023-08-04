@@ -1,7 +1,9 @@
-import { type ResponseObject, type Service, type User } from "@/types";
+import { type ResponseObject, type User } from "@/types";
+
+const baseUrl = `${process.env.SERVER_URL ?? ""}/users`;
 
 const getAll = async (): Promise<User[]> => {
-  return await fetch(`${process.env.SERVER_URL ?? ""}/users/`, {
+  return await fetch(baseUrl, {
     method: "GET",
     next: {
       revalidate: 60,
@@ -13,14 +15,14 @@ const getAll = async (): Promise<User[]> => {
 };
 
 const deleteOne = async (id: string): Promise<ResponseObject> => {
-  return await fetch(`${process.env.SERVER_URL ?? ""}/users/${id}`, {
+  return await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
   })
     .then(async (res) => await res.json())
     .catch((err) => err);
 };
 
-const userService: Service = {
+const userService = {
   getAll,
   deleteOne,
 };

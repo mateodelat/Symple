@@ -9,6 +9,9 @@ export interface Field {
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
+  errors?: string[];
+  handleErrors?: (errors: string[]) => void;
+  clearErrors?: () => void;
 }
 
 export interface Option {
@@ -34,9 +37,10 @@ export interface User {
   id: string;
   name: string;
   lastName: string;
+  avatar?: string;
   email: string;
   role: string;
-  enterprises: Enterprise[];
+  enterprises?: Enterprise[];
 }
 
 export interface Link {
@@ -56,6 +60,7 @@ export interface ButtonProps {
   onClick: () => any;
   className?: string;
   type?: "button" | "submit" | "reset";
+  props?: object;
 }
 
 export type VerticalButtonProps = Omit<ButtonProps, "children">;
@@ -86,15 +91,21 @@ export type ServiceType = "enterpriseService" | "userService";
 
 export interface ListProps {
   list: Enterprise[] | User[];
-  newElement: string;
-  newElementPage: string;
+  canCreateElement: boolean;
+  newElement?: string;
+  newElementPage?: string;
   listEmptyMessage: string;
   typeOfCard: CardType;
+  className?: string;
+  cardClassName?: string;
+  cardOnClick?: (element?: any) => void;
 }
 
 export interface CardProps {
   element: Enterprise | User;
   type: CardType;
+  className?: string;
+  onClick?: (element?: any) => any;
 }
 
 export interface CardEnterprise {
@@ -107,6 +118,7 @@ export interface CardEnterprise {
 
 export interface FormProps {
   fields: Field[];
+  customFields?: Array<{ value: any }>;
   title?: string;
   buttonSubmit?: string;
   onSubmit: () => any;
@@ -128,6 +140,8 @@ export interface ModalProps {
   toggle: () => void;
   children: React.ReactNode;
   onConfirm: () => any;
+  onCancel?: () => any;
+  className?: string;
 }
 
 export interface ResponseObject {
@@ -144,9 +158,19 @@ export interface EnterpriseContextType {
   deleteEnterprise: (id: string) => void;
 }
 
+export interface UserContextType {
+  users: User[];
+  isLoading: boolean;
+  setInitialUsers: (users: User[]) => void;
+  addUser: (user: User) => void;
+  deleteUser: (id: string) => void;
+}
+
 export interface EntepriseContextProviderProps {
   children: React.ReactNode;
 }
+
+export type UserContextProviderProps = EntepriseContextProviderProps;
 
 export type DeleteEnterpriseProps = Omit<
   ModalProps,
@@ -181,4 +205,14 @@ export enum AmountOfEmployees {
   "elevenToTwentyFive" = "11-25",
   "TwentySixToFifty" = "26-50",
   "FiftyPlus" = "50+",
+}
+
+export interface SearchBarProps {
+  title: string;
+}
+
+export interface AddUsersProps {
+  addedUsers: User[];
+  addUser: (user: User) => void;
+  removeUser: (user: User) => void;
 }

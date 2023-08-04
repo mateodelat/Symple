@@ -1,6 +1,6 @@
 import { List } from "@components/index";
 import userService from "@services/users";
-import { type User, CardType } from "@/types";
+import { CardType } from "@/types";
 
 export default async function UsersPage(): Promise<JSX.Element> {
   const users = await userService.getAll();
@@ -8,7 +8,7 @@ export default async function UsersPage(): Promise<JSX.Element> {
   return (
     <div>
       <List
-        list={users as User[]}
+        list={users}
         newElement="Nuevo usuario"
         newElementPage={"/admin-panel/users/new"}
         listEmptyMessage="No existen usuarios registrados..."

@@ -15,13 +15,22 @@ body {
   background-color: variables.$primary-background-color;
 }
 
+input,
+input::placeholder {
+  font-family: inherit;
+}
+
 a {
   text-decoration: none;
   color: black;
-  &:hover{
+  &:hover {
     color: variables.$primary-blue-color;
     transition: all 0.15s ease-in-out;
   }
+}
+
+button {
+  font-family: inherit;
 }
 
 ul {

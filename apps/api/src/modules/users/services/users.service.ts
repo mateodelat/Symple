@@ -29,8 +29,16 @@ export class UsersService {
     return false;
   }
 
-  async getAll(): Promise<User[]> {
-    const users = await this.UserModel.find({}).populate('enterprises').exec();
+  async getAll(role: string): Promise<User[]> {
+    let filter = {};
+
+    if (role !== "") {
+      filter = { role };
+    }
+
+    const users = await this.UserModel.find(filter)
+      .populate("enterprises")
+      .exec();
     return users;
   }
 
@@ -42,7 +50,7 @@ export class UsersService {
   async create(payload: CreateUserDTO): Promise<User | undefined> {
     const exists = await this.checkEmailExists(payload.email);
     if (!exists) {
-      const {password, ...rest} = payload;
+      const { password, ...rest } = payload;
       const salt = 10;
       const passwordHash = await bcrypt.hash(password, salt);
       const object = { ...rest, password: passwordHash, createdAt: new Date() };

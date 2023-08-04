@@ -2,10 +2,10 @@ POST http://localhost:3001/api/enterprises
 Content-Type: application/json
 
 {
-  "name": "Empresa 1",
+  "name": "Empresa 1000",
   "turn": "Giro 3",
   "address": "Dirección 3",
   "telephone": "Teléfono 3",
   "amountOfEmployees": "50+",
-  "admins": ["64bad96aa22686461706192a"]
+  "admins": ["64bd64627664552431fc0b55"]
 }

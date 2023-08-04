@@ -1,24 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { useEnterpriseContext } from "@contexts/Enterprise/context";
-import enterpriseService from "@services/enterprises";
 import { List } from "@components/index";
 import { CardType } from "@/types";
 
 export default function EnterpriseList(): JSX.Element {
-  const { enterprises, setInitialEnterprises, isLoading } =
-    useEnterpriseContext();
+  const { enterprises, isLoading } = useEnterpriseContext();
+  console.log(enterprises);
 
-  useEffect(() => {
-    const fetchEnterprises = async (): Promise<void> => {
-      const list = await enterpriseService.getAll();
-      setInitialEnterprises(list);
-    };
-
-    void fetchEnterprises();
-  }, []);
   return (
     <>
       {isLoading ? (
@@ -30,6 +19,7 @@ export default function EnterpriseList(): JSX.Element {
           newElementPage={"/admin-panel/enterprise/new"}
           listEmptyMessage="No cuentas con empresas a tu cargo..."
           typeOfCard={CardType.EnterpriseCard}
+          canCreateElement={true}
         />
       )}
     </>

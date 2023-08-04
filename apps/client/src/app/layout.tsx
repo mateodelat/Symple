@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import UserContextProvider from "@contexts/User/provider";
 import EnterpriseContextProvider from "@contexts/Enterprise/provider";
 import "@styles/global.scss";
 
@@ -21,8 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <EnterpriseContextProvider>{children}</EnterpriseContextProvider>
-        <Toaster />
+        <UserContextProvider>
+          <EnterpriseContextProvider>
+            <Toaster />
+            {children}
+          </EnterpriseContextProvider>
+        </UserContextProvider>
       </body>
     </html>
   );

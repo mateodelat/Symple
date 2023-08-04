@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import EnterpriseContext from "./context";
+import enterpriseService from "@services/enterprises";
 import {
   type Enterprise,
   type AppState,
@@ -30,6 +31,20 @@ export default function EnterpriseContextProvider({
     );
     setEnterprises(newEnterprises);
   };
+
+  useEffect(() => {
+    /* 
+  
+      TODO: Do the fetching after the user logs in, to only get the enterprises the user has access.
+    
+    */
+    const fetchEnterprises = async (): Promise<void> => {
+      const list = await enterpriseService.getAll();
+      setInitialEnterprises(list);
+    };
+
+    void fetchEnterprises();
+  }, []);
 
   return (
     <EnterpriseContext.Provider
