@@ -5,7 +5,8 @@ export interface Field {
   required: boolean;
   props?: object;
   options?: Option[];
-  value: string;
+  fileProps?: FileProps;
+  value: any;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
@@ -18,6 +19,8 @@ export interface Option {
   value: string;
   label: string;
 }
+
+export type FileProps = Pick<UploadFileProps, "file" | "handleSelectedFile">;
 
 export type FieldProps = Omit<Field, "value" | "onChange">;
 
@@ -116,12 +119,14 @@ export interface CardEnterprise {
   toggleModal: (val?: boolean) => void;
 }
 
+export interface CustomField {
+  required: boolean;
+  value: string | any[];
+}
+
 export interface FormProps {
   fields: Field[];
-  customFields?: Array<{
-    required: boolean;
-    value: any;
-  }>;
+  customFields?: CustomField[];
   title?: string;
   buttonSubmit?: string;
   onSubmit: () => any;
@@ -129,10 +134,14 @@ export interface FormProps {
   children?: React.ReactNode;
 }
 
-export interface CustomField {
-  required: boolean;
-  value: string | any[];
+export interface UploadFileProps {
+  text?: string;
+  id?: string;
+  file: File | undefined;
+  handleSelectedFile: ((e: File | undefined) => void) | undefined;
 }
+
+export type UseFile = Pick<UploadFileProps, "file" | "handleSelectedFile">;
 
 export interface CardUser {
   element: User;

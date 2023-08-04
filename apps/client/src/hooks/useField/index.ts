@@ -8,6 +8,7 @@ export default function useField({
   placeholder,
   name,
   required,
+  fileProps,
   props,
   options,
 }: FieldProps): Field {
@@ -33,6 +34,7 @@ export default function useField({
     placeholder,
     name,
     required,
+    fileProps,
     value,
     onChange,
     props,

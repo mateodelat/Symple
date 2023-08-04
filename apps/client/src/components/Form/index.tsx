@@ -2,7 +2,7 @@
 import React from "react";
 
 import { type FormProps } from "@/types";
-import { Button } from "@components/index";
+import { Button, UploadFile } from "@components/index";
 import styles from "./Form.module.scss";
 
 export default function Form({
@@ -30,6 +30,7 @@ export default function Form({
             options,
             clearErrors,
             handleErrors,
+            fileProps,
             ...field
           }) => {
             return (
@@ -55,6 +56,12 @@ export default function Form({
                       </option>
                     ))}
                   </select>
+                ) : type === "file" ? (
+                  <UploadFile
+                    file={fileProps?.file}
+                    handleSelectedFile={fileProps?.handleSelectedFile}
+                    id={name}
+                  />
                 ) : (
                   <input
                     type={type}

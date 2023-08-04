@@ -1,21 +1,42 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@components/index";
+import { type UploadFileProps } from "@/types";
+import styles from "./UploadFile.module.scss";
 
-export default function UploadFile(): JSX.Element {
-  const ref = useRef<HTMLInputElement>(null);
+export default function UploadFile({
+  text = "Seleccionar archivo",
+  id = "fileUpload",
+  file,
+  handleSelectedFile = () => {},
+}: UploadFileProps): JSX.Element {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const result = event.target.files?.[0];
+    handleSelectedFile(result);
+  };
+
+  const [element, setElement] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const element = document.getElementById(id);
+    setElement(element);
+  }, []);
+
   return (
-    <div>
-      <input type="file" hidden ref={ref} />
+    <div className={styles.container}>
+      <input type="file" hidden id={id} onChange={handleChange} />
       <Button
         onClick={() => {
-          ref.current?.click();
+          element?.click();
         }}
       >
-        Subir archivo
+        {text}
       </Button>
+      <span className={styles.container_text}>
+        {file?.name ?? "No hay archivos seleccionados..."}
+      </span>
     </div>
   );
 }

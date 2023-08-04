@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { AddUsers, Button, Form, Modal, UploadFile } from "@components/index";
-import { useField, useToggle } from "@hooks/index";
+import { AddUsers, Button, Form, Modal } from "@components/index";
+import { useField, useFile, useToggle } from "@hooks/index";
 import {
   AmountOfEmployees,
-  CustomField,
+  type CustomField,
   type AppState,
   type User,
 } from "@/types";
@@ -19,8 +19,13 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 export default function CreateEnterprise(): JSX.Element {
+  const [addedUsers, setAddedUsers] = useState<AppState["users"]>([]);
+  const { back } = useRouter();
+
   const { addEnterprise } = useEnterpriseContext();
   const { users } = useUserContext();
+
+  const { file, handleSelectedFile } = useFile();
 
   const name = useField({
     type: "text",
@@ -30,10 +35,12 @@ export default function CreateEnterprise(): JSX.Element {
   });
 
   const image = useField({
-    type: "type",
+    type: "file",
     placeholder: "Imagen",
     name: "image",
     required: false,
+    props: { accept: "image/*", hidden: true },
+    fileProps: { file, handleSelectedFile },
   });
 
   const turn = useField({
@@ -69,10 +76,8 @@ export default function CreateEnterprise(): JSX.Element {
     })),
   });
 
-  const [addedUsers, setAddedUsers] = useState<AppState["users"]>([]);
-  const { back } = useRouter();
-
   const fields = [name, image, turn, telephone, address, amountOfEmployees];
+
   const customFields: CustomField[] = [
     {
       required: true,
@@ -156,7 +161,6 @@ export default function CreateEnterprise(): JSX.Element {
           />
         </Modal>
       )}
-      <UploadFile />
     </Form>
   );
 }
