@@ -1,5 +1,9 @@
 @use "@styles/variables";
 
+.label{
+  color: variables.$primary-blue-color;
+}
+
 .button {
   display: flex;
   justify-content: space-between;

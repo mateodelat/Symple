@@ -6,6 +6,12 @@
     height: 50px;
   }
   &_text {
+    &_title{
+      width: 180px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
     &_user {
       color: variables.$secondary-blue-color;
     }

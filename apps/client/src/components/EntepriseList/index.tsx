@@ -6,8 +6,6 @@ import { CardType } from "@/types";
 
 export default function EnterpriseList(): JSX.Element {
   const { enterprises, isLoading } = useEnterpriseContext();
-  console.log(enterprises);
-
   return (
     <>
       {isLoading ? (

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 import { Form } from "../index";
 import { useField } from "@/hooks/index";
@@ -8,6 +9,7 @@ import { useField } from "@/hooks/index";
 import styles from "./Login.module.scss";
 
 export default function Login(): JSX.Element {
+  const { push } = useRouter();
   const email = useField({
     type: "text",
     placeholder: "Correo electrónico",
@@ -27,6 +29,11 @@ export default function Login(): JSX.Element {
     label: "Iniciar sesión",
   };
 
+  const handleLogIn = () => {
+    console.log("handle login");
+    push("/admin-panel");
+  };
+
   return (
     <section className={styles.login}>
       <h1 className={styles.login_title}>Bienvenido a Symple.</h1>
@@ -35,11 +42,8 @@ export default function Login(): JSX.Element {
       </p>
       <Form
         fields={[email, password]}
-        isLink={true}
         link={link}
-        onSubmit={() => {
-          console.log("handle login submit");
-        }}
+        onSubmit={() => handleLogIn()}
       />
     </section>
   );

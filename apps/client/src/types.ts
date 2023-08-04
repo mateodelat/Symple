@@ -118,14 +118,22 @@ export interface CardEnterprise {
 
 export interface FormProps {
   fields: Field[];
-  customFields?: Array<{ value: any }>;
+  customFields?: Array<{
+    required: boolean;
+    value: any;
+  }>;
   title?: string;
   buttonSubmit?: string;
   onSubmit: () => any;
-  isLink?: boolean;
   link?: LinkButtonProps;
   children?: React.ReactNode;
 }
+
+export interface CustomField {
+  required: boolean;
+  value: string | any[];
+}
+
 export interface CardUser {
   element: User;
 }
@@ -144,10 +152,8 @@ export interface ModalProps {
   className?: string;
 }
 
-export interface ResponseObject {
+export interface ErrorObject {
   message: string;
-  error?: string;
-  statusCode?: number;
 }
 
 export interface EnterpriseContextType {

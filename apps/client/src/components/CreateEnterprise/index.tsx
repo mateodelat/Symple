@@ -3,14 +3,20 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { AddUsers, Button, Form, Modal } from "@components/index";
+import { AddUsers, Button, Form, Modal, UploadFile } from "@components/index";
 import { useField, useToggle } from "@hooks/index";
-import { AmountOfEmployees, type AppState, type User } from "@/types";
+import {
+  AmountOfEmployees,
+  CustomField,
+  type AppState,
+  type User,
+} from "@/types";
 import { useEnterpriseContext } from "@contexts/Enterprise/context";
 import { useUserContext } from "@contexts/User/context";
 import enterpriseService from "@services/enterprises";
 import styles from "./CreateEnterprise.module.scss";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function CreateEnterprise(): JSX.Element {
   const { addEnterprise } = useEnterpriseContext();
@@ -24,7 +30,7 @@ export default function CreateEnterprise(): JSX.Element {
   });
 
   const image = useField({
-    type: "text",
+    type: "type",
     placeholder: "Imagen",
     name: "image",
     required: false,
@@ -64,32 +70,35 @@ export default function CreateEnterprise(): JSX.Element {
   });
 
   const [addedUsers, setAddedUsers] = useState<AppState["users"]>([]);
+  const { back } = useRouter();
 
   const fields = [name, image, turn, telephone, address, amountOfEmployees];
-  const customFields = addedUsers.map((user) => ({ value: user.id }));
+  const customFields: CustomField[] = [
+    {
+      required: true,
+      value: addedUsers.map((user) => ({ value: user.id })),
+    },
+  ];
 
   const { value, toggle } = useToggle();
 
   const createEnterprise = async (): Promise<void> => {
-    const fieldsData = fields.map(({ name, value, required }) => ({
-      [name]: !required && value === "" ? undefined : value,
-    }));
-    const ids = addedUsers.map((user) => user.id);
-    const payload = Object.assign({}, ...fieldsData, { admins: ids });
-
     try {
-      console.log("debug try");
+      const fieldsData = fields.map(({ name, value, required }) => ({
+        [name]: !required && value === "" ? undefined : value,
+      }));
+      const ids = addedUsers.map((user) => user.id);
+      const payload = Object.assign({}, ...fieldsData, { admins: ids });
       const response = await enterpriseService.create(payload);
       const admins = users
         .filter((user) => ids.includes(user.id))
         .map(({ enterprises, ...user }) => ({ ...user }));
       const newEnterprise = { ...response, admins };
-
       addEnterprise(newEnterprise);
-    } catch (error) {
-      console.log("debug catch");
-
-      console.log(error);
+      toast.success(`Empresa ${newEnterprise.name} creada correctamente.`);
+      back();
+    } catch (e: any) {
+      toast.error(e.message);
     }
   };
 
@@ -115,8 +124,16 @@ export default function CreateEnterprise(): JSX.Element {
       fields={fields}
       customFields={customFields}
       onSubmit={createEnterprise}
+      title="Crear empresa"
     >
-      <Button onClick={toggle} className={styles.button}>
+      <label htmlFor="addUsers" className={styles.label}>
+        Añadir usuario
+      </label>
+      <Button
+        onClick={toggle}
+        className={styles.button}
+        props={{ name: "addUsers" }}
+      >
         <span>Añadir usuario</span>
         <Image
           src={"/add_button.svg"}
@@ -139,6 +156,7 @@ export default function CreateEnterprise(): JSX.Element {
           />
         </Modal>
       )}
+      <UploadFile />
     </Form>
   );
 }

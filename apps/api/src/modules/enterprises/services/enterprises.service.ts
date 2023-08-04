@@ -33,7 +33,7 @@ export class EnterprisesService {
   }
 
   async getAll(): Promise<Enterprise[]> {
-    const elements = this.EnterpriseModel.find({})
+    const elements = await this.EnterpriseModel.find({})
       .populate("admins", {
         name: 1,
         lastName: 1,
@@ -42,7 +42,7 @@ export class EnterprisesService {
         createdAt: 1,
       })
       .exec();
-    return await elements;
+    return elements;
   }
 
   async getOne(id: string): Promise<Enterprise> {

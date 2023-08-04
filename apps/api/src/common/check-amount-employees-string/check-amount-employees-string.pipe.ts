@@ -7,7 +7,7 @@ import {
 
 @Injectable()
 export class CheckAmountEmployeesStringPipe implements PipeTransform {
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: any, metadata: ArgumentMetadata): string {
     const options = {
       "1-10": "1-10",
       "11-25": "11-25",
