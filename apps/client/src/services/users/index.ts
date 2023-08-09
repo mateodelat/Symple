@@ -1,4 +1,4 @@
-import { type ResponseObject, type User } from "@/types";
+import { type ErrorObject, type User } from "@/types";
 
 const baseUrl = `${process.env.SERVER_URL ?? ""}/users`;
 
@@ -14,7 +14,7 @@ const getAll = async (): Promise<User[]> => {
   });
 };
 
-const deleteOne = async (id: string): Promise<ResponseObject> => {
+const deleteOne = async (id: string): Promise<ErrorObject> => {
   return await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
   })

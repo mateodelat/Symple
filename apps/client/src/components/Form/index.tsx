@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 import { type FormProps } from "@/types";
-import { Button, UploadFile } from "@components/index";
+import { Button, UploadImage } from "@components/index";
 import styles from "./Form.module.scss";
 
 export default function Form({
@@ -11,6 +12,7 @@ export default function Form({
   buttonSubmit = "Enviar",
   title,
   onSubmit,
+  className = "",
   children,
 }: FormProps): JSX.Element {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -20,7 +22,10 @@ export default function Form({
   return (
     <div className={styles.container}>
       {title !== undefined && <h2>{title}</h2>}
-      <form onSubmit={handleSubmit} className={styles.container_form}>
+      <form
+        onSubmit={handleSubmit}
+        className={`${styles.container_form} ${className}`}
+      >
         {fields.map(
           ({
             name,
@@ -39,7 +44,9 @@ export default function Form({
                   htmlFor={name}
                   className={styles.container_form_wrapper_label}
                 >
-                  {field.placeholder}
+                  <strong className={styles.container_form_wrapper_label_text}>
+                    {field.placeholder}
+                  </strong>
                 </label>
                 {type === "select" ? (
                   <select
@@ -57,11 +64,23 @@ export default function Form({
                     ))}
                   </select>
                 ) : type === "file" ? (
-                  <UploadFile
-                    file={fileProps?.file}
-                    handleSelectedFile={fileProps?.handleSelectedFile}
-                    id={name}
-                  />
+                  <>
+                    <UploadImage
+                      file={fileProps?.file}
+                      handleSelectedFile={fileProps?.handleSelectedFile}
+                      id={name}
+                    />
+                    {fileProps?.resolvedImage !== undefined && (
+                      <div className={styles.image}>
+                        <Image
+                          src={fileProps?.resolvedImage}
+                          alt="Foto de empresa"
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <input
                     type={type}

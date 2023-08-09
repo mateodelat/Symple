@@ -1,5 +1,9 @@
-import { Enterprise, type CreateEnterpriseDTO, ErrorObject } from "@/types";
-import { returnResponse } from "@utils/Response/index";
+import {
+  type Enterprise,
+  type CreateEnterpriseDTO,
+  type ErrorObject,
+} from "@/types";
+import { returnResponse } from "@utils/response";
 
 const baseUrl = `${process.env.SERVER_URL ?? ""}/enterprises`;
 
@@ -10,7 +14,7 @@ const getAll = async (): Promise<Enterprise[]> => {
       revalidate: 30,
     },
   });
-  return returnResponse(response);
+  return await returnResponse(response);
 };
 
 const create = async (payload: CreateEnterpriseDTO): Promise<Enterprise> => {
@@ -22,14 +26,14 @@ const create = async (payload: CreateEnterpriseDTO): Promise<Enterprise> => {
     body: JSON.stringify(payload),
   });
 
-  return returnResponse(response);
+  return await returnResponse(response);
 };
 
-const deleteOne = async (id: string): Promise<void | ErrorObject> => {
+const deleteOne = async (id: string): Promise<ErrorObject> => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
   });
-  return returnResponse(response);
+  return await returnResponse(response);
 };
 
 const enterpriseService = {

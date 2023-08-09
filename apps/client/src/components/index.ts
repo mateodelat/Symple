@@ -1,5 +1,5 @@
 import Login from "./Login";
-import UploadFile from "./UploadFile";
+import UploadImage from "./UploadImage";
 import Form from "./Form";
 import Header from "./Header";
 import Navigation from "./Navigation";
@@ -19,7 +19,7 @@ import VerticalButton from "./VerticalButton";
 
 export {
   Login,
-  UploadFile,
+  UploadImage,
   Form,
   Header,
   Navigation,

@@ -20,7 +20,9 @@ export interface Option {
   label: string;
 }
 
-export type FileProps = Pick<UploadFileProps, "file" | "handleSelectedFile">;
+export type FileProps = Pick<UploadFileProps, "file" | "handleSelectedFile"> & {
+  resolvedImage: string;
+};
 
 export type FieldProps = Omit<Field, "value" | "onChange">;
 
@@ -130,14 +132,14 @@ export interface FormProps {
   title?: string;
   buttonSubmit?: string;
   onSubmit: () => any;
-  link?: LinkButtonProps;
+  className?: string;
   children?: React.ReactNode;
 }
 
 export interface UploadFileProps {
   text?: string;
   id?: string;
-  file: File | undefined;
+  file: File | string | undefined;
   handleSelectedFile: ((e: File | undefined) => void) | undefined;
 }
 

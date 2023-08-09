@@ -6,7 +6,7 @@ import { Button } from "@components/index";
 import { type UploadFileProps } from "@/types";
 import styles from "./UploadFile.module.scss";
 
-export default function UploadFile({
+export default function UploadImage({
   text = "Seleccionar archivo",
   id = "fileUpload",
   file,
@@ -34,9 +34,11 @@ export default function UploadFile({
       >
         {text}
       </Button>
-      <span className={styles.container_text}>
-        {file?.name ?? "No hay archivos seleccionados..."}
-      </span>
+      {file === undefined && (
+        <span className={styles.container_text}>
+          No hay archivos seleccionados...
+        </span>
+      )}
     </div>
   );
 }

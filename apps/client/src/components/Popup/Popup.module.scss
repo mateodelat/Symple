@@ -1,10 +1,12 @@
 @use "@styles/variables";
 
 .popup{
+  width: 100px;
+  height: fit-content;
   position: absolute;
+  padding-top: 2rem;
   top: 0;
   right: 0;
-  padding: 3rem;
   background: white;
   box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
@@ -17,7 +19,6 @@
     &_action{
       width: 100%;
       padding: 0.5rem;
-      border: 1px solid black;
       font-size: 1.6rem;
       font-weight: 700;
       text-align: start;  

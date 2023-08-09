@@ -1,7 +1,15 @@
 @use "@styles/variables";
 
+.form{
+  width: 85%;
+}
+
 .label{
-  color: variables.$primary-blue-color;
+  padding-left: 5px;
+  color: variables.$primary-black-color;
+  &_text{
+    font-weight: 500;
+  }
 }
 
 .button {

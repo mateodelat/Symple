@@ -8,7 +8,6 @@ export default function Popup({ id, toggleModal }: PopupProps): JSX.Element {
   return (
     <>
       <div className={styles.popup}>
-        <h3>Opciones</h3>
         <div className={styles.popup_content}>
           <Link
             className={styles.popup_content_action}

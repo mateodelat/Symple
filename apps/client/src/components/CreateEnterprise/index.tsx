@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { AddUsers, Button, Form, Modal } from "@components/index";
 import { useField, useFile, useToggle } from "@hooks/index";
@@ -13,13 +13,15 @@ import {
 } from "@/types";
 import { useEnterpriseContext } from "@contexts/Enterprise/context";
 import { useUserContext } from "@contexts/User/context";
-import enterpriseService from "@services/enterprises";
+import { enterpriseService } from "@services/index";
 import styles from "./CreateEnterprise.module.scss";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getBase64 } from "@utils/convertImage";
 
 export default function CreateEnterprise(): JSX.Element {
   const [addedUsers, setAddedUsers] = useState<AppState["users"]>([]);
+  const [imageSource, setImageSource] = useState<string | undefined>(undefined);
   const { back } = useRouter();
 
   const { addEnterprise } = useEnterpriseContext();
@@ -40,7 +42,11 @@ export default function CreateEnterprise(): JSX.Element {
     name: "image",
     required: false,
     props: { accept: "image/*", hidden: true },
-    fileProps: { file, handleSelectedFile },
+    fileProps: {
+      file,
+      handleSelectedFile,
+      resolvedImage: imageSource as string,
+    },
   });
 
   const turn = useField({
@@ -94,6 +100,9 @@ export default function CreateEnterprise(): JSX.Element {
       }));
       const ids = addedUsers.map((user) => user.id);
       const payload = Object.assign({}, ...fieldsData, { admins: ids });
+      if (file !== undefined && imageSource !== undefined) {
+        payload.image = imageSource;
+      }
       const response = await enterpriseService.create(payload);
       const admins = users
         .filter((user) => ids.includes(user.id))
@@ -124,15 +133,27 @@ export default function CreateEnterprise(): JSX.Element {
     setAddedUsers([]);
   };
 
+  useEffect(() => {
+    const getImage = async (): Promise<void> => {
+      if (file !== undefined)
+        await getBase64(file as File, (result: string) => {
+          setImageSource(result);
+        });
+      else setImageSource(undefined);
+    };
+    void getImage();
+  }, [file]);
+
   return (
     <Form
       fields={fields}
       customFields={customFields}
       onSubmit={createEnterprise}
+      className={styles.form}
       title="Crear empresa"
     >
       <label htmlFor="addUsers" className={styles.label}>
-        Añadir usuario
+        <strong className={styles.label_text}>Añadir usuario</strong>
       </label>
       <Button
         onClick={toggle}
