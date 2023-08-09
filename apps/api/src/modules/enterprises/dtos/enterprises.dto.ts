@@ -2,7 +2,6 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsUrl,
   IsEnum,
   IsArray,
   ArrayNotEmpty,
@@ -26,7 +25,6 @@ export class CreateEnterpriseDTO {
 
   @IsString()
   @IsOptional()
-  @IsUrl()
   @ApiProperty({
     description: "Imagen de la empresa; No es un campo obligatorio.",
   })
@@ -57,7 +55,10 @@ export class CreateEnterpriseDTO {
   @IsArray()
   @ArrayNotEmpty()
   @ArrayUnique()
-  @ApiProperty({ description:"Arreglo con los ObjectIds de los administradores de la empresa; Campo obligatorio." })
+  @ApiProperty({
+    description:
+      "Arreglo con los ObjectIds de los administradores de la empresa; Campo obligatorio.",
+  })
   readonly admins: Types.ObjectId[];
 }
 

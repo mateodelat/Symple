@@ -1,6 +1,7 @@
 import {
   type Enterprise,
   type CreateEnterpriseDTO,
+  type EditEnterpriseDTO,
   type ErrorObject,
 } from "@/types";
 import { returnResponse } from "@utils/response";
@@ -29,6 +30,21 @@ const create = async (payload: CreateEnterpriseDTO): Promise<Enterprise> => {
   return await returnResponse(response);
 };
 
+const update = async (
+  id: string,
+  payload: EditEnterpriseDTO,
+): Promise<Enterprise> => {
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  return await returnResponse(response);
+};
+
 const deleteOne = async (id: string): Promise<ErrorObject> => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
@@ -39,6 +55,7 @@ const deleteOne = async (id: string): Promise<ErrorObject> => {
 const enterpriseService = {
   getAll,
   create,
+  update,
   deleteOne,
 };
 

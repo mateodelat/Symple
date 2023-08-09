@@ -8,6 +8,7 @@ const EnterpriseContext = createContext<EnterpriseContextType>({
   setInitialEnterprises: (enterprises) => {},
   isLoading: true,
   addEnterprise: (enterprise) => {},
+  updateEnterprise: (id, enterprise) => {},
   deleteEnterprise: (id) => {},
 });
 

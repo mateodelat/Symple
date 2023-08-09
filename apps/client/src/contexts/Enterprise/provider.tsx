@@ -16,13 +16,20 @@ export default function EnterpriseContextProvider({
   const [enterprises, setEnterprises] = useState<AppState["enterprises"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const setInitialEnterprises = (enterprises: Enterprise[]): void => {
+    setEnterprises(enterprises);
+    setIsLoading(false);
+  };
+
   const addEnterprise = (enterprise: Enterprise): void => {
     setEnterprises([...enterprises, enterprise]);
   };
 
-  const setInitialEnterprises = (enterprises: Enterprise[]): void => {
-    setEnterprises(enterprises);
-    setIsLoading(false);
+  const updateEnterprise = (id: string, enterprise: Enterprise): void => {
+    const index = enterprises.findIndex((e) => e.id === id);
+    const newEnterprises = [...enterprises];
+    newEnterprises[index] = enterprise;
+    setEnterprises(newEnterprises);
   };
 
   const deleteEnterprise = (id: string): void => {
@@ -53,6 +60,7 @@ export default function EnterpriseContextProvider({
         setInitialEnterprises,
         isLoading,
         addEnterprise,
+        updateEnterprise,
         deleteEnterprise,
       }}
     >

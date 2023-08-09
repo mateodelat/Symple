@@ -1,5 +1,5 @@
 import Login from "./Login";
-import UploadImage from "./UploadImage";
+import UploadFile from "./UploadFile";
 import Form from "./Form";
 import Header from "./Header";
 import Navigation from "./Navigation";
@@ -8,7 +8,7 @@ import Button from "./Button";
 import List from "./List";
 import LinkButton from "./LinkButton";
 import EnterpriseList from "./EntepriseList";
-import CreateEnterprise from "./CreateEnterprise";
+import EnterpriseForm from "./EnterpriseForm";
 import AddUsers from "./AddUsers";
 import SearchBar from "./SearchBar";
 import DeleteEnterprise from "./DeleteEnterprise";
@@ -19,7 +19,7 @@ import VerticalButton from "./VerticalButton";
 
 export {
   Login,
-  UploadImage,
+  UploadFile,
   Form,
   Header,
   Navigation,
@@ -28,7 +28,7 @@ export {
   List,
   LinkButton,
   EnterpriseList,
-  CreateEnterprise,
+  EnterpriseForm,
   AddUsers,
   SearchBar,
   DeleteEnterprise,

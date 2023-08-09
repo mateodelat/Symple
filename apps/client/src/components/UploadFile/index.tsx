@@ -6,7 +6,7 @@ import { Button } from "@components/index";
 import { type UploadFileProps } from "@/types";
 import styles from "./UploadFile.module.scss";
 
-export default function UploadImage({
+export default function UploadFile({
   text = "Seleccionar archivo",
   id = "fileUpload",
   file,

@@ -11,22 +11,17 @@ export default function useField({
   fileProps,
   props,
   options,
+  initialValue = "",
 }: FieldProps): Field {
-  const [value, setValue] = useState("");
-  const [errors, setErrors] = useState<string[]>([]);
+  const [value, setValue] = useState(initialValue);
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | string,
   ): void => {
-    setValue(e.target.value);
-  };
-
-  const handleErrors = (errors: string[]): void => {
-    setErrors(errors);
-  };
-
-  const clearErrors = (): void => {
-    setErrors([]);
+    setValue(() => {
+      if (typeof e === "string") return e;
+      return e.target.value;
+    });
   };
 
   return {
@@ -39,8 +34,6 @@ export default function useField({
     onChange,
     props,
     options,
-    errors,
-    handleErrors,
-    clearErrors,
+    initialValue,
   };
 }

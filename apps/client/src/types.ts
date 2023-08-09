@@ -6,13 +6,11 @@ export interface Field {
   props?: object;
   options?: Option[];
   fileProps?: FileProps;
+  initialValue?: string | number;
   value: any;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | string,
   ) => void;
-  errors?: string[];
-  handleErrors?: (errors: string[]) => void;
-  clearErrors?: () => void;
 }
 
 export interface Option {
@@ -33,9 +31,10 @@ export interface Enterprise {
   turn: string;
   telephone: string;
   address: string;
+  amountOfEmployees: AmountOfEmployees;
   admins: User[];
   createdAt: Date;
-  // departments: Department[]
+  departments?: any[];
 }
 
 export interface User {
@@ -172,6 +171,7 @@ export interface EnterpriseContextType {
   isLoading: boolean;
   setInitialEnterprises: (enterprises: Enterprise[]) => void;
   addEnterprise: (enterprise: Enterprise) => void;
+  updateEnterprise: (id: string, enterprise: Enterprise) => void;
   deleteEnterprise: (id: string) => void;
 }
 
@@ -232,4 +232,14 @@ export interface AddUsersProps {
   addedUsers: User[];
   addUser: (user: User) => void;
   removeUser: (user: User) => void;
+}
+
+export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
+  id: string;
+  admins: User[];
+};
+
+export interface EnterpriseFormProps {
+  id?: string;
+  isEditMode?: boolean;
 }

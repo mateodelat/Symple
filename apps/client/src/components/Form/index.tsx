@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 
 import { type FormProps } from "@/types";
-import { Button, UploadImage } from "@components/index";
+import { Button, UploadFile } from "@components/index";
 import styles from "./Form.module.scss";
 
 export default function Form({
@@ -31,11 +31,9 @@ export default function Form({
             name,
             type,
             props,
-            errors,
             options,
-            clearErrors,
-            handleErrors,
             fileProps,
+            initialValue,
             ...field
           }) => {
             return (
@@ -65,15 +63,15 @@ export default function Form({
                   </select>
                 ) : type === "file" ? (
                   <>
-                    <UploadImage
+                    <UploadFile
                       file={fileProps?.file}
                       handleSelectedFile={fileProps?.handleSelectedFile}
                       id={name}
                     />
-                    {fileProps?.resolvedImage !== undefined && (
+                    {fileProps?.resolvedImage !== "" && (
                       <div className={styles.image}>
                         <Image
-                          src={fileProps?.resolvedImage}
+                          src={fileProps?.resolvedImage as string}
                           alt="Foto de empresa"
                           width={200}
                           height={200}
