@@ -33,7 +33,7 @@ export default function Form({
             props,
             options,
             fileProps,
-            initialValue,
+            setInitialValue,
             ...field
           }) => {
             return (

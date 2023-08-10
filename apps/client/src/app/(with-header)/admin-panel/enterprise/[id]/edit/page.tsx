@@ -1,12 +1,12 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-
 import { EnterpriseForm } from "@components/index";
+import { useEnterpriseContext } from "@contexts/index";
 
-export default function EnterpriseEditPage(): JSX.Element {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-  console.log(searchParams.entries());
-  return <EnterpriseForm isEditMode={true} id={id as string} />;
+export default function EnterpriseEditPage({ params }: any): JSX.Element {
+  const { enterprises } = useEnterpriseContext();
+  const enterpriseToEdit = enterprises.find(
+    (enterprise) => enterprise.id === params.id,
+  );
+  return <EnterpriseForm enterpriseToEdit={enterpriseToEdit} />;
 }

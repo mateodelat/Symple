@@ -6,8 +6,8 @@ export interface Field {
   props?: object;
   options?: Option[];
   fileProps?: FileProps;
-  initialValue?: string | number;
   value: any;
+  setInitialValue: (initialValue: string) => void;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | string,
   ) => void;
@@ -22,7 +22,7 @@ export type FileProps = Pick<UploadFileProps, "file" | "handleSelectedFile"> & {
   resolvedImage: string;
 };
 
-export type FieldProps = Omit<Field, "value" | "onChange">;
+export type FieldProps = Omit<Field, "value" | "onChange" | "setInitialValue">;
 
 export interface Enterprise {
   id: string;
@@ -240,6 +240,5 @@ export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
 };
 
 export interface EnterpriseFormProps {
-  id?: string;
-  isEditMode?: boolean;
+  enterpriseToEdit?: EditEnterpriseDTO;
 }

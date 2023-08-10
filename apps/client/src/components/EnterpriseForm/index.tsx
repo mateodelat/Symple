@@ -21,11 +21,18 @@ import { useRouter } from "next/navigation";
 import { getBase64 } from "@utils/convertImage";
 
 export default function EnterpriseForm({
-  id = "",
-  isEditMode = false,
+  enterpriseToEdit = {
+    address: "",
+    admins: [],
+    amountOfEmployees: AmountOfEmployees.OneToTen,
+    id: "",
+    name: "",
+    telephone: "",
+    turn: "",
+    image: "",
+  },
 }: EnterpriseFormProps): JSX.Element {
-  const { addEnterprise, updateEnterprise, enterprises } =
-    useEnterpriseContext();
+  const { addEnterprise, updateEnterprise } = useEnterpriseContext();
 
   const [addedUsers, setAddedUsers] = useState<AppState["users"]>([]);
   const [imageSource, setImageSource] = useState<string>("");
@@ -100,27 +107,31 @@ export default function EnterpriseForm({
   const { value, toggle } = useToggle();
 
   const createEnterprise = async (): Promise<void> => {
+    const fieldsData = fields.map(({ name, value, required }) => ({
+      [name]: !required && value === "" ? undefined : value,
+    }));
+    const ids = addedUsers.map((user) => user.id);
+    const payload = Object.assign({}, ...fieldsData, { admins: ids });
+    if (file !== undefined && imageSource !== undefined) {
+      payload.image = imageSource;
+    }
+    const admins = users
+      .filter((user) => ids.includes(user.id))
+      .map(({ enterprises, ...user }) => ({ ...user }));
+
     try {
-      const fieldsData = fields.map(({ name, value, required }) => ({
-        [name]: !required && value === "" ? undefined : value,
-      }));
-      const ids = addedUsers.map((user) => user.id);
-      const payload = Object.assign({}, ...fieldsData, { admins: ids });
-      if (file !== undefined && imageSource !== undefined) {
-        payload.image = imageSource;
-      }
-      const admins = users
-        .filter((user) => ids.includes(user.id))
-        .map(({ enterprises, ...user }) => ({ ...user }));
-      if (!isEditMode) {
+      if (enterpriseToEdit.id === "") {
         const response = await enterpriseService.create(payload);
         const newEnterprise = { ...response, admins };
         addEnterprise(newEnterprise);
         toast.success(`Empresa ${newEnterprise.name} creada correctamente.`);
       } else {
-        const response = await enterpriseService.update(id, payload);
-        updateEnterprise(id, response);
-        console.log(response);
+        const response = await enterpriseService.update(
+          enterpriseToEdit.id,
+          payload,
+        );
+        response.admins = admins;
+        updateEnterprise(enterpriseToEdit.id, response);
         toast.success(`Empresa ${response.name} actualizada correctamente.`);
       }
       setTimeout(() => {
@@ -160,21 +171,14 @@ export default function EnterpriseForm({
   }, [file]);
 
   useEffect(() => {
-    const enterpriseToEdit = enterprises.find(
-      (enterprise) => enterprise.id === id,
-    );
-    console.log(enterpriseToEdit);
-    if (enterpriseToEdit !== undefined) {
-      name.onChange(enterpriseToEdit.name);
-      turn.onChange(enterpriseToEdit.turn);
-      telephone.onChange(enterpriseToEdit.telephone);
-      address.onChange(enterpriseToEdit.address);
-      amountOfEmployees.onChange(enterpriseToEdit.amountOfEmployees);
-      setImageSource(enterpriseToEdit.image);
-      setAddedUsers(enterpriseToEdit.admins);
-    }
-    console.log("re render");
-  }, [id]);
+    name.setInitialValue(enterpriseToEdit.name);
+    setImageSource(enterpriseToEdit.image as string);
+    turn.setInitialValue(enterpriseToEdit.turn);
+    telephone.setInitialValue(enterpriseToEdit.telephone);
+    address.setInitialValue(enterpriseToEdit.address);
+    amountOfEmployees.setInitialValue(enterpriseToEdit.amountOfEmployees);
+    setAddedUsers(enterpriseToEdit.admins);
+  }, [enterpriseToEdit.id]);
 
   return (
     <Form
@@ -182,7 +186,7 @@ export default function EnterpriseForm({
       customFields={customFields}
       onSubmit={createEnterprise}
       className={styles.form}
-      title={!isEditMode ? "Crear empresa" : "Editar empresa"}
+      title={enterpriseToEdit.id === "" ? "Crear empresa" : "Editar empresa"}
     >
       <label htmlFor="addUsers" className={styles.label}>
         <strong className={styles.label_text}>Añadir usuario</strong>

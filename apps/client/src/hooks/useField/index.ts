@@ -11,9 +11,12 @@ export default function useField({
   fileProps,
   props,
   options,
-  initialValue = "",
 }: FieldProps): Field {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState<string>("");
+
+  const setInitialValue = (initialValue: string): void => {
+    setValue(initialValue);
+  };
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> | string,
@@ -34,6 +37,6 @@ export default function useField({
     onChange,
     props,
     options,
-    initialValue,
+    setInitialValue,
   };
 }
