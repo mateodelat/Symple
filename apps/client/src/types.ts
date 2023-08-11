@@ -120,6 +120,10 @@ export interface CardEnterprise {
   toggleModal: (val?: boolean) => void;
 }
 
+export interface CardUser {
+  element: User;
+}
+
 export interface CustomField {
   required: boolean;
   value: string | any[];
@@ -143,10 +147,6 @@ export interface UploadFileProps {
 }
 
 export type UseFile = Pick<UploadFileProps, "file" | "handleSelectedFile">;
-
-export interface CardUser {
-  element: User;
-}
 
 export interface PopupProps {
   id: string;

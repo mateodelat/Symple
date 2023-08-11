@@ -10,11 +10,16 @@ export default function Button({
   type = "button",
   props = {},
 }: ButtonProps): JSX.Element {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
+    onClick();
+  };
+
   return (
     <button
       className={`${styles.button} ${className}`}
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
       {...props}
     >
       {children}

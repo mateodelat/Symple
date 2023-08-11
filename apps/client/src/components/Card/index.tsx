@@ -33,7 +33,8 @@ export default function Card({
         <button
           className={styles.togglePopup}
           type="button"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             togglePopup();
           }}
         />

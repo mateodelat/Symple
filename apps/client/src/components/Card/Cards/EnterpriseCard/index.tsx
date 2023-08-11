@@ -38,14 +38,10 @@ export default function EnterpriseCard({
             })}
         </p>
       </div>
-      <div className={styles.card_buttons}>
-        <VerticalButton
-          onClick={() => {
-            togglePopup();
-          }}
-          className={isPopupOpen ? styles.card_buttons_vertical : ""}
-        />
-      </div>
+      <VerticalButton
+        onClick={togglePopup}
+        className={isPopupOpen ? styles.card_vertical : ""}
+      />
       {isPopupOpen && <Popup id={element.id} toggleModal={toggleModal} />}
       {isModalOpen && (
         <DeleteEnterprise

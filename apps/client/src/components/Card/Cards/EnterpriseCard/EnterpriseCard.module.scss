@@ -16,16 +16,7 @@
       color: variables.$secondary-blue-color;
     }
   }
-  &_buttons {
-    position: absolute;
-    display: grid;
-    grid-template-columns: 1fr;
-    place-items: center;
-    top: 5px;
-    right: 10px;
-
-    &_vertical {
-      z-index: 4 !important;
-    }
+  &_vertical {
+    z-index: 4 !important;
   }
 }

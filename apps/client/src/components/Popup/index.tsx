@@ -12,6 +12,9 @@ export default function Popup({ id, toggleModal }: PopupProps): JSX.Element {
           <Link
             className={styles.popup_content_action}
             href={`/admin-panel/enterprise/${id}/edit`}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             Editar
           </Link>

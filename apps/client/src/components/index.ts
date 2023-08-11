@@ -1,3 +1,4 @@
+import NotFound from "./NotFound";
 import Login from "./Login";
 import UploadFile from "./UploadFile";
 import Form from "./Form";
@@ -18,6 +19,7 @@ import Modal from "./Modal";
 import VerticalButton from "./VerticalButton";
 
 export {
+  NotFound,
   Login,
   UploadFile,
   Form,
