@@ -7,7 +7,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model, type Types, isValidObjectId } from "mongoose";
 
 import { Enterprise } from "./enterprise.entity";
-import { UsersService } from "@/modules/users/services/users.service";
+import { UsersService } from "@modules/users/users.service";
 import {
   type CreateEnterpriseDTO,
   type UpdateEnterpriseDTO,
