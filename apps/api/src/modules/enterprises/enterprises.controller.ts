@@ -11,13 +11,10 @@ import {
 } from "@nestjs/common";
 import { ApiTags, ApiOperation } from "@nestjs/swagger";
 
-import { EnterprisesService } from "../services/enterprises.service";
-import {
-  CreateEnterpriseDTO,
-  UpdateEnterpriseDTO,
-} from "../dtos/enterprises.dto";
+import { EnterprisesService } from "./enterprises.service";
+import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from "./enterprises.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
-import { type Enterprise } from "../entities/enterprise.entity";
+import { type Enterprise } from "./enterprise.entity";
 
 @ApiTags("Enterprises")
 @Controller("enterprises")

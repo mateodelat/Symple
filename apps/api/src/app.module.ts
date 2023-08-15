@@ -8,6 +8,7 @@ import { EnterprisesModule } from "@modules/enterprises/enterprises.module";
 import { DatabaseModule } from "./modules/database/database.module";
 import { environments } from "./environments";
 import { UsersModule } from "./modules/users/users.module";
+import { AuthModule } from './auth/auth.module';
 import config from "./config";
 
 const nodeEnv: string = process.env.NODE_ENV ?? ".env";
@@ -28,6 +29,7 @@ const nodeEnv: string = process.env.NODE_ENV ?? ".env";
     EnterprisesModule,
     DatabaseModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

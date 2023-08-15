@@ -7,8 +7,8 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model, type Types } from "mongoose";
 import * as bcrypt from "bcrypt";
 
-import { User } from "../entities/user.entity";
-import { type CreateUserDTO, type UpdateUserDTO } from "../dtos/user.dto";
+import { User } from "./user.entity";
+import { type CreateUserDTO, type UpdateUserDTO } from "./user.dto";
 
 @Injectable()
 export class UsersService {

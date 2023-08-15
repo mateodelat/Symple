@@ -6,12 +6,12 @@ import {
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, type Types, isValidObjectId } from "mongoose";
 
-import { Enterprise } from "../entities/enterprise.entity";
+import { Enterprise } from "./enterprise.entity";
 import { UsersService } from "@/modules/users/services/users.service";
 import {
   type CreateEnterpriseDTO,
   type UpdateEnterpriseDTO,
-} from "../dtos/enterprises.dto";
+} from "./enterprises.dto";
 
 @Injectable()
 export class EnterprisesService {

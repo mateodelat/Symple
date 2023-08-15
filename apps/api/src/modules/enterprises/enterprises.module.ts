@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 
-import { EnterprisesController } from "./controllers/enterprises.controller";
-import { EnterprisesService } from "./services/enterprises.service";
-import { EnterpriseSchema, Enterprise } from "./entities/enterprise.entity";
+import { EnterprisesController } from "./enterprises.controller";
+import { EnterprisesService } from "./enterprises.service";
+import { EnterpriseSchema, Enterprise } from "./enterprise.entity";
 import { UsersModule } from "../users/users.module";
 
 @Module({

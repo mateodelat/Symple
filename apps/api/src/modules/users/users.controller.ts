@@ -12,8 +12,8 @@ import {
 } from "@nestjs/common";
 import { ApiTags, ApiOperation } from "@nestjs/swagger";
 
-import { UsersService } from "../services/users.service";
-import { CreateUserDTO, UpdateUserDTO } from "../dtos/user.dto";
+import { UsersService } from "./users.service";
+import { CreateUserDTO, UpdateUserDTO } from "./user.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
 import { Types } from "mongoose";
 
