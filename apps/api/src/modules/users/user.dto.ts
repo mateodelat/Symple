@@ -62,7 +62,22 @@ export class UpdateUserDTO extends PartialType(CreateUserDTO) {
   @IsString({ each: true })
   @ApiProperty({
     description:
-      "Estado del usuario: Es administrador general o usuario; Campo obligatorio.",
+      "Arreglo con los ids de las empresas a las que el usuario administra. Campo obligatorio.",
   })
   readonly enterprises: Types.ObjectId[];
+}
+
+export class LoginUserDTO {
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  @ApiProperty({
+    description: "Correo electrónico del usuario; Campo obligatorio.",
+  })
+  readonly email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ description: "Contraseña del usuario; Campo obligatorio." })
+  readonly password: string;
 }

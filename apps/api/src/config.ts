@@ -8,4 +8,5 @@ export default registerAs("config", () => ({
     cluster: process.env.DB_CLUSTER,
   },
   port: process.env.PORT,
+  jwtSecret: process.env.JWT_SECRET,
 }));

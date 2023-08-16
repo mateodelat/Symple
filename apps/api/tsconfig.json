@@ -12,8 +12,12 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
+      "@auth/*": ["auth/*"],
+      "@common/*": ["common/*"],
+      "@constants/*": ["constants/*"],
+      "@decorators/*": ["auth/decorators/*"],
       "@modules/*": ["modules/*"],
-      "@common/*": ["common/*"]
+      "@guards/*": ["auth/guards/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

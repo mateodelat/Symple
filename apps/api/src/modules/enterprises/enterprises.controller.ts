@@ -2,12 +2,13 @@ import {
   Controller,
   Get,
   Post,
-  Put,
+  Patch,
   Delete,
   Param,
   Body,
   HttpStatus,
   HttpCode,
+  UseGuards,
 } from "@nestjs/common";
 import { ApiTags, ApiOperation } from "@nestjs/swagger";
 
@@ -15,11 +16,16 @@ import { EnterprisesService } from "./enterprises.service";
 import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from "./enterprises.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
 import { type Enterprise } from "./enterprise.entity";
+import { JwtAuthGuard } from "@auth/guards/jwt-auth.guard";
+import { Public } from "@auth/decorators/public.decorator";
 
+@UseGuards(JwtAuthGuard)
 @ApiTags("Enterprises")
 @Controller("enterprises")
 export class EnterprisesController {
   constructor(private readonly enterprisesService: EnterprisesService) {}
+
+  @Public()
   @Get()
   @ApiOperation({ summary: "Lista de empresas" })
 
@@ -37,6 +43,7 @@ export class EnterprisesController {
   }
 
   @Get(":id")
+  @ApiOperation({ summary: "Recuperar una empresa" })
   async getOne(
     @Param("id", CheckObjectIdPipe) id: string,
   ): Promise<Enterprise> {
@@ -45,11 +52,13 @@ export class EnterprisesController {
   }
 
   @Post()
+  @ApiOperation({ summary: "Crear empresa" })
   async create(@Body() payload: CreateEnterpriseDTO): Promise<Enterprise> {
     return await this.enterprisesService.create(payload);
   }
 
-  @Put(":id")
+  @ApiOperation({ summary: "Actualizar empresa" })
+  @Patch(":id")
   async update(
     @Body() payload: UpdateEnterpriseDTO,
     @Param("id", CheckObjectIdPipe) id: string,
@@ -57,6 +66,7 @@ export class EnterprisesController {
     return await this.enterprisesService.update({ id, payload });
   }
 
+  @ApiOperation({ summary: "Eliminar empresa" })
   @Delete(":id")
   @HttpCode(HttpStatus.OK)
   async delete(@Param("id", CheckObjectIdPipe) id: string): Promise<any> {

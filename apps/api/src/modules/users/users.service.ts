@@ -76,4 +76,9 @@ export class UsersService {
     await user.deleteOne();
     return { message: `User with id #${id.toString()} deleted successfully` };
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.UserModel.findOne({ email }).exec();
+    return user;
+  }
 }

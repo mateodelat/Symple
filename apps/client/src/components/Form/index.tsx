@@ -68,16 +68,17 @@ export default function Form({
                       handleSelectedFile={fileProps?.handleSelectedFile}
                       id={name}
                     />
-                    {fileProps?.resolvedImage !== "" && (
-                      <div className={styles.image}>
-                        <Image
-                          src={fileProps?.resolvedImage as string}
-                          alt="Foto de empresa"
-                          width={200}
-                          height={200}
-                        />
-                      </div>
-                    )}
+                    {fileProps?.resolvedImage !== undefined &&
+                      fileProps?.resolvedImage !== "" && (
+                        <div className={styles.image}>
+                          <Image
+                            src={fileProps?.resolvedImage}
+                            alt="Foto de empresa"
+                            width={200}
+                            height={200}
+                          />
+                        </div>
+                      )}
                   </>
                 ) : (
                   <input

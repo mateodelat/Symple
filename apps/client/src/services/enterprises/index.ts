@@ -35,7 +35,7 @@ const update = async (
   payload: EditEnterpriseDTO,
 ): Promise<Enterprise> => {
   const response = await fetch(`${baseUrl}/${id}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
