@@ -1,3 +1,5 @@
+import { type ErrorCode } from "./constants/errors";
+
 export interface Field {
   name: string;
   type: string;
@@ -164,6 +166,7 @@ export interface ModalProps {
 
 export interface ErrorObject {
   message: string;
+  statusCode: ErrorCode;
 }
 
 export interface EnterpriseContextType {

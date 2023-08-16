@@ -1,11 +1,13 @@
+import { errors } from "@constants/index";
 import { type ErrorObject } from "@/types";
 
 export const returnResponse = async (response: Response): Promise<any> => {
   const data = await response.json();
   if (!response.ok) {
-    const error = data as ErrorObject;
+    const { message, statusCode } = data as ErrorObject;
+    const handler = errors[statusCode];
     throw new Error(
-      `Ocurrió un error al realizar la petición: ${error.message}`,
+      `Ocurrió un error al realizar la petición: ${handler ?? message}`,
     );
   }
   return data;
