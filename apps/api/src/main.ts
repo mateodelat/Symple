@@ -18,8 +18,8 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix("/api");
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle("Grow2Go API")
-    .setDescription("Documentación para API de Grow2Go")
+    .setTitle("Symple API")
+    .setDescription("Documentación para API de Symple")
     .setVersion("1.0.0")
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);

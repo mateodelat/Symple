@@ -1,16 +1,19 @@
 .modal {
   display: none;
+  &::backdrop{
+    background-color: rgba(0,0,0,0.5);
+  }
   &[open] {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
+    display: block;
+    padding: 0;
     margin: auto;
-    gap: 1rem;
     z-index: 3;
     animation: fadein 150ms ease-in forwards;
+    border: none;
+    border-radius: 0.5rem;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    cursor: default;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -25,10 +28,18 @@
     }
   }
 
-  &_wrapper {
-    width: 100%;
-    display: grid;
+  &_content{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
+    padding: 2rem;
+    &_wrapper {
+      width: 100%;
+      display: grid;
+      gap: 1rem;
+    }
   }
 
   @keyframes fadein {

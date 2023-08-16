@@ -3,8 +3,8 @@
 import { useRef, useEffect } from "react";
 import { Button } from "@components/index";
 
-import styles from "./Modal.module.scss";
 import { type ModalProps } from "@/types";
+import styles from "./Modal.module.scss";
 
 export default function Modal({
   isOpen,
@@ -39,15 +39,24 @@ export default function Modal({
       ref.current?.close();
     }, 150);
   };
+
+  const handleDialogClick = (e: React.MouseEvent<HTMLDialogElement>): void => {
+    e.stopPropagation();
+    if (e.target === ref.current) handleCancel();
+  };
   return (
-    <>
-      <dialog ref={ref} className={`${styles.modal} ${className}`}>
+    <dialog
+      ref={ref}
+      className={`${styles.modal} ${className}`}
+      onClick={handleDialogClick}
+    >
+      <div className={styles.modal_content}>
         {children}
-        <div className={styles.modal_wrapper}>
+        <div className={styles.modal_content_wrapper}>
           <Button onClick={handleConfirm}>Confirmar</Button>
           <Button onClick={handleCancel}>Cancelar</Button>
         </div>
-      </dialog>
-    </>
+      </div>
+    </dialog>
   );
 }

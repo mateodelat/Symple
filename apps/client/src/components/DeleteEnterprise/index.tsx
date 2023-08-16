@@ -14,12 +14,13 @@ export default function DeleteEnterprise({
   const { deleteEnterprise } = useEnterpriseContext();
 
   const deleteElement = async (): Promise<void> => {
-    const response = await enterpriseService.deleteOne(enterpriseId);
-    if (response.statusCode === 404) toast.error(response.message);
-    else {
+    try {
+      const response = await enterpriseService.deleteOne(enterpriseId);
       toggle();
       deleteEnterprise(enterpriseId);
       toast.success(response.message);
+    } catch (e: any) {
+      toast.error(e.message);
     }
   };
 

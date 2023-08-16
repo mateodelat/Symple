@@ -2,8 +2,6 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { EnterprisesModule } from "@modules/enterprises/enterprises.module";
 import { DatabaseModule } from "./modules/database/database.module";
 import { environments } from "./environments";
@@ -32,7 +30,5 @@ const nodeEnv: string = process.env.NODE_ENV ?? ".env";
     UsersModule,
     AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
