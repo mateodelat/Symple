@@ -1,19 +1,17 @@
-import { Controller, Post, Req, UseGuards } from "@nestjs/common";
-import { Request } from "express";
-import { AuthGuard } from "@nestjs/passport";
-import { ApiTags } from "@nestjs/swagger";
+import { Controller, Request, Post, UseGuards } from "@nestjs/common";
+import { LocalAuthGuard } from "./guards/local-auth.guard";
 
 import { AuthService } from "./auth.service";
-import { type User } from "@/modules/users/user.entity";
+import { Public } from "./decorators/public.decorator";
 
-@ApiTags("Authorization")
 @Controller("auth")
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  @UseGuards(AuthGuard("local"))
+
+  @Public()
+  @UseGuards(LocalAuthGuard)
   @Post("login")
-  login(@Req() req: Request): any {
-    const user: User = req.user as User;
-    if (req.user !== undefined) return this.authService.generateJWT(user);
+  async login(@Request() req): Promise<any> {
+    return await this.authService.login(req.user);
   }
 }

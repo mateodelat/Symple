@@ -7,7 +7,7 @@ export const returnResponse = async (response: Response): Promise<any> => {
     const { message, statusCode } = data as ErrorObject;
     const handler = errors[statusCode];
     throw new Error(
-      `Ocurrió un error al realizar la petición: ${handler ?? message}`,
+      `Ocurrió un error al realizar la petición: ${message ?? handler}`,
     );
   }
   return data;

@@ -8,7 +8,6 @@ import {
   Body,
   HttpStatus,
   HttpCode,
-  UseGuards,
 } from "@nestjs/common";
 import { ApiTags, ApiOperation } from "@nestjs/swagger";
 
@@ -16,16 +15,12 @@ import { EnterprisesService } from "./enterprises.service";
 import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from "./enterprises.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
 import { type Enterprise } from "./enterprise.entity";
-import { JwtAuthGuard } from "@auth/guards/jwt-auth.guard";
-import { Public } from "@auth/decorators/public.decorator";
 
-@UseGuards(JwtAuthGuard)
-@ApiTags("Enterprises")
 @Controller("enterprises")
+@ApiTags("Enterprises")
 export class EnterprisesController {
   constructor(private readonly enterprisesService: EnterprisesService) {}
 
-  @Public()
   @Get()
   @ApiOperation({ summary: "Lista de empresas" })
 

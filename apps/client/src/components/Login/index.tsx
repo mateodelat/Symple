@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { Form } from "../index";
 import { useField } from "@/hooks/index";
 
 import styles from "./Login.module.scss";
+import { toast } from "react-hot-toast";
 
 export default function Login(): JSX.Element {
   const { push } = useRouter();
@@ -24,9 +25,19 @@ export default function Login(): JSX.Element {
     required: true,
   });
 
-  const handleLogin = (): void => {
-    console.log("handle login");
-    push("/admin-panel");
+  const handleLogin = async (): Promise<void> => {
+    try {
+      const res = await signIn("credentials", {
+        email: email.value,
+        password: password.value,
+        redirect: false,
+      });
+      console.log(res);
+    } catch (error: any) {
+      toast.error(`Error al iniciar sesión: ${error.message as string}`);
+    }
+
+    // push("/admin-panel");
   };
 
   return (

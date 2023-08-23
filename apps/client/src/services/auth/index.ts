@@ -1,12 +1,12 @@
-import { type LoginDTO, type Session } from "@/types";
+import { type Session } from "@/types";
 import { returnResponse } from "@utils/response";
 
 const baseUrl = `${process.env.SERVER_URL as string}/auth`;
 
-const login = async (payload: LoginDTO): Promise<Session> => {
+const login = async (email: string, password: string): Promise<Session> => {
   const response = await fetch(`${baseUrl}/login`, {
     method: "POST",
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ email, password }),
   });
   return await returnResponse(response);
 };

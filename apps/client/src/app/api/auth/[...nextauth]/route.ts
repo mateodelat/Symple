@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { authService } from "@/services";
-import { type LoginDTO } from "@/types";
+import { returnResponse } from "@/utils/response";
 
 const handler = NextAuth({
   providers: [
@@ -18,14 +18,15 @@ const handler = NextAuth({
         },
       },
       async authorize(credentials) {
-        try {
-          const response = await authService.login(credentials as LoginDTO);
-          console.log(response);
-        } catch (error) {
-          console.log(error);
-        }
-
-        return { user: {}, id: "" };
+        const email = credentials?.email;
+        const password = credentials?.password;
+        const response = await fetch("http://localhost:3001/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        console.log(await returnResponse(response));
+        return await returnResponse(response);
       },
     }),
   ],
@@ -37,7 +38,7 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.user = user;
+      if (user !== undefined) token.user = user;
       return token;
     },
     async session({ session, token }) {
