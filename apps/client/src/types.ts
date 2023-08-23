@@ -243,6 +243,16 @@ export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
   admins: User[];
 };
 
+export interface Session {
+  accessToken: string;
+  user: User;
+}
+
+export interface LoginDTO {
+  email: string;
+  password: string;
+}
+
 export interface EnterpriseFormProps {
   enterpriseToEdit?: EditEnterpriseDTO;
 }

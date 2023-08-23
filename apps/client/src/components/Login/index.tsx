@@ -24,12 +24,7 @@ export default function Login(): JSX.Element {
     required: true,
   });
 
-  const link = {
-    href: "/admin-panel",
-    label: "Iniciar sesión",
-  };
-
-  const handleLogIn = () => {
+  const handleLogin = (): void => {
     console.log("handle login");
     push("/admin-panel");
   };
@@ -40,11 +35,7 @@ export default function Login(): JSX.Element {
       <p className={styles.login_description}>
         Inicia sesión con tu correo y contraseña.
       </p>
-      <Form
-        fields={[email, password]}
-        link={link}
-        onSubmit={() => handleLogIn()}
-      />
+      <Form fields={[email, password]} onSubmit={handleLogin} />
     </section>
   );
 }
