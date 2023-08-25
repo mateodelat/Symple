@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./AuthProvider";
 import UserContextProvider from "@contexts/User/provider";
 import EnterpriseContextProvider from "@contexts/Enterprise/provider";
 import "@styles/global.scss";
@@ -20,15 +21,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <UserContextProvider>
-          <EnterpriseContextProvider>
-            <Toaster />
-            {children}
-          </EnterpriseContextProvider>
-        </UserContextProvider>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <UserContextProvider>
+            <EnterpriseContextProvider>
+              <Toaster />
+              {children}
+            </EnterpriseContextProvider>
+          </UserContextProvider>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

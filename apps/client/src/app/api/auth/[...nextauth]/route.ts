@@ -1,8 +1,6 @@
+import { type User } from "@/types";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-import { authService } from "@/services";
-import { returnResponse } from "@/utils/response";
 
 const handler = NextAuth({
   providers: [
@@ -20,29 +18,40 @@ const handler = NextAuth({
       async authorize(credentials) {
         const email = credentials?.email;
         const password = credentials?.password;
-        const response = await fetch("http://localhost:3001/api/auth/login", {
+
+        const res = await fetch("http://localhost:3001/api/auth/login", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ email, password }),
         });
-        console.log(await returnResponse(response));
-        return await returnResponse(response);
+
+        if (!res.ok) {
+          throw new Error("Credenciales inválidas.");
+        }
+        return await res.json();
       },
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/",
   },
   session: {
     strategy: "jwt",
+    maxAge: 1 * 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user !== undefined) token.user = user;
+      if (user !== undefined) {
+        token.user = user as User;
+      }
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user as any;
+      const expires = session.expires;
+      session = token.user as any;
+      session.expires = expires;
       return session;
     },
   },

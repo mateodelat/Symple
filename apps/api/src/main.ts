@@ -21,6 +21,7 @@ async function bootstrap(): Promise<void> {
     .setTitle("Symple API")
     .setDescription("Documentación para API de Symple")
     .setVersion("1.0.0")
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup("docs", app, document);

@@ -4,52 +4,54 @@ import {
   type EditEnterpriseDTO,
   type ErrorObject,
 } from "@/types";
-import { returnResponse } from "@utils/response";
+import { customFetch } from "@lib/fetch";
 
 const baseUrl = `${process.env.SERVER_URL ?? ""}/enterprises`;
 
 const getAll = async (): Promise<Enterprise[]> => {
-  const response = await fetch(baseUrl, {
+  const response = await customFetch({
+    baseUrl,
     method: "GET",
-    next: {
-      revalidate: 30,
+    options: {
+      next: {
+        revalidate: 30,
+      },
     },
   });
-  return await returnResponse(response);
+  return response;
 };
 
 const create = async (payload: CreateEnterpriseDTO): Promise<Enterprise> => {
-  const response = await fetch(baseUrl, {
+  const response = await customFetch({
+    baseUrl,
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+    options: {
+      body: JSON.stringify(payload),
     },
-    body: JSON.stringify(payload),
   });
-
-  return await returnResponse(response);
+  return response;
 };
 
 const update = async (
   id: string,
   payload: EditEnterpriseDTO,
 ): Promise<Enterprise> => {
-  const response = await fetch(`${baseUrl}/${id}`, {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${id}`,
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
+    options: {
+      body: JSON.stringify(payload),
     },
-    body: JSON.stringify(payload),
   });
-
-  return await returnResponse(response);
+  return response;
 };
 
 const deleteOne = async (id: string): Promise<ErrorObject> => {
-  const response = await fetch(`${baseUrl}/${id}`, {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${id}`,
     method: "DELETE",
   });
-  return await returnResponse(response);
+  return response;
 };
 
 const enterpriseService = {

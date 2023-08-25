@@ -22,7 +22,7 @@ import { JwtAuthGuard } from "./guards/jwt-auth.guard";
         return {
           secret: configService.jwtSecret,
           signOptions: {
-            expiresIn: "60s",
+            expiresIn: "1d",
           },
         };
       },

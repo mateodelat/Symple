@@ -18,7 +18,11 @@ export class User extends Document {
   @Prop({ required: true })
   lastName: string;
 
-  @Prop()
+  @Prop({
+    required: false,
+    type: String,
+    default: "",
+  })
   avatar: string;
 
   @Prop({ required: true, unique: true })

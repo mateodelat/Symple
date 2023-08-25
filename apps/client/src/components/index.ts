@@ -17,6 +17,7 @@ import Card from "./Card";
 import Popup from "./Popup";
 import Modal from "./Modal";
 import VerticalButton from "./VerticalButton";
+import Loader from "./Loader";
 
 export {
   NotFound,
@@ -38,4 +39,5 @@ export {
   Modal,
   VerticalButton,
   Popup,
+  Loader,
 };

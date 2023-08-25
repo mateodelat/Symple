@@ -2,9 +2,9 @@ POST http://localhost:3001/api/users
 Content-Type: application/json
 
 {
-  "name": "Usuario 1",
-  "lastName": "Test",
-  "email": "usuario@outlook.es",
-  "password": "123456",
+  "name": "Efrén",
+  "lastName": "Ruíz Rubio",
+  "email": "efren282@outlook.es",
+  "password": "MetroEFTW1!",
   "role": "admin"
 }

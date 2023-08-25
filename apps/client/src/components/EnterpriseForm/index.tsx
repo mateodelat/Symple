@@ -143,7 +143,6 @@ export default function EnterpriseForm({
   };
 
   const addUser = (user: User): void => {
-    console.log(user);
     setAddedUsers([...addedUsers, user]);
   };
 

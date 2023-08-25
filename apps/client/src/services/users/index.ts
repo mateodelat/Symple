@@ -1,30 +1,61 @@
-import { type ErrorObject, type User } from "@/types";
+import {
+  type User,
+  type CreateUserDTO,
+  type EditUserDTO,
+  type ErrorObject,
+} from "@/types";
+import { customFetch } from "@lib/fetch";
 
-const baseUrl = `${process.env.SERVER_URL ?? ""}/users`;
+const baseUrl = `${process.env.SERVER_URL ?? ""}/enterprises`;
 
 const getAll = async (): Promise<User[]> => {
-  return await fetch(baseUrl, {
+  const response = await customFetch({
+    baseUrl,
     method: "GET",
-    next: {
-      revalidate: 60,
+    options: {
+      next: {
+        revalidate: 30,
+      },
     },
-  }).then(async (res) => {
-    const response = await res.json();
-    return response;
   });
+  return response;
+};
+
+const create = async (payload: CreateUserDTO): Promise<User> => {
+  const response = await customFetch({
+    baseUrl,
+    method: "POST",
+    options: {
+      body: JSON.stringify(payload),
+    },
+  });
+  return response;
+};
+
+const update = async (id: string, payload: EditUserDTO): Promise<User> => {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${id}`,
+    method: "PATCH",
+    options: {
+      body: JSON.stringify(payload),
+    },
+  });
+  return response;
 };
 
 const deleteOne = async (id: string): Promise<ErrorObject> => {
-  return await fetch(`${baseUrl}/${id}`, {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${id}`,
     method: "DELETE",
-  })
-    .then(async (res) => await res.json())
-    .catch((err) => err);
+  });
+  return response;
 };
 
-const userService = {
+const enterpriseService = {
   getAll,
+  create,
+  update,
   deleteOne,
 };
 
-export default userService;
+export default enterpriseService;

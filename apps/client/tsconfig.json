@@ -26,9 +26,10 @@
       "@constants/*": ["constants/*"],
       "@contexts/*": ["contexts/*"],
       "@hooks/*": ["hooks/*"],
+      "@lib/*": ["lib/*"],
       "@styles/*": ["styles/*"],
       "@services/*": ["services/*"],
-      "@utils/*": ["utils/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": [

@@ -10,12 +10,13 @@ import {
   HttpStatus,
   HttpCode,
 } from "@nestjs/common";
-import { ApiTags, ApiOperation } from "@nestjs/swagger";
+import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger";
 
 import { UsersService } from "./users.service";
 import { CreateUserDTO, UpdateUserDTO } from "./user.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
 import { Types } from "mongoose";
+import { Public } from "@/auth/decorators/public.decorator";
 
 @ApiTags("Users")
 @Controller("users")
@@ -23,12 +24,14 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get()
   @ApiOperation({ summary: "Recuperar todos los usuarios" })
+  @ApiBearerAuth()
   async getAll(@Query("role") role: string = ""): Promise<any> {
     return await this.usersService.getAll(role);
   }
 
-  @ApiOperation({ summary: "Recuperar usuarios" })
   @Get(":id")
+  @ApiOperation({ summary: "Recuperar usuarios" })
+  @ApiBearerAuth()
   async getOne(
     @Param("id", CheckObjectIdPipe) id: Types.ObjectId,
   ): Promise<any> {
@@ -36,14 +39,17 @@ export class UsersController {
     return await element;
   }
 
-  @ApiOperation({ summary: "Crear usuario" })
   @Post()
+  @Public()
+  @ApiOperation({ summary: "Crear usuario" })
+  @ApiBearerAuth()
   async create(@Body() payload: CreateUserDTO): Promise<any> {
     return await this.usersService.create(payload);
   }
 
-  @ApiOperation({ summary: "Actualizar usuario" })
   @Patch(":id")
+  @ApiOperation({ summary: "Actualizar usuario" })
+  @ApiBearerAuth()
   async update(
     @Body() payload: UpdateUserDTO,
     @Param("id", CheckObjectIdPipe) id: Types.ObjectId,
@@ -51,8 +57,9 @@ export class UsersController {
     return await this.usersService.update({ id, payload });
   }
 
-  @ApiOperation({ summary: "Eliminar usuario" })
   @Delete(":id")
+  @ApiOperation({ summary: "Eliminar usuario" })
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   async delete(
     @Param("id", CheckObjectIdPipe) id: Types.ObjectId,

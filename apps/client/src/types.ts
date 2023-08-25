@@ -49,6 +49,19 @@ export interface User {
   enterprises?: Enterprise[];
 }
 
+export interface CreateUserDTO {
+  name: string;
+  lastName: string;
+  avatar?: string;
+  email: string;
+  role: string;
+  enterprises?: Enterprise[];
+}
+
+export interface EditUserDTO extends CreateUserDTO {
+  id: string;
+}
+
 export interface Link {
   label: string;
   href: string;
@@ -242,11 +255,6 @@ export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
   id: string;
   admins: User[];
 };
-
-export interface Session {
-  accessToken: string;
-  user: User;
-}
 
 export interface LoginDTO {
   email: string;

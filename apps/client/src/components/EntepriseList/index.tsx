@@ -13,6 +13,7 @@ export default function EnterpriseList(): JSX.Element {
   const handleCardClick = (enterprise: Enterprise): void => {
     router.push(`/admin-panel/enterprise/${enterprise.id}`);
   };
+
   return (
     <>
       {isLoading ? (
