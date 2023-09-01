@@ -8,13 +8,24 @@ import {
   Body,
   HttpStatus,
   HttpCode,
+  Query,
 } from "@nestjs/common";
-import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger";
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from "@nestjs/swagger";
 
 import { EnterprisesService } from "./enterprises.service";
 import { CreateEnterpriseDTO, UpdateEnterpriseDTO } from "./enterprises.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
 import { type Enterprise } from "./enterprise.entity";
+import {
+  limitParamDTO,
+  offsetParamDTO,
+  turnParamDTO,
+} from "@/common/dtos/queryParams";
 
 @Controller("enterprises")
 @ApiTags("Enterprises")
@@ -24,18 +35,15 @@ export class EnterprisesController {
   @Get()
   @ApiOperation({ summary: "Lista de empresas" })
   @ApiBearerAuth()
-
-  /*
-    TODO: Implement pagination (check if it's necessary)
-        @ApiQuery({ name: 'limit', type: limitParamDTO })
-        @ApiQuery({ name: 'offset', type: offsetParamDTO })
-        @ApiQuery({ name: 'turn', type: turnParamDTO })
-  */
-  async getAll() /* @Query('limit') limit: number = 10,
-    @Query('offset') offset: number = 0,
-    @Query('turn') turn: string */
-  : Promise<any> {
-    return await this.enterprisesService.getAll();
+  @ApiQuery({ name: "limit", type: limitParamDTO })
+  @ApiQuery({ name: "offset", type: offsetParamDTO })
+  @ApiQuery({ name: "turn", type: turnParamDTO })
+  async getAll(
+    @Query("limit") limit: number = 30,
+    @Query("offset") offset: number = 0,
+    @Query("id") id: string,
+  ): Promise<any> {
+    return await this.enterprisesService.getAll({ limit, offset, id });
   }
 
   @Get(":id")

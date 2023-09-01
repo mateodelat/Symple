@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import { Form } from "@components/index";
+import { Form, Loader } from "@components/index";
 import { useField } from "@/hooks/index";
 
 import styles from "./Login.module.scss";
@@ -68,6 +68,7 @@ export default function Login(): JSX.Element {
           <Form fields={[email, password]} onSubmit={handleLogin} />
         </section>
       )}
+      {status === "loading" && isLoggedIn && <Loader />}
     </>
   );
 }

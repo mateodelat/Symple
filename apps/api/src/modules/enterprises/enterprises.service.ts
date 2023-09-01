@@ -12,6 +12,7 @@ import {
   type CreateEnterpriseDTO,
   type UpdateEnterpriseDTO,
 } from "./enterprises.dto";
+import { type QueryGetAll } from "@/types/models/Enterprise";
 
 @Injectable()
 export class EnterprisesService {
@@ -32,8 +33,8 @@ export class EnterprisesService {
     return isValidObjectId(id);
   }
 
-  async getAll(): Promise<Enterprise[]> {
-    const elements = await this.EnterpriseModel.find({})
+  async getAll({ id, limit, offset }: QueryGetAll): Promise<Enterprise[]> {
+    const elements = await this.EnterpriseModel.find({ admins: { $in: [id] } })
       .populate("admins", {
         name: 1,
         lastName: 1,
@@ -41,6 +42,8 @@ export class EnterprisesService {
         role: 1,
         createdAt: 1,
       })
+      .skip(offset)
+      .limit(limit)
       .exec();
     return elements;
   }

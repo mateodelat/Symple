@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 import EnterpriseContext from "./context";
 import enterpriseService from "@services/enterprises";
@@ -13,6 +14,8 @@ import {
 export default function EnterpriseContextProvider({
   children,
 }: EntepriseContextProviderProps): JSX.Element {
+  const { data: session, status } = useSession();
+
   const [enterprises, setEnterprises] = useState<AppState["enterprises"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -40,18 +43,14 @@ export default function EnterpriseContextProvider({
   };
 
   useEffect(() => {
-    /* 
-  
-      TODO: Do the fetching after the user logs in, to only get the enterprises the user has access.
-    
-    */
-    const fetchEnterprises = async (): Promise<void> => {
-      const list = await enterpriseService.getAll();
-      setInitialEnterprises(list);
-    };
-
-    void fetchEnterprises();
-  }, []);
+    if (status === "authenticated") {
+      const fetchEnterprises = async (): Promise<void> => {
+        const list = await enterpriseService.getAll();
+        setInitialEnterprises(list);
+      };
+      void fetchEnterprises();
+    }
+  }, [status]);
 
   return (
     <EnterpriseContext.Provider

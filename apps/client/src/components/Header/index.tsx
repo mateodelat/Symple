@@ -3,6 +3,7 @@
 import { Aside, Button } from "../index";
 import { links } from "@/constants/index";
 import styles from "./Header.module.scss";
+import { signOut } from "next-auth/react";
 
 export default function Header(): JSX.Element {
   return (
@@ -50,9 +51,7 @@ export default function Header(): JSX.Element {
         </Button>
         <Button
           className={`${styles.header_buttons_btn} ${styles.header_buttons_btn_text}`}
-          onClick={() => {
-            console.log("logout button");
-          }}
+          onClick={signOut}
         >
           Cerrar sesión
         </Button>

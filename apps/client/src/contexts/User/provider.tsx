@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 import UserContext from "./context";
 import userService from "@services/users";
@@ -13,6 +14,8 @@ import {
 export default function UserContextProvider({
   children,
 }: UserContextProviderProps): JSX.Element {
+  const { data: session, status } = useSession();
+
   const [users, setUsers] = useState<AppState["users"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -31,16 +34,15 @@ export default function UserContextProvider({
   };
 
   useEffect(() => {
-    /*
-      TODO: Only do the fetching after the user (TBD: with admin role) logs in. 
-    */
-    const fetchUsers = async (): Promise<void> => {
-      const list = await userService.getAll();
-      setInitialUsers(list);
-    };
+    if (status === "authenticated") {
+      const fetchUsers = async (): Promise<void> => {
+        const list = await userService.getAll();
+        setInitialUsers(list);
+      };
 
-    void fetchUsers();
-  }, []);
+      void fetchUsers();
+    }
+  }, [status]);
 
   return (
     <UserContext.Provider
