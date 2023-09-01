@@ -19,7 +19,15 @@
       display: none;
     }
     &_card {
+      position: absolute;
       max-width: 256px;
     }
+  }
+  &_newMember {
+    align-self: flex-start;
+    width: 50%;
+    background: transparent !important;
+    color: black;
+    text-decoration: underline;
   }
 }

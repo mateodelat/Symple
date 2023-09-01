@@ -14,7 +14,7 @@ import {
 export default function UserContextProvider({
   children,
 }: UserContextProviderProps): JSX.Element {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const [users, setUsers] = useState<AppState["users"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,7 +39,6 @@ export default function UserContextProvider({
         const list = await userService.getAll();
         setInitialUsers(list);
       };
-
       void fetchUsers();
     }
   }, [status]);

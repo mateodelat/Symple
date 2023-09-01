@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 
-import { Card, List, SearchBar } from "@components/index";
+import { Button, Card, List, Modal, SearchBar } from "@components/index";
 import { useUserContext } from "@contexts/User/context";
 import styles from "./AddUsers.module.scss";
 import { CardType, type AddUsersProps, type User } from "@/types";
+import { useToggle } from "@hooks/index";
 
 export default function AddUsers({
   addedUsers,
@@ -14,16 +15,29 @@ export default function AddUsers({
 }: AddUsersProps): JSX.Element {
   const { users: data } = useUserContext();
   const [users, setUsers] = useState<User[]>([]);
+  const [filter, setFilter] = useState<string>("");
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const { toggle, value } = useToggle();
 
   const handleAddUsers = (user: User): void => {
     addUser(user);
     setUsers(() => users.filter((u) => u.id !== user.id));
   };
 
+  const handleRemoveUsers = (user: User): void => {
+    removeUser(user);
+    if (
+      user.email.includes(filter) ||
+      user.name.includes(filter) ||
+      user.lastName.includes(filter)
+    )
+      setUsers((prev) => [...prev, user]);
+  };
+
   const handleUsersFilter = (filter: string): void => {
     if (filter === "") {
       setIsFiltering(false);
+      setUsers([]);
       return;
     }
     setIsFiltering(true);
@@ -65,7 +79,7 @@ export default function AddUsers({
             element={user}
             key={user.id}
             onClick={() => {
-              removeUser(user);
+              handleRemoveUsers(user);
             }}
           />
         ))}
@@ -73,7 +87,12 @@ export default function AddUsers({
       <SearchBar
         title="Nombre / Correo del usuario registrado"
         handleData={handleUsersFilter}
+        filter={filter}
+        setFilter={setFilter}
       />
+      <Button onClick={toggle} className={styles.addUsers_newMember}>
+        Registrar miembro
+      </Button>
       <List
         list={users}
         canCreateElement={false}
@@ -83,6 +102,12 @@ export default function AddUsers({
         cardClassName={styles.addUsers_list_card}
         cardOnClick={handleAddUsers}
       />
+
+      {value && (
+        <Modal isOpen={value} toggle={toggle} onConfirm={() => {}}>
+          test
+        </Modal>
+      )}
     </article>
   );
 }

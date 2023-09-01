@@ -33,8 +33,14 @@ export class EnterprisesService {
     return isValidObjectId(id);
   }
 
-  async getAll({ id, limit, offset }: QueryGetAll): Promise<Enterprise[]> {
-    const elements = await this.EnterpriseModel.find({ admins: { $in: [id] } })
+  async getAll({ limit, offset, user }: QueryGetAll): Promise<Enterprise[]> {
+    let filter = {};
+    if (user.role !== "admin") {
+      filter = {
+        admins: user.id,
+      };
+    }
+    const elements = await this.EnterpriseModel.find(filter)
       .populate("admins", {
         name: 1,
         lastName: 1,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 
 import styles from "./SearchBar.module.scss";
@@ -9,18 +9,17 @@ import { type SearchBarProps } from "@/types";
 export default function SearchBar({
   title,
   handleData,
+  filter,
+  setFilter,
 }: SearchBarProps): JSX.Element {
-  const [search, setSearch] = useState<string>("");
-
   useEffect(() => {
-    if (search === "") return;
     const setFiltered = setTimeout(() => {
-      handleData(search);
+      handleData(filter);
     }, 100);
     return () => {
       clearTimeout(setFiltered);
     };
-  }, [search]);
+  }, [filter]);
 
   return (
     <article className={styles.searchbar}>
@@ -37,7 +36,7 @@ export default function SearchBar({
           type="text"
           className={styles.searchbar_wrapper_input}
           onChange={(e) => {
-            setSearch(e.target.value);
+            setFilter(e.target.value);
           }}
         />
       </div>

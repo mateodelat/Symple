@@ -21,6 +21,7 @@ export default function UserCard({ element }: CardUser): JSX.Element {
         <h2 className={styles.card_text_title}>{element.name}</h2>
         <p className={styles.card_text_user}>{element.email}</p>
       </div>
+      <div className={styles.card_remove} />
     </>
   );
 }

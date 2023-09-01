@@ -243,6 +243,8 @@ export enum AmountOfEmployees {
 export interface SearchBarProps {
   title: string;
   handleData: (filter: string) => void;
+  filter: string;
+  setFilter: (filter: string) => void;
 }
 
 export interface AddUsersProps {

@@ -27,3 +27,12 @@
     color: red;
   }
 }
+
+.addedUsers {
+  padding-left: 0.5rem;
+  &_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

@@ -6,7 +6,7 @@ import {
 } from "@/types";
 import { customFetch } from "@lib/fetch";
 
-const baseUrl = `${process.env.SERVER_URL ?? ""}/enterprises`;
+const baseUrl = `${process.env.SERVER_URL ?? ""}/users`;
 
 const getAll = async (): Promise<User[]> => {
   const response = await customFetch({

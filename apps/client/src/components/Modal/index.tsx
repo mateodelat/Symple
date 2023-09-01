@@ -49,6 +49,12 @@ export default function Modal({
       ref={ref}
       className={`${styles.modal} ${className}`}
       onClick={handleDialogClick}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.stopPropagation();
+          handleCancel();
+        }
+      }}
     >
       <div className={styles.modal_content}>
         <Button className={styles.modal_content_close} onClick={handleCancel}>

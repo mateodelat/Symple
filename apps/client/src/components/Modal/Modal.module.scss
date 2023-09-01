@@ -41,6 +41,34 @@
       display: grid;
       gap: 1rem;
     }
+    &_close{
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 20px;
+      height: 20px;
+      background: transparent !important;
+      &_button{
+        position: relative;
+        transform: rotate(0.625turn);
+        &::before, &{
+          width: 2rem;
+          height: 3px;
+          border-radius: 1rem;
+          background-color: black;
+        }
+        &::before{
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+        }
+        &::before {
+          top: 6px;
+          transform: rotate(90deg) translateX(-6px);
+        }
+      }
+    }
   }
 
   @keyframes fadein {

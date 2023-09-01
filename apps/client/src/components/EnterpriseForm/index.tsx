@@ -204,6 +204,19 @@ export default function EnterpriseForm({
           alt="Botón para añadir usuarios a empresa"
         />
       </Button>
+      {addedUsers.length > 0 && (
+        <div className={styles.addedUsers}>
+          <h4>Usuarios añadidos</h4>
+          {addedUsers.map((user) => (
+            <div className={styles.addedUsers_wrapper}>
+              <span>
+                <strong>{user.name}</strong>
+              </span>
+              <span>{user.email}</span>
+            </div>
+          ))}
+        </div>
+      )}
       {value && (
         <Modal
           isOpen={value}

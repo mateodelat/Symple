@@ -8,6 +8,7 @@ import { CardType, type Enterprise } from "@/types";
 
 export default function EnterpriseList(): JSX.Element {
   const router = useRouter();
+
   const { enterprises, isLoading } = useEnterpriseContext();
 
   const handleCardClick = (enterprise: Enterprise): void => {

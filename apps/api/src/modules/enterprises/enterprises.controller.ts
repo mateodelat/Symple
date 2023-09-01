@@ -9,6 +9,7 @@ import {
   HttpStatus,
   HttpCode,
   Query,
+  Req,
 } from "@nestjs/common";
 import {
   ApiTags,
@@ -41,9 +42,13 @@ export class EnterprisesController {
   async getAll(
     @Query("limit") limit: number = 30,
     @Query("offset") offset: number = 0,
-    @Query("id") id: string,
+    @Req() req,
   ): Promise<any> {
-    return await this.enterprisesService.getAll({ limit, offset, id });
+    return await this.enterprisesService.getAll({
+      limit,
+      offset,
+      user: req.user,
+    });
   }
 
   @Get(":id")

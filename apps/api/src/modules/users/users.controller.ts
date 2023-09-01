@@ -22,6 +22,8 @@ import { Public } from "@/auth/decorators/public.decorator";
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Public()
   @Get()
   @ApiOperation({ summary: "Recuperar todos los usuarios" })
   @ApiBearerAuth()

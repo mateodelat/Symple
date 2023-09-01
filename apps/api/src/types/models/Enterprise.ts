@@ -1,5 +1,7 @@
+import { type User } from "@/modules/users/user.entity";
+
 export interface QueryGetAll {
   limit: number;
   offset: number;
-  id: string;
+  user: User;
 }
