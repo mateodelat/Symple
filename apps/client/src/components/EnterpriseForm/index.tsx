@@ -204,11 +204,11 @@ export default function EnterpriseForm({
           alt="Botón para añadir usuarios a empresa"
         />
       </Button>
-      {addedUsers.length > 0 && (
+      {!value && addedUsers.length > 0 && (
         <div className={styles.addedUsers}>
           <h4>Usuarios añadidos</h4>
           {addedUsers.map((user) => (
-            <div className={styles.addedUsers_wrapper}>
+            <div className={styles.addedUsers_wrapper} key={user.id}>
               <span>
                 <strong>{user.name}</strong>
               </span>

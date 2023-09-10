@@ -1,10 +1,11 @@
 .modal {
   display: none;
-  &::backdrop{
-    background-color: rgba(0,0,0,0.5);
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
   }
   &[open] {
     display: block;
+    width: 100%;
     padding: 0;
     margin: auto;
     z-index: 3;
@@ -28,8 +29,9 @@
     }
   }
 
-  &_content{
+  &_content {
     display: flex;
+    width: 100%;
     position: relative;
     flex-direction: column;
     align-items: center;
@@ -41,23 +43,24 @@
       display: grid;
       gap: 1rem;
     }
-    &_close{
+    &_close {
       position: absolute;
       right: 10px;
       top: 10px;
       width: 20px;
       height: 20px;
       background: transparent !important;
-      &_button{
+      &_button {
         position: relative;
         transform: rotate(0.625turn);
-        &::before, &{
+        &::before,
+        & {
           width: 2rem;
           height: 3px;
           border-radius: 1rem;
           background-color: black;
         }
-        &::before{
+        &::before {
           content: "";
           position: absolute;
           left: 0;
@@ -87,5 +90,18 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .modal {
+    &[open] {
+      width: 80%;
+    }
+    &_content {
+      &_wrapper {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   }
 }

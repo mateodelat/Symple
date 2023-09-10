@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Button, Card, List, Modal, SearchBar } from "@components/index";
+import { Card, List, Modal, SearchBar } from "@components/index";
 import { useUserContext } from "@contexts/User/context";
 import styles from "./AddUsers.module.scss";
 import { CardType, type AddUsersProps, type User } from "@/types";
@@ -90,9 +90,15 @@ export default function AddUsers({
         filter={filter}
         setFilter={setFilter}
       />
-      <Button onClick={toggle} className={styles.addUsers_newMember}>
+      <button
+        onClick={() => {
+          toggle();
+        }}
+        className={styles.addUsers_newMember}
+        type="button"
+      >
         Registrar miembro
-      </Button>
+      </button>
       <List
         list={users}
         canCreateElement={false}
@@ -105,7 +111,7 @@ export default function AddUsers({
 
       {value && (
         <Modal isOpen={value} toggle={toggle} onConfirm={() => {}}>
-          test
+          <h1>test</h1>
         </Modal>
       )}
     </article>
