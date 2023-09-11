@@ -24,7 +24,9 @@ export default function CardEnterprise({
         className={styles.card_image}
       />
       <div className={styles.card_text}>
-        <h2 className={styles.card_text_title}>{element.name}</h2>
+        <h2 className={styles.card_text_title} title={element.name}>
+          {element.name}
+        </h2>
         <p className={styles.card_text_user}>
           {admins.length > 0 &&
             admins.map((admin, i) => {

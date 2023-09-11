@@ -61,11 +61,18 @@ export default function Login(): JSX.Element {
     <>
       {status === "unauthenticated" && (
         <section className={styles.login}>
-          <h1 className={styles.login_title}>Bienvenido a Symple.</h1>
-          <p className={styles.login_description}>
-            Inicia sesión con tu correo y contraseña.
-          </p>
-          <Form fields={[email, password]} onSubmit={handleLogin} />
+          <div className={styles.login_left} />
+          <div className={styles.login_right}>
+            <h1 className={styles.login_right_title}>Bienvenido a Symple.</h1>
+            <p className={styles.login_right_description}>
+              Inicia sesión con tu correo y contraseña.
+            </p>
+            <Form
+              fields={[email, password]}
+              onSubmit={handleLogin}
+              className={styles.login_right_form}
+            />
+          </div>
         </section>
       )}
       {status === "loading" && isLoggedIn && <Loader />}

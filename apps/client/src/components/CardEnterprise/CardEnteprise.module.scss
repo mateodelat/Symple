@@ -17,3 +17,43 @@
     }
   }
 }
+
+@media screen and (min-width: 768px) {
+  .card {
+    &_text {
+      &_title {
+        width: 240px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .card {
+    &_text {
+      &_title {
+        width: 190px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .card {
+    &_text {
+      &_title {
+        width: 330px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .card {
+    &_text {
+      &_title {
+        width: 470px;
+      }
+    }
+  }
+}

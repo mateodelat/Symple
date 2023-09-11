@@ -1,5 +1,7 @@
 @use "@styles/variables";
 
 .vertical {
+  position: absolute;
+  right: 10px;
   z-index: 4 !important;
 }

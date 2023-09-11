@@ -28,10 +28,7 @@ export default function CardEnterpriseEdit({
         handleCardClick(element);
       }}
     >
-      <VerticalButton
-        onClick={togglePopup}
-        className={isPopupOpen ? styles.vertical : ""}
-      />
+      <VerticalButton onClick={togglePopup} className={styles.vertical} />
       {isPopupOpen && <Popup id={element.id} toggleModal={toggleModal} />}
       {isModalOpen && (
         <DeleteEnterprise

@@ -1,5 +1,24 @@
-.main{
+.main {
   display: grid;
   gap: 1rem;
   padding: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .main {
+    padding: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .main {
+    padding: 2rem 4rem;
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .main {
+    padding: 4rem 8rem;
+    font-size: 2rem;
+  }
 }

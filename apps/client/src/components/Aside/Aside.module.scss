@@ -6,7 +6,7 @@
   transition: all 200ms ease-in-out;
   transform: translateX(-100%);
   will-change: transform, visibility;
-  z-index: 1;
+  z-index: 5;
 
   &_button {
     position: absolute;
@@ -33,7 +33,7 @@
   &_hamburger {
     display: block;
     position: relative;
-    z-index: 2;
+    z-index: 6;
     &::before,
     &::after,
     & {

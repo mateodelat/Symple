@@ -18,7 +18,7 @@ export default function List({
   const { data: session } = useSession();
 
   return (
-    <section className={`${styles.list} ${className}`}>
+    <section className={styles.list}>
       {canCreateElement && session?.user.role === "admin" && (
         <LinkButton
           className={styles.list_button}
@@ -26,11 +26,13 @@ export default function List({
           label={newElement ?? ""}
         />
       )}
-      {list.length > 0 ? (
-        list.map((element) => <Card key={element.id} element={element} />)
-      ) : (
-        <h2>{listEmptyMessage}</h2>
-      )}
+      <div className={`${styles.list_wrapper} ${className}`}>
+        {list.length > 0 ? (
+          list.map((element) => <Card key={element.id} element={element} />)
+        ) : (
+          <h2>{listEmptyMessage}</h2>
+        )}
+      </div>
     </section>
   );
 }

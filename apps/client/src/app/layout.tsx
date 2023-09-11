@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+
 import { AuthProvider } from "./AuthProvider";
 import UserContextProvider from "@contexts/User/provider";
 import EnterpriseContextProvider from "@contexts/Enterprise/provider";
