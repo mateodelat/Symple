@@ -1,11 +1,16 @@
 import Image from "next/image";
 
-import styles from "./UserCard.module.scss";
-import { type CardUser } from "@/types";
+import { Card } from "@components/index";
+import { type CardUserProps } from "@/types";
+import styles from "./CardUser.module.scss";
 
-export default function UserCard({ element }: CardUser): JSX.Element {
+export default function CardUser({
+  element,
+  onClick,
+  children,
+}: CardUserProps): JSX.Element {
   return (
-    <>
+    <Card onClick={onClick}>
       <Image
         src={
           element.avatar === undefined || element.avatar === ""
@@ -21,7 +26,7 @@ export default function UserCard({ element }: CardUser): JSX.Element {
         <h2 className={styles.card_text_title}>{element.name}</h2>
         <p className={styles.card_text_user}>{element.email}</p>
       </div>
-      <div className={styles.card_remove} />
-    </>
+      {children}
+    </Card>
   );
 }

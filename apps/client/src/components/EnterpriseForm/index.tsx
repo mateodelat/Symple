@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import { AddUsers, Button, Form, Modal } from "@components/index";
+import { AddUsers, Button, CardUser, Form, Modal } from "@components/index";
 import { useField, useFile, useToggle } from "@hooks/index";
 import {
   AmountOfEmployees,
@@ -208,12 +208,7 @@ export default function EnterpriseForm({
         <div className={styles.addedUsers}>
           <h4>Usuarios añadidos</h4>
           {addedUsers.map((user) => (
-            <div className={styles.addedUsers_wrapper} key={user.id}>
-              <span>
-                <strong>{user.name}</strong>
-              </span>
-              <span>{user.email}</span>
-            </div>
+            <CardUser key={user.id} element={user} />
           ))}
         </div>
       )}

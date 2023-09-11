@@ -6,7 +6,7 @@
     height: 50px;
   }
   &_text {
-    &_title{
+    &_title {
       width: 180px;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -15,8 +15,5 @@
     &_user {
       color: variables.$secondary-blue-color;
     }
-  }
-  &_vertical {
-    z-index: 4 !important;
   }
 }

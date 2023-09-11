@@ -1,3 +1,4 @@
+import type React from "react";
 import { type ErrorCode } from "./constants/errors";
 
 export interface Field {
@@ -114,30 +115,34 @@ export interface ListProps {
   newElement?: string;
   newElementPage?: string;
   listEmptyMessage: string;
-  typeOfCard: CardType;
   className?: string;
-  cardClassName?: string;
-  cardOnClick?: (element?: any) => void;
+  Card: React.FC<{ element: any }>;
 }
 
-export interface CardProps {
+export interface GenericCardProps {
   element: Enterprise | User;
-  type: CardType;
+}
+export interface CardProps {
   className?: string;
+  onClick?: (element?: any) => any;
+  children: React.ReactNode;
+}
+
+export interface CardEnterpriseProps {
+  element: Enterprise;
+  children?: React.ReactNode;
   onClick?: (element?: any) => any;
 }
 
-export interface CardEnterprise {
-  element: Enterprise;
-  isPopupOpen: boolean;
-  togglePopup: () => void;
-  isModalOpen: boolean;
-  toggleModal: (val?: boolean) => void;
-}
+export type CardEnterpriseEditProps = Pick<CardEnterpriseProps, "element">;
 
-export interface CardUser {
+export type CardUserProps = Omit<CardEnterpriseProps, "element"> & {
   element: User;
-}
+};
+
+export type CardUserEditProps = Pick<CardUserProps, "element" | "onClick"> & {
+  isAdding?: boolean;
+};
 
 export interface CustomField {
   required: boolean;

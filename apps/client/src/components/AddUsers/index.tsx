@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { Card, List, Modal, SearchBar } from "@components/index";
+import { CardUserEdit, Modal, SearchBar } from "@components/index";
 import { useUserContext } from "@contexts/User/context";
 import styles from "./AddUsers.module.scss";
-import { CardType, type AddUsersProps, type User } from "@/types";
+import { type AddUsersProps, type User } from "@/types";
 import { useToggle } from "@hooks/index";
 
 export default function AddUsers({
@@ -74,8 +74,7 @@ export default function AddUsers({
       <div className={styles.addUsers_addedList}>
         {addedUsers.length === 0 && <h2>No se han asignado usuarios.</h2>}
         {addedUsers.map((user) => (
-          <Card
-            type={CardType.UserCard}
+          <CardUserEdit
             element={user}
             key={user.id}
             onClick={() => {
@@ -99,15 +98,20 @@ export default function AddUsers({
       >
         Registrar miembro
       </button>
-      <List
-        list={users}
-        canCreateElement={false}
-        listEmptyMessage={messageHandler()}
-        typeOfCard={CardType.UserCard}
-        className={styles.addUsers_list}
-        cardClassName={styles.addUsers_list_card}
-        cardOnClick={handleAddUsers}
-      />
+
+      {users.length > 0 &&
+        users.map((user) => (
+          <div key={user.id}>
+            <h3>{messageHandler()}</h3>
+            <CardUserEdit
+              element={user}
+              onClick={() => {
+                handleAddUsers(user);
+              }}
+              isAdding
+            />
+          </div>
+        ))}
 
       {value && (
         <Modal isOpen={value} toggle={toggle} onConfirm={() => {}}>

@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 
-import { Card, LinkButton } from "@components/index";
+import { LinkButton } from "@components/index";
 import { type ListProps } from "@/types";
 import styles from "./List.module.scss";
 
@@ -12,10 +12,8 @@ export default function List({
   newElement,
   newElementPage,
   listEmptyMessage,
-  typeOfCard,
+  Card,
   className = "",
-  cardClassName = "",
-  cardOnClick = () => {},
 }: ListProps): JSX.Element {
   const { data: session } = useSession();
 
@@ -29,17 +27,7 @@ export default function List({
         />
       )}
       {list.length > 0 ? (
-        list.map((element) => (
-          <Card
-            element={element}
-            key={element.id}
-            type={typeOfCard}
-            className={cardClassName}
-            onClick={() => {
-              cardOnClick(element);
-            }}
-          />
-        ))
+        list.map((element) => <Card key={element.id} element={element} />)
       ) : (
         <h2>{listEmptyMessage}</h2>
       )}

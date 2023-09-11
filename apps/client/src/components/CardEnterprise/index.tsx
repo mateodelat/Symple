@@ -1,21 +1,17 @@
 import Image from "next/image";
 
-import { VerticalButton, Popup } from "@components/index";
-import { type CardEnterprise } from "@/types";
-import styles from "./EnterpriseCard.module.scss";
-import DeleteEnterprise from "@/components/DeleteEnterprise";
+import { Card } from "@components/index";
+import { type CardEnterpriseProps } from "@/types";
+import styles from "./CardEnteprise.module.scss";
 
-export default function EnterpriseCard({
+export default function CardEnterprise({
   element,
-  isPopupOpen,
-  togglePopup,
-  isModalOpen,
-  toggleModal,
-}: CardEnterprise): JSX.Element {
+  onClick = () => {},
+  children,
+}: CardEnterpriseProps): JSX.Element {
   const admins = element.admins.filter((admin) => admin.role !== "admin");
-
   return (
-    <>
+    <Card onClick={onClick}>
       <Image
         src={
           element.image === undefined || element.image === ""
@@ -38,18 +34,7 @@ export default function EnterpriseCard({
             })}
         </p>
       </div>
-      <VerticalButton
-        onClick={togglePopup}
-        className={isPopupOpen ? styles.card_vertical : ""}
-      />
-      {isPopupOpen && <Popup id={element.id} toggleModal={toggleModal} />}
-      {isModalOpen && (
-        <DeleteEnterprise
-          isOpen={isModalOpen}
-          toggle={toggleModal}
-          enterpriseId={element.id}
-        />
-      )}
-    </>
+      {children}
+    </Card>
   );
 }
