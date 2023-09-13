@@ -5,7 +5,7 @@ import styles from "./Button.module.scss";
 
 export default function Button({
   className = "",
-  onClick,
+  onClick = () => {},
   children,
   type = "button",
   props = {},

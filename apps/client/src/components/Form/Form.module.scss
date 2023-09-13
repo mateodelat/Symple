@@ -20,12 +20,15 @@
     &::-webkit-scrollbar {
       display: none;
     }
+    &_section {
+      display: grid;
+      gap: 1rem;
+    }
     &_wrapper {
       display: flex;
-      gap: 1rem;
       flex-direction: column;
       &_label {
-        padding-left: 0.5rem;
+        margin-bottom: 1rem;
         color: variables.$primary-black-color;
         &_text {
           font-weight: 500;
@@ -38,6 +41,11 @@
         &::placeholder {
           color: variables.$tertiary-blue-color;
         }
+      }
+      &_error {
+        color: red;
+        margin-top: 0.5rem;
+        font-weight: 500;
       }
     }
     &_button {

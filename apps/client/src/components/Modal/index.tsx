@@ -61,10 +61,9 @@ export default function Modal({
           <div className={styles.modal_content_close_button} />
         </Button>
         {children}
-        <div className={styles.modal_content_wrapper}>
-          <Button onClick={handleConfirm}>Confirmar</Button>
-          <Button onClick={handleCancel}>Cancelar</Button>
-        </div>
+        <Button onClick={handleConfirm} className={styles.modal_content_accept}>
+          Confirmar
+        </Button>
       </div>
     </dialog>
   );

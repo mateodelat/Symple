@@ -1,5 +1,6 @@
-import enterpriseService from "./enterprises";
-import userService from "./users";
 import authService from "./auth";
+import enterpriseService from "./enterprises";
+import uploadService from "./uploads";
+import userService from "./users";
 
-export { enterpriseService, userService, authService };
+export { authService, enterpriseService, uploadService, userService };

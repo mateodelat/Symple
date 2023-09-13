@@ -1,23 +1,14 @@
 "use client";
 
 import { Aside, Button } from "../index";
-import { links } from "@/constants/index";
+import { headerNavLinks } from "@/constants/Links";
 import styles from "./Header.module.scss";
 import { signOut } from "next-auth/react";
 
 export default function Header(): JSX.Element {
   return (
     <header className={styles.header}>
-      <Aside links={links.headerNavLinks} />
-      {/* <div className={styles.header_image}>
-        <Image
-          src='https://unavatar.io/sindresorhus@gmail.com'
-          width={100}
-          height={100}
-          alt='Enterprise logo'
-          className={styles.nav_image_container}
-        />
-      </div> */}
+      <Aside links={headerNavLinks} />
       <div className={styles.header_buttons}>
         <Button
           className={styles.header_buttons_btn}

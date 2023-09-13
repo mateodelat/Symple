@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { CardUserEdit, Modal, SearchBar } from "@components/index";
+import { CardUserEdit, Modal, SearchBar, UserForm } from "@components/index";
 import { useUserContext } from "@contexts/User/context";
 import styles from "./AddUsers.module.scss";
 import { type AddUsersProps, type User } from "@/types";
 import { useToggle } from "@hooks/index";
+
+const listEmptyMessages = {
+  notFound: "No existen usuarios con el filtro ingresado.",
+  noUsers: "No hay usuarios restantes.",
+  noData: "No existen usuarios registrados.",
+  startState: "Busca por correo, nombre o apellido a usuarios.",
+};
 
 export default function AddUsers({
   addedUsers,
@@ -17,6 +24,7 @@ export default function AddUsers({
   const [users, setUsers] = useState<User[]>([]);
   const [filter, setFilter] = useState<string>("");
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
+  const [message, setMessage] = useState(listEmptyMessages.startState);
   const { toggle, value } = useToggle();
 
   const handleAddUsers = (user: User): void => {
@@ -53,20 +61,18 @@ export default function AddUsers({
     );
   };
 
-  const listEmptyMessages = {
-    notFound: "No existen usuarios con el filtro ingresado.",
-    noUsers: "No hay usuarios restantes.",
-    noData: "No existen usuarios registrados.",
-    startState: "Busca por correo, nombre o apellido a usuarios.",
-  };
+  useEffect(() => {
+    let finalMessage = "";
+    if (data.length === 0) finalMessage = listEmptyMessages.noData;
+    if (isFiltering && users.length === 0)
+      finalMessage = listEmptyMessages.notFound;
+    if (addedUsers.length > 0 && isFiltering && users.length === 0)
+      finalMessage = listEmptyMessages.noUsers;
+    if (!isFiltering && users.length === 0)
+      finalMessage = listEmptyMessages.startState;
 
-  const messageHandler = (): string => {
-    if (data.length === 0) return listEmptyMessages.noData;
-    if (isFiltering && users.length === 0) return listEmptyMessages.notFound;
-    if (addedUsers.length > 0 && users.length === 0 && isFiltering)
-      return listEmptyMessages.noUsers;
-    return listEmptyMessages.startState;
-  };
+    setMessage(finalMessage);
+  }, [filter, users, addedUsers, data]);
 
   return (
     <article className={styles.addUsers}>
@@ -89,6 +95,7 @@ export default function AddUsers({
         filter={filter}
         setFilter={setFilter}
       />
+      <h3>{message}</h3>
       <button
         onClick={() => {
           toggle();
@@ -102,7 +109,6 @@ export default function AddUsers({
       {users.length > 0 &&
         users.map((user) => (
           <div key={user.id}>
-            <h3>{messageHandler()}</h3>
             <CardUserEdit
               element={user}
               onClick={() => {
@@ -114,8 +120,13 @@ export default function AddUsers({
         ))}
 
       {value && (
-        <Modal isOpen={value} toggle={toggle} onConfirm={() => {}}>
-          <h1>test</h1>
+        <Modal
+          isOpen={value}
+          toggle={toggle}
+          onConfirm={() => {}}
+          className={styles.createUser}
+        >
+          <UserForm />
         </Modal>
       )}
     </article>

@@ -8,7 +8,6 @@ export async function compressImage(image: File): Promise<File | undefined> {
     useWebWorker: true,
   };
 
-  if (image.type === "image/svg+xml") return image;
   try {
     const compressedFile = await imageCompression(image, options);
     return compressedFile;

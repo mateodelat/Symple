@@ -1,5 +1,6 @@
 import type React from "react";
-import { type ErrorCode } from "./constants/errors";
+import { type ErrorCode } from "./constants/Errors";
+import type * as yup from "yup";
 
 export interface Field {
   name: string;
@@ -16,9 +17,32 @@ export interface Field {
   ) => void;
 }
 
-export interface Option {
-  value: string;
+export interface Section {
+  title: Title;
+  fields: FormField[];
+}
+
+export interface Title {
+  name: string;
+  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  style?: Record<string, string | boolean>;
+}
+
+export interface FormField {
+  name: string;
+  type?: "text" | "email" | "password" | "date" | "numeric";
   label: string;
+  placeholder?: string;
+  props?: Record<string, string | boolean>;
+  options?: Option[];
+  fileProps?: FileProps;
+  elementType?: "select" | "file";
+  required?: boolean;
+}
+
+export interface Option {
+  label: string;
+  id: string;
 }
 
 export type FileProps = Pick<UploadFileProps, "file" | "handleSelectedFile"> & {
@@ -77,7 +101,7 @@ export type AsideProps = Omit<NavigationProps, "toggleAside">;
 
 export interface ButtonProps {
   children: React.ReactNode;
-  onClick: () => any;
+  onClick?: () => any;
   className?: string;
   type?: "button" | "submit" | "reset";
   props?: object;
@@ -150,20 +174,23 @@ export interface CustomField {
 }
 
 export interface FormProps {
-  fields: Field[];
-  customFields?: CustomField[];
-  title?: string;
+  sections: Section[];
+  schema: yup.ObjectSchema<any>;
   buttonSubmit?: string;
-  onSubmit: () => any;
+  onSubmit: (values: any) => any;
   className?: string;
   children?: React.ReactNode;
+  setFormMethods?: (methods: any) => void;
+  handleFiles?: (file: File) => void;
+  files?: FileState[];
 }
 
 export interface UploadFileProps {
   text?: string;
   id?: string;
-  file: File | string | undefined;
-  handleSelectedFile: ((e: File | undefined) => void) | undefined;
+  file: FileState;
+  handleSelectedFile: (e: File) => void;
+  props: Record<string, string | boolean>;
 }
 
 export type UseFile = Pick<UploadFileProps, "file" | "handleSelectedFile">;
@@ -259,15 +286,29 @@ export interface AddUsersProps {
 }
 
 export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
-  id: string;
+  id?: string;
+  createdAt?: Date;
   admins: User[];
 };
 
-export interface LoginDTO {
+export interface EnterpriseFormProps {
+  enterpriseToEdit?: EditEnterpriseDTO;
+}
+
+export interface LoginUserDTO {
   email: string;
   password: string;
 }
 
-export interface EnterpriseFormProps {
-  enterpriseToEdit?: EditEnterpriseDTO;
+export interface FileState {
+  name: string;
+  purpose: string;
+  file: File | string | undefined;
+  required?: boolean;
+}
+
+export interface UploadFileDTO {
+  fileId: string;
+  type: string;
+  purpose: string;
 }

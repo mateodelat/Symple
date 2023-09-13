@@ -122,3 +122,13 @@ export const errors: Record<ErrorCode, string> = {
   530: "Sitio en construcción",
   599: "Error de conexión de red",
 };
+
+export const formErrors = {
+  required: "Este campo es requerido",
+  email: "El correo electrónico no es válido",
+  minLength: "Este campo debe tener al menos {min} caracteres",
+  maxLength: "Este campo debe tener menos de {max} caracteres",
+  min: "Este campo debe ser mayor o igual a {min}",
+  max: "Este campo debe ser menor o igual a {max}",
+  pattern: "El formato no es válido",
+};

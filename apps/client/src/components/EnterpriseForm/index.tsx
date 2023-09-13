@@ -4,131 +4,86 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 import { AddUsers, Button, CardUser, Form, Modal } from "@components/index";
-import { useField, useFile, useToggle } from "@hooks/index";
+import { useToggle } from "@hooks/index";
 import {
-  AmountOfEmployees,
-  type CustomField,
   type AppState,
   type User,
   type EnterpriseFormProps,
+  type CreateEnterpriseDTO,
+  type EditEnterpriseDTO,
+  type FileState,
 } from "@/types";
 import { useEnterpriseContext } from "@contexts/Enterprise/context";
 import { useUserContext } from "@contexts/User/context";
-import { enterpriseService } from "@services/index";
+import { enterpriseService, uploadService } from "@services/index";
 import styles from "./EnterpriseForm.module.scss";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { getBase64 } from "@utils/convertImage";
+import { enterpriseFields, enterpriseSchema } from "@/constants/EnterpriseForm";
+import { type UseFormReturn } from "react-hook-form";
 
 export default function EnterpriseForm({
-  enterpriseToEdit = {
-    address: "",
-    admins: [],
-    amountOfEmployees: AmountOfEmployees.OneToTen,
-    id: "",
-    name: "",
-    telephone: "",
-    turn: "",
-    image: "",
-  },
+  enterpriseToEdit,
 }: EnterpriseFormProps): JSX.Element {
   const { addEnterprise, updateEnterprise } = useEnterpriseContext();
 
   const [addedUsers, setAddedUsers] = useState<AppState["users"]>([]);
-  const [imageSource, setImageSource] = useState<string>("");
+  const [sections, setSections] = useState(enterpriseFields);
+  const [formMethods, setFormMethods] = useState<UseFormReturn | null>(null);
+  const [image, setImage] = useState<FileState>({
+    name: "image",
+    purpose: "enterprise",
+    file: undefined,
+  });
+
+  const handleImage = (file: File): void => {
+    setImage({ ...image, file });
+  };
   const { back } = useRouter();
 
   const { users } = useUserContext();
 
-  const { file, handleSelectedFile } = useFile();
-
-  const name = useField({
-    type: "text",
-    placeholder: "Nombre",
-    name: "name",
-    required: true,
-  });
-
-  const image = useField({
-    type: "file",
-    placeholder: "Imagen",
-    name: "image",
-    required: false,
-    props: { accept: "image/*", hidden: true },
-    fileProps: {
-      file,
-      handleSelectedFile,
-      resolvedImage: imageSource,
-    },
-  });
-
-  const turn = useField({
-    type: "text",
-    placeholder: "Giro",
-    name: "turn",
-    required: true,
-  });
-
-  const telephone = useField({
-    type: "text",
-    placeholder: "Teléfono de contacto",
-    name: "telephone",
-    required: true,
-    props: { numeric: "true" },
-  });
-
-  const address = useField({
-    type: "text",
-    placeholder: "Dirección",
-    name: "address",
-    required: true,
-  });
-
-  const amountOfEmployees = useField({
-    type: "select",
-    placeholder: "Cantidad de empleados",
-    name: "amountOfEmployees",
-    required: true,
-    options: Object.values(AmountOfEmployees).map((value) => ({
-      label: value,
-      value,
-    })),
-  });
-
-  const fields = [name, image, turn, telephone, address, amountOfEmployees];
-
-  const customFields: CustomField[] = [
-    {
-      required: true,
-      value: addedUsers.map((user) => ({ value: user.id })),
-    },
-  ];
-
   const { value, toggle } = useToggle();
 
-  const createEnterprise = async (): Promise<void> => {
-    const fieldsData = fields.map(({ name, value, required }) => ({
-      [name]: !required && value === "" ? undefined : value,
-    }));
+  const createEnterprise = async (
+    data: CreateEnterpriseDTO | EditEnterpriseDTO,
+  ): Promise<void> => {
     const ids = addedUsers.map((user) => user.id);
-    const payload = Object.assign({}, ...fieldsData, { admins: ids });
-    if (file !== undefined && imageSource !== undefined) {
-      payload.image = imageSource;
-    }
+    data.admins = ids;
     const admins = users
       .filter((user) => ids.includes(user.id))
       .map(({ enterprises, ...user }) => ({ ...user }));
 
+    if (formMethods?.getValues().admins.length === 0) {
+      toast.error("Debe añadir al menos un administrador a la empresa.");
+      return;
+    }
+
+    if (image.file !== undefined && image.file instanceof File) {
+      try {
+        const response = await uploadService.upload(image);
+        data.image = response.filename;
+      } catch (err: any) {
+        toast.error(
+          `Ocurrió un error al intentar subir el archivo: ${
+            err.message as string
+          }`,
+        );
+      }
+    }
+
     try {
-      if (enterpriseToEdit.id === "") {
-        const response = await enterpriseService.create(payload);
+      if (enterpriseToEdit?.id === undefined) {
+        const response = await enterpriseService.create(
+          data as CreateEnterpriseDTO,
+        );
         const newEnterprise = { ...response, admins };
         addEnterprise(newEnterprise);
         toast.success(`Empresa ${newEnterprise.name} creada correctamente.`);
       } else {
         const response = await enterpriseService.update(
           enterpriseToEdit.id,
-          payload,
+          data as EditEnterpriseDTO,
         );
         response.admins = admins;
         updateEnterprise(enterpriseToEdit.id, response);
@@ -160,33 +115,31 @@ export default function EnterpriseForm({
   };
 
   useEffect(() => {
-    const getImage = async (): Promise<void> => {
-      if (file !== undefined)
-        await getBase64(file as File, (result: string) => {
-          setImageSource(result);
-        });
-      else setImageSource("");
-    };
-    void getImage();
-  }, [file]);
-
-  useEffect(() => {
-    name.setInitialValue(enterpriseToEdit.name);
-    setImageSource(enterpriseToEdit.image as string);
-    turn.setInitialValue(enterpriseToEdit.turn);
-    telephone.setInitialValue(enterpriseToEdit.telephone);
-    address.setInitialValue(enterpriseToEdit.address);
-    amountOfEmployees.setInitialValue(enterpriseToEdit.amountOfEmployees);
-    setAddedUsers(enterpriseToEdit.admins);
-  }, [enterpriseToEdit.id]);
+    if (enterpriseToEdit !== undefined) {
+      setSections((prev) => {
+        const newSections = [...prev];
+        newSections[0].title.name = "Editar empresa";
+        return newSections;
+      });
+      if (enterpriseToEdit.image !== undefined) {
+        setImage({ ...image, file: enterpriseToEdit.image });
+      }
+      if (formMethods !== null) {
+        formMethods.reset(enterpriseToEdit);
+        setAddedUsers(enterpriseToEdit.admins);
+      }
+    }
+  }, [enterpriseToEdit, formMethods]);
 
   return (
     <Form
-      fields={fields}
-      customFields={customFields}
+      sections={sections}
+      schema={enterpriseSchema}
       onSubmit={createEnterprise}
       className={styles.form}
-      title={enterpriseToEdit.id === "" ? "Crear empresa" : "Editar empresa"}
+      setFormMethods={setFormMethods}
+      handleFiles={handleImage}
+      files={[image]}
     >
       <label htmlFor="addUsers" className={styles.label}>
         <strong className={styles.label_text}>Añadir usuario</strong>

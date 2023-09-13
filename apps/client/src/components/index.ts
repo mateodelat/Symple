@@ -1,3 +1,4 @@
+import As from "./As";
 import AddUsers from "./AddUsers";
 import Aside from "./Aside";
 import Button from "./Button";
@@ -21,9 +22,11 @@ import NotFound from "./NotFound";
 import Popup from "./Popup";
 import SearchBar from "./SearchBar";
 import UploadFile from "./UploadFile";
+import UserForm from "./UserForm";
 import VerticalButton from "./VerticalButton";
 
 export {
+  As,
   AddUsers,
   Aside,
   Button,
@@ -47,5 +50,6 @@ export {
   Popup,
   SearchBar,
   UploadFile,
+  UserForm,
   VerticalButton,
 };

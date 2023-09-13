@@ -25,8 +25,9 @@ const create = async (payload: CreateEnterpriseDTO): Promise<Enterprise> => {
   const response = await customFetch({
     baseUrl,
     method: "POST",
-    options: {
-      body: JSON.stringify(payload),
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
     },
   });
   return response;
@@ -36,11 +37,15 @@ const update = async (
   id: string,
   payload: EditEnterpriseDTO,
 ): Promise<Enterprise> => {
+  const data = { ...payload };
+  delete data.id;
+  delete data.createdAt;
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
     method: "PATCH",
-    options: {
-      body: JSON.stringify(payload),
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
     },
   });
   return response;

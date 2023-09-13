@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 import { Form, Loader } from "@components/index";
-import { useField } from "@/hooks/index";
-
+import { loginFields, loginSchema } from "@/constants/LoginForm";
+import { type LoginUserDTO } from "@/types";
 import styles from "./Login.module.scss";
-import { toast } from "react-hot-toast";
 
 export default function Login(): JSX.Element {
   const { push } = useRouter();
@@ -16,25 +16,12 @@ export default function Login(): JSX.Element {
   const toastRef = useRef<string>("");
   const [isLoggedIn, setisLoggedIn] = useState<boolean>(false);
 
-  const email = useField({
-    type: "text",
-    placeholder: "Correo electrónico",
-    name: "email",
-    required: true,
-  });
-
-  const password = useField({
-    type: "password",
-    placeholder: "Contraseña",
-    name: "password",
-    required: true,
-  });
-
-  const handleLogin = async (): Promise<void> => {
+  const handleLogin = async (data: LoginUserDTO): Promise<void> => {
+    const { email, password } = data;
     toastRef.current = toast.loading("Validando credenciales...");
     const res = await signIn("credentials", {
-      email: email.value,
-      password: password.value,
+      email,
+      password,
       redirect: false,
     });
 
@@ -64,11 +51,9 @@ export default function Login(): JSX.Element {
           <div className={styles.login_left} />
           <div className={styles.login_right}>
             <h1 className={styles.login_right_title}>Bienvenido a Symple.</h1>
-            <p className={styles.login_right_description}>
-              Inicia sesión con tu correo y contraseña.
-            </p>
             <Form
-              fields={[email, password]}
+              sections={loginFields}
+              schema={loginSchema}
               onSubmit={handleLogin}
               className={styles.login_right_form}
             />

@@ -39,7 +39,6 @@
     gap: 1rem;
     padding: 4rem 2rem;
     &_wrapper {
-      width: 100%;
       display: grid;
       gap: 1rem;
     }
@@ -99,8 +98,8 @@
       width: 80%;
     }
     &_content {
-      &_wrapper {
-        grid-template-columns: repeat(2, 1fr);
+      &_accept {
+        width: 85%;
       }
     }
   }
