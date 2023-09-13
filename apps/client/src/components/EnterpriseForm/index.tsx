@@ -71,9 +71,12 @@ export default function EnterpriseForm({
         );
       }
     }
+    let tID = "";
 
     try {
       if (enterpriseToEdit?.id === undefined) {
+        tID = toast.loading("Actualizando empresa");
+
         const response = await enterpriseService.create(
           data as CreateEnterpriseDTO,
         );
@@ -81,6 +84,7 @@ export default function EnterpriseForm({
         addEnterprise(newEnterprise);
         toast.success(`Empresa ${newEnterprise.name} creada correctamente.`);
       } else {
+        tID = toast.loading("Actualizando empresa");
         const response = await enterpriseService.update(
           enterpriseToEdit.id,
           data as EditEnterpriseDTO,
@@ -91,9 +95,11 @@ export default function EnterpriseForm({
       }
       setTimeout(() => {
         back();
-      }, 1500);
+      }, 300);
     } catch (e: any) {
       toast.error(e.message);
+    } finally {
+      toast.dismiss(tID);
     }
   };
 
