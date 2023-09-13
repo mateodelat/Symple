@@ -75,12 +75,11 @@ export interface User {
 }
 
 export interface CreateUserDTO {
+  email: string;
   name: string;
   lastName: string;
-  avatar?: string;
-  email: string;
+  password: string;
   role: string;
-  enterprises?: Enterprise[];
 }
 
 export interface EditUserDTO extends CreateUserDTO {
@@ -229,6 +228,7 @@ export interface UserContextType {
   setInitialUsers: (users: User[]) => void;
   addUser: (user: User) => void;
   deleteUser: (id: string) => void;
+  isAddingUser: boolean;
 }
 
 export interface EntepriseContextProviderProps {
@@ -311,4 +311,12 @@ export interface UploadFileDTO {
   fileId: string;
   type: string;
   purpose: string;
+}
+
+export interface UserFormData {
+  email: string;
+  name: string;
+  lastName: string;
+  password: string;
+  repeatPassword: string;
 }

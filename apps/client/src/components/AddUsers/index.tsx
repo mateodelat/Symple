@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
-import { CardUserEdit, Modal, SearchBar, UserForm } from "@components/index";
+import { CardUserEdit, SearchBar } from "@components/index";
 import { useUserContext } from "@contexts/User/context";
 import styles from "./AddUsers.module.scss";
 import { type AddUsersProps, type User } from "@/types";
-import { useToggle } from "@hooks/index";
 
 const listEmptyMessages = {
   notFound: "No existen usuarios con el filtro ingresado.",
@@ -25,7 +25,6 @@ export default function AddUsers({
   const [filter, setFilter] = useState<string>("");
   const [isFiltering, setIsFiltering] = useState<boolean>(false);
   const [message, setMessage] = useState(listEmptyMessages.startState);
-  const { toggle, value } = useToggle();
 
   const handleAddUsers = (user: User): void => {
     addUser(user);
@@ -34,12 +33,27 @@ export default function AddUsers({
 
   const handleRemoveUsers = (user: User): void => {
     removeUser(user);
-    if (
-      user.email.includes(filter) ||
-      user.name.includes(filter) ||
-      user.lastName.includes(filter)
-    )
-      setUsers((prev) => [...prev, user]);
+    if (handleFilter(user, filter)) setUsers((prev) => [...prev, user]);
+  };
+
+  const handleFilter = (user: User, filter: string): boolean => {
+    const { email, id, lastName, name, role } = user;
+
+    const aux = filter.toLowerCase();
+    const emailLoweredCase = email.toLowerCase();
+    const nameLoweredCase = name.toLowerCase();
+    const lastNameLoweredCase = lastName.toLowerCase();
+
+    return (
+      (emailLoweredCase.startsWith(aux) ||
+        emailLoweredCase.endsWith(aux) ||
+        nameLoweredCase.startsWith(aux) ||
+        nameLoweredCase.endsWith(aux) ||
+        lastNameLoweredCase.startsWith(aux) ||
+        lastNameLoweredCase.endsWith(aux)) &&
+      role !== "admin" &&
+      !addedUsers.some((addedUser) => addedUser.id === id)
+    );
   };
 
   const handleUsersFilter = (filter: string): void => {
@@ -49,16 +63,7 @@ export default function AddUsers({
       return;
     }
     setIsFiltering(true);
-    setUsers(() =>
-      data.filter(
-        (user) =>
-          (user.email.includes(filter) ||
-            user.name.includes(filter) ||
-            user.lastName.includes(filter)) &&
-          user.role !== "admin" &&
-          !addedUsers.some((addedUser) => addedUser.id === user.id),
-      ),
-    );
+    setUsers(() => data.filter((user) => handleFilter(user, filter)));
   };
 
   useEffect(() => {
@@ -96,15 +101,12 @@ export default function AddUsers({
         setFilter={setFilter}
       />
       <h3>{message}</h3>
-      <button
-        onClick={() => {
-          toggle();
-        }}
+      <Link
+        href={"/admin-panel/user/new"}
         className={styles.addUsers_newMember}
-        type="button"
       >
         Registrar miembro
-      </button>
+      </Link>
 
       {users.length > 0 &&
         users.map((user) => (
@@ -118,17 +120,6 @@ export default function AddUsers({
             />
           </div>
         ))}
-
-      {value && (
-        <Modal
-          isOpen={value}
-          toggle={toggle}
-          onConfirm={() => {}}
-          className={styles.createUser}
-        >
-          <UserForm />
-        </Modal>
-      )}
     </article>
   );
 }

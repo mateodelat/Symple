@@ -131,4 +131,5 @@ export const formErrors = {
   min: "Este campo debe ser mayor o igual a {min}",
   max: "Este campo debe ser menor o igual a {max}",
   pattern: "El formato no es válido",
+  match: 'Las contraseñas deben de coincidir'
 };

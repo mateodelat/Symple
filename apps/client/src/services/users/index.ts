@@ -25,8 +25,9 @@ const create = async (payload: CreateUserDTO): Promise<User> => {
   const response = await customFetch({
     baseUrl,
     method: "POST",
-    options: {
-      body: JSON.stringify(payload),
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
     },
   });
   return response;

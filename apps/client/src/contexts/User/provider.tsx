@@ -18,9 +18,12 @@ export default function UserContextProvider({
 
   const [users, setUsers] = useState<AppState["users"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isAddingUser, setIsAddingUser] = useState<boolean>(false);
 
   const addUser = (enterprise: User): void => {
+    setIsAddingUser(false);
     setUsers([...users, enterprise]);
+    setIsAddingUser(true);
   };
 
   const setInitialUsers = (users: User[]): void => {
@@ -51,6 +54,7 @@ export default function UserContextProvider({
         isLoading,
         addUser,
         deleteUser,
+        isAddingUser,
       }}
     >
       {children}

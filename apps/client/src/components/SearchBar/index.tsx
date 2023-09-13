@@ -15,7 +15,7 @@ export default function SearchBar({
   useEffect(() => {
     const setFiltered = setTimeout(() => {
       handleData(filter);
-    }, 100);
+    }, 150);
     return () => {
       clearTimeout(setFiltered);
     };

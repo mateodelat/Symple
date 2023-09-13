@@ -9,6 +9,7 @@ const UserContext = createContext<UserContextType>({
   isLoading: true,
   addUser: (user) => {},
   deleteUser: (id) => {},
+  isAddingUser: false,
 });
 
 export const useUserContext = (): UserContextType => useContext(UserContext);
