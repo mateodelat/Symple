@@ -2,6 +2,7 @@ import As from "./As";
 import AddUsers from "./AddUsers";
 import AddUsersWrapper from "./AddUsersWrapper";
 import Aside from "./Aside";
+import BackButton from "./BackButton";
 import Button from "./Button";
 import Card from "./Card";
 import CardDraggable from "./CardDraggable";
@@ -35,6 +36,7 @@ export {
   AddUsers,
   AddUsersWrapper,
   Aside,
+  BackButton,
   Button,
   Card,
   CardDraggable,

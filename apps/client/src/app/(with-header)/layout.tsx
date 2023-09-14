@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Header } from "@components/index";
+import { BackButton, Header } from "@components/index";
 import styles from "@styles/WithHeader.module.scss";
 
 export default function WithHeaderLayout({
@@ -11,6 +11,7 @@ export default function WithHeaderLayout({
   return (
     <main className={styles.main}>
       <Header />
+      <BackButton />
       {children}
     </main>
   );
