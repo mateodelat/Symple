@@ -57,8 +57,7 @@ export class EnterprisesController {
   async getOne(
     @Param("id", CheckObjectIdPipe) id: string,
   ): Promise<Enterprise> {
-    const element = this.enterprisesService.getOne(id);
-    return await element;
+    return await this.enterprisesService.getOne(id);
   }
 
   @Post()

@@ -68,7 +68,16 @@ export interface Enterprise {
 
 export interface Department {
   id: string;
-  title: string;
+  name: string;
+}
+
+export interface CreateDepartmentDTO {
+  enterprise: string;
+  name: string;
+}
+
+export interface DepartmentFormData {
+  name: string;
 }
 
 export interface User {
@@ -174,6 +183,10 @@ export type CardUserEditProps = Pick<CardUserProps, "element" | "onClick"> & {
   isAdding?: boolean;
 };
 
+export type CardDepartmentProps = Omit<CardEnterpriseProps, "element"> & {
+  element: Department;
+};
+
 export type CustomField = Record<string, () => JSX.Element>;
 
 export interface FormProps {
@@ -269,6 +282,7 @@ export interface CreateEnterpriseDTO {
   telephone: string;
   amountOfEmployees: AmountOfEmployees;
   admins: string[];
+  departments: string[];
 }
 
 export enum AmountOfEmployees {
@@ -295,11 +309,11 @@ export type AddUsersWrapperProps = Pick<AddUsersProps, "addedUsers"> & {
   setAddedUsers: (value: SetStateAction<User[]>) => void;
 };
 
-export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
+export type EditEnterpriseDTO = Partial<Omit<CreateEnterpriseDTO, "admins">> & {
   id?: string;
   createdAt?: Date;
-  departments?: Department[];
-  admins: User[];
+  departments?: CreateDepartmentDTO[];
+  admins?: User[];
 };
 
 export interface EnterpriseFormProps {

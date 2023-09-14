@@ -48,6 +48,10 @@ export class EnterprisesService {
         role: 1,
         createdAt: 1,
       })
+      .populate("departments", {
+        name: 1,
+        createdAt: 1,
+      })
       .skip(offset)
       .limit(limit)
       .exec();
@@ -55,7 +59,17 @@ export class EnterprisesService {
   }
 
   async getOne(id: string): Promise<Enterprise> {
-    const element = await this.checkEnterpriseExists(id);
+    const element = await this.EnterpriseModel.findById(id)
+      .populate("admins", {
+        name: 1,
+        lastName: 1,
+        email: 1,
+        role: 1,
+        createdAt: 1,
+      })
+      .exec();
+    if (element === null)
+      throw new NotFoundException(`Enterprise with id #${id} not found`);
     return element;
   }
 

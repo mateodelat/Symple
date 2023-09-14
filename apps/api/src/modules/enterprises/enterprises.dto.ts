@@ -60,6 +60,14 @@ export class CreateEnterpriseDTO {
       "Arreglo con los ObjectIds de los administradores de la empresa; Campo obligatorio.",
   })
   readonly admins: Types.ObjectId[];
+
+  @IsArray()
+  @ArrayUnique()
+  @ApiProperty({
+    description:
+      "Arreglo con los ObjectIds de los departamentos de la empresa.",
+  })
+  readonly departments: Types.ObjectId[];
 }
 
 export class UpdateEnterpriseDTO extends PartialType(CreateEnterpriseDTO) {}

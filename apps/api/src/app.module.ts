@@ -9,6 +9,7 @@ import { UsersModule } from "./modules/users/users.module";
 import { AuthModule } from "./auth/auth.module";
 import { MulterModule } from "@nestjs/platform-express";
 import { UploadsModule } from "./modules/uploads/uploads.module";
+import { DepartmentsModule } from "./modules/departments/departments.module";
 import config from "./config";
 
 const nodeEnv: string = process.env.NODE_ENV ?? ".env";
@@ -32,6 +33,7 @@ const nodeEnv: string = process.env.NODE_ENV ?? ".env";
     UsersModule,
     AuthModule,
     UploadsModule,
+    DepartmentsModule,
     MulterModule.register({
       dest: "./uploads",
     }),
