@@ -5,3 +5,28 @@
   right: 10px;
   z-index: 4 !important;
 }
+
+.button{
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  background: transparent;
+  border: none;
+}
+
+ .action{
+    position: relative;
+    z-index: 4;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: start;  
+    border-radius: 0;
+    background: none;
+    color: black;
+    &:hover{
+      color: variables.$primary-green-color;
+      transition: all 0.15s ease-in-out;
+    }
+  }

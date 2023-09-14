@@ -201,8 +201,8 @@ export interface UploadFileProps {
 export type UseFile = Pick<UploadFileProps, "file" | "handleSelectedFile">;
 
 export interface PopupProps {
-  id: string;
-  toggleModal: (val?: boolean) => void;
+  toggleModal?: (val?: boolean) => void;
+  children: React.ReactNode;
 }
 
 export interface ModalProps {

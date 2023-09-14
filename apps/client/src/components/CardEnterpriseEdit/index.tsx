@@ -9,6 +9,7 @@ import {
 import { useToggle } from "@hooks/index";
 import { type CardEnterpriseEditProps, type Enterprise } from "@/types";
 import styles from "./CardEntepriseEdit.module.scss";
+import Link from "next/link";
 
 export default function CardEnterpriseEdit({
   element,
@@ -29,7 +30,29 @@ export default function CardEnterpriseEdit({
       }}
     >
       <VerticalButton onClick={togglePopup} className={styles.vertical} />
-      {isPopupOpen && <Popup id={element.id} toggleModal={toggleModal} />}
+      {isPopupOpen && (
+        <>
+          <Popup toggleModal={toggleModal}>
+            <Link
+              className={styles.action}
+              href={`/admin-panel/enterprise/${element.id}/edit`}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              Editar
+            </Link>
+          </Popup>
+          <button
+            className={styles.button}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              togglePopup();
+            }}
+          ></button>
+        </>
+      )}
       {isModalOpen && (
         <DeleteEnterprise
           isOpen={isModalOpen}

@@ -11,7 +11,7 @@ import CardUserEdit from "./CardUserEdit";
 import DeleteEnterprise from "./DeleteEnterprise";
 import DepartmentList from "./DepartmentList";
 import EnterpriseForm from "./EnterpriseForm";
-import EnterpriseList from "./EntepriseList";
+import EnterpriseList from "./EnterpriseList";
 import Form from "./Form";
 import Header from "./Header";
 import LinkButton from "./LinkButton";
