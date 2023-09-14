@@ -56,6 +56,7 @@ export default function Login(): JSX.Element {
               schema={loginSchema}
               onSubmit={handleLogin}
               className={styles.login_right_form}
+              fieldsClassName={styles.login_right_form_fields}
             />
           </div>
         </section>

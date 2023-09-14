@@ -1,17 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import { AddUsers, Button, CardUser, Form, Modal } from "@components/index";
-import { useToggle } from "@hooks/index";
+import { AddUsersWrapper, Form } from "@components/index";
 import {
   type AppState,
-  type User,
   type EnterpriseFormProps,
   type CreateEnterpriseDTO,
   type EditEnterpriseDTO,
   type FileState,
+  type CustomField,
 } from "@/types";
 import { useEnterpriseContext } from "@contexts/Enterprise/context";
 import { useUserContext } from "@contexts/User/context";
@@ -36,14 +34,18 @@ export default function EnterpriseForm({
     file: undefined,
   });
 
+  const [customFields, setCustomFields] = useState<CustomField>({
+    addUsers: () => (
+      <AddUsersWrapper addedUsers={addedUsers} setAddedUsers={setAddedUsers} />
+    ),
+  });
+
   const handleImage = (file: File): void => {
     setImage({ ...image, file });
   };
   const { back } = useRouter();
 
   const { users } = useUserContext();
-
-  const { value, toggle } = useToggle();
 
   const createEnterprise = async (
     data: CreateEnterpriseDTO | EditEnterpriseDTO,
@@ -103,23 +105,6 @@ export default function EnterpriseForm({
     }
   };
 
-  const addUser = (user: User): void => {
-    setAddedUsers([...addedUsers, user]);
-  };
-
-  const removeUser = (user: User): void => {
-    setAddedUsers(addedUsers.filter((addedUser) => addedUser.id !== user.id));
-  };
-
-  const confirmModal = (): void => {
-    toast.success("Usuarios añadidos correctamente.");
-    toggle();
-  };
-
-  const cancelModal = (): void => {
-    setAddedUsers([]);
-  };
-
   useEffect(() => {
     if (enterpriseToEdit !== undefined) {
       setSections((prev) => {
@@ -137,54 +122,28 @@ export default function EnterpriseForm({
     }
   }, [enterpriseToEdit, formMethods]);
 
+  useEffect(() => {
+    setCustomFields({
+      addUsers: () => (
+        <AddUsersWrapper
+          addedUsers={addedUsers}
+          setAddedUsers={setAddedUsers}
+        />
+      ),
+    });
+  }, [addedUsers]);
+
   return (
     <Form
       sections={sections}
       schema={enterpriseSchema}
       onSubmit={createEnterprise}
       className={styles.form}
+      fieldsClassName={styles.form_fields}
       setFormMethods={setFormMethods}
       handleFiles={handleImage}
       files={[image]}
-    >
-      <label htmlFor="addUsers" className={styles.label}>
-        <strong className={styles.label_text}>Añadir usuario</strong>
-      </label>
-      <Button
-        onClick={toggle}
-        className={styles.button}
-        props={{ name: "addUsers" }}
-      >
-        <span>Añadir usuario</span>
-        <Image
-          src={"/add_button.svg"}
-          width={20}
-          height={20}
-          alt="Botón para añadir usuarios a empresa"
-        />
-      </Button>
-      {!value && addedUsers.length > 0 && (
-        <div className={styles.addedUsers}>
-          <h4>Usuarios añadidos</h4>
-          {addedUsers.map((user) => (
-            <CardUser key={user.id} element={user} />
-          ))}
-        </div>
-      )}
-      {value && (
-        <Modal
-          isOpen={value}
-          toggle={toggle}
-          onConfirm={confirmModal}
-          onCancel={cancelModal}
-        >
-          <AddUsers
-            addedUsers={addedUsers}
-            addUser={addUser}
-            removeUser={removeUser}
-          />
-        </Modal>
-      )}
-    </Form>
+      customFields={customFields}
+    />
   );
 }

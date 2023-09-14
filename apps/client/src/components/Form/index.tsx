@@ -14,10 +14,12 @@ export default function Form({
   buttonSubmit = "Enviar",
   onSubmit,
   className = "",
+  fieldsClassName = "",
   children,
   setFormMethods,
   files,
   handleFiles,
+  customFields,
 }: FormProps): JSX.Element {
   const formMethods = useForm({
     resolver: yupResolver(schema),
@@ -47,69 +49,92 @@ export default function Form({
           return (
             <div key={title.name} className={styles.container_form_section}>
               <As name={title.name} as={title.as} style={title.style} />
-              {fields.map(
-                ({
-                  name,
-                  type = "text",
-                  label,
-                  placeholder,
-                  elementType,
-                  options,
-                  props,
-                }) => (
-                  <div key={name} className={styles.container_form_wrapper}>
-                    <label
-                      htmlFor={name}
-                      className={styles.container_form_wrapper_label}
+              <div
+                className={`${styles.container_form_section_fields} ${fieldsClassName}`}
+              >
+                {fields.map(
+                  ({
+                    name,
+                    type = "text",
+                    label,
+                    placeholder,
+                    elementType,
+                    options,
+                    props,
+                    style = {},
+                  }) => (
+                    <div
+                      key={name}
+                      className={styles.container_form_section_wrapper}
+                      style={{ ...style }}
                     >
-                      <strong
-                        className={styles.container_form_wrapper_label_text}
+                      <label
+                        htmlFor={name}
+                        className={styles.container_form_section_wrapper_label}
                       >
-                        {label}
-                      </strong>
-                    </label>
-                    {elementType === "select" ? (
-                      <select
-                        id={name}
-                        {...props}
-                        {...register(name)}
-                        className={styles.container_form_wrapper_input}
-                      >
-                        {options?.map(({ id, label }) => {
-                          return (
-                            <option key={id} value={id}>
-                              {label}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    ) : elementType === "file" ? (
-                      <UploadFile
-                        file={
-                          files?.find((file) => file.name === name) as FileState
-                        }
-                        handleSelectedFile={handleFiles ?? (() => {})}
-                        id={name}
-                        props={props ?? {}}
-                      />
-                    ) : (
-                      <input
-                        id={name}
-                        type={type}
-                        placeholder={placeholder}
-                        {...register(name)}
-                        {...props}
-                        className={styles.container_form_wrapper_input}
-                      />
-                    )}
-                    {errors[name] !== null && (
-                      <span className={styles.container_form_wrapper_error}>
-                        {errors[name]?.message as string}
-                      </span>
-                    )}
-                  </div>
-                ),
-              )}
+                        <strong
+                          className={
+                            styles.container_form_section_wrapper_label_text
+                          }
+                        >
+                          {label}
+                        </strong>
+                      </label>
+                      {elementType === "select" ? (
+                        <select
+                          id={name}
+                          {...props}
+                          {...register(name)}
+                          className={
+                            styles.container_form_section_wrapper_input
+                          }
+                        >
+                          {options?.map(({ id, label }) => {
+                            return (
+                              <option key={id} value={id}>
+                                {label}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      ) : elementType === "file" ? (
+                        <UploadFile
+                          file={
+                            files?.find(
+                              (file) => file.name === name,
+                            ) as FileState
+                          }
+                          handleSelectedFile={handleFiles ?? (() => {})}
+                          id={name}
+                          props={props ?? {}}
+                        />
+                      ) : elementType === "custom" ? (
+                        customFields?.[name]()
+                      ) : (
+                        <input
+                          id={name}
+                          type={type}
+                          placeholder={placeholder}
+                          {...register(name)}
+                          {...props}
+                          className={
+                            styles.container_form_section_wrapper_input
+                          }
+                        />
+                      )}
+                      {errors[name] !== null && (
+                        <span
+                          className={
+                            styles.container_form_section_wrapper_error
+                          }
+                        >
+                          {errors[name]?.message as string}
+                        </span>
+                      )}
+                    </div>
+                  ),
+                )}
+              </div>
             </div>
           );
         })}

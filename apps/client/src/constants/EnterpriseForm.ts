@@ -23,6 +23,7 @@ export const enterpriseFields: Section[] = [
         name: "name",
         label: "Nombre",
         placeholder: "Nombre",
+        style: { gridArea: "name" },
       },
       {
         name: "image",
@@ -31,21 +32,25 @@ export const enterpriseFields: Section[] = [
         props: {
           accept: "image/jpeg,image/png",
         },
+        style: { gridArea: "image" },
       },
       {
         name: "turn",
         label: "Giro",
         placeholder: "Giro",
+        style: { gridArea: "turn" },
       },
       {
         name: "telephone",
         label: "Teléfono de contacto",
         placeholder: "Teléfono de contacto",
+        style: { gridArea: "telephone" },
       },
       {
         name: "address",
         label: "Dirección",
         placeholder: "Dirección",
+        style: { gridArea: "address" },
       },
       {
         name: "amountOfEmployees",
@@ -55,6 +60,13 @@ export const enterpriseFields: Section[] = [
           label: value,
         })),
         elementType: "select",
+        style: { gridArea: "amountOfEmployees" },
+      },
+      {
+        name: "addUsers",
+        label: "Añadir usuarios",
+        style: { gridArea: "addUsers" },
+        elementType: "custom",
       },
     ],
   },

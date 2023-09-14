@@ -1,6 +1,7 @@
 import type React from "react";
 import { type ErrorCode } from "./constants/Errors";
 import type * as yup from "yup";
+import { type SetStateAction } from "react";
 
 export interface Field {
   name: string;
@@ -36,7 +37,8 @@ export interface FormField {
   props?: Record<string, string | boolean>;
   options?: Option[];
   fileProps?: FileProps;
-  elementType?: "select" | "file";
+  elementType?: "select" | "file" | "custom";
+  style?: Record<string, string | boolean>;
   required?: boolean;
 }
 
@@ -61,7 +63,12 @@ export interface Enterprise {
   amountOfEmployees: AmountOfEmployees;
   admins: User[];
   createdAt: Date;
-  departments?: any[];
+  departments: Department[];
+}
+
+export interface Department {
+  id: string;
+  title: string;
 }
 
 export interface User {
@@ -133,7 +140,7 @@ export interface UserCardComponentProps {
 export type ServiceType = "enterpriseService" | "userService";
 
 export interface ListProps {
-  list: Enterprise[] | User[];
+  list: Enterprise[] | User[] | Department[];
   canCreateElement: boolean;
   newElement?: string;
   newElementPage?: string;
@@ -167,10 +174,7 @@ export type CardUserEditProps = Pick<CardUserProps, "element" | "onClick"> & {
   isAdding?: boolean;
 };
 
-export interface CustomField {
-  required: boolean;
-  value: string | any[];
-}
+export type CustomField = Record<string, () => JSX.Element>;
 
 export interface FormProps {
   sections: Section[];
@@ -178,10 +182,12 @@ export interface FormProps {
   buttonSubmit?: string;
   onSubmit: (values: any) => any;
   className?: string;
+  fieldsClassName?: string;
   children?: React.ReactNode;
   setFormMethods?: (methods: any) => void;
   handleFiles?: (file: File) => void;
   files?: FileState[];
+  customFields?: CustomField;
 }
 
 export interface UploadFileProps {
@@ -285,9 +291,14 @@ export interface AddUsersProps {
   removeUser: (user: User) => void;
 }
 
+export type AddUsersWrapperProps = Pick<AddUsersProps, "addedUsers"> & {
+  setAddedUsers: (value: SetStateAction<User[]>) => void;
+};
+
 export type EditEnterpriseDTO = Omit<CreateEnterpriseDTO, "admins"> & {
   id?: string;
   createdAt?: Date;
+  departments?: Department[];
   admins: User[];
 };
 
@@ -319,4 +330,12 @@ export interface UserFormData {
   lastName: string;
   password: string;
   repeatPassword: string;
+}
+
+export interface DepartmentListProps {
+  enterprise: Enterprise;
+}
+
+export interface LoaderProps {
+  className?: string;
 }

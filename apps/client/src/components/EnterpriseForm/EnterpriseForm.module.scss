@@ -2,33 +2,25 @@
 
 .form {
   width: 85%;
-}
-
-.label {
-  color: variables.$primary-black-color;
-  &_text {
-    font-weight: 500;
+  &_fields{
+    grid-template-areas: 'name'
+                         'image'
+                         'turn'
+                         'telephone'
+                         'address'
+                         'amountOfEmployees'
+                         'addUsers'
   }
 }
 
-.button {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  align-items: center;
-  padding: 1rem;
-  border: 1px solid variables.$primary-gray-color;
-  border-radius: 1.5rem;
-  color: variables.$tertiary-blue-color;
-  background: none;
-  &_error {
-    padding: 0 0.5rem;
-    color: red;
+@media screen and (min-width: 1024px) {
+  .form {
+    &_fields{
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas: 'name turn'
+                          'telephone address'
+                          'amountOfEmployees none'
+                          'image addUsers'
+    }
   }
-}
-
-.addedUsers {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
 }

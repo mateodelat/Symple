@@ -5,3 +5,9 @@ export interface QueryGetAll {
   offset: number;
   user: User;
 }
+
+export interface Department {
+  id: string;
+  name: string;
+  subdepartments: Department[];
+}

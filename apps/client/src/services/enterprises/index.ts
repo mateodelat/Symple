@@ -40,6 +40,7 @@ const update = async (
   const data = { ...payload };
   delete data.id;
   delete data.createdAt;
+  delete data.departments;
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
     method: "PATCH",

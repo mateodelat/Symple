@@ -26,13 +26,17 @@ export default function List({
           label={newElement ?? ""}
         />
       )}
-      <div className={`${styles.list_wrapper} ${className}`}>
-        {list.length > 0 ? (
-          list.map((element) => <Card key={element.id} element={element} />)
-        ) : (
-          <h2>{listEmptyMessage}</h2>
-        )}
-      </div>
+      {list.length > 0 ? (
+        <>
+          <div className={`${styles.list_wrapper} ${className}`}>
+            {list.map((element) => (
+              <Card key={element.id} element={element} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <h2>{listEmptyMessage}</h2>
+      )}
     </section>
   );
 }

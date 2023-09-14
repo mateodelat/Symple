@@ -1,5 +1,6 @@
 import As from "./As";
 import AddUsers from "./AddUsers";
+import AddUsersWrapper from "./AddUsersWrapper";
 import Aside from "./Aside";
 import Button from "./Button";
 import Card from "./Card";
@@ -8,6 +9,7 @@ import CardEnterpriseEdit from "./CardEnterpriseEdit";
 import CardUser from "./CardUser";
 import CardUserEdit from "./CardUserEdit";
 import DeleteEnterprise from "./DeleteEnterprise";
+import DepartmentList from "./DepartmentList";
 import EnterpriseForm from "./EnterpriseForm";
 import EnterpriseList from "./EntepriseList";
 import Form from "./Form";
@@ -28,6 +30,7 @@ import VerticalButton from "./VerticalButton";
 export {
   As,
   AddUsers,
+  AddUsersWrapper,
   Aside,
   Button,
   Card,
@@ -36,6 +39,7 @@ export {
   CardUser,
   CardUserEdit,
   DeleteEnterprise,
+  DepartmentList,
   EnterpriseForm,
   EnterpriseList,
   Form,
