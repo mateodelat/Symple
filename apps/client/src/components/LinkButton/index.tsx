@@ -6,12 +6,12 @@ import { type LinkButtonProps } from "@/types";
 
 export default function LinkButton({
   href,
-  label,
+  children,
   className = "",
 }: LinkButtonProps): JSX.Element {
   return (
     <Link href={href} className={`${styles.link} ${className}`}>
-      {label}
+      {children}
     </Link>
   );
 }

@@ -1,12 +1,10 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 import { LinkButton } from "@components/index";
 import { type ListProps } from "@/types";
 import styles from "./List.module.scss";
-import { useEffect } from "react";
 
 export default function List({
   list,
@@ -18,22 +16,16 @@ export default function List({
   className = "",
 }: ListProps): JSX.Element {
   const { data: session } = useSession();
-  const { prefetch } = useRouter();
 
-  useEffect(() => {
-    if (newElementPage !== undefined) prefetch(newElementPage);
-  }, []);
   return (
     <section className={styles.list}>
       {canCreateElement &&
         session?.user.role === "admin" &&
         newElementPage !== undefined &&
         newElement !== undefined && (
-          <LinkButton
-            className={styles.list_button}
-            href={newElementPage}
-            label={newElement}
-          />
+          <LinkButton className={styles.list_button} href={newElementPage}>
+            {newElement}
+          </LinkButton>
         )}
       {list.length > 0 ? (
         <>

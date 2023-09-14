@@ -74,35 +74,47 @@ export default function EnterpriseForm({
         );
       }
     }
-    let tID = "";
 
-    try {
-      if (enterpriseToEdit?.id === undefined) {
-        tID = toast.loading("Actualizando empresa");
-
-        const response = await enterpriseService.create(
-          data as CreateEnterpriseDTO,
-        );
-        const newEnterprise = { ...response, admins };
-        addEnterprise(newEnterprise);
-        toast.success(`Empresa ${newEnterprise.name} creada correctamente.`);
-      } else {
-        tID = toast.loading("Actualizando empresa");
-        const response = await enterpriseService.update(
-          enterpriseToEdit.id,
-          data as EditEnterpriseDTO,
-        );
-        response.admins = admins;
-        updateEnterprise(enterpriseToEdit.id, response);
-        toast.success(`Empresa ${response.name} actualizada correctamente.`);
-      }
+    if (enterpriseToEdit?.id === undefined) {
+      await toast.promise(
+        enterpriseService.create(data as CreateEnterpriseDTO),
+        {
+          loading: "Creando empresa...",
+          error: (err: any) =>
+            `Ocurrió un error al crear la empresa: ${err.message as string}`,
+          success: (response) => {
+            const newEnterprise = { ...response, admins };
+            addEnterprise(newEnterprise);
+            return `Empresa ${newEnterprise.name} creada correctamente.`;
+          },
+        },
+      );
       setTimeout(() => {
         back();
       }, 300);
-    } catch (e: any) {
-      toast.error(e.message);
-    } finally {
-      toast.dismiss(tID);
+    } else {
+      await toast.promise(
+        enterpriseService.update(
+          enterpriseToEdit.id,
+          data as EditEnterpriseDTO,
+        ),
+        {
+          loading: "Actualizando empresa...",
+          error: (err: any) =>
+            `Ocurrió un error al actualizar la empresa: ${
+              err.message as string
+            }`,
+          success: (response) => {
+            response.admins = admins;
+            if (enterpriseToEdit.id !== undefined)
+              updateEnterprise(enterpriseToEdit.id, response);
+            return `Empresa ${response.name} actualizada correctamente.`;
+          },
+        },
+      );
+      setTimeout(() => {
+        back();
+      }, 300);
     }
   };
 
@@ -121,6 +133,12 @@ export default function EnterpriseForm({
         if (enterpriseToEdit.admins !== undefined)
           setAddedUsers(enterpriseToEdit.admins);
       }
+    } else {
+      setSections((prev) => {
+        const newSections = [...prev];
+        newSections[0].title.name = "Crear empresa";
+        return newSections;
+      });
     }
   }, [enterpriseToEdit, formMethods]);
 
