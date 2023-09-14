@@ -1,5 +1,3 @@
-import NextAuth, { DefaultSession } from "next-auth";
-import { JWT } from "next-auth/jwt";
 import { type User } from "@/types";
 
 declare module "next-auth" {

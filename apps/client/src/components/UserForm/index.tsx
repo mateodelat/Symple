@@ -7,7 +7,7 @@ import { Form } from "@components/index";
 import { userService } from "@/services";
 import { useUserContext } from "@/contexts";
 import { sections, schema } from "@constants/UserForm";
-import { CreateUserDTO, UserFormData } from "@/types";
+import { type CreateUserDTO, type UserFormData } from "@/types";
 import styles from "./UserForm.module.scss";
 
 export default function UserForm(): JSX.Element {

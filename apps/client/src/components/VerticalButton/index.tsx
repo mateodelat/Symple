@@ -5,7 +5,7 @@ import styles from "./VerticalButton.module.scss";
 import React from "react";
 
 export default function VerticalButton({
-  onClick,
+  onClick = () => {},
   className = "",
 }: VerticalButtonProps): JSX.Element {
   const handleClick = (e: React.MouseEvent): void => {

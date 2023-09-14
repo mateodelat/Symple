@@ -1,7 +1,6 @@
 @use "@styles/variables";
 
 .form {
-  width: 85%;
   &_fields{
     grid-template-areas: 'name'
                          'image'

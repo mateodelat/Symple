@@ -1,4 +1,4 @@
-import { type Session } from "@/types";
+import { type Session } from "next-auth";
 import { returnResponse } from "@utils/response";
 
 const baseUrl = `${process.env.SERVER_URL as string}/auth`;

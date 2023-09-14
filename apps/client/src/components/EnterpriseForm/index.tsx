@@ -52,6 +52,7 @@ export default function EnterpriseForm({
   ): Promise<void> => {
     const ids = addedUsers.map((user) => user.id);
     data.admins = ids;
+    data.departments = [];
     const admins = users
       .filter((user) => ids.includes(user.id))
       .map(({ enterprises, ...user }) => ({ ...user }));
@@ -117,7 +118,8 @@ export default function EnterpriseForm({
       }
       if (formMethods !== null) {
         formMethods.reset(enterpriseToEdit);
-        setAddedUsers(enterpriseToEdit.admins);
+        if (enterpriseToEdit.admins !== undefined)
+          setAddedUsers(enterpriseToEdit.admins);
       }
     }
   }, [enterpriseToEdit, formMethods]);
