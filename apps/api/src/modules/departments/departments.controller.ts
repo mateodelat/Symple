@@ -11,15 +11,25 @@ import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentService) {}
 
+  @Get()
+  @ApiOperation({ summary: "Lista de todos los departamentos" })
+  @ApiBearerAuth()
+  async getAll(): Promise<Department[]> {
+    return await this.departmentsService.getAll();
+  }
+
   @Get(":id")
   @ApiOperation({ summary: "Lista de departamentos de una empresa" })
   @ApiBearerAuth()
-  async getAll(@Param("id", CheckObjectIdPipe) id): Promise<Department[]> {
-    return await this.departmentsService.getAll(id);
+  async getAllPerEnterprise(
+    @Param("id", CheckObjectIdPipe) id,
+  ): Promise<Department[]> {
+    return await this.departmentsService.getAllPerEnterprise(id);
   }
 
   @Post()
   @ApiOperation({ summary: "Crear un nuevo departamento" })
+  @ApiBearerAuth()
   async create(@Body() payload: CreateDepartmentDTO): Promise<Department> {
     return await this.departmentsService.create(payload);
   }

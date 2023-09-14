@@ -13,6 +13,16 @@ export class DepartmentService {
     private readonly enterprisesService: EnterprisesService,
   ) {}
 
+  async getAll(): Promise<Department[]> {
+    const elements = await this.DepartmentModel.find({}).exec();
+    return elements;
+  }
+
+  async getAllPerEnterprise(id: string): Promise<Department[]> {
+    const elements = await this.DepartmentModel.find({ enterprise: id }).exec();
+    return elements;
+  }
+
   async create(payload: CreateDepartmentDTO): Promise<Department> {
     const isValidObjectId = this.enterprisesService.checkObjectId(
       payload.enterprise,
@@ -31,10 +41,5 @@ export class DepartmentService {
     });
 
     return newDepartment;
-  }
-
-  async getAll(id: string): Promise<Department[]> {
-    const elements = await this.DepartmentModel.find({ enterprise: id }).exec();
-    return elements;
   }
 }

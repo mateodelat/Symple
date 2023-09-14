@@ -15,8 +15,28 @@ const create = async (payload: CreateDepartmentDTO): Promise<Department> => {
   return response;
 };
 
+const getAll = async (): Promise<Department[]> => {
+  const response = await customFetch({
+    baseUrl,
+    method: "GET",
+  });
+  return response;
+};
+
+const getAllPerEnterprise = async (
+  enterpriseId: string,
+): Promise<Department[]> => {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${enterpriseId}`,
+    method: "GET",
+  });
+  return response;
+};
+
 const departmentsService = {
   create,
+  getAll,
+  getAllPerEnterprise,
 };
 
 export default departmentsService;

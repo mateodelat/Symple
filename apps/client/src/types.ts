@@ -67,8 +67,10 @@ export interface Enterprise {
 }
 
 export interface Department {
-  id: string;
   name: string;
+  enterprise: string;
+  createdAt: Date;
+  id: string;
 }
 
 export interface CreateDepartmentDTO {
@@ -250,11 +252,22 @@ export interface UserContextType {
   isAddingUser: boolean;
 }
 
+export interface DepartmentContextType {
+  departments: Department[];
+  isLoading: boolean;
+  setInitialDepartments: (departments: Department[]) => void;
+  addDepartment: (department: Department) => void;
+  updateDepartment: (id: string, department: Department) => void;
+  deleteDepartment: (id: string) => void;
+}
+
 export interface EntepriseContextProviderProps {
   children: React.ReactNode;
 }
 
 export type UserContextProviderProps = EntepriseContextProviderProps;
+
+export type DepartmentContextProviderProps = EntepriseContextProviderProps;
 
 export type DeleteEnterpriseProps = Omit<
   ModalProps,
@@ -265,13 +278,14 @@ export type DeleteEnterpriseProps = Omit<
 
 export interface LinkButtonProps {
   href: string;
-  label: string;
+  children: React.ReactNode;
   className?: string;
 }
 
 export interface AppState {
   enterprises: Enterprise[];
   users: User[];
+  departments: Department[];
 }
 
 export interface CreateEnterpriseDTO {
@@ -347,7 +361,8 @@ export interface UserFormData {
 }
 
 export interface DepartmentListProps {
-  enterprise: Enterprise;
+  departments: Department[];
+  enterpriseId: string;
 }
 
 export interface LoaderProps {

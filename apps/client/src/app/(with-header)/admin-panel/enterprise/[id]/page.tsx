@@ -1,10 +1,10 @@
 "use client";
 import { notFound } from "next/navigation";
 
-import { useEnterpriseContext } from "@contexts/Enterprise/context";
+import { useDepartmentContext, useEnterpriseContext } from "@contexts/index";
 import { DepartmentList, Loader } from "@components/index";
 import { useEffect, useState } from "react";
-import { type Enterprise } from "@/types";
+import { type Department, type Enterprise } from "@/types";
 import styles from "./EnterprisePage.module.scss";
 
 export default function EnterprisePage({
@@ -12,8 +12,14 @@ export default function EnterprisePage({
 }: {
   params: { id: string };
 }): JSX.Element {
+  const { departments, isLoading: departmentsAreLoading } =
+    useDepartmentContext();
   const { enterprises, isLoading } = useEnterpriseContext();
+
   const [enterprise, setEnterprise] = useState<Enterprise | undefined>();
+  const [filteredDepartments, setFilteredDepartments] = useState<Department[]>(
+    [],
+  );
 
   useEffect(() => {
     if (!isLoading) {
@@ -21,9 +27,17 @@ export default function EnterprisePage({
       if (enterpriseFound !== undefined) setEnterprise(enterpriseFound);
       else notFound();
     }
-  });
+    if (!departmentsAreLoading)
+      setFilteredDepartments(
+        departments.filter((d) => d.enterprise === params.id),
+      );
+  }, [isLoading, departmentsAreLoading]);
+
   return enterprise !== undefined ? (
-    <DepartmentList enterprise={enterprise} />
+    <DepartmentList
+      departments={filteredDepartments}
+      enterpriseId={params.id}
+    />
   ) : (
     <div className={styles.container}>
       <Loader className={styles.container_loader} />

@@ -14,7 +14,7 @@ import {
 export default function EnterpriseContextProvider({
   children,
 }: EntepriseContextProviderProps): JSX.Element {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const [enterprises, setEnterprises] = useState<AppState["enterprises"]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
