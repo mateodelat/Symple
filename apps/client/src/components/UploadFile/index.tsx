@@ -58,6 +58,7 @@ export default function UploadFile({
         onClick={() => {
           element?.click();
         }}
+        className={styles.container_button}
       >
         {text}
       </Button>

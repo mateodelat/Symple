@@ -38,7 +38,7 @@ export default function AddUsersWrapper({
   };
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <Button
         onClick={toggle}
         className={styles.button}

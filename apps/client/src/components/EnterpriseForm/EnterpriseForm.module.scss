@@ -20,7 +20,19 @@
       grid-template-areas: 'name turn'
                           'telephone address'
                           'amountOfEmployees none'
-                          'image addUsers'
+                          'image image'
+                          'addUsers addUsers'
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .form {
+    &_fields{
+      grid-template-columns: repeat(3, 1fr) !important;
+      grid-template-areas: 'name turn telephone'
+                          'address amountOfEmployees none'
+                          'image addUsers none';
     }
   }
 }

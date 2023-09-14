@@ -77,6 +77,17 @@
   }
 }
 
+@media screen and (min-width: 768px){
+  .container {
+    &_form {
+      &_button{
+        font-size: 1.5rem;
+        padding: 1.5rem 0;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 1024px){
   .container{
     &_form{
@@ -86,7 +97,33 @@
           grid-template-columns: repeat(2, 1fr);
           gap: 2rem;
         }
-        
+      }
+      &_button{
+        width: 50%;
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1920px){
+  .container {
+    &_form {
+      &_section {
+        &_wrapper {
+          
+          &_input {
+            padding: 2rem;
+            font-size: 1.6rem;
+          }
+          &_error {
+            margin-top: 1rem;
+          }
+        }
+      }
+      &_button{
+        width: 33% !important;
+        font-size: 1.6rem;
       }
     }
   }
