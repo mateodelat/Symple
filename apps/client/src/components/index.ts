@@ -4,11 +4,14 @@ import AddUsersWrapper from "./AddUsersWrapper";
 import Aside from "./Aside";
 import Button from "./Button";
 import Card from "./Card";
+import CardDraggable from "./CardDraggable";
+import CardDepartment from "./CardDepartment";
 import CardEnterprise from "./CardEnterprise";
 import CardEnterpriseEdit from "./CardEnterpriseEdit";
 import CardUser from "./CardUser";
 import CardUserEdit from "./CardUserEdit";
 import DeleteEnterprise from "./DeleteEnterprise";
+import DepartmentForm from "./DepartmentForm";
 import DepartmentList from "./DepartmentList";
 import EnterpriseForm from "./EnterpriseForm";
 import EnterpriseList from "./EnterpriseList";
@@ -34,10 +37,13 @@ export {
   Aside,
   Button,
   Card,
+  CardDraggable,
+  CardDepartment,
   CardEnterprise,
   CardEnterpriseEdit,
   CardUser,
   CardUserEdit,
+  DepartmentForm,
   DeleteEnterprise,
   DepartmentList,
   EnterpriseForm,

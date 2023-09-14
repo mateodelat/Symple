@@ -1,9 +1,9 @@
 "use client";
 
 // import { useSession } from "next-auth/react";
-import { CardEnterpriseEdit, List } from "@components/index";
+
+import { CardDepartment, List } from "@components/index";
 import { type DepartmentListProps } from "@/types";
-// import { useEffect } from "react";
 
 export default function DepartmentList({
   enterprise,
@@ -14,10 +14,10 @@ export default function DepartmentList({
     <List
       list={enterprise.departments}
       newElement="Crear departamento"
-      newElementPage="/"
+      newElementPage={`/admin-panel/enterprise/${enterprise.id}/create-department`}
       listEmptyMessage="No existen departamentos en esta empresa..."
       canCreateElement={true}
-      Card={CardEnterpriseEdit}
+      Card={CardDepartment}
     />
   );
 }
