@@ -4,7 +4,10 @@ import { Model } from "mongoose";
 
 import { Department } from "./department.entity";
 import { EnterprisesService } from "@modules/enterprises/enterprises.service";
-import { type CreateDepartmentDTO } from "./departments.dto";
+import {
+  UpdateDepartmentDTO,
+  type CreateDepartmentDTO,
+} from "./departments.dto";
 @Injectable()
 export class DepartmentService {
   constructor(
@@ -42,4 +45,8 @@ export class DepartmentService {
 
     return newDepartment;
   }
+
+  /* async update(id: string, payload: UpdateDepartmentDTO): Promise<Department> {
+    const elementToUpdate = await this.
+  } */
 }

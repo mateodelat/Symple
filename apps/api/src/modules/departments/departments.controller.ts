@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger";
 
 import { DepartmentService } from "./departments.service";
 import { type Department } from "./department.entity";
-import { CreateDepartmentDTO } from "./departments.dto";
+import { CreateDepartmentDTO, UpdateDepartmentDTO } from "./departments.dto";
 import { CheckObjectIdPipe } from "@/common/check-object-id/check-object-id.pipe";
 
 @Controller("departments")
@@ -33,4 +33,14 @@ export class DepartmentsController {
   async create(@Body() payload: CreateDepartmentDTO): Promise<Department> {
     return await this.departmentsService.create(payload);
   }
+
+  /* @Patch(":id")
+  @ApiOperation({ summary: "Editar un departamento" })
+  @ApiBearerAuth()
+  async update(
+    @Body() payload: UpdateDepartmentDTO,
+    @Param("id", CheckObjectIdPipe) id: string,
+  ): Promise<Department> {
+    return await this.departmentsService.update(id, payload);
+  } */
 }

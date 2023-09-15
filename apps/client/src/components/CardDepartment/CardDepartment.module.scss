@@ -1,0 +1,14 @@
+@use "@styles/variables";
+
+.department {
+  width: 100%;
+  padding: 1rem;
+  &_sub {
+    width: 90%;
+    margin-left: auto;
+    &_last {
+      width: 90%;
+      margin-left: auto;
+    }
+  }
+}

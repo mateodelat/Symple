@@ -1,7 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-
 import { LinkButton } from "@components/index";
 import { type ListProps } from "@/types";
 import styles from "./List.module.scss";
@@ -15,12 +13,9 @@ export default function List({
   Card,
   className = "",
 }: ListProps): JSX.Element {
-  const { data: session } = useSession();
-
   return (
     <section className={styles.list}>
       {canCreateElement &&
-        session?.user.role === "admin" &&
         newElementPage !== undefined &&
         newElement !== undefined && (
           <LinkButton className={styles.list_button} href={newElementPage}>

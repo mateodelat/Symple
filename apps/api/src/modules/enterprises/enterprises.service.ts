@@ -108,6 +108,15 @@ export class EnterprisesService {
   }): Promise<Enterprise> {
     const elementToUpdate = await this.checkEnterpriseExists(id);
     elementToUpdate.$set(payload);
+    if (payload?.admins != null && payload.admins.length > 0) {
+      for (const userId of payload.admins) {
+        const user = await this.usersService.checkUserExits(userId);
+        await this.usersService.update({
+          id: userId,
+          payload: { enterprises: [...user.enterprises, userId] },
+        });
+      }
+    }
     return await elementToUpdate.save();
   }
 

@@ -1,4 +1,8 @@
-import { type Department, type CreateDepartmentDTO } from "@/types";
+import {
+  type Department,
+  type CreateDepartmentDTO,
+  type EditDepartmentDTO,
+} from "@/types";
 import { customFetch } from "@lib/fetch";
 
 const baseUrl = `${process.env.SERVER_URL ?? ""}/departments`;
@@ -7,6 +11,21 @@ const create = async (payload: CreateDepartmentDTO): Promise<Department> => {
   const response = await customFetch({
     baseUrl,
     method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+const update = async (
+  payload: EditDepartmentDTO,
+  enterpriseId: string,
+): Promise<Department> => {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${enterpriseId}`,
+    method: "PATCH",
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
@@ -35,6 +54,7 @@ const getAllPerEnterprise = async (
 
 const departmentsService = {
   create,
+  update,
   getAll,
   getAllPerEnterprise,
 };

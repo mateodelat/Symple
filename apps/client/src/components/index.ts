@@ -1,4 +1,6 @@
 import As from "./As";
+import AddDepartment from "./AddDepartment";
+import AddSubDepartment from "./AddSubDepartment";
 import AddUsers from "./AddUsers";
 import AddUsersWrapper from "./AddUsersWrapper";
 import Aside from "./Aside";
@@ -7,6 +9,7 @@ import Button from "./Button";
 import Card from "./Card";
 import CardDraggable from "./CardDraggable";
 import CardDepartment from "./CardDepartment";
+import CardDepartmentEdit from "./CardDepartmentEdit";
 import CardEnterprise from "./CardEnterprise";
 import CardEnterpriseEdit from "./CardEnterpriseEdit";
 import CardUser from "./CardUser";
@@ -33,6 +36,8 @@ import VerticalButton from "./VerticalButton";
 
 export {
   As,
+  AddDepartment,
+  AddSubDepartment,
   AddUsers,
   AddUsersWrapper,
   Aside,
@@ -41,6 +46,7 @@ export {
   Card,
   CardDraggable,
   CardDepartment,
+  CardDepartmentEdit,
   CardEnterprise,
   CardEnterpriseEdit,
   CardUser,

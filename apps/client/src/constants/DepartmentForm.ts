@@ -1,12 +1,7 @@
 import { type Section } from "@/types";
-import { formErrors } from "@/constants/Errors";
 import * as yup from "yup";
 
-const { required } = formErrors;
-
-export const schema = yup.object({
-  name: yup.string().required(required),
-});
+export const schema = yup.object({});
 
 export const sections: Section[] = [
   {
@@ -16,9 +11,9 @@ export const sections: Section[] = [
     },
     fields: [
       {
-        name: "name",
-        label: "Nombre",
-        placeholder: "Nombre",
+        name: "department",
+        label: "Nombre del departamento",
+        elementType: "custom",
       },
     ],
   },

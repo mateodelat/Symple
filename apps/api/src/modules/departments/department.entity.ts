@@ -1,3 +1,4 @@
+import { type SubDepartment } from "@/types/models/Department";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 
@@ -16,6 +17,9 @@ export class Department extends Document {
 
   @Prop({ required: true, type: Types.ObjectId, ref: "Enterprise" })
   enterprise: Types.ObjectId;
+
+  @Prop()
+  subDepartments: SubDepartment[];
 
   @Prop({ required: true })
   createdAt: Date;

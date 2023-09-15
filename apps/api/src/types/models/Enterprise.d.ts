@@ -9,5 +9,5 @@ export interface QueryGetAll {
 export interface Department {
   id: string;
   name: string;
-  subdepartments: Department[];
+  subDepartments: Department[];
 }

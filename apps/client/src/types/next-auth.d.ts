@@ -1,9 +1,9 @@
-import { type User } from "@/types";
+import { type SessionUser } from "@/types";
 
 declare module "next-auth" {
   interface Session {
     accessToken: string;
-    user: User;
+    user: SessionUser;
   }
 }
 

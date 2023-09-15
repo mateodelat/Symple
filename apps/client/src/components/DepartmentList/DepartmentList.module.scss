@@ -1,0 +1,9 @@
+.container {
+  display: grid;
+  gap: 1rem;
+  &_button {
+    border-radius: 5px;
+    padding: 0.5rem 2rem;
+    font-size: 1.6rem;
+  }
+}

@@ -1,7 +1,7 @@
 import type React from "react";
 import { type ErrorCode } from "./constants/Errors";
 import type * as yup from "yup";
-import { type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 export interface Field {
   name: string;
@@ -73,10 +73,11 @@ export interface Department {
   id: string;
 }
 
-export interface CreateDepartmentDTO {
+export type CreateDepartmentDTO = DepartmentState & {
   enterprise: string;
-  name: string;
-}
+};
+
+export type EditDepartmentDTO = Partial<CreateDepartmentDTO>;
 
 export interface DepartmentFormData {
   name: string;
@@ -90,6 +91,16 @@ export interface User {
   email: string;
   role: string;
   enterprises?: Enterprise[];
+}
+
+export interface SessionUser {
+  id: string;
+  name: string;
+  lastName: string;
+  avatar?: string;
+  email: string;
+  role: string;
+  enterprises?: string[];
 }
 
 export interface CreateUserDTO {
@@ -185,8 +196,12 @@ export type CardUserEditProps = Pick<CardUserProps, "element" | "onClick"> & {
   isAdding?: boolean;
 };
 
+export type CardDepartmentEditProps = Omit<CardDepartmentProps, "children">;
+
 export type CardDepartmentProps = Omit<CardEnterpriseProps, "element"> & {
-  element: Department;
+  element: DepartmentState;
+  children?: React.ReactNode;
+  isEditing?: boolean;
 };
 
 export type CustomField = Record<string, () => JSX.Element>;
@@ -282,10 +297,18 @@ export interface LinkButtonProps {
   className?: string;
 }
 
+export interface DepartmentState {
+  name?: string;
+  subDepartments?: DepartmentState[];
+  enterprise?: string;
+  createdAt?: Date;
+}
+
 export interface AppState {
   enterprises: Enterprise[];
   users: User[];
   departments: Department[];
+  department: DepartmentState | null;
 }
 
 export interface CreateEnterpriseDTO {
@@ -367,4 +390,13 @@ export interface DepartmentListProps {
 
 export interface LoaderProps {
   className?: string;
+}
+
+export interface AddDepartmentProps {
+  department: DepartmentState | null;
+  handleDepartmentChange: Dispatch<SetStateAction<DepartmentState | null>>;
+}
+
+export interface AddSubdepartmentProps extends AddDepartmentProps {
+  index: number;
 }
