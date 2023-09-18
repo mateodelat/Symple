@@ -12,3 +12,24 @@
     cursor: not-allowed;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .button {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .button {
+    width: 50%;
+    margin-left: auto;
+    padding: 1.2rem 0;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .button {
+    width: 33%;
+    font-size: 1.8rem;
+  }
+}

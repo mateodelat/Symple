@@ -57,6 +57,7 @@ export default function Login(): JSX.Element {
               onSubmit={handleLogin}
               className={styles.login_right_form}
               fieldsClassName={styles.login_right_form_fields}
+              buttonSubmit="Iniciar sesión"
             />
           </div>
         </section>

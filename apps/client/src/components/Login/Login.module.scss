@@ -38,9 +38,10 @@
     }
     &_form {
       width: 100%;
-    &_fields{
-      grid-template-columns: 1fr;
-    }
+      gap: 2rem;
+      &_fields {
+        grid-template-columns: 1fr;
+      }
     }
   }
 }
@@ -85,6 +86,9 @@
     &_right {
       &_form {
         width: 40%;
+        & > button {
+          width: 50%;
+        }
       }
     }
   }

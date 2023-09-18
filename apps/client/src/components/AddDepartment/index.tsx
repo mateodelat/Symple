@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./AddDepartment.module.scss";
 
 import { AddSubDepartment, Button } from "@components/index";
 import { type AddDepartmentProps } from "@/types";
+import styles from "./AddDepartment.module.scss";
 
 export default function AddDepartment({
   department,
@@ -58,6 +58,7 @@ export default function AddDepartment({
         props={{
           disabled: isDisabled,
         }}
+        className={styles.container_button}
       >
         Agregar sub departamento
       </Button>

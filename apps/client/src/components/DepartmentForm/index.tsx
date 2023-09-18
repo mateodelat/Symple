@@ -9,6 +9,7 @@ import { sections, schema } from "@constants/DepartmentForm";
 import toast from "react-hot-toast";
 import departmentsService from "@/services/departments";
 import { useDepartmentContext } from "@/contexts";
+import styles from "./DepartmentForm.module.scss";
 
 export default function DepartmentForm(): JSX.Element {
   const { back } = useRouter();
@@ -69,6 +70,7 @@ export default function DepartmentForm(): JSX.Element {
       schema={schema}
       onSubmit={handleSubmit}
       customFields={customFields}
+      fieldsClassName={styles.fields}
     />
   );
 }
