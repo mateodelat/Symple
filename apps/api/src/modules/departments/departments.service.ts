@@ -16,9 +16,9 @@ export class DepartmentService {
     private readonly enterprisesService: EnterprisesService,
   ) {}
 
-  async checkDepartmentExists(name: string): Promise<boolean> {
+  async checkDepartmentExists(name: string): Promise<Department | null> {
     const element = await this.DepartmentModel.findOne({ name }).exec();
-    return Boolean(element);
+    return element;
   }
 
   async getAll(): Promise<Department[]> {
@@ -37,7 +37,8 @@ export class DepartmentService {
     );
     const exists = await this.checkDepartmentExists(payload.name);
     if (!isValidObjectId) throw new Error("Invalid or malformed ObjectId.");
-    if (exists) throw new BadRequestException("Department already exists.");
+    if (exists === null)
+      throw new BadRequestException("Department already exists.");
     const object = { ...payload, createdAt: new Date() };
 
     const element = new this.DepartmentModel(object);
@@ -55,6 +56,9 @@ export class DepartmentService {
   }
 
   async update(id: string, payload: UpdateDepartmentDTO): Promise<any> {
-    return JSON.stringify({ id, payload });
+    const element = await this.DepartmentModel.findByIdAndUpdate(id, payload, {
+      new: true,
+    }).exec();
+    return element;
   }
 }

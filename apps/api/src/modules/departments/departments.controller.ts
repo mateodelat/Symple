@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger";
 
 import { DepartmentService } from "./departments.service";
@@ -34,7 +34,7 @@ export class DepartmentsController {
     return await this.departmentsService.create(payload);
   }
 
-  @Patch(":id")
+  @Put(":id")
   @ApiOperation({ summary: "Editar un departamento" })
   @ApiBearerAuth()
   async update(

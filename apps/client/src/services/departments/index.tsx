@@ -29,7 +29,7 @@ const update = async (
   delete newPayload.id;
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
-    method: "PATCH",
+    method: "PUT",
     body: JSON.stringify(newPayload),
     headers: {
       "Content-Type": "application/json",

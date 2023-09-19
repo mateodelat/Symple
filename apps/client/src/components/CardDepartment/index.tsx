@@ -30,17 +30,19 @@ export default function CardDepartment({
       if (cardProps?.saveChanges === true) {
         const updateDepartment = async (): Promise<void> => {
           try {
-            const response = await departmentsService.update(
-              department,
-              department.id as string,
+            await toast.promise(
+              departmentsService.update(department, department.id as string),
+              {
+                loading: "Actualizando estructura...",
+                success: () => {
+                  cardProps?.setSaveChanges(false);
+                  cardProps?.setIsEditing(false);
+                  return "Estructura actualizada";
+                },
+                error: (err: any) => err.message,
+              },
             );
-
-            console.log(response);
-            cardProps?.setSaveChanges(false);
-            cardProps?.setIsEditing(false);
-          } catch (err: any) {
-            toast.error(err.message);
-          }
+          } catch {}
         };
         void updateDepartment();
       }
