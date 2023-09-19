@@ -37,7 +37,7 @@ export class DepartmentService {
     );
     const exists = await this.checkDepartmentExists(payload.name);
     if (!isValidObjectId) throw new Error("Invalid or malformed ObjectId.");
-    if (exists === null)
+    if (exists !== null)
       throw new BadRequestException("Department already exists.");
     const object = { ...payload, createdAt: new Date() };
 

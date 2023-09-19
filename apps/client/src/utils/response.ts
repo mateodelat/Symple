@@ -17,8 +17,6 @@ export const returnResponse = async (
     }
     return data;
   } catch (err: any) {
-    throw new Error(
-      `Ocurrió un error al realizar la petición: ${err.message as string}`,
-    );
+    throw new Error(err.message as string);
   }
 };
