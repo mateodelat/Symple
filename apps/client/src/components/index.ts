@@ -6,10 +6,10 @@ import AddUsersWrapper from "./AddUsersWrapper";
 import Aside from "./Aside";
 import BackButton from "./BackButton";
 import Button from "./Button";
+import ButtonIcon from "./ButtonIcon";
 import Card from "./Card";
 import CardDraggable from "./CardDraggable";
 import CardDepartment from "./CardDepartment";
-import CardDepartmentEdit from "./CardDepartmentEdit";
 import CardEnterprise from "./CardEnterprise";
 import CardEnterpriseEdit from "./CardEnterpriseEdit";
 import CardUser from "./CardUser";
@@ -43,10 +43,10 @@ export {
   Aside,
   BackButton,
   Button,
+  ButtonIcon,
   Card,
   CardDraggable,
   CardDepartment,
-  CardDepartmentEdit,
   CardEnterprise,
   CardEnterpriseEdit,
   CardUser,

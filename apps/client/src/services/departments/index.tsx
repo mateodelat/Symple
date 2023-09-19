@@ -2,6 +2,7 @@ import {
   type Department,
   type CreateDepartmentDTO,
   type EditDepartmentDTO,
+  type ErrorObject,
 } from "@/types";
 import { customFetch } from "@lib/fetch";
 
@@ -21,12 +22,15 @@ const create = async (payload: CreateDepartmentDTO): Promise<Department> => {
 
 const update = async (
   payload: EditDepartmentDTO,
-  enterpriseId: string,
+  id: string,
 ): Promise<Department> => {
+  const newPayload = { ...payload };
+  delete newPayload.createdAt;
+  delete newPayload.id;
   const response = await customFetch({
-    baseUrl: `${baseUrl}/${enterpriseId}`,
+    baseUrl: `${baseUrl}/${id}`,
     method: "PATCH",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(newPayload),
     headers: {
       "Content-Type": "application/json",
     },
@@ -52,11 +56,20 @@ const getAllPerEnterprise = async (
   return response;
 };
 
+const deleteDepartment = async (id: string): Promise<ErrorObject> => {
+  const response = await customFetch({
+    baseUrl: `${baseUrl}/${id}`,
+    method: "DELETE",
+  });
+  return response;
+};
+
 const departmentsService = {
   create,
   update,
   getAll,
   getAllPerEnterprise,
+  deleteDepartment,
 };
 
 export default departmentsService;

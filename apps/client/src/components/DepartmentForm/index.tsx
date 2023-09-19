@@ -44,6 +44,22 @@ export default function DepartmentForm(): JSX.Element {
       const payload = structuredClone(department);
       if (payload !== null)
         if (payload.subDepartments === undefined) payload.subDepartments = [];
+      if (payload?.subDepartments !== undefined)
+        for (const subDepartment of payload.subDepartments) {
+          if (subDepartment.name === "") {
+            toast.error("El nombre del subdepartamento no puede estar vacío.");
+            return;
+          }
+          if (subDepartment.subDepartments !== undefined)
+            for (const lastSubDepartment of subDepartment.subDepartments) {
+              if (lastSubDepartment.name === "") {
+                toast.error(
+                  "El nombre del subdepartamento no puede estar vacío.",
+                );
+                return;
+              }
+            }
+        }
       await toast.promise(
         departmentsService.create({ ...payload, enterprise: id }),
         {

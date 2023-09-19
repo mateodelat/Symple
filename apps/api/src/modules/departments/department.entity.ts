@@ -12,7 +12,7 @@ import { Document, Types } from "mongoose";
   },
 })
 export class Department extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   name: string;
 
   @Prop({ required: true, type: Types.ObjectId, ref: "Enterprise" })

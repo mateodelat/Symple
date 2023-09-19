@@ -34,7 +34,7 @@ export class DepartmentsController {
     return await this.departmentsService.create(payload);
   }
 
-  /* @Patch(":id")
+  @Patch(":id")
   @ApiOperation({ summary: "Editar un departamento" })
   @ApiBearerAuth()
   async update(
@@ -42,5 +42,5 @@ export class DepartmentsController {
     @Param("id", CheckObjectIdPipe) id: string,
   ): Promise<Department> {
     return await this.departmentsService.update(id, payload);
-  } */
+  }
 }

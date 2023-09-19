@@ -168,7 +168,11 @@ export interface ListProps {
   newElementPage?: string;
   listEmptyMessage: string;
   className?: string;
-  Card: React.FC<{ element: any }>;
+  Card: React.FC<{
+    element: any;
+    cardProps?: Record<string, string | boolean>;
+  }>;
+  cardProps?: Record<string, any>;
 }
 
 export interface GenericCardProps {
@@ -201,7 +205,7 @@ export type CardDepartmentEditProps = Omit<CardDepartmentProps, "children">;
 export type CardDepartmentProps = Omit<CardEnterpriseProps, "element"> & {
   element: DepartmentState;
   children?: React.ReactNode;
-  isEditing?: boolean;
+  cardProps?: Record<string, any>;
 };
 
 export type CustomField = Record<string, () => JSX.Element>;
@@ -302,6 +306,7 @@ export interface DepartmentState {
   subDepartments?: DepartmentState[];
   enterprise?: string;
   createdAt?: Date;
+  id?: string;
 }
 
 export interface AppState {
@@ -399,4 +404,12 @@ export interface AddDepartmentProps {
 
 export interface AddSubdepartmentProps extends AddDepartmentProps {
   index: number;
+}
+
+export interface ButtonIconProps {
+  icon: any;
+  width?: number;
+  height?: number;
+  onClick: () => void;
+  className?: string;
 }

@@ -11,6 +11,7 @@ export default function List({
   newElementPage,
   listEmptyMessage,
   Card,
+  cardProps = {},
   className = "",
 }: ListProps): JSX.Element {
   return (
@@ -26,7 +27,7 @@ export default function List({
         <>
           <div className={`${styles.list_wrapper} ${className}`}>
             {list.map((element) => (
-              <Card key={element.id} element={element} />
+              <Card key={element.id} element={element} cardProps={cardProps} />
             ))}
           </div>
         </>

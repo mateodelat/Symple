@@ -1,11 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 
 import { Department } from "./department.entity";
 import { EnterprisesService } from "@modules/enterprises/enterprises.service";
 import {
-  UpdateDepartmentDTO,
+  type UpdateDepartmentDTO,
   type CreateDepartmentDTO,
 } from "./departments.dto";
 @Injectable()
@@ -15,6 +15,11 @@ export class DepartmentService {
     private readonly DepartmentModel: Model<Department>,
     private readonly enterprisesService: EnterprisesService,
   ) {}
+
+  async checkDepartmentExists(name: string): Promise<boolean> {
+    const element = await this.DepartmentModel.findOne({ name }).exec();
+    return Boolean(element);
+  }
 
   async getAll(): Promise<Department[]> {
     const elements = await this.DepartmentModel.find({}).exec();
@@ -30,8 +35,11 @@ export class DepartmentService {
     const isValidObjectId = this.enterprisesService.checkObjectId(
       payload.enterprise,
     );
+    const exists = await this.checkDepartmentExists(payload.name);
     if (!isValidObjectId) throw new Error("Invalid or malformed ObjectId.");
+    if (exists) throw new BadRequestException("Department already exists.");
     const object = { ...payload, createdAt: new Date() };
+
     const element = new this.DepartmentModel(object);
 
     const newDepartment = await element.save();
@@ -46,7 +54,7 @@ export class DepartmentService {
     return newDepartment;
   }
 
-  /* async update(id: string, payload: UpdateDepartmentDTO): Promise<Department> {
-    const elementToUpdate = await this.
-  } */
+  async update(id: string, payload: UpdateDepartmentDTO): Promise<any> {
+    return JSON.stringify({ id, payload });
+  }
 }
