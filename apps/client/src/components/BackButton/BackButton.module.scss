@@ -1,13 +1,12 @@
 @use "@styles/variables";
 
 .back{
+  display: grid;
+  place-items: center;
   width: 4rem;
   height: 4rem;
   background: none;
   border: none;
-  color: variables.$primary-green-color;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {
