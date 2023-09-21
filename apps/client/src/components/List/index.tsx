@@ -10,6 +10,8 @@ export default function List({
   newElement,
   newElementPage,
   listEmptyMessage,
+  beforeListContent,
+  afterListContent,
   Card,
   cardProps = {},
   className = "",
@@ -23,6 +25,11 @@ export default function List({
             {newElement}
           </LinkButton>
         )}
+      {beforeListContent !== undefined && typeof beforeListContent === "function" ? (
+        beforeListContent()
+      ) : (
+        beforeListContent
+      )}
       {list.length > 0 ? (
         <>
           <div className={`${styles.list_wrapper} ${className}`}>
@@ -33,6 +40,11 @@ export default function List({
         </>
       ) : (
         <h2>{listEmptyMessage}</h2>
+      )}
+      {afterListContent !== undefined && typeof afterListContent === "function" ? (
+        afterListContent() 
+      ) : ( 
+      afterListContent
       )}
     </section>
   );

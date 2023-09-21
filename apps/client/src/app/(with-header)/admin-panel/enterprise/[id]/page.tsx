@@ -37,6 +37,7 @@ export default function EnterprisePage({
     <DepartmentList
       departments={filteredDepartments}
       enterpriseId={params.id}
+      title={`Departamentos de ${enterprise.name}`}
     />
   ) : (
     <div className={styles.container}>

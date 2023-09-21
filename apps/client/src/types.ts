@@ -167,6 +167,8 @@ export interface ListProps {
   newElement?: string;
   newElementPage?: string;
   listEmptyMessage: string;
+  beforeListContent?: JSX.Element | (() => JSX.Element);
+  afterListContent?: JSX.Element | (() => JSX.Element);
   className?: string;
   Card: React.FC<{
     element: any;
@@ -390,6 +392,7 @@ export interface UserFormData {
 
 export interface DepartmentListProps {
   departments: Department[];
+  title: string;
   enterpriseId: string;
 }
 

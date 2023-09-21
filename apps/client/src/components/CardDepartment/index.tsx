@@ -54,18 +54,18 @@ export default function CardDepartment({
       <div className={styles.department}>
         {cardProps?.isEditing === false ? (
           <>
-            <span>{department.name}</span>
+            <span className={styles.department_name}>{department.name}</span>
             {department?.subDepartments !== undefined &&
               department.subDepartments.map((sub, i) => (
                 <div className={styles.department_sub} key={`sub.name-${i}`}>
-                  <span>{sub.name}</span>
+                  <span className={styles.department_sub_name}>{sub.name}</span>
                   {sub?.subDepartments !== undefined &&
                     sub.subDepartments.map((lastSub, j) => (
                       <div
                         key={`${lastSub.name ?? ""}-${j}`}
                         className={styles.department_sub_last}
                       >
-                        <span>{lastSub.name}</span>
+                        <span className={styles.department_sub_last_name}>{lastSub.name}</span>
                       </div>
                     ))}
                 </div>
