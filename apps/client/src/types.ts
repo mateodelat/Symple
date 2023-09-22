@@ -66,13 +66,6 @@ export interface Enterprise {
   departments: Department[];
 }
 
-export interface Department {
-  name: string;
-  enterprise: string;
-  createdAt: Date;
-  id: string;
-}
-
 export type CreateDepartmentDTO = DepartmentState & {
   enterprise: string;
 };
@@ -132,6 +125,7 @@ export interface ButtonProps {
   onClick?: () => any;
   className?: string;
   type?: "button" | "submit" | "reset";
+  style?: Record<string, string | boolean>;
   props?: object;
 }
 
@@ -202,13 +196,14 @@ export type CardUserEditProps = Pick<CardUserProps, "element" | "onClick"> & {
   isAdding?: boolean;
 };
 
-export type CardDepartmentEditProps = Omit<CardDepartmentProps, "children">;
-
 export type CardDepartmentProps = Omit<CardEnterpriseProps, "element"> & {
-  element: DepartmentState;
-  children?: React.ReactNode;
-  cardProps?: Record<string, any>;
+  element: Department;
 };
+
+export interface CardDepartmentEditProps extends CardDepartmentProps {
+  updateDepartment: (id: string, department: Department) => void;
+  deleteDepartment: (id: string) => void;
+}
 
 export type CustomField = Record<string, () => JSX.Element>;
 
@@ -303,19 +298,38 @@ export interface LinkButtonProps {
   className?: string;
 }
 
-export interface DepartmentState {
-  name?: string;
-  subDepartments?: DepartmentState[];
-  enterprise?: string;
-  createdAt?: Date;
-  id?: string;
+export interface Department {
+  name: string;
+  subDepartments: SubDepartment[];
+  enterprise: string;
+  createdAt: Date;
+  id: string;
+}
+
+export interface SubDepartment {
+  name: string;
+  subDepartments: SubDepartment[];
+}
+
+export interface SubDepartmentWithId extends SubDepartment {
+  id: string;
+  subDepartments: SubDepartmentWithId[];
 }
 
 export interface AppState {
   enterprises: Enterprise[];
   users: User[];
   departments: Department[];
-  department: DepartmentState | null;
+  department: DepartmentStateWithId;
+}
+
+export interface DepartmentState {
+  name: string;
+  subDepartments: SubDepartment[];
+}
+
+export interface DepartmentStateWithId extends DepartmentState {
+  subDepartments: SubDepartmentWithId[];
 }
 
 export interface CreateEnterpriseDTO {
@@ -394,6 +408,8 @@ export interface DepartmentListProps {
   departments: Department[];
   title: string;
   enterpriseId: string;
+  updateDepartment: (id: string, department: Department) => void;
+  deleteDepartment: (id: string) => void;
 }
 
 export interface LoaderProps {
@@ -401,8 +417,8 @@ export interface LoaderProps {
 }
 
 export interface AddDepartmentProps {
-  department: DepartmentState | null;
-  handleDepartmentChange: Dispatch<SetStateAction<DepartmentState | null>>;
+  department: DepartmentStateWithId;
+  handleDepartmentChange: Dispatch<SetStateAction<DepartmentStateWithId>>;
 }
 
 export interface AddSubdepartmentProps extends AddDepartmentProps {
@@ -415,4 +431,5 @@ export interface ButtonIconProps {
   height?: number;
   onClick: () => void;
   className?: string;
+  style?: Record<string, string | boolean>;
 }

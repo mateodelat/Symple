@@ -1,55 +1,59 @@
 "use client";
 
-import { useState } from "react";
-
 import { type AddSubdepartmentProps } from "@/types";
 import styles from "./AddSubDepartment.module.scss";
+import ButtonIcon from "../ButtonIcon";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddSubDepartment({
-  department,
   handleDepartmentChange,
   index,
+  department,
 }: AddSubdepartmentProps): JSX.Element {
-  const [subDepartmentCount, setSubDepartmentCount] = useState(0);
-
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="Sub departamento"
-        className={styles.container_input}
-        onChange={(e) => {
-          handleDepartmentChange((prev) => {
-            const newDepartment = { ...prev };
-            if (newDepartment.subDepartments === undefined) {
-              newDepartment.subDepartments = [];
-              newDepartment.subDepartments.push({
-                name: e.target.value,
-                subDepartments: [],
-              });
-            } else newDepartment.subDepartments[index].name = e.target.value;
-            return newDepartment;
-          });
-        }}
-      />
+      <div className={styles.container_wrapper}>
+        <input
+          type="text"
+          placeholder="Sub departamento"
+          className={styles.container_input}
+          onChange={(e) => {
+            handleDepartmentChange((prev) => {
+              const newDepartment = { ...prev };
+              newDepartment.subDepartments[index].name = e.target.value;
+              return newDepartment;
+            });
+          }}
+        />
+        <ButtonIcon
+          icon={"/trash_bin.svg"}
+          onClick={() => {
+            handleDepartmentChange((prev) => {
+              const newDepartment = { ...prev };
+              const aux = newDepartment.subDepartments;
+              const subDepartments = [
+                ...aux?.slice(0, index),
+                ...aux?.slice(index + 1, aux.length),
+              ];
+              newDepartment.subDepartments = subDepartments;
+              return newDepartment;
+            });
+          }}
+          className={styles.container_wrapper_button}
+        />
+      </div>
+
       <button
         type="button"
         onClick={() => {
-          setSubDepartmentCount((prev) => prev + 1);
           handleDepartmentChange((prev) => {
             const newDepartment = { ...prev };
-            if (newDepartment.subDepartments?.[index] !== undefined) {
-              if (
-                newDepartment.subDepartments?.[index].subDepartments ===
-                undefined
-              ) {
-                newDepartment.subDepartments[index].subDepartments = [];
-              }
 
-              newDepartment.subDepartments[index].subDepartments?.push({
-                name: "",
-              });
-            }
+            newDepartment.subDepartments[index].subDepartments?.push({
+              name: "",
+              subDepartments: [],
+              id: uuidv4(),
+            });
             return newDepartment;
           });
         }}
@@ -57,33 +61,38 @@ export default function AddSubDepartment({
       >
         +
       </button>
-      {Array.from({ length: subDepartmentCount }).map((_, i) => (
-        <div key={i} className={styles.container_subdepartment}>
-          <input
-            type="text"
-            placeholder="Sub departamento - "
-            onChange={(e) => {
-              handleDepartmentChange((prev: any) => {
-                const newDepartment = { ...prev };
+      {department.subDepartments[index].subDepartments.map((last, i) => (
+        <div key={last.id} className={styles.container_subdepartment}>
+          <div className={styles.container_wrapper}>
+            <input
+              type="text"
+              placeholder="Sub departamento - "
+              onChange={(e) => {
+                handleDepartmentChange((prev: any) => {
+                  const newDepartment = { ...prev };
+                  newDepartment.subDepartments[index].subDepartments[i].name =
+                    e.target.value;
+                  return newDepartment;
+                });
+              }}
+            />
+            <ButtonIcon
+              icon={"/trash_bin.svg"}
+              onClick={() => {
+                handleDepartmentChange((prev) => {
+                  const newDepartment = { ...prev };
+                  const aux =
+                    newDepartment.subDepartments[index].subDepartments;
 
-                if (
-                  newDepartment.subDepartments?.[index] !== undefined &&
-                  newDepartment.subDepartments?.[index].subDepartments ===
-                    undefined
-                )
-                  newDepartment.subDepartments[index].subDepartments = [];
+                  aux.splice(i, 1);
 
-                if (
-                  newDepartment.subDepartments?.[index]?.subDepartments?.[i] !==
-                  undefined
-                )
-                  newDepartment.subDepartments[index].subDepartments[i] = {
-                    name: e.target.value,
-                  };
-                return newDepartment;
-              });
-            }}
-          />
+                  newDepartment.subDepartments[index].subDepartments = aux;
+                  return newDepartment;
+                });
+              }}
+              className={styles.container_wrapper_button}
+            />
+          </div>
         </div>
       ))}
     </div>

@@ -79,6 +79,15 @@ export class EnterprisesService {
     );
     if (!areValidObjectIds)
       throw new BadRequestException("Invalid or malformed ObjectId.");
+
+    for (const id of payload.admins) {
+      const enterprise = this.EnterpriseModel.findOne({ admins: id }).exec();
+      if (enterprise !== null)
+        throw new BadRequestException(
+          `User with id #${id.toString()} already has an enterprise`,
+        );
+    }
+
     const object = { ...payload, createdAt: new Date() };
     const element = new this.EnterpriseModel(object);
     const users = payload.admins;

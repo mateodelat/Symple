@@ -25,8 +25,6 @@ const update = async (
   id: string,
 ): Promise<Department> => {
   const newPayload = { ...payload };
-  delete newPayload.createdAt;
-  delete newPayload.id;
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
     method: "PUT",
@@ -56,10 +54,17 @@ const getAllPerEnterprise = async (
   return response;
 };
 
-const deleteDepartment = async (id: string): Promise<ErrorObject> => {
+const deleteDepartment = async (
+  id: string,
+  enterprise: string,
+): Promise<ErrorObject> => {
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
     method: "DELETE",
+    body: JSON.stringify({ enterprise }),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   return response;
 };

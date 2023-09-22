@@ -5,6 +5,19 @@
   gap: 1rem;
   width: 90%;
   margin-left: auto;
+  &_wrapper {
+    position: relative;
+    &_button {
+      position: absolute;
+      width: 20px !important;
+      height: 20px !important;
+      background: none !important;
+      padding: 0 !important;
+      top: 50%;
+      right: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
   &_button {
     justify-self: flex-end;
     border: 1px solid variables.$tertiary-blue-color;

@@ -1,17 +1,14 @@
 "use client";
 
-import { useState } from "react";
-
 import { AddSubDepartment, Button } from "@components/index";
 import { type AddDepartmentProps } from "@/types";
 import styles from "./AddDepartment.module.scss";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddDepartment({
   department,
   handleDepartmentChange,
 }: AddDepartmentProps): JSX.Element {
-  const [subDepartmentCount, setSubDepartmentCount] = useState(0);
-
   const isDisabled =
     (department?.subDepartments instanceof Array &&
       department?.subDepartments?.at(-1)?.name === "") ||
@@ -34,9 +31,9 @@ export default function AddDepartment({
         }}
       />
 
-      {Array.from({ length: subDepartmentCount }).map((_, i) => (
+      {department.subDepartments.map((sub, i) => (
         <AddSubDepartment
-          key={i}
+          key={sub.id}
           index={i}
           department={department}
           handleDepartmentChange={handleDepartmentChange}
@@ -49,11 +46,14 @@ export default function AddDepartment({
             if (newDepartment.subDepartments === undefined) {
               newDepartment.subDepartments = [];
             }
-            newDepartment.subDepartments.push({ name: "" });
+            newDepartment.subDepartments.push({
+              name: "",
+              subDepartments: [],
+              id: uuidv4(),
+            });
 
             return newDepartment;
           });
-          setSubDepartmentCount((prev) => prev + 1);
         }}
         props={{
           disabled: isDisabled,

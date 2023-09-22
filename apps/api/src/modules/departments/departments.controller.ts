@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+} from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger";
 
 import { DepartmentService } from "./departments.service";
@@ -42,5 +52,13 @@ export class DepartmentsController {
     @Param("id", CheckObjectIdPipe) id: string,
   ): Promise<Department> {
     return await this.departmentsService.update(id, payload);
+  }
+
+  @Delete(":id")
+  @ApiOperation({ summary: "Eliminar un departamento" })
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  async delete(@Param("id", CheckObjectIdPipe) id: string): Promise<any> {
+    return await this.departmentsService.delete(id);
   }
 }

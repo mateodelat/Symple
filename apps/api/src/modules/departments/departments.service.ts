@@ -27,6 +27,11 @@ export class DepartmentService {
     return element;
   }
 
+  async checkDepartmentExistsById(id: string): Promise<Department | null> {
+    const element = await this.DepartmentModel.findById(id).exec();
+    return element;
+  }
+
   async getAll(): Promise<Department[]> {
     const elements = await this.DepartmentModel.find({}).exec();
     return elements;
@@ -69,5 +74,13 @@ export class DepartmentService {
       new: true,
     }).exec();
     return element;
+  }
+
+  async delete(id: string): Promise<{ message: string }> {
+    const element = await this.checkDepartmentExistsById(id);
+    if (element === null)
+      throw new BadRequestException("El departamento no existe.");
+    await element.deleteOne();
+    return { message: `Enterprise with id #${id} deleted successfully` };
   }
 }

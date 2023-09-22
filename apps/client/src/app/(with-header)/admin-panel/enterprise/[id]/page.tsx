@@ -12,8 +12,12 @@ export default function EnterprisePage({
 }: {
   params: { id: string };
 }): JSX.Element {
-  const { departments, isLoading: departmentsAreLoading } =
-    useDepartmentContext();
+  const {
+    departments,
+    isLoading: departmentsAreLoading,
+    updateDepartment,
+    deleteDepartment,
+  } = useDepartmentContext();
   const { enterprises, isLoading } = useEnterpriseContext();
 
   const [enterprise, setEnterprise] = useState<Enterprise | undefined>();
@@ -31,13 +35,15 @@ export default function EnterprisePage({
       setFilteredDepartments(
         departments.filter((d) => d.enterprise === params.id),
       );
-  }, [isLoading, departmentsAreLoading]);
+  }, [isLoading, departmentsAreLoading, departments]);
 
   return enterprise !== undefined ? (
     <DepartmentList
       departments={filteredDepartments}
       enterpriseId={params.id}
       title={`Departamentos de ${enterprise.name}`}
+      updateDepartment={updateDepartment}
+      deleteDepartment={deleteDepartment}
     />
   ) : (
     <div className={styles.container}>
