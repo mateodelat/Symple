@@ -201,7 +201,7 @@ export type CardDepartmentProps = Omit<CardEnterpriseProps, "element"> & {
 };
 
 export interface CardDepartmentEditProps extends CardDepartmentProps {
-  updateDepartment: (id: string, department: Department) => void;
+  updateDepartment: (department: Department) => void;
   deleteDepartment: (id: string) => void;
 }
 
@@ -273,7 +273,7 @@ export interface DepartmentContextType {
   isLoading: boolean;
   setInitialDepartments: (departments: Department[]) => void;
   addDepartment: (department: Department) => void;
-  updateDepartment: (id: string, department: Department) => void;
+  updateDepartment: (department: Department) => void;
   deleteDepartment: (id: string) => void;
 }
 
@@ -330,6 +330,9 @@ export interface DepartmentState {
 
 export interface DepartmentStateWithId extends DepartmentState {
   subDepartments: SubDepartmentWithId[];
+  id?: string;
+  createdAt?: Date;
+  enterprise?: string;
 }
 
 export interface CreateEnterpriseDTO {
@@ -408,7 +411,7 @@ export interface DepartmentListProps {
   departments: Department[];
   title: string;
   enterpriseId: string;
-  updateDepartment: (id: string, department: Department) => void;
+  updateDepartment: DepartmentContextType["updateDepartment"];
   deleteDepartment: (id: string) => void;
 }
 

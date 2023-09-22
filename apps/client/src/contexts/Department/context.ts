@@ -8,7 +8,7 @@ const DepartmentContext = createContext<DepartmentContextType>({
   setInitialDepartments: (departments) => {},
   isLoading: true,
   addDepartment: (department) => {},
-  updateDepartment: (id, department) => {},
+  updateDepartment: (department) => {},
   deleteDepartment: (id) => {},
 });
 

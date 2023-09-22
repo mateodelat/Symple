@@ -10,7 +10,7 @@ import {
   LinkButton,
   Modal,
 } from "@components/index";
-import { type Department, type DepartmentListProps } from "@/types";
+import { type DepartmentListProps, type Department } from "@/types";
 import styles from "./DepartmentList.module.scss";
 import CardDepartmentEdit from "../CardDepartmentEdit";
 import { useToggle } from "@/hooks";
@@ -38,12 +38,10 @@ export default function DepartmentList({
     setWindowSize(window.innerWidth);
   }, []);
 
-  const handleDepartmentChanges = (
-    id: string,
-    department: Department,
-  ): void => {
-    const index = departmentsState.findIndex((e) => e.id === id);
+  const handleDepartmentChanges = (department: Department): void => {
+    const index = departmentsState.findIndex((e) => e.id === department.id);
     const newDepartments = [...departmentsState];
+
     newDepartments[index] = department;
     setDepartmentsState(newDepartments);
   };
@@ -93,23 +91,47 @@ export default function DepartmentList({
               departmentsState.find((ds) => ds.id === department.id) ===
               undefined,
           );
-          const toastId = toast.loading("Eliminando departamentos...");
-          for (const department of deletedDepartments) {
-            try {
-              await departmentsService.deleteDepartment(
-                department.id,
-                department.enterprise,
-              );
-              deleteDepartment(department.id);
-            } catch (e: any) {
-              toast.error(e.message, { id: toastId });
+          if (deletedDepartments.length > 0) {
+            const toastId = toast.loading("Eliminando departamentos...");
+            for (const department of deletedDepartments) {
+              try {
+                await departmentsService.deleteDepartment(
+                  department.id,
+                  department.enterprise,
+                );
+                deleteDepartment(department.id);
+              } catch (e: any) {
+                toast.error(e.message, { id: toastId });
+              }
             }
+            toast.success("Departamentos eliminados", { id: toastId });
           }
-          toast.success("Departamentos eliminados", { id: toastId });
-          setSaveChanges(false);
-          setIsEditing(false);
         };
+
+        const updateDepartments = async (): Promise<void> => {
+          try {
+            const toastId = toast.loading("Actualizando departamentos...");
+            for (const department of departmentsState) {
+              const { createdAt, id, ...payload } = department;
+              try {
+                const response = await departmentsService.update(
+                  payload,
+                  department.id,
+                );
+                updateDepartment(response);
+              } catch (e: any) {
+                toast.error(e.message, { id: toastId });
+              }
+            }
+
+            toast.success("Departamentos actualizados", { id: toastId });
+            setSaveChanges(false);
+            setIsEditing(false);
+          } catch {}
+        };
+
         void deleteDepartments();
+        void updateDepartments();
       }
     }
   }, [cancelChanges, saveChanges]);

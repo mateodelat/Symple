@@ -23,9 +23,8 @@ export default function AddDepartment({
         type="text"
         placeholder="Departamento"
         onChange={(e) => {
-          handleDepartmentChange((prev) => {
+          handleDepartmentChange((prev: any) => {
             const newDepartment = { ...prev };
-
             newDepartment.name = e.target.value;
             return newDepartment;
           });

@@ -31,10 +31,10 @@ export default function EnterprisePage({
       if (enterpriseFound !== undefined) setEnterprise(enterpriseFound);
       else notFound();
     }
-    if (!departmentsAreLoading)
-      setFilteredDepartments(
-        departments.filter((d) => d.enterprise === params.id),
-      );
+    if (!departmentsAreLoading) {
+      const filtered = departments.filter((d) => d.enterprise === params.id);
+      setFilteredDepartments(filtered);
+    }
   }, [isLoading, departmentsAreLoading, departments]);
 
   return enterprise !== undefined ? (

@@ -28,11 +28,13 @@ export default function DeparmentContextProvider({
     setDepartments([...departments, department]);
   };
 
-  const updateDepartment = (id: string, department: Department): void => {
-    const index = departments.findIndex((e) => e.id === id);
-    const newDepartments = [...departments];
-    newDepartments[index] = department;
-    setDepartments(newDepartments);
+  const updateDepartment = (department: Department): void => {
+    setDepartments((prev) => {
+      const newDepartments = [...prev];
+      const index = newDepartments.findIndex((e) => e.id === department.id);
+      newDepartments[index] = department;
+      return prev;
+    });
   };
 
   const deleteDepartment = (id: string): void => {

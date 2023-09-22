@@ -18,7 +18,9 @@ export default function AddSubDepartment({
           type="text"
           placeholder="Sub departamento"
           className={styles.container_input}
-          value={isEditMode ? department.subDepartments[index].name : undefined}
+          defaultValue={
+            isEditMode ? department.subDepartments[index].name : undefined
+          }
           onChange={(e) => {
             handleDepartmentChange((prev) => {
               const newDepartment = { ...prev };
