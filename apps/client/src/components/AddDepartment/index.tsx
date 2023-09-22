@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function AddDepartment({
   department,
   handleDepartmentChange,
+  isEditMode = false,
 }: AddDepartmentProps): JSX.Element {
   const isDisabled =
     (department?.subDepartments instanceof Array &&
@@ -29,6 +30,7 @@ export default function AddDepartment({
             return newDepartment;
           });
         }}
+        value={isEditMode ? department.name : undefined}
       />
 
       {department.subDepartments.map((sub, i) => (
@@ -37,6 +39,7 @@ export default function AddDepartment({
           index={i}
           department={department}
           handleDepartmentChange={handleDepartmentChange}
+          isEditMode={isEditMode}
         />
       ))}
       <Button

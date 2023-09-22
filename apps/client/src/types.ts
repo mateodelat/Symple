@@ -419,6 +419,7 @@ export interface LoaderProps {
 export interface AddDepartmentProps {
   department: DepartmentStateWithId;
   handleDepartmentChange: Dispatch<SetStateAction<DepartmentStateWithId>>;
+  isEditMode?: boolean;
 }
 
 export interface AddSubdepartmentProps extends AddDepartmentProps {

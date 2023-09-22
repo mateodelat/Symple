@@ -9,6 +9,7 @@ export default function AddSubDepartment({
   handleDepartmentChange,
   index,
   department,
+  isEditMode = false,
 }: AddSubdepartmentProps): JSX.Element {
   return (
     <div className={styles.container}>
@@ -17,6 +18,7 @@ export default function AddSubDepartment({
           type="text"
           placeholder="Sub departamento"
           className={styles.container_input}
+          value={isEditMode ? department.subDepartments[index].name : undefined}
           onChange={(e) => {
             handleDepartmentChange((prev) => {
               const newDepartment = { ...prev };
@@ -67,6 +69,7 @@ export default function AddSubDepartment({
             <input
               type="text"
               placeholder="Sub departamento - "
+              value={isEditMode ? last.name : undefined}
               onChange={(e) => {
                 handleDepartmentChange((prev: any) => {
                   const newDepartment = { ...prev };
