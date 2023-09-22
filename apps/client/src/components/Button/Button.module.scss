@@ -21,15 +21,13 @@
 
 @media screen and (min-width: 1024px) {
   .button {
-    width: 50%;
-    margin-left: auto;
     padding: 1.2rem 0;
+    font-size: 1.6rem;
   }
 }
 
 @media screen and (min-width: 1920px) {
   .button {
-    width: 33%;
-    font-size: 1.8rem;
+    font-size: 1.8rem !important;
   }
 }

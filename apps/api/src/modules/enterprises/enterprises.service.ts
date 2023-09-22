@@ -81,7 +81,9 @@ export class EnterprisesService {
       throw new BadRequestException("Invalid or malformed ObjectId.");
 
     for (const id of payload.admins) {
-      const enterprise = this.EnterpriseModel.findOne({ admins: id }).exec();
+      const enterprise = await this.EnterpriseModel.findOne({
+        admins: id,
+      }).exec();
       if (enterprise !== null)
         throw new BadRequestException(
           `User with id #${id.toString()} already has an enterprise`,
@@ -90,19 +92,18 @@ export class EnterprisesService {
 
     const object = { ...payload, createdAt: new Date() };
     const element = new this.EnterpriseModel(object);
-    const users = payload.admins;
 
-    for (const id of users) {
+    for (const id of payload.admins) {
       await this.usersService.checkUserExits(id);
     }
 
     const newEnterprise = await element.save();
     for (const id of payload.admins) {
       const user = await this.usersService.checkUserExits(id);
-      const enterprises = user.enterprises;
+      const enterprises = [...user.enterprises, newEnterprise.id];
       await this.usersService.update({
         id,
-        payload: { enterprises: [...enterprises, newEnterprise._id] },
+        payload: { enterprises },
       });
     }
     return newEnterprise;
@@ -118,11 +119,11 @@ export class EnterprisesService {
     const elementToUpdate = await this.checkEnterpriseExists(id);
     elementToUpdate.$set(payload);
     if (payload?.admins != null && payload.admins.length > 0) {
-      for (const userId of payload.admins) {
-        const user = await this.usersService.checkUserExits(userId);
+      for (const id of payload.admins) {
+        const user = await this.usersService.checkUserExits(id);
         await this.usersService.update({
-          id: userId,
-          payload: { enterprises: [...user.enterprises, userId] },
+          id,
+          payload: { enterprises: [...user.enterprises, elementToUpdate.id] },
         });
       }
     }

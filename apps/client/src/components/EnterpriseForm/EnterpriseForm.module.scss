@@ -39,3 +39,12 @@
     }
   }
 }
+
+@media screen and (min-width: 2560px) {
+  .form {
+    & button[type="submit"] {
+      width: 33%;
+      margin: 0 auto;
+    }
+  }
+}

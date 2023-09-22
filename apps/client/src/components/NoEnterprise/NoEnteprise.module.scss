@@ -1,0 +1,14 @@
+@use "@styles/variables";
+
+.container {
+  display: flex;
+  height: 100dvh;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  &_title {
+    text-align: center;
+  }
+}

@@ -27,6 +27,7 @@ import Loader from "./Loader";
 import Login from "./Login";
 import Modal from "./Modal";
 import Navigation from "./Navigation";
+import NoEnterprise from "./NoEnterprise";
 import NotFound from "./NotFound";
 import Popup from "./Popup";
 import SearchBar from "./SearchBar";
@@ -64,6 +65,7 @@ export {
   Login,
   Modal,
   Navigation,
+  NoEnterprise,
   NotFound,
   Popup,
   SearchBar,
