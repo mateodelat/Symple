@@ -212,18 +212,20 @@ export default function DepartmentList({
           </div>
         </>
       )}
-      {departmentsState.map((department) =>
-        !isEditing ? (
-          <CardDepartment element={department} key={department.id} />
-        ) : (
-          <CardDepartmentEdit
-            element={department}
-            key={department.id}
-            updateDepartment={handleDepartmentChanges}
-            deleteDepartment={handleDepartmentDelete}
-          />
-        ),
-      )}
+      <div className={styles.list}>
+        {departmentsState.map((department) =>
+          !isEditing ? (
+            <CardDepartment element={department} key={department.id} />
+          ) : (
+            <CardDepartmentEdit
+              element={department}
+              key={department.id}
+              updateDepartment={handleDepartmentChanges}
+              deleteDepartment={handleDepartmentDelete}
+            />
+          ),
+        )}
+      </div>
       {isCancelOpen && (
         <Modal
           isOpen={isCancelOpen}
