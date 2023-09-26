@@ -6,6 +6,9 @@ const nextConfig = {
   env: {
     SERVER_URL: "http://localhost:3001/api",
   },
+  experimental: {
+    serverActions: true,
+  },
 };
 
 module.exports = nextConfig;

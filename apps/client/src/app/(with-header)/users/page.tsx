@@ -1,8 +1,14 @@
+"use server";
+
+import { type User } from "@/types";
 import { CardUserEdit, List } from "@components/index";
 import userService from "@services/users";
 
 export default async function UsersPage(): Promise<JSX.Element> {
-  const users = await userService.getAll();
+  let users: User[] = [];
+  try {
+    users = await userService.getAll();
+  } catch {}
 
   return (
     <div>
