@@ -178,6 +178,7 @@ export interface CardProps {
   className?: string;
   onClick?: (element?: any) => any;
   children: React.ReactNode;
+  title?: string;
 }
 
 export interface CardEnterpriseProps {
@@ -436,4 +437,10 @@ export interface ButtonIconProps {
   onClick: () => void;
   className?: string;
   style?: Record<string, string | boolean>;
+}
+
+export interface DepartmentPageProps {
+  params: {
+    departmentId: string
+  }
 }

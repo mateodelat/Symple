@@ -10,6 +10,7 @@ import ButtonIcon from "./ButtonIcon";
 import Card from "./Card";
 import CardDraggable from "./CardDraggable";
 import CardDepartment from "./CardDepartment";
+import CardDepartmentEdit from "./CardDepartmentEdit";
 import CardEnterprise from "./CardEnterprise";
 import CardEnterpriseEdit from "./CardEnterpriseEdit";
 import CardUser from "./CardUser";
@@ -48,6 +49,7 @@ export {
   Card,
   CardDraggable,
   CardDepartment,
+  CardDepartmentEdit,
   CardEnterprise,
   CardEnterpriseEdit,
   CardUser,

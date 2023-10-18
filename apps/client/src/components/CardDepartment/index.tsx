@@ -6,9 +6,10 @@ import styles from "./CardDepartment.module.scss";
 
 export default function CardDepartment({
   element,
+  onClick = () => {},
 }: CardDepartmentProps): JSX.Element {
   return (
-    <CardDraggable>
+    <CardDraggable onClick={onClick}>
       <div className={styles.department}>
         <span
           className={`${styles.department_name} ${

@@ -17,7 +17,6 @@ export default function CardDepartmentEdit({
   updateDepartment,
 }: CardDepartmentEditProps): JSX.Element {
   const { toggle, value } = useToggle();
-
   const [department, setDepartment] = useState<DepartmentStateWithId>({
     name: element.name,
     enterprise: element.enterprise,

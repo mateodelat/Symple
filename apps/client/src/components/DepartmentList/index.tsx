@@ -2,20 +2,21 @@
 
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import {
   Button,
   ButtonIcon,
   CardDepartment,
+  CardDepartmentEdit,
   LinkButton,
   Modal,
 } from "@components/index";
+import { useToggle } from "@/hooks";
+import { departmentsService } from "@/services";
 import { type DepartmentListProps, type Department } from "@/types";
 import styles from "./DepartmentList.module.scss";
-import CardDepartmentEdit from "../CardDepartmentEdit";
-import { useToggle } from "@/hooks";
-import toast from "react-hot-toast";
-import { departmentsService } from "@/services";
 
 export default function DepartmentList({
   departments,
@@ -25,6 +26,8 @@ export default function DepartmentList({
   updateDepartment,
 }: DepartmentListProps): JSX.Element {
   const { data: session, status } = useSession();
+  const { push } = useRouter()
+  const currentPath = usePathname()
   const { toggle, value: isCancelOpen } = useToggle();
 
   const [canCreate, setCanCreate] = useState(false);
@@ -73,8 +76,9 @@ export default function DepartmentList({
   }, [departments]);
 
   useEffect(() => {
-    const hasSameValues =
-      JSON.stringify(departments) === JSON.stringify(departmentsState);
+    const hasSameValues = Object.entries(departments).every(([key]) => (
+      departments[key as any] === departmentsState[key as any]
+    ))
 
     if (hasSameValues) {
       setIsEditing(false);
@@ -135,6 +139,10 @@ export default function DepartmentList({
       }
     }
   }, [cancelChanges, saveChanges]);
+
+  const handleCardClick = (id: string): void => {
+    push(`${currentPath}/department/${id}`);
+  }
 
   return (
     <div className={styles.container}>
@@ -215,7 +223,13 @@ export default function DepartmentList({
       <div className={styles.list}>
         {departmentsState.map((department) =>
           !isEditing ? (
-            <CardDepartment element={department} key={department.id} />
+            <CardDepartment
+              element={department}
+              key={department.id}
+              onClick={() => { 
+                handleCardClick(department.id); 
+              }}
+            />
           ) : (
             <CardDepartmentEdit
               element={department}
