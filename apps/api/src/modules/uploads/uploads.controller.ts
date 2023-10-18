@@ -30,7 +30,7 @@ export class UploadsController {
         filename: (_req, file, callback) => {
           // const uniqueSufix = `${Date.now()}${Math.round(Math.random() * 1e9)}`;
           const ext = extname(file.originalname);
-          callback(null, `${uuidv4() as string}${ext}`);
+          callback(null, `${uuidv4()}${ext}`);
         },
       }),
     }),

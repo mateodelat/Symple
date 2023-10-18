@@ -1,48 +1,48 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
-import { CardUserEdit, SearchBar } from "@components/index";
-import { useUserContext } from "@contexts/User/context";
-import styles from "./AddUsers.module.scss";
-import { type AddUsersProps, type User } from "@/types";
+import { CardUserEdit, SearchBar } from '@components/index'
+import { useUserContext } from '@contexts/User/context'
+import styles from './AddUsers.module.scss'
+import { type AddUsersProps, type User } from '@/types'
 
 const listEmptyMessages = {
-  notFound: "No existen usuarios con el filtro ingresado.",
-  noUsers: "No hay usuarios restantes.",
-  noData: "No existen usuarios registrados.",
-  startState: "Busca por correo, nombre o apellido a usuarios.",
-};
+  notFound: 'No existen usuarios con el filtro ingresado.',
+  noUsers: 'No hay usuarios restantes.',
+  noData: 'No existen usuarios registrados.',
+  startState: 'Busca por correo, nombre o apellido a usuarios.'
+}
 
-export default function AddUsers({
+export default function AddUsers ({
   addedUsers,
   addUser,
-  removeUser,
+  removeUser
 }: AddUsersProps): JSX.Element {
-  const { users: data } = useUserContext();
-  const [users, setUsers] = useState<User[]>([]);
-  const [filter, setFilter] = useState<string>("");
-  const [isFiltering, setIsFiltering] = useState<boolean>(false);
-  const [message, setMessage] = useState(listEmptyMessages.startState);
+  const { users: data } = useUserContext()
+  const [users, setUsers] = useState<User[]>([])
+  const [filter, setFilter] = useState<string>('')
+  const [isFiltering, setIsFiltering] = useState<boolean>(false)
+  const [message, setMessage] = useState(listEmptyMessages.startState)
 
   const handleAddUsers = (user: User): void => {
-    addUser(user);
-    setUsers(() => users.filter((u) => u.id !== user.id));
-  };
+    addUser(user)
+    setUsers(() => users.filter((u) => u.id !== user.id))
+  }
 
   const handleRemoveUsers = (user: User): void => {
-    removeUser(user);
-    if (handleFilter(user, filter)) setUsers((prev) => [...prev, user]);
-  };
+    removeUser(user)
+    if (handleFilter(user, filter)) setUsers((prev) => [...prev, user])
+  }
 
   const handleFilter = (user: User, filter: string): boolean => {
-    const { email, id, lastName, name, role } = user;
+    const { email, id, lastName, name, role } = user
 
-    const aux = filter.toLowerCase();
-    const emailLoweredCase = email.toLowerCase();
-    const nameLoweredCase = name.toLowerCase();
-    const lastNameLoweredCase = lastName.toLowerCase();
+    const aux = filter.toLowerCase()
+    const emailLoweredCase = email.toLowerCase()
+    const nameLoweredCase = name.toLowerCase()
+    const lastNameLoweredCase = lastName.toLowerCase()
 
     return (
       (emailLoweredCase.startsWith(aux) ||
@@ -51,33 +51,30 @@ export default function AddUsers({
         nameLoweredCase.endsWith(aux) ||
         lastNameLoweredCase.startsWith(aux) ||
         lastNameLoweredCase.endsWith(aux)) &&
-      role !== "admin" &&
+      role !== 'admin' &&
       !addedUsers.some((addedUser) => addedUser.id === id)
-    );
-  };
+    )
+  }
 
   const handleUsersFilter = (filter: string): void => {
-    if (filter === "") {
-      setIsFiltering(false);
-      setUsers([]);
-      return;
+    if (filter === '') {
+      setIsFiltering(false)
+      setUsers([])
+      return
     }
-    setIsFiltering(true);
-    setUsers(() => data.filter((user) => handleFilter(user, filter)));
-  };
+    setIsFiltering(true)
+    setUsers(() => data.filter((user) => handleFilter(user, filter)))
+  }
 
   useEffect(() => {
-    let finalMessage = "";
-    if (data.length === 0) finalMessage = listEmptyMessages.noData;
-    if (isFiltering && users.length === 0)
-      finalMessage = listEmptyMessages.notFound;
-    if (addedUsers.length > 0 && isFiltering && users.length === 0)
-      finalMessage = listEmptyMessages.noUsers;
-    if (!isFiltering && users.length === 0)
-      finalMessage = listEmptyMessages.startState;
+    let finalMessage = ''
+    if (data.length === 0) finalMessage = listEmptyMessages.noData
+    if (isFiltering && users.length === 0) { finalMessage = listEmptyMessages.notFound }
+    if (addedUsers.length > 0 && isFiltering && users.length === 0) { finalMessage = listEmptyMessages.noUsers }
+    if (!isFiltering && users.length === 0) { finalMessage = listEmptyMessages.startState }
 
-    setMessage(finalMessage);
-  }, [filter, users, addedUsers, data]);
+    setMessage(finalMessage)
+  }, [filter, users, addedUsers, data])
 
   return (
     <article className={styles.addUsers}>
@@ -89,7 +86,7 @@ export default function AddUsers({
             element={user}
             key={user.id}
             onClick={() => {
-              handleRemoveUsers(user);
+              handleRemoveUsers(user)
             }}
           />
         ))}
@@ -102,7 +99,7 @@ export default function AddUsers({
       />
       <h3>{message}</h3>
       <Link
-        href={"/admin-panel/user/new"}
+        href={'/admin-panel/user/new'}
         className={styles.addUsers_newMember}
       >
         Registrar miembro
@@ -114,12 +111,12 @@ export default function AddUsers({
             <CardUserEdit
               element={user}
               onClick={() => {
-                handleAddUsers(user);
+                handleAddUsers(user)
               }}
               isAdding
             />
           </div>
         ))}
     </article>
-  );
+  )
 }

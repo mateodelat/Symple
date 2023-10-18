@@ -1,9 +1,9 @@
-import { UserForm } from "@components/index";
+import { UserForm } from '@components/index'
 
-export default function UserFormPage(): JSX.Element {
+export default function UserFormPage (): JSX.Element {
   return (
     <div>
       <UserForm />
     </div>
-  );
+  )
 }

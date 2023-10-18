@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import { Button, Modal, SearchBar } from "@components/index";
-import { type DepartmentAdministrationProps } from "@/types";
-import styles from "./DepartmentAdministration.module.scss";
-import { useState } from "react";
-import { internalLinks } from "@/constants/DepartmentAdministration";
-import { useToggle } from "@/hooks";
+import { AddRole, Button, Modal, SearchBar } from '@components/index'
+import { type DepartmentAdministrationProps } from '@/types'
+import styles from './DepartmentAdministration.module.scss'
+import { useState } from 'react'
+import { internalLinks } from '@/constants/DepartmentAdministration'
+import { useToggle } from '@/hooks'
 
-export default function DepartmentAdministration({
-  id,
+export default function DepartmentAdministration ({
+  id
 }: DepartmentAdministrationProps): JSX.Element {
-  const [filter, setFilter] = useState("");
-  const [links, setLinks] = useState(internalLinks);
+  const [filter, setFilter] = useState('')
+  const [links, setLinks] = useState(internalLinks)
 
-  const {toggle, value} = useToggle()
+  const { toggle, value } = useToggle()
 
   const handleActive = (name: string): void => {
     setLinks((prev) => {
-      const newLinks = structuredClone(prev);
+      const newLinks = structuredClone(prev)
       newLinks.forEach((link) => {
-        if (link.name === name) link.isActive = true;
-        else link.isActive = false;
-      });
-      return newLinks;
-    });
-  };
+        if (link.name === name) link.isActive = true
+        else link.isActive = false
+      })
+      return newLinks
+    })
+  }
 
   const element = links.find((link) => link.isActive)
 
@@ -35,13 +35,14 @@ export default function DepartmentAdministration({
         <ul className={styles.container_nav_list}>
           {links.map(({ label, name, isActive }) => (
             <li
+              key={name}
               className={`${styles.container_nav_list_item} ${
-                isActive ? styles.container_nav_list_item_active : ""
+                isActive ? styles.container_nav_list_item_active : ''
               }`}
             >
               <button
                 onClick={() => {
-                  handleActive(name);
+                  handleActive(name)
                 }}
               >
                 {label}
@@ -56,9 +57,13 @@ export default function DepartmentAdministration({
       </Button>
       {value && (
         <Modal isOpen={value} onConfirm={() => {}} toggle={toggle}>
-          
+          {element?.name === 'roles' && (
+            <AddRole
+              isEditing={false}
+            />
+          )}
         </Modal>
       )}
     </section>
-  );
+  )
 }

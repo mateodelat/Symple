@@ -1,22 +1,22 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react'
 
-import { Navigation } from "../index";
-import styles from "./Aside.module.scss";
-import { type AsideProps } from "@/types";
+import { Navigation } from '../index'
+import styles from './Aside.module.scss'
+import { type AsideProps } from '@/types'
 
-export default function Aside({ links }: AsideProps): JSX.Element {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export default function Aside ({ links }: AsideProps): JSX.Element {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleToggleAside = (): void => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    setIsMenuOpen(!isMenuOpen)
+  }
 
   return (
     <>
       <aside
-        className={`${styles.aside} ${isMenuOpen ? styles.aside_open : ""}`}
+        className={`${styles.aside} ${isMenuOpen ? styles.aside_open : ''}`}
       >
         <button
           className={styles.aside_button}
@@ -32,10 +32,10 @@ export default function Aside({ links }: AsideProps): JSX.Element {
       >
         <span
           className={`${styles.button_hamburger} ${
-            isMenuOpen ? styles.button_hamburger_open : ""
+            isMenuOpen ? styles.button_hamburger_open : ''
           }`}
         />
       </button>
     </>
-  );
+  )
 }

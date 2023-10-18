@@ -1,20 +1,20 @@
-import Image from "next/image";
+import Image from 'next/image'
 
-import { Card } from "@components/index";
-import { type CardUserProps } from "@/types";
-import styles from "./CardUser.module.scss";
+import { Card } from '@components/index'
+import { type CardUserProps } from '@/types'
+import styles from './CardUser.module.scss'
 
-export default function CardUser({
+export default function CardUser ({
   element,
   onClick,
-  children,
+  children
 }: CardUserProps): JSX.Element {
   return (
     <Card onClick={onClick}>
       <Image
         src={
-          element.avatar === undefined || element.avatar === ""
-            ? "/placeholder.svg"
+          element.avatar === undefined || element.avatar === ''
+            ? '/placeholder.svg'
             : element.avatar
         }
         width={100}
@@ -28,5 +28,5 @@ export default function CardUser({
       </div>
       {children}
     </Card>
-  );
+  )
 }

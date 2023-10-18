@@ -1,42 +1,42 @@
-"use client";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+'use client'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 // import Image from "next/image";
 
-import { As, Button, UploadFile } from "@components/index";
-import { type FileState, type FormProps } from "@/types";
-import styles from "./Form.module.scss";
-import { useEffect } from "react";
+import { As, Button, UploadFile } from '@components/index'
+import { type FileState, type FormProps } from '@/types'
+import styles from './Form.module.scss'
+import { useEffect } from 'react'
 
-export default function Form({
+export default function Form ({
   sections,
   schema,
-  buttonSubmit = "Enviar",
+  buttonSubmit = 'Enviar',
   onSubmit,
-  className = "",
-  fieldsClassName = "",
+  className = '',
+  fieldsClassName = '',
   children,
   setFormMethods,
   files,
   handleFiles,
-  customFields,
+  customFields
 }: FormProps): JSX.Element {
   const formMethods = useForm({
     resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+    mode: 'onChange'
+  })
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = formMethods;
+    formState: { errors }
+  } = formMethods
 
   useEffect(() => {
     if (setFormMethods !== undefined) {
-      setFormMethods(formMethods);
+      setFormMethods(formMethods)
     }
-  }, [setFormMethods]);
+  }, [setFormMethods])
 
   return (
     <div className={styles.container}>
@@ -55,13 +55,13 @@ export default function Form({
                 {fields.map(
                   ({
                     name,
-                    type = "text",
+                    type = 'text',
                     label,
                     placeholder,
                     elementType,
                     options,
                     props,
-                    style = {},
+                    style = {}
                   }) => (
                     <div
                       key={name}
@@ -80,7 +80,8 @@ export default function Form({
                           {label}
                         </strong>
                       </label>
-                      {elementType === "select" ? (
+                      {elementType === 'select'
+                        ? (
                         <select
                           id={name}
                           {...props}
@@ -94,23 +95,28 @@ export default function Form({
                               <option key={id} value={id}>
                                 {label}
                               </option>
-                            );
+                            )
                           })}
                         </select>
-                      ) : elementType === "file" ? (
+                          )
+                        : elementType === 'file'
+                          ? (
                         <UploadFile
                           file={
                             files?.find(
-                              (file) => file.name === name,
+                              (file) => file.name === name
                             ) as FileState
                           }
                           handleSelectedFile={handleFiles ?? (() => {})}
                           id={name}
                           props={props ?? {}}
                         />
-                      ) : elementType === "custom" ? (
-                        customFields?.[name]()
-                      ) : (
+                            )
+                          : elementType === 'custom'
+                            ? (
+                                customFields?.[name]()
+                              )
+                            : (
                         <input
                           id={name}
                           type={type}
@@ -121,7 +127,7 @@ export default function Form({
                             styles.container_form_section_wrapper_input
                           }
                         />
-                      )}
+                              )}
                       {errors[name] !== null && (
                         <span
                           className={
@@ -132,11 +138,11 @@ export default function Form({
                         </span>
                       )}
                     </div>
-                  ),
+                  )
                 )}
               </div>
             </div>
-          );
+          )
         })}
         {children}
         <Button className={styles.container_form_button} type="submit">
@@ -144,5 +150,5 @@ export default function Form({
         </Button>
       </form>
     </div>
-  );
+  )
 }

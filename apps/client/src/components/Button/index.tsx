@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import { type ButtonProps } from "@/types";
-import styles from "./Button.module.scss";
+import { type ButtonProps } from '@/types'
+import styles from './Button.module.scss'
 
-export default function Button({
-  className = "",
+export default function Button ({
+  className = '',
   onClick = () => {},
   children,
-  type = "button",
-  props = {},
+  type = 'button',
+  props = {}
 }: ButtonProps): JSX.Element {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    e.stopPropagation();
-    onClick();
-  };
+    e.stopPropagation()
+    onClick()
+  }
 
   return (
     <button
@@ -24,5 +24,5 @@ export default function Button({
     >
       {children}
     </button>
-  );
+  )
 }

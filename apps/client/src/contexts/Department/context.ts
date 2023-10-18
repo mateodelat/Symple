@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import { createContext, useContext } from "react";
-import { type DepartmentContextType } from "@/types";
+import { createContext, useContext } from 'react'
+import { type DepartmentContextType } from '@/types'
 
 const DepartmentContext = createContext<DepartmentContextType>({
   departments: [],
@@ -9,10 +9,10 @@ const DepartmentContext = createContext<DepartmentContextType>({
   isLoading: true,
   addDepartment: (department) => {},
   updateDepartment: (department) => {},
-  deleteDepartment: (id) => {},
-});
+  deleteDepartment: (id) => {}
+})
 
 export const useDepartmentContext = (): DepartmentContextType =>
-  useContext(DepartmentContext);
+  useContext(DepartmentContext)
 
-export default DepartmentContext;
+export default DepartmentContext

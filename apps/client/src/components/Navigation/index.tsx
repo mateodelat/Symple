@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+import { usePathname } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { type NavigationProps } from "@/types";
-import styles from "./Navigation.module.scss";
+import { type NavigationProps } from '@/types'
+import styles from './Navigation.module.scss'
 
-export default function Navigation({
+export default function Navigation ({
   links,
-  toggleAside,
+  toggleAside
 }: NavigationProps): JSX.Element {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <section className={styles.main}>
@@ -34,7 +34,7 @@ export default function Navigation({
                 className={`${styles.main_nav_list_element_link} ${
                   pathname === href
                     ? styles.main_nav_list_element_link_active
-                    : ""
+                    : ''
                 }`}
               >
                 {label}
@@ -44,5 +44,5 @@ export default function Navigation({
         </ul>
       </nav>
     </section>
-  );
+  )
 }

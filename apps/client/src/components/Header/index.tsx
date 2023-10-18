@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { Aside, Button } from "../index";
-import { headerNavLinks } from "@/constants/Links";
-import styles from "./Header.module.scss";
-import { signOut } from "next-auth/react";
+import { Aside, Button } from '../index'
+import { headerNavLinks } from '@/constants/Links'
+import styles from './Header.module.scss'
+import { signOut } from 'next-auth/react'
 
-export default function Header(): JSX.Element {
+export default function Header (): JSX.Element {
   return (
     <header className={styles.header}>
       <Aside links={headerNavLinks} />
@@ -13,7 +13,7 @@ export default function Header(): JSX.Element {
         <Button
           className={styles.header_buttons_btn}
           onClick={() => {
-            console.log("notifications button");
+            console.log('notifications button')
           }}
         >
           <svg
@@ -28,7 +28,7 @@ export default function Header(): JSX.Element {
         <Button
           className={styles.header_buttons_btn}
           onClick={() => {
-            console.log("toggle dark mode");
+            console.log('toggle dark mode')
           }}
         >
           <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em">
@@ -48,5 +48,5 @@ export default function Header(): JSX.Element {
         </Button>
       </div>
     </header>
-  );
+  )
 }

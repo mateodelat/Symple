@@ -1,32 +1,32 @@
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 import {
   CardEnterprise,
   VerticalButton,
   Popup,
-  DeleteEnterprise,
-} from "@components/index";
-import { useToggle } from "@hooks/index";
-import { type CardEnterpriseEditProps, type Enterprise } from "@/types";
-import styles from "./CardEntepriseEdit.module.scss";
-import Link from "next/link";
+  DeleteEnterprise
+} from '@components/index'
+import { useToggle } from '@hooks/index'
+import { type CardEnterpriseEditProps, type Enterprise } from '@/types'
+import styles from './CardEntepriseEdit.module.scss'
+import Link from 'next/link'
 
-export default function CardEnterpriseEdit({
-  element,
+export default function CardEnterpriseEdit ({
+  element
 }: CardEnterpriseEditProps): JSX.Element {
-  const router = useRouter();
+  const router = useRouter()
 
   const handleCardClick = (enterprise: Enterprise): void => {
-    router.push(`/admin-panel/enterprise/${enterprise.id}`);
-  };
+    router.push(`/admin-panel/enterprise/${enterprise.id}`)
+  }
 
-  const { value: isPopupOpen, toggle: togglePopup } = useToggle();
-  const { value: isModalOpen, toggle: toggleModal } = useToggle();
+  const { value: isPopupOpen, toggle: togglePopup } = useToggle()
+  const { value: isModalOpen, toggle: toggleModal } = useToggle()
   return (
     <CardEnterprise
       element={element}
       onClick={() => {
-        handleCardClick(element);
+        handleCardClick(element)
       }}
     >
       <VerticalButton onClick={togglePopup} className={styles.vertical} />
@@ -37,7 +37,7 @@ export default function CardEnterpriseEdit({
               className={styles.action}
               href={`/admin-panel/enterprise/${element.id}/edit`}
               onClick={(e) => {
-                e.stopPropagation();
+                e.stopPropagation()
               }}
             >
               Editar
@@ -47,8 +47,8 @@ export default function CardEnterpriseEdit({
             className={styles.button}
             type="button"
             onClick={(e) => {
-              e.stopPropagation();
-              togglePopup();
+              e.stopPropagation()
+              togglePopup()
             }}
           ></button>
         </>
@@ -61,5 +61,5 @@ export default function CardEnterpriseEdit({
         />
       )}
     </CardEnterprise>
-  );
+  )
 }

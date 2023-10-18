@@ -1,56 +1,56 @@
-"use client";
+'use client'
 
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 
-import EnterpriseContext from "./context";
-import enterpriseService from "@services/enterprises";
+import EnterpriseContext from './context'
+import enterpriseService from '@services/enterprises'
 import {
   type Enterprise,
   type AppState,
-  type EntepriseContextProviderProps,
-} from "@/types";
+  type EntepriseContextProviderProps
+} from '@/types'
 
-export default function EnterpriseContextProvider({
-  children,
+export default function EnterpriseContextProvider ({
+  children
 }: EntepriseContextProviderProps): JSX.Element {
-  const { status } = useSession();
+  const { status } = useSession()
 
-  const [enterprises, setEnterprises] = useState<AppState["enterprises"]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [enterprises, setEnterprises] = useState<AppState['enterprises']>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   const setInitialEnterprises = (enterprises: Enterprise[]): void => {
-    setEnterprises(enterprises);
-    setIsLoading(false);
-  };
+    setEnterprises(enterprises)
+    setIsLoading(false)
+  }
 
   const addEnterprise = (enterprise: Enterprise): void => {
-    setEnterprises([...enterprises, enterprise]);
-  };
+    setEnterprises([...enterprises, enterprise])
+  }
 
   const updateEnterprise = (id: string, enterprise: Enterprise): void => {
-    const index = enterprises.findIndex((e) => e.id === id);
-    const newEnterprises = [...enterprises];
-    newEnterprises[index] = enterprise;
-    setEnterprises(newEnterprises);
-  };
+    const index = enterprises.findIndex((e) => e.id === id)
+    const newEnterprises = [...enterprises]
+    newEnterprises[index] = enterprise
+    setEnterprises(newEnterprises)
+  }
 
   const deleteEnterprise = (id: string): void => {
     const newEnterprises = enterprises.filter(
-      (enterprise) => enterprise.id !== id,
-    );
-    setEnterprises(newEnterprises);
-  };
+      (enterprise) => enterprise.id !== id
+    )
+    setEnterprises(newEnterprises)
+  }
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === 'authenticated') {
       const fetchEnterprises = async (): Promise<void> => {
-        const list = await enterpriseService.getAll();
-        setInitialEnterprises(list);
-      };
-      void fetchEnterprises();
+        const list = await enterpriseService.getAll()
+        setInitialEnterprises(list)
+      }
+      void fetchEnterprises()
     }
-  }, [status]);
+  }, [status])
 
   return (
     <EnterpriseContext.Provider
@@ -60,10 +60,10 @@ export default function EnterpriseContextProvider({
         isLoading,
         addEnterprise,
         updateEnterprise,
-        deleteEnterprise,
+        deleteEnterprise
       }}
     >
       {children}
     </EnterpriseContext.Provider>
-  );
+  )
 }

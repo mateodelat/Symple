@@ -1,28 +1,28 @@
-"use client";
+'use client'
 
-import { type DeleteEnterpriseProps } from "@/types";
-import { Modal } from "@components/index";
-import enterpriseService from "@services/enterprises";
-import { useEnterpriseContext } from "@contexts/Enterprise/context";
-import { toast } from "react-hot-toast";
+import { type DeleteEnterpriseProps } from '@/types'
+import { Modal } from '@components/index'
+import enterpriseService from '@services/enterprises'
+import { useEnterpriseContext } from '@contexts/Enterprise/context'
+import { toast } from 'react-hot-toast'
 
-export default function DeleteEnterprise({
+export default function DeleteEnterprise ({
   isOpen,
   toggle,
-  enterpriseId,
+  enterpriseId
 }: DeleteEnterpriseProps): JSX.Element {
-  const { deleteEnterprise } = useEnterpriseContext();
+  const { deleteEnterprise } = useEnterpriseContext()
 
   const deleteElement = async (): Promise<void> => {
     try {
-      const response = await enterpriseService.deleteOne(enterpriseId);
-      toggle();
-      deleteEnterprise(enterpriseId);
-      toast.success(response.message);
+      const response = await enterpriseService.deleteOne(enterpriseId)
+      toggle()
+      deleteEnterprise(enterpriseId)
+      toast.success(response.message)
     } catch (e: any) {
-      toast.error(e.message);
+      toast.error(e.message)
     }
-  };
+  }
 
   return (
     <Modal isOpen={isOpen} toggle={toggle} onConfirm={deleteElement}>
@@ -32,5 +32,5 @@ export default function DeleteEnterprise({
         deshacer.
       </p>
     </Modal>
-  );
+  )
 }

@@ -1,58 +1,58 @@
-"use client";
+'use client'
 
-import { useRef, useEffect } from "react";
-import { Button } from "@components/index";
+import { useRef, useEffect } from 'react'
+import { Button } from '@components/index'
 
-import { type ModalProps } from "@/types";
-import styles from "./Modal.module.scss";
+import { type ModalProps } from '@/types'
+import styles from './Modal.module.scss'
 
-export default function Modal({
+export default function Modal ({
   isOpen,
   toggle,
   onConfirm,
   onCancel = () => {},
   children,
-  className = "",
+  className = ''
 }: ModalProps): JSX.Element {
   useEffect(() => {
-    if (isOpen) ref.current?.showModal();
-  }, [isOpen]);
+    if (isOpen) ref.current?.showModal()
+  }, [isOpen])
 
-  const ref = useRef<HTMLDialogElement>(null);
+  const ref = useRef<HTMLDialogElement>(null)
 
   const handleConfirm = (): void => {
-    handleClick();
+    handleClick()
     setTimeout(() => {
-      onConfirm();
-    }, 150);
-  };
+      onConfirm()
+    }, 150)
+  }
 
   const handleCancel = (): void => {
-    handleClick();
-    onCancel();
-  };
+    handleClick()
+    onCancel()
+  }
 
   const handleClick = (): void => {
-    ref.current?.classList.add(styles.modal_close);
+    ref.current?.classList.add(styles.modal_close)
     setTimeout(() => {
-      toggle();
-      ref.current?.close();
-    }, 150);
-  };
+      toggle()
+      ref.current?.close()
+    }, 150)
+  }
 
   const handleDialogClick = (e: React.MouseEvent<HTMLDialogElement>): void => {
-    e.stopPropagation();
-    if (e.target === ref.current) handleCancel();
-  };
+    e.stopPropagation()
+    if (e.target === ref.current) handleCancel()
+  }
   return (
     <dialog
       ref={ref}
       className={`${styles.modal} ${className}`}
       onClick={handleDialogClick}
       onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          e.stopPropagation();
-          handleCancel();
+        if (e.key === 'Escape') {
+          e.stopPropagation()
+          handleCancel()
         }
       }}
     >
@@ -66,5 +66,5 @@ export default function Modal({
         </Button>
       </div>
     </dialog>
-  );
+  )
 }

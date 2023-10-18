@@ -1,27 +1,27 @@
-"use client";
+'use client'
 
-import { type VerticalButtonProps } from "@/types";
-import styles from "./VerticalButton.module.scss";
-import React from "react";
+import { type VerticalButtonProps } from '@/types'
+import styles from './VerticalButton.module.scss'
+import React from 'react'
 
-export default function VerticalButton({
+export default function VerticalButton ({
   onClick = () => {},
-  className = "",
+  className = ''
 }: VerticalButtonProps): JSX.Element {
   const handleClick = (e: React.MouseEvent): void => {
-    e.stopPropagation();
-    onClick();
-  };
+    e.stopPropagation()
+    onClick()
+  }
   return (
     <>
       <button
         className={`${styles.button} ${className}`}
         onClick={(e) => {
-          handleClick(e);
+          handleClick(e)
         }}
       >
         <div className={styles.button_vertical} />
       </button>
     </>
-  );
+  )
 }
