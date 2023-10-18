@@ -16,6 +16,7 @@ import CardEnterpriseEdit from "./CardEnterpriseEdit";
 import CardUser from "./CardUser";
 import CardUserEdit from "./CardUserEdit";
 import DeleteEnterprise from "./DeleteEnterprise";
+import DepartmentAdministration from "./DepartmentAdministration";
 import DepartmentForm from "./DepartmentForm";
 import DepartmentList from "./DepartmentList";
 import EnterpriseForm from "./EnterpriseForm";
@@ -54,8 +55,9 @@ export {
   CardEnterpriseEdit,
   CardUser,
   CardUserEdit,
-  DepartmentForm,
   DeleteEnterprise,
+  DepartmentAdministration,
+  DepartmentForm,
   DepartmentList,
   EnterpriseForm,
   EnterpriseList,

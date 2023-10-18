@@ -7,7 +7,7 @@ import styles from "./SearchBar.module.scss";
 import { type SearchBarProps } from "@/types";
 
 export default function SearchBar({
-  title,
+  title = undefined,
   handleData,
   filter,
   setFilter,
@@ -23,7 +23,7 @@ export default function SearchBar({
 
   return (
     <article className={styles.searchbar}>
-      <legend>{title}</legend>
+      {title !== undefined && <legend>{title}</legend>}
       <div className={styles.searchbar_wrapper}>
         <Image
           src="/search_logo.svg"

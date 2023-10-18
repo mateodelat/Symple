@@ -355,7 +355,7 @@ export enum AmountOfEmployees {
 }
 
 export interface SearchBarProps {
-  title: string;
+  title?: string | undefined;
   handleData: (filter: string) => void;
   filter: string;
   setFilter: (filter: string) => void;
@@ -441,6 +441,21 @@ export interface ButtonIconProps {
 
 export interface DepartmentPageProps {
   params: {
-    departmentId: string
-  }
+    departmentId: string;
+  };
+}
+
+export interface DepartmentAdministrationProps {
+  id: string;
+}
+
+export type DepartmentAdministrationSelectedView =
+  | "members"
+  | "positions"
+  | "roles";
+
+export interface InternalLink {
+  name: DepartmentAdministrationSelectedView;
+  label: string;
+  isActive: boolean;
 }
