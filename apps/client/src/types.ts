@@ -136,6 +136,10 @@ export interface UseToggle {
   toggle: (val?: boolean) => void
 }
 
+export interface UseWindowResize {
+  windowSize: number
+}
+
 export enum CardType {
   EnterpriseCard,
   UserCard,

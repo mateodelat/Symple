@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
@@ -13,7 +13,7 @@ import {
   LinkButton,
   Modal
 } from '@components/index'
-import { useToggle } from '@/hooks'
+import { useToggle, useWindowResize } from '@/hooks'
 import { departmentsService } from '@/services'
 import { type DepartmentListProps, type Department } from '@/types'
 import styles from './DepartmentList.module.scss'
@@ -29,17 +29,13 @@ export default function DepartmentList ({
   const { push } = useRouter()
   const currentPath = usePathname()
   const { toggle, value: isCancelOpen } = useToggle()
+  const { windowSize } = useWindowResize()
 
   const [canCreate, setCanCreate] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [cancelChanges, setCancelChanges] = useState(false)
   const [saveChanges, setSaveChanges] = useState(false)
-  const [windowSize, setWindowSize] = useState(window.innerWidth)
   const [departmentsState, setDepartmentsState] = useState(departments)
-
-  const handleWindowResize = useCallback(() => {
-    setWindowSize(window.innerWidth)
-  }, [])
 
   const handleDepartmentChanges = (department: Department): void => {
     const index = departmentsState.findIndex((e) => e.id === department.id)
@@ -54,13 +50,6 @@ export default function DepartmentList ({
       return prev.filter((enterprise) => enterprise.id !== id)
     })
   }
-
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowResize)
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [handleWindowResize])
 
   useEffect(() => {
     if (status === 'authenticated') {

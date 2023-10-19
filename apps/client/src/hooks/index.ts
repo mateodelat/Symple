@@ -1,3 +1,4 @@
 import useToggle from './useToggle'
+import useWindowResize from './useWindowResize'
 
-export { useToggle }
+export { useToggle, useWindowResize }
