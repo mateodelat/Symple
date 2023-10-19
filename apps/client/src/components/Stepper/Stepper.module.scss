@@ -8,9 +8,8 @@
   gap: 1rem;
   &_container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    width: 100%;
     &_button {
       width: 30px;
       height: 30px;
@@ -27,6 +26,29 @@
       width: 30px;
       height: 2px;
       background-color: variables.$primary-gray-color;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .stepper {
+    &_container {
+      flex-direction: column;
+      &_button {
+        position: relative;
+        font-size: inherit;
+        font-family: inherit;
+      }
+      &_title {
+        position: absolute;
+        transform: translate(50%, -50%);
+        // left: 45px;
+      }
+      &_connector {
+        width: 2px;
+        height: 30px;
+        align-self: center;
+      }
     }
   }
 }

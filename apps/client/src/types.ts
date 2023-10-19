@@ -140,6 +140,12 @@ export interface UseWindowResize {
   windowSize: number
 }
 
+export interface UseStepper {
+  currentStep: number
+  nextStep: () => void
+  previousStep: (index?: number) => void
+}
+
 export enum CardType {
   EnterpriseCard,
   UserCard,
@@ -475,4 +481,6 @@ export interface Step {
 export interface StepperProps {
   steps: Step[]
   currentStep: number
+  nextStep: () => void
+  previousStep: (index?: number) => void
 }
