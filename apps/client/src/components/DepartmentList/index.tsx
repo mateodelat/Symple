@@ -245,6 +245,12 @@ export default function DepartmentList ({
             setCancelChanges(false)
             setIsEditing(false)
           }}
+          onCancel={() => {
+            setDepartmentsState(departments)
+            setCancelChanges(false)
+            setIsEditing(false)
+            toggle()
+          }}
           toggle={toggle}
         >
           <h3>Atención</h3>
