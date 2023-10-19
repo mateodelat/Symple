@@ -37,7 +37,6 @@ export default function AddUsersWrapper ({
     setAddedUsers([])
   }
 
-  console.log(!value && addedUsers.length > 0)
   return (
     <div className={styles.wrapper}>
       <Button

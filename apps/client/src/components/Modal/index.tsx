@@ -12,7 +12,9 @@ export default function Modal ({
   onConfirm,
   onCancel = () => {},
   children,
-  className = ''
+  className = '',
+  confirmText = 'Confirmar',
+  hasConfirmButton = true
 }: ModalProps): JSX.Element {
   useEffect(() => {
     if (isOpen) ref.current?.showModal()
@@ -61,9 +63,11 @@ export default function Modal ({
           <div className={styles.modal_content_close_button} />
         </Button>
         {children}
-        <Button onClick={handleConfirm} className={styles.modal_content_accept}>
-          Confirmar
-        </Button>
+        {hasConfirmButton && (
+          <Button onClick={handleConfirm} className={styles.modal_content_accept}>
+            {confirmText}
+          </Button>
+        )}
       </div>
     </dialog>
   )

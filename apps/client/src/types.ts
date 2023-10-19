@@ -1,7 +1,8 @@
 import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
-import { type Dispatch, type SetStateAction } from 'react'
+import { type RefObject, type Dispatch, type SetStateAction } from 'react'
+import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
 
 export interface Field {
   name: string
@@ -21,12 +22,13 @@ export interface Field {
 export interface Section {
   title: Title
   fields: FormField[]
+  className?: string
 }
 
 export interface Title {
   name: string
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'
-  style?: Record<string, string | boolean>
+  style?: React.CSSProperties
 }
 
 export interface FormField {
@@ -37,8 +39,8 @@ export interface FormField {
   props?: Record<string, string | boolean>
   options?: Option[]
   fileProps?: FileProps
-  elementType?: 'select' | 'file' | 'custom'
-  style?: Record<string, string | boolean>
+  elementType?: 'select' | 'file' | 'custom' | 'textarea'
+  style?: React.CSSProperties
   required?: boolean
 }
 
@@ -146,6 +148,20 @@ export interface UseStepper {
   previousStep: (index?: number) => void
 }
 
+export interface UseModal {
+  ref: RefObject<HTMLDialogElement>
+  handleConfirm: () => void
+  handleCancel: () => void
+  handleClick: () => void
+  handleDialogClick: (e: React.MouseEvent<HTMLDialogElement>) => void
+}
+
+export interface UseModalProps {
+  onConfirm: () => any
+  onCancel: () => any
+  toggle: (val?: boolean) => void
+}
+
 export enum CardType {
   EnterpriseCard,
   UserCard,
@@ -230,6 +246,18 @@ export interface FormProps {
   handleFiles?: (file: File) => void
   files?: FileState[]
   customFields?: CustomField
+  isStepper?: boolean
+  steps?: Step[]
+}
+
+export interface FormSectionProps extends Section {
+  fieldsClassName: string
+  register: UseFormRegister<any>
+  errors: FieldErrors<any>
+  files?: FileState[]
+  handleFiles?: (file: File) => void
+  customFields?: CustomField
+  children?: React.ReactNode
 }
 
 export interface UploadFileProps {
@@ -254,6 +282,8 @@ export interface ModalProps {
   onConfirm: () => any
   onCancel?: () => any
   className?: string
+  confirmText?: string
+  hasConfirmButton?: boolean
 }
 
 export interface ErrorObject {
@@ -483,4 +513,6 @@ export interface StepperProps {
   currentStep: number
   nextStep: () => void
   previousStep: (index?: number) => void
+  checkErrors?: (fieldsToCheck: string[]) => Promise<boolean>
+  fieldNames?: string[]
 }

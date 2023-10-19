@@ -1,12 +1,12 @@
 'use client'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-// import Image from "next/image";
 
-import { As, Button, UploadFile } from '@components/index'
-import { type FileState, type FormProps } from '@/types'
+import { Button, FormSection, Stepper } from '@components/index'
+import { type FormProps } from '@/types'
 import styles from './Form.module.scss'
 import { useEffect } from 'react'
+import { useStepper } from '@/hooks'
 
 export default function Form ({
   sections,
@@ -19,17 +19,20 @@ export default function Form ({
   setFormMethods,
   files,
   handleFiles,
-  customFields
+  customFields,
+  isStepper = false,
+  steps = []
 }: FormProps): JSX.Element {
   const formMethods = useForm({
     resolver: yupResolver(schema),
-    mode: 'onChange'
+    mode: 'all'
   })
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    trigger
   } = formMethods
 
   useEffect(() => {
@@ -38,116 +41,91 @@ export default function Form ({
     }
   }, [setFormMethods])
 
+  const { currentStep, nextStep, previousStep } = useStepper()
+
+  const checkErrors = async (fieldsToCheck: string[]): Promise<boolean> => {
+    const isValid = await trigger(fieldsToCheck)
+    return isValid
+  }
+
   return (
     <div className={styles.container}>
       <form
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={handleSubmit(onSubmit)}
-        className={`${styles.container_form} ${className}`}
+        className={`${styles.container_form} ${isStepper ? styles.container_form_stepper : ''} ${className}`}
       >
-        {sections.map(({ title, fields }) => {
+        {isStepper && (
+          <Stepper
+            steps={steps}
+            currentStep={currentStep}
+            nextStep={nextStep}
+            previousStep={previousStep}
+            checkErrors={checkErrors}
+            fieldNames={sections.at(currentStep)?.fields.map(({ name }) => name)}
+          />
+        )}
+        {sections.map(({ title, fields, className = '' }, i) => {
           return (
-            <div key={title.name} className={styles.container_form_section}>
-              <As name={title.name} as={title.as} style={title.style} />
-              <div
-                className={`${styles.container_form_section_fields} ${fieldsClassName}`}
-              >
-                {fields.map(
-                  ({
-                    name,
-                    type = 'text',
-                    label,
-                    placeholder,
-                    elementType,
-                    options,
-                    props,
-                    style = {}
-                  }) => (
-                    <div
-                      key={name}
-                      className={styles.container_form_section_wrapper}
-                      style={{ ...style }}
-                    >
-                      <label
-                        htmlFor={name}
-                        className={styles.container_form_section_wrapper_label}
-                      >
-                        <strong
-                          className={
-                            styles.container_form_section_wrapper_label_text
-                          }
+            isStepper
+              ? currentStep === i && (
+                <FormSection
+                  title={title}
+                  fields={fields}
+                  fieldsClassName={`${fieldsClassName} ${className}`}
+                  register={register}
+                  errors={errors}
+                  customFields={customFields}
+                  files={files}
+                  handleFiles={handleFiles}
+                  key={title.name}
+                >
+                  {currentStep === steps.length - 1
+                    ? (
+                        <Button
+                          className={styles.container_form_button}
+                          type="submit"
                         >
-                          {label}
-                        </strong>
-                      </label>
-                      {elementType === 'select'
-                        ? (
-                        <select
-                          id={name}
-                          {...props}
-                          {...register(name)}
-                          className={
-                            styles.container_form_section_wrapper_input
-                          }
+                          {buttonSubmit}
+                        </Button>
+                      )
+                    : (
+                        <Button
+                          className={styles.container_form_button}
+                          onClick={async () => {
+                            const isValid = await checkErrors(fields.map(({ name }) => name))
+                            if (isValid) nextStep()
+                          }}
                         >
-                          {options?.map(({ id, label }) => {
-                            return (
-                              <option key={id} value={id}>
-                                {label}
-                              </option>
-                            )
-                          })}
-                        </select>
-                          )
-                        : elementType === 'file'
-                          ? (
-                        <UploadFile
-                          file={
-                            files?.find(
-                              (file) => file.name === name
-                            ) as FileState
-                          }
-                          handleSelectedFile={handleFiles ?? (() => {})}
-                          id={name}
-                          props={props ?? {}}
-                        />
-                            )
-                          : elementType === 'custom'
-                            ? (
-                                customFields?.[name]()
-                              )
-                            : (
-                        <input
-                          id={name}
-                          type={type}
-                          placeholder={placeholder}
-                          {...register(name)}
-                          {...props}
-                          className={
-                            styles.container_form_section_wrapper_input
-                          }
-                        />
-                              )}
-                      {errors[name] !== null && (
-                        <span
-                          className={
-                            styles.container_form_section_wrapper_error
-                          }
-                        >
-                          {errors[name]?.message as string}
-                        </span>
+                          Siguiente
+                        </Button>
                       )}
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
+                </FormSection>
+              )
+              : (
+                <FormSection
+                  title={title}
+                  fields={fields}
+                  fieldsClassName={fieldsClassName}
+                  register={register}
+                  errors={errors}
+                  customFields={customFields}
+                  files={files}
+                  handleFiles={handleFiles}
+                  key={title.name}
+                />
+                )
           )
         })}
         {children}
-        <Button className={styles.container_form_button} type="submit">
-          {buttonSubmit}
-        </Button>
+        {!isStepper && (
+          <Button
+            className={styles.container_form_button}
+            type="submit"
+          >
+            {buttonSubmit}
+          </Button>
+        )}
       </form>
     </div>
   )

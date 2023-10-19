@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 import { AddRole, Button, Modal, SearchBar } from '@components/index'
-import { useToggle } from '@/hooks'
+import { useModal, useToggle } from '@/hooks'
 import { internalLinks } from '@/constants/DepartmentAdministration'
 import { type DepartmentAdministrationProps } from '@/types'
 import styles from './DepartmentAdministration.module.scss'
@@ -15,6 +15,13 @@ export default function DepartmentAdministration ({
   const [links, setLinks] = useState(internalLinks)
 
   const { toggle, value } = useToggle()
+  const {
+    handleCancel,
+    handleClick,
+    handleConfirm,
+    handleDialogClick,
+    ref
+  } = useModal({ toggle, onCancel: () => {}, onConfirm: () => {} })
 
   const handleActive = (name: string): void => {
     setLinks((prev) => {
@@ -61,6 +68,7 @@ export default function DepartmentAdministration ({
           isOpen={value}
           onConfirm={() => {}}
           toggle={toggle}
+          hasConfirmButton={false}
         >
           {element?.name === 'roles' && (
             <AddRole

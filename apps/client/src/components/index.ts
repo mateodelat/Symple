@@ -23,6 +23,7 @@ import DepartmentList from './DepartmentList'
 import EnterpriseForm from './EnterpriseForm'
 import EnterpriseList from './EnterpriseList'
 import Form from './Form'
+import FormSection from './FormSection'
 import Header from './Header'
 import LinkButton from './LinkButton'
 import List from './List'
@@ -65,6 +66,7 @@ export {
   EnterpriseForm,
   EnterpriseList,
   Form,
+  FormSection,
   Header,
   LinkButton,
   List,

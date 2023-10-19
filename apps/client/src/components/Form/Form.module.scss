@@ -24,6 +24,11 @@
     &::-webkit-scrollbar {
       display: none;
     }
+    &_button {
+      &_hidden {
+        display: none;
+      }
+    }
     &_section {
       display: grid;
       gap: 1.5rem;
@@ -80,6 +85,9 @@
 @media screen and (min-width: 1024px) {
   .container {
     &_form {
+      &_stepper {
+        flex-direction: row;
+      }
       &_section {
         &_wrapper {
           &_input {

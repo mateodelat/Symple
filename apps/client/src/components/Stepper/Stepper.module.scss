@@ -32,9 +32,11 @@
 
 @media screen and (min-width: 1024px) {
   .stepper {
+    width: fit-content;
     &_container {
+      position: sticky;
+      top: 2rem;
       flex-direction: column;
-      width: fit-content;
       &_connector {
         width: 2px;
         height: 30px;

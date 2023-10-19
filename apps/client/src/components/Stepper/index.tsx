@@ -5,10 +5,21 @@ import styles from './Stepper.module.scss'
 import { Fragment } from 'react'
 import { useWindowResize } from '@hooks/index'
 
-export default function Stepper ({ steps, currentStep, nextStep, previousStep }: StepperProps): JSX.Element {
+export default function Stepper ({
+  steps,
+  currentStep,
+  nextStep,
+  previousStep,
+  checkErrors,
+  fieldNames
+}: StepperProps): JSX.Element {
   const { windowSize } = useWindowResize()
 
-  const handleSteps = (index: number): void => {
+  const handleSteps = async (index: number): Promise<void> => {
+    if (checkErrors !== undefined) {
+      const isValid = await checkErrors(fieldNames ?? [])
+      if (!isValid) return
+    }
     if (index < currentStep) previousStep(index)
     else if (index > currentStep) nextStep()
   }
@@ -30,8 +41,10 @@ export default function Stepper ({ steps, currentStep, nextStep, previousStep }:
             <Fragment key={index}>
               <button
                 className={`${styles.stepper_container_button} ${index <= currentStep ? styles.stepper_container_button_active : ''}`}
-                onClick={() => { handleSteps(index) }}
+                onClick={() => { handleSteps(index).then(() => {}).catch(() => {}) }
+                }
                 disabled={currentStep + 1 < index}
+                type='button'
               />
               {index !== steps.length - 1 && (
                 <div className={`${styles.stepper_container_connector} ${index < currentStep ? styles.stepper_container_button_active : ''}`}/>
@@ -49,13 +62,14 @@ export default function Stepper ({ steps, currentStep, nextStep, previousStep }:
               <div className={styles.wrapper}>
                 <button
                   className={`${styles.stepper_container_button} ${index <= currentStep ? styles.stepper_container_button_active : ''}`}
-                  onClick={() => { handleSteps(index) }}
-                  disabled={currentStep + 1 < index}
+                  onClick={() => { handleSteps(index).then(() => {}).catch(() => {}) }}
+                  disabled={currentStep + 1 < index }
+                  type='button'
                 />
                 <span
                   className={styles.stepper_container_title}
                 >
-                  {index === currentStep && steps[currentStep].name}
+                  {steps[index].name}
                 </span>
                 {index !== steps.length - 1 && (
                   <div className={`${styles.stepper_container_connector} ${index < currentStep ? styles.stepper_container_button_active : ''}`}/>
@@ -65,7 +79,8 @@ export default function Stepper ({ steps, currentStep, nextStep, previousStep }:
             )
           })}
         </aside>
-          )}
+          )
+      }
     </div>
   )
 }

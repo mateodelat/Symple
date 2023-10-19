@@ -43,9 +43,7 @@ export default function UploadFile ({
             const src = URL.createObjectURL(blob)
             setImage(src)
           })
-          .catch((err) => {
-            console.log(err)
-          })
+          .catch(() => {})
       }
       setImage(src)
     }
