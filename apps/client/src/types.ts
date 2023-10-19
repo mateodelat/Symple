@@ -463,3 +463,12 @@ export interface InternalLink {
 export interface AddRoleProps {
   isEditing: boolean
 }
+
+export interface Step {
+  name: string
+  index: number
+}
+export interface StepperProps {
+  steps: Step[]
+  currentStep: number
+}

@@ -34,6 +34,7 @@ import NoEnterprise from './NoEnterprise'
 import NotFound from './NotFound'
 import Popup from './Popup'
 import SearchBar from './SearchBar'
+import Stepper from './Stepper'
 import UploadFile from './UploadFile'
 import UserForm from './UserForm'
 import VerticalButton from './VerticalButton'
@@ -75,6 +76,7 @@ export {
   NotFound,
   Popup,
   SearchBar,
+  Stepper,
   UploadFile,
   UserForm,
   VerticalButton

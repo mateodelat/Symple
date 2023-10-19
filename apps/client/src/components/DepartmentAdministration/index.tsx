@@ -1,11 +1,12 @@
 'use client'
 
+import { useState } from 'react'
+
 import { AddRole, Button, Modal, SearchBar } from '@components/index'
+import { useToggle } from '@/hooks'
+import { internalLinks } from '@/constants/DepartmentAdministration'
 import { type DepartmentAdministrationProps } from '@/types'
 import styles from './DepartmentAdministration.module.scss'
-import { useState } from 'react'
-import { internalLinks } from '@/constants/DepartmentAdministration'
-import { useToggle } from '@/hooks'
 
 export default function DepartmentAdministration ({
   id
@@ -56,7 +57,11 @@ export default function DepartmentAdministration ({
         Nuevo {element?.label.toLowerCase()}
       </Button>
       {value && (
-        <Modal isOpen={value} onConfirm={() => {}} toggle={toggle}>
+        <Modal
+          isOpen={value}
+          onConfirm={() => {}}
+          toggle={toggle}
+        >
           {element?.name === 'roles' && (
             <AddRole
               isEditing={false}

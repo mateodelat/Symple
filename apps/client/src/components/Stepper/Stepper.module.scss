@@ -1,0 +1,32 @@
+@use "@styles/variables";
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 1rem;
+  &_container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    &_button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      background-color: variables.$primary-gray-color;
+
+      &_active {
+        background-color: variables.$primary-green-color !important;
+      }
+    }
+
+    &_connector {
+      width: 30px;
+      height: 2px;
+      background-color: variables.$primary-gray-color;
+    }
+  }
+}
