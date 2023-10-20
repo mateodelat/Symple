@@ -8,7 +8,11 @@ const { required } = formErrors
 export const roleSchema = yup.object({
   detailsName: yup.string().required(required),
   detailsObjective: yup.string().required(required),
-  indicators: yup.string().required(required),
+  indicatorName: yup.string().required(required),
+  indicatorSelect: yup.object({
+    id: yup.string().required(required),
+    label: yup.string().required(required)
+  }),
   deliverables: yup.string().required(required),
   functions: yup.string().required(required)
 })

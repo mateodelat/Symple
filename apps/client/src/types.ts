@@ -538,6 +538,7 @@ export interface Indicator {
 
 export interface AddIndicatorProps {
   addedIndicators: Indicator[]
+  register: UseFormRegister<any>
 }
 
 export interface SelectFieldProps {

@@ -3,7 +3,7 @@ import { type AddIndicatorProps } from '@/types'
 import styles from './AddIndicator.module.scss'
 import { roleIndicatorOptions } from '@/constants/RoleForm'
 
-export default function AddIndicator ({ addedIndicators }: AddIndicatorProps): JSX.Element {
+export default function AddIndicator ({ addedIndicators, register }: AddIndicatorProps): JSX.Element {
   return (
     <section className={styles.container}>
       <div className={styles.container_indicator}>
@@ -13,7 +13,7 @@ export default function AddIndicator ({ addedIndicators }: AddIndicatorProps): J
           height={20}
           className={styles.container_indicator_icon_draggable}
         />
-        <input type="text" placeholder='Indicador'/>
+        <input type="text" placeholder='Indicador' {...register('indicatorName')}/>
         <ButtonIcon
           icon={'/trash_bin.svg'}
           width={20}
@@ -23,7 +23,8 @@ export default function AddIndicator ({ addedIndicators }: AddIndicatorProps): J
           }}
         />
       </div>
-      <SelectField name='indicatorType' options={roleIndicatorOptions}/>
+      <SelectField options={roleIndicatorOptions} name='indicatorSelect'/>
+      <div className={styles.container_}></div>
     </section>
   )
 }
