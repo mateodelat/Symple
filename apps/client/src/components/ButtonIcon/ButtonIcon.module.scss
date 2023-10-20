@@ -1,6 +1,11 @@
 .icon {
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  background: none;
+  width: fit-content !important;
+  height: fit-content !important;
+  padding: 5px !important;
+  background: none !important;
+  &:disabled {
+    & > img {
+      opacity: 0.5;
+    }
+  }
 }

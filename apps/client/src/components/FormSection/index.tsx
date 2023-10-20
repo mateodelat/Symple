@@ -1,6 +1,7 @@
 import { As, UploadFile } from '@components/index'
 import { type FileState, type FormSectionProps } from '@/types'
 import styles from './FormSection.module.scss'
+import SelectField from '../SelectField'
 
 export default function FormSection ({
   title,
@@ -35,36 +36,30 @@ export default function FormSection ({
               className={styles.section_wrapper}
               style={{ ...style }}
             >
-              <label
-                htmlFor={name}
-                className={styles.section_wrapper_label}
-              >
-                <strong
-                  className={
-                    styles.section_wrapper_label_text
-                  }
-                >
-                  {label}
-                </strong>
-              </label>
+              {
+                label !== undefined && (
+                  <label
+                    htmlFor={name}
+                    className={styles.section_wrapper_label}
+                  >
+                    <strong
+                      className={
+                        styles.section_wrapper_label_text
+                      }
+                    >
+                      {label}
+                    </strong>
+                  </label>
+                )
+              }
               {elementType === 'select'
                 ? (
-                <select
-                  id={name}
-                  {...props}
-                  {...register(name)}
-                  className={
-                    styles.section_wrapper_input
-                  }
-                >
-                  {options?.map(({ id, label }) => {
-                    return (
-                      <option key={id} value={id}>
-                        {label}
-                      </option>
-                    )
-                  })}
-                </select>
+                <SelectField
+                  name={name}
+                  options={options ?? []}
+                  props={props}
+                  register={register}
+                />
                   )
                 : elementType === 'file'
                   ? (
@@ -86,9 +81,7 @@ export default function FormSection ({
                           placeholder={placeholder}
                           {...register(name)}
                           {...props}
-                          className={
-                            `${styles.section_wrapper_input} ${styles.section_wrapper_textarea}`
-                          }
+                          className={styles.section_wrapper_textarea}
                         />
                       )
                     : elementType === 'custom'
@@ -102,13 +95,10 @@ export default function FormSection ({
                             placeholder={placeholder}
                             {...register(name)}
                             {...props}
-                            className={
-                              styles.section_wrapper_input
-                            }
                           />
                         )
               }
-              {errors[name] !== null && (
+              {errors[name] !== null && elementType !== 'custom' && (
                 <span
                   className={
                     styles.section_wrapper_error

@@ -71,10 +71,10 @@ export default function DepartmentAdministration ({
           ref={modalRef}
         >
           {element?.name === 'roles' && (
-            <AddRole
-              isEditing={false}
-              isOpen={value}
-            />
+              <AddRole
+                isEditing={false}
+                isOpen={value}
+              />
           )}
         </Modal>
     </section>

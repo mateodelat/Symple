@@ -31,19 +31,21 @@ export default function AddSubDepartment ({
         />
         <ButtonIcon
           icon={'/trash_bin.svg'}
-          onClick={() => {
-            handleDepartmentChange((prev) => {
-              const newDepartment = { ...prev }
-              const aux = newDepartment.subDepartments
-              const subDepartments = [
-                ...aux?.slice(0, index),
-                ...aux?.slice(index + 1, aux.length)
-              ]
-              newDepartment.subDepartments = subDepartments
-              return newDepartment
-            })
-          }}
           className={styles.container_wrapper_button}
+          props={{
+            onClick: () => {
+              handleDepartmentChange((prev) => {
+                const newDepartment = { ...prev }
+                const aux = newDepartment.subDepartments
+                const subDepartments = [
+                  ...aux?.slice(0, index),
+                  ...aux?.slice(index + 1, aux.length)
+                ]
+                newDepartment.subDepartments = subDepartments
+                return newDepartment
+              })
+            }
+          }}
         />
       </div>
 
@@ -83,17 +85,19 @@ export default function AddSubDepartment ({
             />
             <ButtonIcon
               icon={'/trash_bin.svg'}
-              onClick={() => {
-                handleDepartmentChange((prev) => {
-                  const newDepartment = { ...prev }
-                  const aux =
+              props={{
+                onClick: () => {
+                  handleDepartmentChange((prev) => {
+                    const newDepartment = { ...prev }
+                    const aux =
                     newDepartment.subDepartments[index].subDepartments
 
-                  aux.splice(i, 1)
+                    aux.splice(i, 1)
 
-                  newDepartment.subDepartments[index].subDepartments = aux
-                  return newDepartment
-                })
+                    newDepartment.subDepartments[index].subDepartments = aux
+                    return newDepartment
+                  })
+                }
               }}
               className={styles.container_wrapper_button}
             />

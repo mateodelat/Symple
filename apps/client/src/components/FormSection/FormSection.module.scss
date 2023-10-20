@@ -20,15 +20,8 @@
         font-weight: 500;
       }
     }
-    &_input {
-      padding: 1rem;
-      border: 1px solid variables.$primary-gray-color;
-      border-radius: 1.5rem;
-      &::placeholder {
-        color: variables.$tertiary-blue-color;
-      }
-    }
     &_textarea {
+      min-height: 2lh;
       max-height: 6lh;
       resize: vertical;
     }
@@ -51,12 +44,6 @@
 
 @media screen and (min-width: 1024px) {
   .section {
-    &_wrapper {
-      &_input {
-        padding: 1.2rem;
-        font-size: 1.5rem;
-      }
-    }
     &_fields {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -68,9 +55,6 @@
 @media screen and (min-width: 1920px) {
   .section {
     &_wrapper {
-      &_input {
-        font-size: 1.6rem;
-      }
       &_error {
         margin-top: 1rem;
       }

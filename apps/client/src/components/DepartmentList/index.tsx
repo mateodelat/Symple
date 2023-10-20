@@ -184,8 +184,10 @@ export default function DepartmentList ({
                 icon={'/pencil.svg'}
                 width={30}
                 height={30}
-                onClick={() => {
-                  if (!isEditing) setIsEditing((prev) => !prev)
+                props={{
+                  onClick: () => {
+                    if (!isEditing) setIsEditing((prev) => !prev)
+                  }
                 }}
                 className={styles.desktop_wrapper_buttons_btn}
               />
@@ -196,8 +198,10 @@ export default function DepartmentList ({
                   icon={'/x.svg'}
                   width={30}
                   height={30}
-                  onClick={() => {
-                    setCancelChanges(true)
+                  props={{
+                    onClick: () => {
+                      setCancelChanges(true)
+                    }
                   }}
                   className={styles.desktop_wrapper_buttons_btn}
                 />
@@ -205,8 +209,10 @@ export default function DepartmentList ({
                   icon={'/check.svg'}
                   width={30}
                   height={30}
-                  onClick={() => {
-                    setSaveChanges(true)
+                  props={{
+                    onClick: () => {
+                      setSaveChanges(true)
+                    }
                   }}
                   className={styles.desktop_wrapper_buttons_btn}
                 />

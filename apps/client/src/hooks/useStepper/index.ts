@@ -11,9 +11,11 @@ export default function useStepper (): UseStepper {
 
   const previousStep = (index?: number): void => { setCurrentStep((prev) => index ?? prev - 1) }
 
+  const reset = (): void => { setCurrentStep(0) }
   return {
     currentStep,
     nextStep,
-    previousStep
+    previousStep,
+    reset
   }
 }

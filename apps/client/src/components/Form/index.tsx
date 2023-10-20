@@ -1,14 +1,14 @@
 'use client'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { forwardRef, useEffect, useImperativeHandle } from 'react'
 
 import { Button, FormSection, Stepper } from '@components/index'
 import { type FormProps } from '@/types'
 import styles from './Form.module.scss'
-import { useEffect } from 'react'
 import { useStepper } from '@/hooks'
 
-export default function Form ({
+const Form = forwardRef(({
   sections,
   schema,
   buttonSubmit = 'Enviar',
@@ -22,7 +22,7 @@ export default function Form ({
   customFields,
   isStepper = false,
   steps = []
-}: FormProps): JSX.Element {
+}: FormProps, ref): JSX.Element => {
   const formMethods = useForm({
     resolver: yupResolver(schema),
     mode: 'all'
@@ -41,12 +41,18 @@ export default function Form ({
     }
   }, [setFormMethods])
 
-  const { currentStep, nextStep, previousStep } = useStepper()
+  const { currentStep, nextStep, previousStep, reset } = useStepper()
 
   const checkErrors = async (fieldsToCheck: string[]): Promise<boolean> => {
     const isValid = await trigger(fieldsToCheck)
     return isValid
   }
+
+  useImperativeHandle(ref, () => {
+    return {
+      reset
+    }
+  })
 
   return (
     <div className={styles.container}>
@@ -129,4 +135,6 @@ export default function Form ({
       </form>
     </div>
   )
-}
+})
+
+export default Form

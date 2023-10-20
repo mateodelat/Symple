@@ -1,4 +1,4 @@
-import { type Section } from '@/types'
+import { IndicatorType, type Option, type Section } from '@/types'
 import { formErrors } from '@/constants/Errors'
 import styles from '@styles/RoleForm.module.scss'
 import * as yup from 'yup'
@@ -25,13 +25,13 @@ export const roleSections: Section[] = [
         name: 'detailsName',
         label: 'Nombre',
         placeholder: 'Nombre',
-        style: { width: '100%' }
+        style: { width: '100%', alignItems: 'flex-start' }
       },
       {
         name: 'detailsObjective',
         label: 'Objetivo del rol',
         placeholder: 'Breve descripción del rol',
-        style: { width: '100%' },
+        style: { width: '100%', alignItems: 'flex-start' },
         elementType: 'textarea'
       }
     ],
@@ -40,13 +40,13 @@ export const roleSections: Section[] = [
   {
     title: {
       name: 'Indicadores',
-      as: 'h1'
+      as: 'h1',
+      style: { display: 'none' }
     },
     fields: [
       {
-        name: 'indicators',
-        label: 'Indicadores',
-        placeholder: 'Nombre',
+        name: 'addIndicators',
+        elementType: 'custom',
         style: { width: '100%' }
       }
     ],
@@ -98,3 +98,10 @@ export const roleSteps = [
   { index: 2, name: 'Entregables' },
   { index: 3, name: 'Funciones' }
 ]
+
+export const roleIndicatorOptions: Option[] = Object.values(IndicatorType).map((value) => (
+  {
+    id: value,
+    label: value
+  }
+))

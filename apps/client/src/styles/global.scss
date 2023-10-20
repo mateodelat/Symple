@@ -15,7 +15,7 @@ body {
   background-color: variables.$primary-background-color;
 }
 
-input {
+input, select, textarea {
   padding: 1rem;
   border: 1px solid variables.$primary-gray-color;
   border-radius: 1.5rem;
@@ -26,7 +26,11 @@ input {
 }
 
 input,
-input::placeholder {
+input::placeholder,
+select,
+select::placeholder,
+textarea,
+textarea::placeholder {
   font-family: inherit;
 }
 
@@ -58,4 +62,17 @@ h4,
 h5,
 h6 {
   color: variables.$primary-green-color;
+}
+
+@media screen and (min-width: 1024px) {
+  input, select, textarea {
+    padding: 1.2rem;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  input, select, textarea {
+    font-size: 1.6rem;
+  } 
 }

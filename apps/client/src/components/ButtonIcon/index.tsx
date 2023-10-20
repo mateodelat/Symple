@@ -6,13 +6,20 @@ import styles from './ButtonIcon.module.scss'
 
 export default function ButtonIcon ({
   icon,
-  onClick,
   height = 20,
   width = 20,
-  className = ''
+  className = '',
+  props
 }: ButtonIconProps): JSX.Element {
   return (
-    <Button onClick={onClick} className={`${styles.icon} ${className}`}>
+    <Button
+    props={props}
+    className={`${styles.icon} ${className}`}
+      style={{
+        width: `${width + 10}px`,
+        height: `${height + 10}px`
+      }}
+    >
       <Image src={icon} alt="Icon" width={width} height={height} />
     </Button>
   )

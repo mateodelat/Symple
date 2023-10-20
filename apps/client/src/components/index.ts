@@ -1,5 +1,6 @@
 import As from './As'
 import AddDepartment from './AddDepartment'
+import AddIndicator from './AddIndicator'
 import AddSubDepartment from './AddSubDepartment'
 import AddUsers from './AddUsers'
 import AddUsersWrapper from './AddUsersWrapper'
@@ -35,6 +36,7 @@ import NoEnterprise from './NoEnterprise'
 import NotFound from './NotFound'
 import Popup from './Popup'
 import SearchBar from './SearchBar'
+import SelectField from './SelectField'
 import Stepper from './Stepper'
 import UploadFile from './UploadFile'
 import UserForm from './UserForm'
@@ -43,6 +45,7 @@ import VerticalButton from './VerticalButton'
 export {
   As,
   AddDepartment,
+  AddIndicator,
   AddSubDepartment,
   AddUsers,
   AddUsersWrapper,
@@ -78,6 +81,7 @@ export {
   NotFound,
   Popup,
   SearchBar,
+  SelectField,
   Stepper,
   UploadFile,
   UserForm,

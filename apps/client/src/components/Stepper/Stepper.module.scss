@@ -20,6 +20,9 @@
       &_active {
         background-color: variables.$primary-green-color !important;
       }
+      &:disabled{
+        cursor: not-allowed;
+      }
     }
 
     &_connector {

@@ -1,7 +1,7 @@
 import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
-import { type RefObject, type Dispatch, type SetStateAction } from 'react'
+import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes } from 'react'
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
 
 export interface Field {
@@ -34,7 +34,7 @@ export interface Title {
 export interface FormField {
   name: string
   type?: 'text' | 'email' | 'password' | 'date' | 'numeric'
-  label: string
+  label?: string
   placeholder?: string
   props?: Record<string, string | boolean>
   options?: Option[]
@@ -124,7 +124,7 @@ export type AsideProps = Omit<NavigationProps, 'toggleAside'>
 
 export interface ButtonProps {
   children: React.ReactNode
-  onClick?: () => any
+  onClick?: any
   className?: string
   type?: 'button' | 'submit' | 'reset'
   style?: Record<string, string | boolean>
@@ -146,6 +146,7 @@ export interface UseStepper {
   currentStep: number
   nextStep: () => void
   previousStep: (index?: number) => void
+  reset: () => void
 }
 
 export interface UseModal {
@@ -474,9 +475,9 @@ export interface ButtonIconProps {
   icon: any
   width?: number
   height?: number
-  onClick: () => void
   className?: string
   style?: Record<string, string | boolean>
+  props?: ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 export interface DepartmentPageProps {
@@ -516,4 +517,33 @@ export interface StepperProps {
   previousStep: (index?: number) => void
   checkErrors?: (fieldsToCheck: string[]) => Promise<boolean>
   fieldNames?: string[]
+}
+
+export enum IndicatorType {
+  FINANTIAL_OBJECTIVE = 'Objetivo financiero',
+  MEASUREMENT = 'Calificación 1 al 10',
+  MEETS_EXPECTATION = 'Cumple (sí o no)',
+}
+
+export enum IndicatorMeasurementType {
+  Percentage = 'Porcentaje',
+  Amount = 'Monto'
+}
+
+export interface Indicator {
+  type: IndicatorType
+  measurementType?: IndicatorMeasurementType
+  associatedUsers: User[]
+}
+
+export interface AddIndicatorProps {
+  addedIndicators: Indicator[]
+}
+
+export interface SelectFieldProps {
+  name: string
+  options: Option[]
+  register?: UseFormRegister<any>
+  props?: SelectHTMLAttributes<HTMLSelectElement>
+  className?: string
 }

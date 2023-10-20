@@ -25,40 +25,10 @@
       display: none;
     }
     &_button {
+      height: fit-content;
+      align-self: flex-end;
       &_hidden {
         display: none;
-      }
-    }
-    &_section {
-      display: grid;
-      gap: 1.5rem;
-      &_fields {
-        display: grid;
-        gap: 1rem;
-      }
-      &_wrapper {
-        display: flex;
-        flex-direction: column;
-        &_label {
-          margin-bottom: 1rem;
-          color: variables.$primary-black-color;
-          &_text {
-            font-weight: 500;
-          }
-        }
-        &_input {
-          padding: 1rem;
-          border: 1px solid variables.$primary-gray-color;
-          border-radius: 1.5rem;
-          &::placeholder {
-            color: variables.$tertiary-blue-color;
-          }
-        }
-        &_error {
-          color: red;
-          margin-top: 0.5rem;
-          font-weight: 500;
-        }
       }
     }
   }
@@ -88,35 +58,9 @@
       &_stepper {
         flex-direction: row;
       }
-      &_section {
-        &_wrapper {
-          &_input {
-            padding: 1.2rem;
-            font-size: 1.5rem;
-          }
-        }
-        &_fields {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 2rem;
-        }
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 1920px) {
-  .container {
-    &_form {
-      &_section {
-        &_wrapper {
-          &_input {
-            font-size: 1.6rem;
-          }
-          &_error {
-            margin-top: 1rem;
-          }
-        }
+      &_button{
+        width: 50%;
+        justify-self: flex-end;
       }
     }
   }
