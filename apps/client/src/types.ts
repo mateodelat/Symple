@@ -277,7 +277,7 @@ export interface PopupProps {
 
 export interface ModalProps {
   isOpen: boolean
-  toggle: () => void
+  toggle: (value?: boolean) => void
   children: React.ReactNode
   onConfirm: () => any
   onCancel?: () => any
@@ -502,6 +502,7 @@ export interface InternalLink {
 
 export interface AddRoleProps {
   isEditing: boolean
+  isOpen: boolean
 }
 
 export interface Step {
