@@ -237,7 +237,6 @@ export default function DepartmentList ({
               )
         )}
       </div>
-      {isCancelOpen && (
         <Modal
           isOpen={isCancelOpen}
           onConfirm={() => {
@@ -259,7 +258,6 @@ export default function DepartmentList ({
             sin guardar.
           </p>
         </Modal>
-      )}
     </div>
   )
 }

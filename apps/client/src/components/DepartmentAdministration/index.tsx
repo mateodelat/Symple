@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { AddRole, Button, Modal, SearchBar } from '@components/index'
-import { useModal, useToggle } from '@/hooks'
+import { useToggle } from '@/hooks'
 import { internalLinks } from '@/constants/DepartmentAdministration'
 import { type DepartmentAdministrationProps } from '@/types'
 import styles from './DepartmentAdministration.module.scss'
@@ -15,13 +15,6 @@ export default function DepartmentAdministration ({
   const [links, setLinks] = useState(internalLinks)
 
   const { toggle, value } = useToggle()
-  const {
-    handleCancel,
-    handleClick,
-    handleConfirm,
-    handleDialogClick,
-    ref
-  } = useModal({ toggle, onCancel: () => {}, onConfirm: () => {} })
 
   const handleActive = (name: string): void => {
     setLinks((prev) => {
@@ -35,6 +28,8 @@ export default function DepartmentAdministration ({
   }
 
   const element = links.find((link) => link.isActive)
+
+  const modalRef = useRef()
 
   return (
     <section className={styles.container}>
@@ -60,23 +55,28 @@ export default function DepartmentAdministration ({
         </ul>
       </div>
       <SearchBar filter={filter} handleData={() => {}} setFilter={setFilter} />
-      <Button className={styles.container_create} onClick={toggle}>
+      <Button className={styles.container_create} onClick={() => { toggle(true) }}>
         Nuevo {element?.label.toLowerCase()}
       </Button>
-      {value && (
         <Modal
           isOpen={value}
-          onConfirm={() => {}}
+          onConfirm={() => {
+            console.log(modalRef)
+          }}
+          onCancel={() => {
+            console.log(modalRef)
+          }}
           toggle={toggle}
           hasConfirmButton={false}
+          ref={modalRef}
         >
           {element?.name === 'roles' && (
             <AddRole
               isEditing={false}
+              isOpen={value}
             />
           )}
         </Modal>
-      )}
     </section>
   )
 }

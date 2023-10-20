@@ -84,6 +84,14 @@ export const roleSections: Section[] = [
   }
 ]
 
+export const roleInitialValues = {
+  detailsName: '',
+  detailsObjective: '',
+  indicators: '',
+  deliverables: '',
+  functions: ''
+}
+
 export const roleSteps = [
   { index: 0, name: 'Detalles' },
   { index: 1, name: 'Indicadores' },

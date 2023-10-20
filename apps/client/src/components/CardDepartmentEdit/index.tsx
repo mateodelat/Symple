@@ -70,21 +70,19 @@ export default function CardDepartmentEdit ({
           isEditMode
         />
       </div>
-      {value && (
-        <Modal
-          isOpen={value}
-          toggle={toggle}
-          onConfirm={() => {
-            deleteDepartment(element.id)
-          }}
-        >
-          <h3>Atención</h3>
-          <p>
-            ¿Estás seguro que deseas eliminar este departamento? Se eliminaran
-            todos los subdepartamentos dependientes.
-          </p>
-        </Modal>
-      )}
+      <Modal
+        isOpen={value}
+        toggle={toggle}
+        onConfirm={() => {
+          deleteDepartment(element.id)
+        }}
+      >
+        <h3>Atención</h3>
+        <p>
+          ¿Estás seguro que deseas eliminar este departamento? Se eliminaran
+          todos los subdepartamentos dependientes.
+        </p>
+      </Modal>
     </CardDraggable>
   )
 }

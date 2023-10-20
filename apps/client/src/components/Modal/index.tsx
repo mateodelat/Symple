@@ -1,12 +1,12 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
 import { Button } from '@components/index'
 
 import { type ModalProps } from '@/types'
 import styles from './Modal.module.scss'
 
-export default function Modal ({
+const Modal = forwardRef(({
   isOpen,
   toggle,
   onConfirm,
@@ -15,12 +15,8 @@ export default function Modal ({
   className = '',
   confirmText = 'Confirmar',
   hasConfirmButton = true
-}: ModalProps): JSX.Element {
-  useEffect(() => {
-    if (isOpen) ref.current?.showModal()
-  }, [isOpen])
-
-  const ref = useRef<HTMLDialogElement>(null)
+}: ModalProps, ref: any): JSX.Element => {
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
   const handleConfirm = (): void => {
     handleClick()
@@ -35,20 +31,33 @@ export default function Modal ({
   }
 
   const handleClick = (): void => {
-    ref.current?.classList.add(styles.modal_close)
+    dialogRef.current?.classList.toggle(styles.modal_close)
     setTimeout(() => {
       toggle()
-      ref.current?.close()
-    }, 150)
+      dialogRef.current?.close()
+    }, 300)
   }
 
   const handleDialogClick = (e: React.MouseEvent<HTMLDialogElement>): void => {
     e.stopPropagation()
-    if (e.target === ref.current) handleCancel()
+    if (e.target === dialogRef.current) handleCancel()
   }
+
+  useImperativeHandle(ref, () => {
+    return {
+      handleConfirm
+    }
+  })
+
+  useEffect(() => {
+    if (isOpen) {
+      dialogRef.current?.showModal()
+      dialogRef.current?.classList.remove(styles.modal_close)
+    } else dialogRef.current?.close()
+  }, [isOpen])
   return (
     <dialog
-      ref={ref}
+      ref={dialogRef}
       className={`${styles.modal} ${className}`}
       onClick={handleDialogClick}
       onKeyDown={(e) => {
@@ -71,4 +80,6 @@ export default function Modal ({
       </div>
     </dialog>
   )
-}
+})
+
+export default Modal

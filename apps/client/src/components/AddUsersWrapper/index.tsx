@@ -60,20 +60,18 @@ export default function AddUsersWrapper ({
           ))}
         </div>
       )}
-      {value && (
-        <Modal
-          isOpen={value}
-          toggle={toggle}
-          onConfirm={confirmModal}
-          onCancel={cancelModal}
-        >
-          <AddUsers
-            addedUsers={addedUsers}
-            addUser={handleAddUser}
-            removeUser={handleRemoveUser}
-          />
-        </Modal>
-      )}
+      <Modal
+        isOpen={value}
+        toggle={toggle}
+        onConfirm={confirmModal}
+        onCancel={cancelModal}
+      >
+        <AddUsers
+          addedUsers={addedUsers}
+          addUser={handleAddUser}
+          removeUser={handleRemoveUser}
+        />
+      </Modal>
     </div>
   )
 }
