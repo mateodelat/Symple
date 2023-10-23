@@ -14,7 +14,6 @@ export default function Stepper ({
   fieldNames
 }: StepperProps): JSX.Element {
   const { windowSize } = useWindowResize()
-
   const handleSteps = async (index: number): Promise<void> => {
     if (checkErrors !== undefined && index > currentStep) {
       const isValid = await checkErrors(fieldNames ?? [])

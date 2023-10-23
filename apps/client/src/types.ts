@@ -2,7 +2,7 @@ import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
 import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes } from 'react'
-import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
+import { type UseFormReturn, type FieldErrors, type UseFormRegister } from 'react-hook-form'
 
 export interface Field {
   name: string
@@ -39,7 +39,7 @@ export interface FormField {
   props?: Record<string, string | boolean>
   options?: Option[]
   fileProps?: FileProps
-  elementType?: 'select' | 'file' | 'custom' | 'textarea'
+  elementType?: 'select' | 'file' | 'custom' | 'textarea' | 'none'
   style?: React.CSSProperties
   required?: boolean
 }
@@ -520,14 +520,14 @@ export interface StepperProps {
 }
 
 export enum IndicatorType {
-  FINANTIAL_OBJECTIVE = 'Objetivo financiero',
+  FINANCIAL_OBJECTIVE = 'Objetivo financiero',
   MEASUREMENT = 'Calificación 1 al 10',
   MEETS_EXPECTATION = 'Cumple (sí o no)',
 }
 
 export enum IndicatorMeasurementType {
-  Percentage = 'Porcentaje',
-  Amount = 'Monto'
+  PERCENTAGE = 'Porcentaje',
+  AMOUNT = 'Monto'
 }
 
 export interface Indicator {
@@ -538,7 +538,7 @@ export interface Indicator {
 
 export interface AddIndicatorProps {
   addedIndicators: Indicator[]
-  register: UseFormRegister<any>
+  formMethods: UseFormReturn<any> | null
 }
 
 export interface SelectFieldProps {

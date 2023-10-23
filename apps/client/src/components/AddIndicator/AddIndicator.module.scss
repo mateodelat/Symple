@@ -1,16 +1,36 @@
-.container{
+.container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
-  &_indicator{
+  &_indicator {
     display: flex;
     align-items: center;
     gap: 1rem;
-     &_icon{
-      &_draggable{
-        cursor: grab;      
+    &_icon {
+      &_draggable {
+        cursor: grab;
       }
-     }
+    }
+    &_wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  &_label {
+    width: fit-content;
+    &_text {
+      font-weight: 500;
+    }
+  }
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  &_error {
+    color: red;
+    margin-top: -0.5rem;
+    font-weight: 500;
   }
 }

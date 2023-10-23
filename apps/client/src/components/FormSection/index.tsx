@@ -88,7 +88,9 @@ export default function FormSection ({
                       ? (
                           customFields?.[name]()
                         )
-                      : (
+                      : elementType === 'none'
+                        ? null
+                        : (
                           <input
                             id={name}
                             type={type}
@@ -96,9 +98,9 @@ export default function FormSection ({
                             {...register(name)}
                             {...props}
                           />
-                        )
+                          )
               }
-              {errors[name] !== null && elementType !== 'custom' && (
+              {errors[name] !== null && elementType !== 'custom' && elementType !== 'none' && (
                 <span
                   className={
                     styles.section_wrapper_error

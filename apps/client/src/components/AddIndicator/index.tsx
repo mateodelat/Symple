@@ -1,9 +1,41 @@
-import { ButtonIcon, SelectField } from '@components/index'
-import { type AddIndicatorProps } from '@/types'
-import styles from './AddIndicator.module.scss'
-import { roleIndicatorOptions } from '@/constants/RoleForm'
+'use client'
 
-export default function AddIndicator ({ addedIndicators, register }: AddIndicatorProps): JSX.Element {
+import { ButtonIcon, SelectField } from '@components/index'
+import { IndicatorType, type AddIndicatorProps } from '@/types'
+import styles from './AddIndicator.module.scss'
+import { roleIndicatorOptions, roleMeasurementOptions } from '@/constants/RoleForm'
+import { useEffect, useState } from 'react'
+
+export default function AddIndicator ({ addedIndicators, formMethods }: AddIndicatorProps): JSX.Element {
+  const [isRegisterable, setIsRegisterable] = useState<boolean>(false)
+  const values = formMethods?.watch()
+
+  useEffect(() => {
+    if (formMethods?.register !== null) setIsRegisterable(true)
+    else setIsRegisterable(false)
+  }, [formMethods])
+
+  useEffect(() => {
+    if (values.indicatorSelect === '-' || values.indicatorSelect === '') {
+      if (formMethods?.formState.errors.indicatorSelect === undefined) {
+        formMethods?.setError('indicatorSelect', {
+          message: 'Este campo es requerido',
+          type: 'required'
+        })
+      }
+    }
+  }, [values])
+
+  useEffect(() => {
+    formMethods?.setValue('indicatorSelect', roleIndicatorOptions.at(0)?.id ?? '')
+  }, [isRegisterable])
+
+  const handleErrors = (name: string): string | undefined => {
+    return formMethods?.formState.errors[name]?.message as string ?? undefined
+  }
+
+  const indicatorErrorName = handleErrors('indicatorName')
+  const indicatorErrorMeasurementValue = handleErrors('measurementValue')
   return (
     <section className={styles.container}>
       <div className={styles.container_indicator}>
@@ -13,7 +45,9 @@ export default function AddIndicator ({ addedIndicators, register }: AddIndicato
           height={20}
           className={styles.container_indicator_icon_draggable}
         />
-        <input type="text" placeholder='Indicador' {...register('indicatorName')}/>
+        {isRegisterable &&
+          <input type="text" placeholder='Indicador' {...formMethods?.register('indicatorName')}/>
+        }
         <ButtonIcon
           icon={'/trash_bin.svg'}
           width={20}
@@ -23,8 +57,34 @@ export default function AddIndicator ({ addedIndicators, register }: AddIndicato
           }}
         />
       </div>
-      <SelectField options={roleIndicatorOptions} name='indicatorSelect'/>
-      <div className={styles.container_}></div>
+      {indicatorErrorName !== undefined && (
+          <span className={styles.container_error}>
+            {indicatorErrorName}
+          </span>
+      )}
+      {isRegisterable &&
+        <div className={styles.container_wrapper}>
+          <label htmlFor="indicatorSelect" className={styles.container_label}>
+            <strong className={styles.container_label_text}>Tipo de indicador</strong>
+          </label>
+          <SelectField options={roleIndicatorOptions} name='indicatorSelect' register={formMethods?.register}/>
+        </div>
+      }
+      {values.indicatorSelect === IndicatorType.FINANCIAL_OBJECTIVE && (
+          <div className={styles.container_wrapper}>
+            <label htmlFor="measurementSelect" className={styles.container_label}>
+              <strong className={styles.container_label_text}>Tipo de medición</strong>
+            </label>
+            <SelectField options={roleMeasurementOptions} name='measurementSelect' register={formMethods?.register}/>
+            <input type="text" placeholder={values.measurementSelect} {...formMethods?.register('measurementValue')}/>
+            {indicatorErrorMeasurementValue !== undefined && (
+              <span className={styles.container_error}>
+                {indicatorErrorMeasurementValue}
+              </span>
+            )}
+          </div>
+      )}
+
     </section>
   )
 }

@@ -13,7 +13,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
   const [addedIndicators] = useState<Indicator[]>([])
   const [customFields, setCustomFields] = useState<CustomField>({
     addIndicators: () => (
-      <AddIndicator addedIndicators={addedIndicators} register={formMethods?.register}/>
+      <AddIndicator addedIndicators={addedIndicators} formMethods={formMethods}/>
     )
   })
 
@@ -35,7 +35,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
       addIndicators: () => (
         <AddIndicator
           addedIndicators={addedIndicators}
-          register={formMethods?.register}
+          formMethods={formMethods}
           // setAddedIndicators={setAddedIndicators}
         />
       )
