@@ -8,7 +8,9 @@ import { useEffect, useState } from 'react'
 
 export default function AddIndicator ({ addedIndicators, formMethods }: AddIndicatorProps): JSX.Element {
   const [isRegisterable, setIsRegisterable] = useState<boolean>(false)
-  const values = formMethods?.watch()
+
+  const indicatorSelect = formMethods?.watch('indicatorSelect')
+  const measurementSelect = formMethods?.watch('measurementSelect')
 
   useEffect(() => {
     if (formMethods?.register !== null) setIsRegisterable(true)
@@ -16,7 +18,7 @@ export default function AddIndicator ({ addedIndicators, formMethods }: AddIndic
   }, [formMethods])
 
   useEffect(() => {
-    if (values.indicatorSelect === '-' || values.indicatorSelect === '') {
+    if (indicatorSelect === '-' || indicatorSelect === '') {
       if (formMethods?.formState.errors.indicatorSelect === undefined) {
         formMethods?.setError('indicatorSelect', {
           message: 'Este campo es requerido',
@@ -24,7 +26,7 @@ export default function AddIndicator ({ addedIndicators, formMethods }: AddIndic
         })
       }
     }
-  }, [values])
+  }, [indicatorSelect])
 
   useEffect(() => {
     formMethods?.setValue('indicatorSelect', roleIndicatorOptions.at(0)?.id ?? '')
@@ -70,18 +72,26 @@ export default function AddIndicator ({ addedIndicators, formMethods }: AddIndic
           <SelectField options={roleIndicatorOptions} name='indicatorSelect' register={formMethods?.register}/>
         </div>
       }
-      {values.indicatorSelect === IndicatorType.FINANCIAL_OBJECTIVE && (
+      {indicatorSelect === IndicatorType.FINANCIAL_OBJECTIVE && (
           <div className={styles.container_wrapper}>
             <label htmlFor="measurementSelect" className={styles.container_label}>
               <strong className={styles.container_label_text}>Tipo de medición</strong>
             </label>
-            <SelectField options={roleMeasurementOptions} name='measurementSelect' register={formMethods?.register}/>
-            <input type="text" placeholder={values.measurementSelect} {...formMethods?.register('measurementValue')}/>
-            {indicatorErrorMeasurementValue !== undefined && (
-              <span className={styles.container_error}>
-                {indicatorErrorMeasurementValue}
-              </span>
-            )}
+            <div className={styles.container_wrapper_measurement}>
+              <SelectField
+                options={roleMeasurementOptions}
+                name='measurementSelect'
+                register={formMethods?.register}
+                className={styles.container_wrapper_measurement_select}
+              />
+              <input type="text" placeholder={measurementSelect} {...formMethods?.register('measurementValue')}/>
+              {indicatorErrorMeasurementValue !== undefined && (
+                <span className={styles.container_error}>
+                  {indicatorErrorMeasurementValue}
+                </span>
+              )}
+            </div>
+
           </div>
       )}
 

@@ -3,7 +3,7 @@ import { formErrors } from '@/constants/Errors'
 import styles from '@styles/RoleForm.module.scss'
 import * as yup from 'yup'
 
-const { required, minNumber, maxNumber } = formErrors
+const { required, minNumber, maxNumber, number } = formErrors
 
 export const roleSchema = yup.object().shape({
   detailsName: yup.string().required(required),
@@ -11,7 +11,7 @@ export const roleSchema = yup.object().shape({
   indicatorName: yup.string().required(required),
   indicatorSelect: yup.string().required(required),
   measurementSelect: yup.string(),
-  measurementValue: yup.number().when(['measurementSelect'], (values: any, schema) => {
+  measurementValue: yup.number().typeError(number).when(['measurementSelect'], (values: any, schema) => {
     const measurementSelect = values[0]
     switch (measurementSelect) {
       case IndicatorMeasurementType.PERCENTAGE:
