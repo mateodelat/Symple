@@ -280,7 +280,8 @@ export interface ModalProps {
   isOpen: boolean
   toggle: (value?: boolean) => void
   children: React.ReactNode
-  onConfirm: () => any
+  showCancelConfirmation?: boolean
+  onConfirm?: () => any
   onCancel?: () => any
   className?: string
   confirmText?: string

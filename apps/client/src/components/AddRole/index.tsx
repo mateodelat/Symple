@@ -20,7 +20,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
   const formRef = useRef<{ reset: () => void }>()
 
   useEffect(() => {
-    if (formMethods != null) formMethods.reset(roleInitialValues)
+    if (formMethods !== null) formMethods.reset(roleInitialValues)
   }, [formMethods])
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
 
   return (
     <section className={styles.modal}>
-      <h1>{!isEditing ? 'Nuevo' : 'Editar'} rol</h1>
+      <h1>{!isEditing ? 'Agregar' : 'Editar'} rol</h1>
       <div className={styles.modal_content}>
         <Form
           schema={roleSchema}

@@ -1,27 +1,27 @@
-@use '@styles/variables';
+@use "@styles/variables";
 
-.container{
+.container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  &_nav{
+  &_nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    &_list{
+    &_list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       place-items: center;
       max-width: fit-content;
       place-self: center;
-      &_item{
+      &_item {
         width: 100px;
         padding: 0.5rem 1rem;
         text-align: center;
         border-bottom: 2px solid variables.$primary-gray-color;
         cursor: pointer;
-        &:hover{
+        &:hover {
           border-bottom: 2px solid variables.$primary-green-color;
           transition: 0.2s ease-in-out;
         }
@@ -31,18 +31,25 @@
           background-color: transparent;
           border: none;
         }
-        &_active{
+        &_active {
           border-bottom: 2px solid variables.$primary-green-color;
         }
       }
     }
   }
+  &_modal {
+    min-height: 80dvh;
+    &_buttons {
+      display: flex;
+      width: 100%;
+      gap: 1rem;
+    }
+  }
 }
 
-.test{
+.test {
   background-color: red;
   animation: fade-in 0.5s forwards;
-
 }
 
 @keyframes fade-in {
@@ -54,12 +61,12 @@
   }
 }
 
-@media screen and (min-width: 768px){
-  .container{
-    &_nav{
-      &_list{
+@media screen and (min-width: 768px) {
+  .container {
+    &_nav {
+      &_list {
         max-width: max-content;
-        &_item{
+        &_item {
           width: 220px;
         }
       }
@@ -67,20 +74,20 @@
   }
 }
 
-@media screen and (min-width: 1024px){
-  .container{
-    &_nav{
+@media screen and (min-width: 1024px) {
+  .container {
+    &_nav {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       align-items: center;
-      &_list{
+      &_list {
         max-width: fit-content;
-        &_item{
+        &_item {
           width: 220px;
         }
       }
     }
-    &_create{
+    &_create {
       width: 30%;
       align-self: flex-end;
     }

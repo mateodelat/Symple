@@ -11,6 +11,7 @@ const Modal = forwardRef(({
   toggle,
   onConfirm,
   onCancel = () => {},
+  showCancelConfirmation = false,
   children,
   className = '',
   confirmText = 'Confirmar',
@@ -20,14 +21,20 @@ const Modal = forwardRef(({
 
   const handleConfirm = (): void => {
     handleClick()
-    setTimeout(() => {
-      onConfirm()
-    }, 150)
+    if (onConfirm !== undefined) {
+      setTimeout(() => {
+        onConfirm()
+      }, 150)
+    }
   }
 
   const handleCancel = (): void => {
-    handleClick()
-    onCancel()
+    if (!showCancelConfirmation) {
+      handleClick()
+      onCancel()
+    } else {
+      onCancel()
+    }
   }
 
   const handleClick = (): void => {

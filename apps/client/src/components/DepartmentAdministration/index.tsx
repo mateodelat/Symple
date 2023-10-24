@@ -15,6 +15,7 @@ export default function DepartmentAdministration ({
   const [links, setLinks] = useState(internalLinks)
 
   const { toggle, value } = useToggle()
+  const { toggle: toggleCancel, value: confirmCancel } = useToggle()
 
   const handleActive = (name: string): void => {
     setLinks((prev) => {
@@ -55,28 +56,33 @@ export default function DepartmentAdministration ({
         </ul>
       </div>
       <SearchBar filter={filter} handleData={() => {}} setFilter={setFilter} />
-      <Button className={styles.container_create} onClick={() => { toggle(true) }}>
+      <Button className={styles.container_create} onClick={() => { toggle() }}>
         Nuevo {element?.label.toLowerCase()}
       </Button>
-        <Modal
-          isOpen={value}
-          onConfirm={() => {
-            console.log(modalRef)
-          }}
-          onCancel={() => {
-            console.log(modalRef)
-          }}
-          toggle={toggle}
-          hasConfirmButton={false}
-          ref={modalRef}
-        >
-          {element?.name === 'roles' && (
-              <AddRole
-                isEditing={false}
-                isOpen={value}
-              />
-          )}
-        </Modal>
+      <Modal
+        isOpen={value}
+        onCancel={toggleCancel}
+        toggle={toggle}
+        hasConfirmButton={false}
+        ref={modalRef}
+        className={styles.container_modal}
+        showCancelConfirmation
+      >
+        {element?.name === 'roles' && (
+            <AddRole
+              isEditing={false}
+              isOpen={value}
+            />
+        )}
+      </Modal>
+      <Modal
+        isOpen={confirmCancel}
+        onConfirm={toggle}
+        toggle={toggleCancel}
+        hasConfirmButton={true}
+      >
+        ¿Seguro que quieres salir?
+      </Modal>
     </section>
   )
 }

@@ -9,8 +9,15 @@ import { useEffect, useState } from 'react'
 export default function AddIndicator ({ addedIndicators, formMethods }: AddIndicatorProps): JSX.Element {
   const [isRegisterable, setIsRegisterable] = useState<boolean>(false)
 
+  const handleErrors = (name: string): string | undefined => {
+    return formMethods?.formState.errors[name]?.message as string ?? undefined
+  }
+
   const indicatorSelect = formMethods?.watch('indicatorSelect')
   const measurementSelect = formMethods?.watch('measurementSelect')
+  // const measurementValue: number = formMethods?.watch('measurementValue')
+  const indicatorErrorName = handleErrors('indicatorName')
+  const indicatorErrorMeasurementValue = handleErrors('measurementValue')
 
   useEffect(() => {
     if (formMethods?.register !== null) setIsRegisterable(true)
@@ -32,12 +39,19 @@ export default function AddIndicator ({ addedIndicators, formMethods }: AddIndic
     formMethods?.setValue('indicatorSelect', roleIndicatorOptions.at(0)?.id ?? '')
   }, [isRegisterable])
 
-  const handleErrors = (name: string): string | undefined => {
-    return formMethods?.formState.errors[name]?.message as string ?? undefined
-  }
+  // useEffect(() => {
+  //   if (measurementSelect === IndicatorMeasurementType.PERCENTAGE) {
+  //     if (measurementValue !== null && typeof measurementValue === 'number') {
+  //       setDisplayValue(`${measurementValue !== undefined ? measurementValue.toFixed(2) : 0}%`)
+  //     }
+  //   } else if (measurementSelect === IndicatorMeasurementType.AMOUNT) {
+  //     setDisplayValue(new Intl.NumberFormat('en-US', {
+  //       style: 'currency',
+  //       currency: 'USD'
+  //     }).format(measurementValue))
+  //   }
+  // }, [measurementValue, measurementSelect])
 
-  const indicatorErrorName = handleErrors('indicatorName')
-  const indicatorErrorMeasurementValue = handleErrors('measurementValue')
   return (
     <section className={styles.container}>
       <div className={styles.container_indicator}>
@@ -86,7 +100,7 @@ export default function AddIndicator ({ addedIndicators, formMethods }: AddIndic
               />
               <input type="text" placeholder={measurementSelect} {...formMethods?.register('measurementValue')}/>
               {indicatorErrorMeasurementValue !== undefined && (
-                <span className={styles.container_error}>
+                <span className={`${styles.container_error} ${styles.container_error_grid}`}>
                   {indicatorErrorMeasurementValue}
                 </span>
               )}
