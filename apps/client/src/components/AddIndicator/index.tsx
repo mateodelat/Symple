@@ -3,34 +3,42 @@
 import { AddIndicatorForm, Button } from '@components/index'
 import { type AddIndicatorProps } from '@/types'
 import styles from './AddIndicator.module.scss'
+import { useEffect } from 'react'
 
-export default function AddIndicator ({ addedIndicators, formMethods }: AddIndicatorProps): JSX.Element {
-  // useEffect(() => {
-  //   if (measurementSelect === IndicatorMeasurementType.PERCENTAGE) {
-  //     if (measurementValue !== null && typeof measurementValue === 'number') {
-  //       setDisplayValue(`${measurementValue !== undefined ? measurementValue.toFixed(2) : 0}%`)
-  //     }
-  //   } else if (measurementSelect === IndicatorMeasurementType.AMOUNT) {
-  //     setDisplayValue(new Intl.NumberFormat('en-US', {
-  //       style: 'currency',
-  //       currency: 'USD'
-  //     }).format(measurementValue))
-  //   }
-  // }, [measurementValue, measurementSelect])
+export default function AddIndicator ({
+  addedIndicators,
+  formMethods,
+  addIndicator,
+  updateIndicator,
+  deleteIndicator
+}: AddIndicatorProps): JSX.Element {
+  const everyFieldsAreFilled = addedIndicators.every((indicator) => indicator.name !== '' && indicator.amount > 0)
 
-  const everyFieldsAreFilled = addedIndicators.every((indicator) => {
-    return indicator.name !== '' && indicator.amount !== null && indicator.amount > 0
-  })
+  useEffect(() => {
+    addIndicator()
+  }, [])
 
   return (
     <section className={styles.container}>
-      <AddIndicatorForm
-        formMethods={formMethods}
-        addedIndicators={addedIndicators}
-      />
-      {<Button props={{
-        disabled: !everyFieldsAreFilled
-      }}>Agregar indicador</Button>}
+      {addedIndicators.map((indicator, index) => (
+        <AddIndicatorForm
+          formMethods={formMethods}
+          updateIndicator={updateIndicator}
+          deleteIndicator={deleteIndicator}
+          canBeDeleted={addedIndicators.length > 1}
+          key={index}
+        />
+      ))}
+      <Button
+        onClick={() => {
+          addIndicator()
+        }}
+        props={{
+          disabled: !everyFieldsAreFilled
+        }}
+      >
+        Nuevo indicador
+      </Button>
     </section>
   )
 }

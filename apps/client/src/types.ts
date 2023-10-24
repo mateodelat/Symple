@@ -542,6 +542,9 @@ export interface Indicator {
 export interface AddIndicatorProps {
   addedIndicators: Indicator[]
   formMethods: UseFormReturn<any> | null
+  addIndicator: () => void
+  updateIndicator: (index: number, indicator: Indicator) => void
+  deleteIndicator: (index: number) => void
 }
 
 export interface SelectFieldProps {
@@ -552,7 +555,7 @@ export interface SelectFieldProps {
   className?: string
 }
 
-export interface AddIndicatorFormProps {
-  addedIndicators: Indicator[]
-  formMethods: UseFormReturn<any> | null
+export type AddIndicatorFormProps = Omit<AddIndicatorProps, 'addedIndicators' | 'addIndicator'> & {
+  canBeDeleted: boolean
+  index: number
 }

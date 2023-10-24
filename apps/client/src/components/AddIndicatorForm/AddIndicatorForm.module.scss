@@ -1,0 +1,63 @@
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  &_icon {
+    &_draggable {
+      cursor: grab;
+    }
+  }
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.card {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.label {
+  width: fit-content;
+  &_text {
+    font-weight: 500;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  &_measurement {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.error {
+  color: red;
+  margin-top: -0.5rem;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 1024px) {
+  .wrapper {
+    &_measurement {
+      grid-template-columns: 40% calc(60% - 2rem);
+      grid-template-areas:
+        "select input"
+        "none error";
+    }
+  }
+  .error {
+    &_grid {
+      grid-area: error;
+    }
+  }
+}
