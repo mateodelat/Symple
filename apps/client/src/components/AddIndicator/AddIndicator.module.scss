@@ -37,9 +37,6 @@
     color: red;
     margin-top: -0.5rem;
     font-weight: 500;
-    &_grid {
-      grid-area: error;
-    }
   }
 }
 
@@ -51,6 +48,11 @@
         grid-template-areas:
           "select input"
           "none error";
+      }
+    }
+    &_error {
+      &_grid {
+        grid-area: error;
       }
     }
   }

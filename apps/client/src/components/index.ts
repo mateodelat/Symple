@@ -1,6 +1,7 @@
 import As from './As'
 import AddDepartment from './AddDepartment'
 import AddIndicator from './AddIndicator'
+import AddIndicatorForm from './AddIndicatorForm'
 import AddSubDepartment from './AddSubDepartment'
 import AddUsers from './AddUsers'
 import AddUsersWrapper from './AddUsersWrapper'
@@ -46,6 +47,7 @@ export {
   As,
   AddDepartment,
   AddIndicator,
+  AddIndicatorForm,
   AddSubDepartment,
   AddUsers,
   AddUsersWrapper,

@@ -16,7 +16,7 @@ export const roleSchema = yup.object().shape({
     switch (measurementSelect) {
       case IndicatorMeasurementType.PERCENTAGE:
         return schema
-          .min(0, minNumber)
+          .min(1, minNumber)
           .max(100, maxNumber)
           .test(
             'is-decimal',
@@ -79,22 +79,22 @@ export const roleSections: Section[] = [
       {
         name: 'indicatorName',
         elementType: 'none',
-        style: { width: '100%' }
+        style: { display: 'none' }
       },
       {
         name: 'indicatorSelect',
         elementType: 'none',
-        style: { width: '100%' }
+        style: { display: 'none' }
       },
       {
         name: 'measurementSelect',
         elementType: 'none',
-        style: { width: '100%' }
+        style: { display: 'none' }
       },
       {
         name: 'measurementValue',
         elementType: 'none',
-        style: { width: '100%' }
+        style: { display: 'none' }
       }
     ],
     className: styles.details

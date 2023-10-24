@@ -126,7 +126,7 @@ export const errors: Record<ErrorCode, string> = {
 export const formErrors = {
   required: 'Este campo es requerido',
   number: 'Este campo debe ser un número',
-  minNumber: 'El valor debe de ser mínimo 0',
+  minNumber: 'El valor debe de ser mínimo 1',
   maxNumber: 'El valor debe de ser menos de 100',
   email: 'El correo electrónico no es válido',
   minLength: 'Este campo debe tener al menos {min} caracteres',

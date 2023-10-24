@@ -127,7 +127,7 @@ export interface ButtonProps {
   onClick?: any
   className?: string
   type?: 'button' | 'submit' | 'reset'
-  style?: Record<string, string | boolean>
+  style?: React.CSSProperties
   props?: object
 }
 
@@ -532,8 +532,10 @@ export enum IndicatorMeasurementType {
 }
 
 export interface Indicator {
+  name: string
   type: IndicatorType
   measurementType?: IndicatorMeasurementType
+  amount: number
   associatedUsers: User[]
 }
 
@@ -548,4 +550,9 @@ export interface SelectFieldProps {
   register?: UseFormRegister<any>
   props?: SelectHTMLAttributes<HTMLSelectElement>
   className?: string
+}
+
+export interface AddIndicatorFormProps {
+  addedIndicators: Indicator[]
+  formMethods: UseFormReturn<any> | null
 }
