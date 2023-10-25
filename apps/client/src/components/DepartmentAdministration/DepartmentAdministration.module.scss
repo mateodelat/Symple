@@ -44,6 +44,9 @@
       width: 100%;
       gap: 1rem;
     }
+    &_cancel{
+      width: 65% !important;
+    }
   }
 }
 
@@ -90,6 +93,11 @@
     &_create {
       width: 30%;
       align-self: flex-end;
+    }
+    &_modal{
+      &_cancel{
+        width: 40% !important;
+      }
     }
   }
 }

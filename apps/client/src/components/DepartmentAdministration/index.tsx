@@ -80,6 +80,7 @@ export default function DepartmentAdministration ({
         onConfirm={toggle}
         toggle={toggleCancel}
         hasConfirmButton={true}
+        className={styles.container_modal_cancel}
       >
         ¿Seguro que quieres salir?
       </Modal>

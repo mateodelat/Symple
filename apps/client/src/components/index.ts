@@ -1,19 +1,19 @@
-import As from './As'
 import AddDepartment from './AddDepartment'
 import AddIndicator from './AddIndicator'
 import AddIndicatorForm from './AddIndicatorForm'
+import AddRole from './AddRole'
 import AddSubDepartment from './AddSubDepartment'
 import AddUsers from './AddUsers'
 import AddUsersWrapper from './AddUsersWrapper'
-import AddRole from './AddRole'
+import As from './As'
 import Aside from './Aside'
 import BackButton from './BackButton'
 import Button from './Button'
 import ButtonIcon from './ButtonIcon'
 import Card from './Card'
-import CardDraggable from './CardDraggable'
 import CardDepartment from './CardDepartment'
 import CardDepartmentEdit from './CardDepartmentEdit'
+import CardDraggable from './CardDraggable'
 import CardEnterprise from './CardEnterprise'
 import CardEnterpriseEdit from './CardEnterpriseEdit'
 import CardUser from './CardUser'
@@ -27,6 +27,7 @@ import EnterpriseList from './EnterpriseList'
 import Form from './Form'
 import FormSection from './FormSection'
 import Header from './Header'
+import InputField from './InputField'
 import LinkButton from './LinkButton'
 import List from './List'
 import Loader from './Loader'
@@ -44,22 +45,22 @@ import UserForm from './UserForm'
 import VerticalButton from './VerticalButton'
 
 export {
-  As,
   AddDepartment,
   AddIndicator,
   AddIndicatorForm,
+  AddRole,
   AddSubDepartment,
   AddUsers,
   AddUsersWrapper,
-  AddRole,
+  As,
   Aside,
   BackButton,
   Button,
   ButtonIcon,
   Card,
-  CardDraggable,
   CardDepartment,
   CardDepartmentEdit,
+  CardDraggable,
   CardEnterprise,
   CardEnterpriseEdit,
   CardUser,
@@ -73,6 +74,7 @@ export {
   Form,
   FormSection,
   Header,
+  InputField,
   LinkButton,
   List,
   Loader,

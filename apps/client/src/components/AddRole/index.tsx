@@ -2,49 +2,30 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { AddIndicator, Form } from '@components/index'
-import { type CustomField, type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType } from '@/types'
+import { type CustomField, type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type User } from '@/types'
 import styles from './AddRole.module.scss'
 import { roleSections, roleSchema, roleSteps, roleInitialValues } from '@/constants/RoleForm'
 import { type UseFormReturn } from 'react-hook-form'
-import * as yup from 'yup'
 
 export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Element {
   const [formMethods, setFormMethods] = useState<UseFormReturn | null>(null)
 
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
-  const [fields, setFields] = useState<any>(roleSections)
-  const [schema, setSchema] = useState<any>(roleSchema)
+  const [addedUsers, setAddedUsers] = useState<User[]>([])
 
-  const addNewRule = (schema: any, newField: string, newRule: any): yup.ObjectSchema<any, yup.AnyObject, any, ''> => {
-    return schema.shape({
-      ...schema.fields,
-      [newField]: newRule
-    })
-  }
-
-  const addIndicator = (index?: number): void => {
+  const addIndicator = (): void => {
     setAddedIndicators((prev) =>
       [
         ...prev,
         {
-          name: '',
-          amount: 0,
+          name: `Indicador ${prev.length + 1}`,
+          amount: '1',
           associatedUsers: [],
           type: IndicatorType.FINANCIAL_OBJECTIVE,
           measurementType: IndicatorMeasurementType.PERCENTAGE
         }
       ]
     )
-
-    setSchema((prev: any) => {
-      const newSchema = { ...prev }
-      newSchema.fields[`indicatorName${addedIndicators.length as any}`] = yup.string().required('Este campo es requerido') as any
-      // newSchema = addNewRule(newSchema as any, `indicatorName${addedIndicators.length}`, yup.string().required('Este campo es requerido'))
-      // newSchema = addNewRule(newSchema as any, `indicatorSelect${addedIndicators.length}`, yup.string().required('Este campo es requerido'))
-      // newSchema = addNewRule(newSchema as any, `measurementSelect${addedIndicators.length}`, yup.string().required('Este campo es requerido'))
-      // newSchema = addNewRule(newSchema as any, `measurementValue${addedIndicators.length}`, yup.number().required('Este campo es requerido'))
-      return newSchema
-    })
   }
 
   const updateIndicator = (index: number, indicator: Indicator): void => {
@@ -67,6 +48,8 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
     addIndicators: () => (
       <AddIndicator
         addedIndicators={addedIndicators}
+        addedUsers={addedUsers}
+        setAddedUsers={setAddedUsers}
         formMethods={formMethods}
         addIndicator={addIndicator}
         updateIndicator={updateIndicator}
@@ -86,6 +69,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
       formMethods?.reset(roleInitialValues)
       formRef.current?.reset()
       setAddedIndicators([])
+      addIndicator()
     }
   }, [isOpen])
 
@@ -94,22 +78,23 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
       addIndicators: () => (
         <AddIndicator
           addedIndicators={addedIndicators}
+          addedUsers={addedUsers}
+          setAddedUsers={setAddedUsers}
           addIndicator={addIndicator}
           updateIndicator={updateIndicator}
-          updateSchema={setSchema}
           deleteIndicator={deleteIndicator}
           formMethods={formMethods}
         />
       )
     })
-  }, [addedIndicators, formMethods])
+  }, [addedIndicators, addedUsers, formMethods])
 
   return (
     <section className={styles.modal}>
       <h1>{!isEditing ? 'Agregar' : 'Editar'} rol</h1>
       <div className={styles.modal_content}>
         <Form
-          schema={schema}
+          schema={roleSchema}
           sections={roleSections}
           customFields={customFields}
           onSubmit={(data) => {

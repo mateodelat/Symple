@@ -1,6 +1,12 @@
 import { type SelectFieldProps } from '@/types'
 
-export default function SelectField ({ name, register, options, props = {}, className = '' }: SelectFieldProps): JSX.Element {
+export default function SelectField ({
+  name,
+  register,
+  options,
+  props = {},
+  className = ''
+}: SelectFieldProps): JSX.Element {
   const isControlled = register !== undefined ? register(name) : {}
 
   return (

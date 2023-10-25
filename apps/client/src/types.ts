@@ -1,7 +1,7 @@
 import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
-import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes } from 'react'
+import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes, type InputHTMLAttributes } from 'react'
 import { type UseFormReturn, type FieldErrors, type UseFormRegister } from 'react-hook-form'
 
 export interface Field {
@@ -535,12 +535,14 @@ export interface Indicator {
   name: string
   type: IndicatorType
   measurementType?: IndicatorMeasurementType
-  amount: number
+  amount: string
   associatedUsers: User[]
 }
 
 export interface AddIndicatorProps {
   addedIndicators: Indicator[]
+  addedUsers: User[]
+  setAddedUsers: Dispatch<SetStateAction<User[]>>
   formMethods: UseFormReturn<any> | null
   addIndicator: () => void
   updateIndicator: (index: number, indicator: Indicator) => void
@@ -557,5 +559,17 @@ export interface SelectFieldProps {
 
 export type AddIndicatorFormProps = Omit<AddIndicatorProps, 'addedIndicators' | 'addIndicator'> & {
   canBeDeleted: boolean
+  indicator: Indicator
   index: number
+}
+
+export interface AddIndicatorFormErrors {
+  indicatorName: string
+  indicatorMeasurementValue: string
+}
+
+export interface InputFieldProps {
+  params: InputHTMLAttributes<HTMLInputElement>
+  showError?: boolean
+  error?: string
 }

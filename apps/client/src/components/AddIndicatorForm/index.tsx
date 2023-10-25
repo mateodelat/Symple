@@ -2,62 +2,83 @@
 
 import { useEffect, useState } from 'react'
 import ButtonIcon from '../ButtonIcon'
-import { type AddIndicatorFormProps, IndicatorType, IndicatorMeasurementType } from '@/types'
 import styles from './AddIndicatorForm.module.scss'
 import { roleIndicatorOptions, roleMeasurementOptions } from '@/constants/RoleForm'
-import SelectField from '../SelectField'
+import { type AddIndicatorFormProps, IndicatorType, IndicatorMeasurementType, type AddIndicatorFormErrors } from '@/types'
+import { AddUsersWrapper, SelectField, InputField } from '@/components/index'
+
+const possibleErrors = {
+  required: 'El campo es requerido',
+  numeric: 'El campo debe ser numérico',
+  percentage: 'El campo no puede tener más de dos decimales',
+  min: 'El campo no puede ser menor a 0',
+  max: 'El campo no puede ser mayor a 100'
+}
+
+const { max, min, numeric, percentage, required } = possibleErrors
 
 export default function AddIndicatorForm ({
   formMethods,
   canBeDeleted,
   deleteIndicator,
-  updateIndicator
+  updateIndicator,
+  indicator,
+  index,
+  addedUsers,
+  setAddedUsers
 }: AddIndicatorFormProps): JSX.Element {
-  const [isRegisterable, setIsRegisterable] = useState<boolean>(false)
-  const [displayValue, setDisplayValue] = useState('')
+  const [errors, setErrors] = useState<AddIndicatorFormErrors>({ indicatorName: '', indicatorMeasurementValue: '' })
+  const [width, setWidth] = useState(0)
 
-  const handleErrors = (name: string): string | undefined => {
-    return formMethods?.formState.errors[name]?.message as string ?? undefined
+  const handleUpdate = (value: string, name: string): void => {
+    updateIndicator(index, {
+      ...indicator,
+      [name]: value
+    })
   }
 
-  const { /* indicatorName, */ indicatorSelect, measurementSelect, measurementValue } = formMethods?.watch()
-  const indicatorErrorName = handleErrors('indicatorName')
-  const indicatorErrorMeasurementValue = handleErrors('measurementValue')
+  const handleErrors = (name: string, value: string, isNumber: boolean, isPercentage: boolean): void => {
+    console.log(value)
+
+    let error = ''
+    if (value === '') error = required
+    else if (isNaN(Number(value)) && isNumber) error = numeric
+    else if (value !== '' && !(/^-?\d+(\.\d{0,2})?$/.test(value)) && isNumber && isPercentage) error = percentage
+    else if (Number(value) <= 0 && isPercentage) error = min
+    else if (Number(value) > 100 && isPercentage) error = max
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error
+    }))
+  }
 
   useEffect(() => {
-    if (formMethods?.register !== null) setIsRegisterable(true)
-    else setIsRegisterable(false)
-  }, [formMethods])
+    handleUpdate('1', 'amount')
+  }, [indicator.type])
 
   useEffect(() => {
-    formMethods?.setValue('indicatorSelect', roleIndicatorOptions.at(0)?.id ?? '')
-  }, [isRegisterable])
+    handleErrors('indicatorMeasurementValue', indicator.amount.toString(), true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
+  }, [indicator.measurementType])
 
   useEffect(() => {
-    if (indicatorSelect === '-' || indicatorSelect === '') {
-      if (formMethods?.formState.errors.indicatorSelect === undefined) {
-        formMethods?.setError('indicatorSelect', {
-          message: 'Este campo es requerido',
-          type: 'required'
-        })
-      }
-    }
-  }, [indicatorSelect])
+    const input = document.querySelector('#indicatorMeasurementValue') as HTMLInputElement
+    if (input !== null) setWidth(input.offsetWidth)
+  }, [])
 
-  useEffect(() => {
-    if (measurementValue === '') setDisplayValue('')
-    if (measurementSelect === IndicatorMeasurementType.PERCENTAGE && measurementValue !== undefined && measurementValue !== '') {
-      setDisplayValue(`${Number(measurementValue).toFixed(2) ?? 0}%`)
-    } else if (measurementSelect === IndicatorMeasurementType.AMOUNT) {
-      setDisplayValue(new Intl.NumberFormat('es-MX', {
-        style: 'currency',
-        currency: 'MXN'
-      }).format(measurementValue))
-    }
-  }, [measurementValue, measurementSelect])
+  const formatValue = (type: IndicatorMeasurementType, value: string): string => {
+    if (type === IndicatorMeasurementType.PERCENTAGE) return `${value}%`
+    return `$${value.match(/.{1,3}/g)?.join("'") ?? ''}`
+  }
+
+  const { indicatorName, indicatorMeasurementValue } = errors
+
+  const format = formatValue(indicator.measurementType ?? IndicatorMeasurementType.PERCENTAGE, indicator.amount.toString())
+
+  console.log(addedUsers)
 
   return (
-    <div className={styles.card}>
+    <article className={styles.card}>
       <div className={styles.indicator}>
         <ButtonIcon
           icon={'/grip_horizontal.svg'}
@@ -65,32 +86,49 @@ export default function AddIndicatorForm ({
           height={20}
           className={styles.indicator_icon_draggable}
         />
-        {isRegisterable &&
-          <input type="text" placeholder='Indicador' {...formMethods?.register('indicatorName')}/>
-        }
+        <InputField
+          params={{
+            placeholder: 'Indicador',
+            value: indicator.name,
+            onChange: (e) => {
+              handleUpdate(e.target.value, 'name')
+              handleErrors('indicatorName', e.target.value, false, false)
+            }
+          }}
+        />
         <ButtonIcon
           icon={'/trash_bin.svg'}
           width={20}
           height={20}
           props={{
-            disabled: !canBeDeleted
+            disabled: !canBeDeleted,
+            onClick: () => {
+              deleteIndicator(index)
+            }
           }}
         />
       </div>
-      {indicatorErrorName !== undefined && (
+      {indicatorName !== '' && (
         <span className={styles.error}>
-          {indicatorErrorName}
+          {indicatorName}
         </span>
       )}
-      {isRegisterable &&
         <div className={styles.wrapper}>
           <label htmlFor="indicatorSelect" className={styles.label}>
             <strong className={styles.label_text}>Tipo de indicador</strong>
           </label>
-          <SelectField options={roleIndicatorOptions} name='indicatorSelect' register={formMethods?.register}/>
+          <SelectField
+            options={roleIndicatorOptions}
+            name='indicatorSelect'
+            props={{
+              value: indicator.type,
+              onChange: (e) => {
+                handleUpdate(e.target.value, 'type')
+              }
+            }}
+          />
         </div>
-      }
-      {indicatorSelect === IndicatorType.FINANCIAL_OBJECTIVE && (
+      {indicator.type === IndicatorType.FINANCIAL_OBJECTIVE && (
         <div className={styles.wrapper}>
           <label htmlFor="measurementSelect" className={styles.label}>
             <strong className={styles.label_text}>Tipo de medición</strong>
@@ -99,19 +137,35 @@ export default function AddIndicatorForm ({
             <SelectField
               options={roleMeasurementOptions}
               name='measurementSelect'
-              register={formMethods?.register}
               className={styles.wrapper_measurement_select}
+              props={{
+                value: indicator.measurementType,
+                onChange: (e) => {
+                  handleUpdate(e.target.value, 'measurementType')
+                }
+              }}
             />
-            <input type="text" placeholder={measurementSelect} {...formMethods?.register('measurementValue')}/>
-            {indicatorErrorMeasurementValue !== undefined && (
-              <span className={`${styles.error} ${styles.error_grid}`}>
-                {indicatorErrorMeasurementValue}
-              </span>
+            <InputField
+              params={{
+                placeholder: indicator.measurementType,
+                value: indicator.amount,
+                inputMode: 'numeric',
+                id: 'indicatorMeasurementValue',
+                onChange: (e) => {
+                  handleUpdate(e.target.value, 'amount')
+                  handleErrors('indicatorMeasurementValue', e.target.value, true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
+                }
+              }}
+              showError
+              error={indicatorMeasurementValue}
+            />
+            {Number(indicator.amount) > 0 && (
+              <span title={format} className={styles.format} style={{ width }}>{format}</span>
             )}
-            <span>{displayValue}</span>
           </div>
         </div>
       )}
-    </div>
+      <AddUsersWrapper addedUsers={addedUsers} setAddedUsers={setAddedUsers}/>
+    </article>
   )
 }

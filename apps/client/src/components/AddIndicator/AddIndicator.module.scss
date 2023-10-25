@@ -38,6 +38,12 @@
     margin-top: -0.5rem;
     font-weight: 500;
   }
+  &_button{
+    background: #3C3C3B !important;
+    &:disabled{
+      opacity: 0.25 !important;
+    }
+  }
 }
 
 @media screen and (min-width: 1024px) {

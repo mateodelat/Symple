@@ -3,41 +3,11 @@ import { formErrors } from '@/constants/Errors'
 import styles from '@styles/RoleForm.module.scss'
 import * as yup from 'yup'
 
-const { required, minNumber, maxNumber, number } = formErrors
+const { required } = formErrors
 
 export const roleSchema = yup.object().shape({
   detailsName: yup.string().required(required),
-  detailsObjective: yup.string().required(required),
-  indicatorName: yup.string().required(required),
-  indicatorSelect: yup.string().required(required),
-  measurementSelect: yup.string(),
-  measurementValue: yup.number().typeError(number).when(['measurementSelect'], (values: any, schema) => {
-    const measurementSelect = values[0]
-    switch (measurementSelect) {
-      case IndicatorMeasurementType.PERCENTAGE:
-        return schema
-          .min(1, minNumber)
-          .max(100, maxNumber)
-          .test(
-            'is-decimal',
-            'El porcentaje debe de tener máximo 2 decimales',
-            (val: any) => {
-              if (val !== undefined) {
-                return /^\d+(\.\d{0,2})?$/.test(val)
-              }
-              return true
-            }
-          )
-          .required('Must be a percentage')
-      case IndicatorMeasurementType.AMOUNT:
-        return schema.required('Must be an amount')
-      default:
-        return schema
-    }
-  }),
-
-  deliverables: yup.string().required(required),
-  functions: yup.string().required(required)
+  detailsObjective: yup.string().required(required)
 })
 
 export const roleSections: Section[] = [
@@ -75,26 +45,6 @@ export const roleSections: Section[] = [
         name: 'addIndicators',
         elementType: 'custom',
         style: { width: '100%' }
-      },
-      {
-        name: 'indicatorName',
-        elementType: 'none',
-        style: { display: 'none' }
-      },
-      {
-        name: 'indicatorSelect',
-        elementType: 'none',
-        style: { display: 'none' }
-      },
-      {
-        name: 'measurementSelect',
-        elementType: 'none',
-        style: { display: 'none' }
-      },
-      {
-        name: 'measurementValue',
-        elementType: 'none',
-        style: { display: 'none' }
       }
     ],
     className: styles.details
@@ -133,9 +83,7 @@ export const roleSections: Section[] = [
 
 export const roleInitialValues = {
   detailsName: '',
-  detailsObjective: '',
-  deliverables: '',
-  functions: ''
+  detailsObjective: ''
 }
 
 export const roleSteps = [
