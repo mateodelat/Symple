@@ -6,7 +6,6 @@ import styles from './AddIndicator.module.scss'
 
 export default function AddIndicator ({
   addedIndicators,
-  formMethods,
   addIndicator,
   deleteIndicator,
   updateIndicator,
@@ -26,7 +25,6 @@ export default function AddIndicator ({
           key={index}
           addedUsers={addedUsers}
           setAddedUsers={setAddedUsers}
-          formMethods={formMethods}
           canBeDeleted={addedIndicators.length > 1}
           indicator={indicator}
           index={index}

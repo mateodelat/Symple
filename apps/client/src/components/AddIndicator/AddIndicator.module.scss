@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
   width: 100%;
   &_indicator {
     display: flex;
@@ -38,9 +38,9 @@
     margin-top: -0.5rem;
     font-weight: 500;
   }
-  &_button{
-    background: #3C3C3B !important;
-    &:disabled{
+  &_button {
+    background: #3c3c3b !important;
+    &:disabled {
       opacity: 0.25 !important;
     }
   }

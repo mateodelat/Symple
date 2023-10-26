@@ -87,10 +87,9 @@ export const roleInitialValues = {
 }
 
 export const roleSteps = [
-  { index: 0, name: 'Detalles' },
-  { index: 1, name: 'Indicadores' },
-  { index: 2, name: 'Entregables' },
-  { index: 3, name: 'Funciones' }
+  { index: 0, name: 'Indicadores' },
+  { index: 1, name: 'Entregables' },
+  { index: 2, name: 'Funciones' }
 ]
 
 export const roleIndicatorOptions: Option[] = Object.values(IndicatorType).map((value) => (

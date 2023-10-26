@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import ButtonIcon from '../ButtonIcon'
 import styles from './AddIndicatorForm.module.scss'
 import { roleIndicatorOptions, roleMeasurementOptions } from '@/constants/RoleForm'
@@ -88,12 +89,10 @@ export default function AddIndicatorForm ({
     })
   }, [localAddedUsers])
 
-  useEffect(() => {
-    console.log(errors)
-  }, [errors])
-
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+    >
       <div className={styles.indicator}>
         <ButtonIcon
           icon={'/grip_horizontal.svg'}

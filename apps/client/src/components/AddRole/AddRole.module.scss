@@ -7,8 +7,10 @@
   align-items: flex-start;
   &_content {
     display: flex;
+    flex-direction: column;
     width: 100%;
-    gap: 3rem;
+    gap: 2rem;
+    padding-bottom: 2rem;
     &_form {
       padding-top: 0.25rem;
       gap: 3rem !important;

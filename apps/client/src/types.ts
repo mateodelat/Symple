@@ -2,7 +2,7 @@ import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
 import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes, type InputHTMLAttributes } from 'react'
-import { type UseFormReturn, type FieldErrors, type UseFormRegister } from 'react-hook-form'
+import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
 
 export interface Field {
   name: string
@@ -539,13 +539,13 @@ export interface Indicator {
   measurementType?: IndicatorMeasurementType
   amount: string
   associatedUsers: User[]
+  index: number
 }
 
 export interface AddIndicatorProps {
   addedIndicators: Indicator[]
   addedUsers: IndicatorUserState[]
   setAddedUsers: Dispatch<SetStateAction<IndicatorUserState[]>>
-  formMethods: UseFormReturn<any> | null
   addIndicator: () => void
   updateIndicator: (index: number, indicator: Indicator) => void
   deleteIndicator: (index: number) => void
