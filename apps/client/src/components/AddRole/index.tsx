@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { AddIndicator, Form } from '@components/index'
-import { type CustomField, type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type User } from '@/types'
+import { type CustomField, type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type FormRef } from '@/types'
 import styles from './AddRole.module.scss'
 import { roleSections, roleSchema, roleSteps, roleInitialValues } from '@/constants/RoleForm'
 import { type UseFormReturn } from 'react-hook-form'
@@ -11,7 +11,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
   const [formMethods, setFormMethods] = useState<UseFormReturn | null>(null)
 
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
-  const [addedUsers, setAddedUsers] = useState<User[]>([])
+  const [addedUsers, setAddedUsers] = useState<IndicatorUserState[]>([])
 
   const addIndicator = (): void => {
     setAddedIndicators((prev) =>
@@ -54,11 +54,13 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
         addIndicator={addIndicator}
         updateIndicator={updateIndicator}
         deleteIndicator={deleteIndicator}
-        />
+        isStepperBlocked={formRef.current?.isBlocked ?? false}
+        setIsBlocked={formRef.current?.setIsBlocked ?? (() => {})}
+      />
     )
   })
 
-  const formRef = useRef<{ reset: () => void }>()
+  const formRef = useRef<FormRef>()
 
   useEffect(() => {
     if (formMethods !== null) formMethods.reset(roleInitialValues)
@@ -84,10 +86,25 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
           updateIndicator={updateIndicator}
           deleteIndicator={deleteIndicator}
           formMethods={formMethods}
+          isStepperBlocked={formRef.current?.isBlocked ?? false}
+          setIsBlocked={formRef.current?.setIsBlocked ?? (() => {})}
         />
       )
     })
   }, [addedIndicators, addedUsers, formMethods])
+
+  const handleSubmit = (data: any): void => {
+    const payload = {
+      ...data,
+      indicators: addedIndicators.map(({ associatedUsers, ...rest }, i) => (
+        {
+          ...rest,
+          associatedUsers: addedUsers.find(user => user.index === i)?.addedUsers ?? []
+        }
+      ))
+    }
+    console.log(payload)
+  }
 
   return (
     <section className={styles.modal}>
@@ -98,7 +115,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
           sections={roleSections}
           customFields={customFields}
           onSubmit={(data) => {
-            console.log(data)
+            handleSubmit(data)
           }}
           isStepper
           setFormMethods={setFormMethods}

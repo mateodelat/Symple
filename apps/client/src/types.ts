@@ -147,6 +147,8 @@ export interface UseStepper {
   nextStep: () => void
   previousStep: (index?: number) => void
   reset: () => void
+  isBlocked: boolean
+  setIsBlocked: (value: boolean) => void
 }
 
 export interface UseModal {
@@ -541,12 +543,14 @@ export interface Indicator {
 
 export interface AddIndicatorProps {
   addedIndicators: Indicator[]
-  addedUsers: User[]
-  setAddedUsers: Dispatch<SetStateAction<User[]>>
+  addedUsers: IndicatorUserState[]
+  setAddedUsers: Dispatch<SetStateAction<IndicatorUserState[]>>
   formMethods: UseFormReturn<any> | null
   addIndicator: () => void
   updateIndicator: (index: number, indicator: Indicator) => void
   deleteIndicator: (index: number) => void
+  isStepperBlocked: boolean
+  setIsBlocked: (value: boolean) => void
 }
 
 export interface SelectFieldProps {
@@ -572,4 +576,15 @@ export interface InputFieldProps {
   params: InputHTMLAttributes<HTMLInputElement>
   showError?: boolean
   error?: string
+}
+
+export interface IndicatorUserState {
+  index: number
+  addedUsers: User[]
+}
+
+export interface FormRef {
+  reset: () => void
+  isBlocked: boolean
+  setIsBlocked: () => void
 }

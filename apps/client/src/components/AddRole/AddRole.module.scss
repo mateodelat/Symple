@@ -1,6 +1,7 @@
 .modal {
   display: flex;
   width: 100%;
+  height: calc(80dvh - 8rem);
   flex-direction: column;
   gap: 1rem;
   align-items: flex-start;

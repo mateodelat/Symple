@@ -18,16 +18,17 @@ const possibleErrors = {
 const { max, min, numeric, percentage, required } = possibleErrors
 
 export default function AddIndicatorForm ({
-  formMethods,
   canBeDeleted,
   deleteIndicator,
   updateIndicator,
   indicator,
   index,
   addedUsers,
-  setAddedUsers
+  setAddedUsers,
+  setIsBlocked
 }: AddIndicatorFormProps): JSX.Element {
   const [errors, setErrors] = useState<AddIndicatorFormErrors>({ indicatorName: '', indicatorMeasurementValue: '' })
+  const [localAddedUsers, setLocalAddedUsers] = useState(addedUsers.find(user => user.index === index)?.addedUsers ?? [])
   const [width, setWidth] = useState(0)
 
   const handleUpdate = (value: string, name: string): void => {
@@ -38,8 +39,6 @@ export default function AddIndicatorForm ({
   }
 
   const handleErrors = (name: string, value: string, isNumber: boolean, isPercentage: boolean): void => {
-    console.log(value)
-
     let error = ''
     if (value === '') error = required
     else if (isNaN(Number(value)) && isNumber) error = numeric
@@ -53,19 +52,6 @@ export default function AddIndicatorForm ({
     }))
   }
 
-  useEffect(() => {
-    handleUpdate('1', 'amount')
-  }, [indicator.type])
-
-  useEffect(() => {
-    handleErrors('indicatorMeasurementValue', indicator.amount.toString(), true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
-  }, [indicator.measurementType])
-
-  useEffect(() => {
-    const input = document.querySelector('#indicatorMeasurementValue') as HTMLInputElement
-    if (input !== null) setWidth(input.offsetWidth)
-  }, [])
-
   const formatValue = (type: IndicatorMeasurementType, value: string): string => {
     if (type === IndicatorMeasurementType.PERCENTAGE) return `${value}%`
     return `$${value.match(/.{1,3}/g)?.join("'") ?? ''}`
@@ -75,7 +61,36 @@ export default function AddIndicatorForm ({
 
   const format = formatValue(indicator.measurementType ?? IndicatorMeasurementType.PERCENTAGE, indicator.amount.toString())
 
-  console.log(addedUsers)
+  useEffect(() => {
+    const input = document.querySelector('#indicatorMeasurementValue') as HTMLInputElement
+    if (input !== null) setWidth(input.offsetWidth)
+  }, [])
+
+  useEffect(() => {
+    handleUpdate('1', 'amount')
+  }, [indicator.type])
+
+  useEffect(() => {
+    handleErrors('indicatorMeasurementValue', indicator.amount.toString(), true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
+  }, [indicator.measurementType])
+
+  useEffect(() => {
+    if (Object.values(errors).every((val) => val === '')) { setIsBlocked(false) } else setIsBlocked(true)
+  }, [errors])
+
+  useEffect(() => {
+    setAddedUsers(prev => {
+      const newAddedUsers = structuredClone(prev)
+      const userIndex = newAddedUsers.findIndex(user => user.index === index)
+      if (userIndex !== -1) newAddedUsers[userIndex].addedUsers = localAddedUsers
+      else newAddedUsers.push({ index, addedUsers: localAddedUsers })
+      return newAddedUsers
+    })
+  }, [localAddedUsers])
+
+  useEffect(() => {
+    console.log(errors)
+  }, [errors])
 
   return (
     <article className={styles.card}>
@@ -165,7 +180,7 @@ export default function AddIndicatorForm ({
           </div>
         </div>
       )}
-      <AddUsersWrapper addedUsers={addedUsers} setAddedUsers={setAddedUsers}/>
+      <AddUsersWrapper addedUsers={localAddedUsers} setAddedUsers={setLocalAddedUsers}/>
     </article>
   )
 }

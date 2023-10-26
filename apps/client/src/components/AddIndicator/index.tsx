@@ -11,7 +11,9 @@ export default function AddIndicator ({
   deleteIndicator,
   updateIndicator,
   addedUsers,
-  setAddedUsers
+  setAddedUsers,
+  isStepperBlocked,
+  setIsBlocked
 }: AddIndicatorProps): JSX.Element {
   const everyFieldsAreFilled = addedIndicators.every((indicator) => (
     indicator.name !== '' && (indicator.type === IndicatorType.FINANCIAL_OBJECTIVE ? Number(indicator.amount) > 0 : true)
@@ -21,6 +23,7 @@ export default function AddIndicator ({
     <section className={styles.container}>
       {addedIndicators.map((indicator, index) => (
         <AddIndicatorForm
+          key={index}
           addedUsers={addedUsers}
           setAddedUsers={setAddedUsers}
           formMethods={formMethods}
@@ -29,7 +32,8 @@ export default function AddIndicator ({
           index={index}
           deleteIndicator={deleteIndicator}
           updateIndicator={updateIndicator}
-          key={index}
+          isStepperBlocked={isStepperBlocked}
+          setIsBlocked={setIsBlocked}
         />
       ))}
       <Button
