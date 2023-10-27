@@ -3,6 +3,7 @@
 import { AddIndicatorForm, Button } from '@components/index'
 import { type AddIndicatorProps, IndicatorType } from '@/types'
 import styles from './AddIndicator.module.scss'
+import { Droppable } from '@hello-pangea/dnd'
 
 export default function AddIndicator ({
   addedIndicators,
@@ -20,20 +21,27 @@ export default function AddIndicator ({
 
   return (
     <section className={styles.container}>
-      {addedIndicators.map((indicator, index) => (
-        <AddIndicatorForm
-          key={index}
-          addedUsers={addedUsers}
-          setAddedUsers={setAddedUsers}
-          canBeDeleted={addedIndicators.length > 1}
-          indicator={indicator}
-          index={index}
-          deleteIndicator={deleteIndicator}
-          updateIndicator={updateIndicator}
-          isStepperBlocked={isStepperBlocked}
-          setIsBlocked={setIsBlocked}
-        />
-      ))}
+      <Droppable droppableId='indicators'>
+        {(droppableProvided) => (
+          <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className={styles.list}>
+            {addedIndicators.map((indicator, index) => (
+              <AddIndicatorForm
+                key={index}
+                addedUsers={addedUsers}
+                setAddedUsers={setAddedUsers}
+                canBeDeleted={addedIndicators.length > 1}
+                indicator={indicator}
+                index={index}
+                deleteIndicator={deleteIndicator}
+                updateIndicator={updateIndicator}
+                isStepperBlocked={isStepperBlocked}
+                setIsBlocked={setIsBlocked}
+              />
+            ))}
+            {droppableProvided.placeholder}
+          </div>
+        )}
+      </Droppable>
       <Button
         onClick={() => {
           addIndicator()

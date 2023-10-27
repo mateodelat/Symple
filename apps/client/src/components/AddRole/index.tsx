@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { AddIndicator, Button, Stepper } from '@components/index'
-import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState } from '@/types'
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
+import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverables } from '@/types'
+import { DragDropContext } from '@hello-pangea/dnd'
 import styles from './AddRole.module.scss'
 import { useStepper } from '@/hooks'
 import { roleSteps } from '@/constants/RoleForm'
@@ -12,6 +12,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
   const { currentStep, isBlocked, nextStep, previousStep, reset, setIsBlocked } = useStepper()
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
   const [addedUsers, setAddedUsers] = useState<IndicatorUserState[]>([])
+  const [addedDeliverables, setAddedDeliverables] = useState<Deliverables[]>([])
 
   const addIndicator = (): void => {
     setAddedIndicators((prev) =>
@@ -45,6 +46,10 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
     })
   }
 
+  const addDeliverable = () => {
+
+  }
+
   const handleSubmit = (): void => {
     const payload = {
       indicators: addedIndicators.map(({ associatedUsers, ...rest }, i) => (
@@ -66,10 +71,24 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
     }
   }, [isOpen])
 
+  const reorder = (source: number, destination: number): void => {
+    setAddedIndicators((prev) => {
+      const newIndicators = structuredClone(prev)
+      const [removed] = newIndicators.splice(source, 1)
+      newIndicators.splice(destination, 0, removed)
+      return newIndicators
+    })
+  }
+
   return (
     <>
       {isOpen &&
-        <DragDropContext onDragEnd={(result) => { console.log(result) }}>
+        <DragDropContext onDragEnd={(result) => {
+          const { source, destination } = result
+          if (destination == null) return
+          if (source.index === destination.index && source.droppableId === destination.droppableId) return
+          reorder(source.index, destination.index)
+        }}>
           <section className={styles.modal}>
             <h1>{!isEditing ? 'Agregar' : 'Editar'} rol</h1>
             <div className={styles.modal_content}>

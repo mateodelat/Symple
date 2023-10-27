@@ -588,3 +588,14 @@ export interface FormRef {
   isBlocked: boolean
   setIsBlocked: () => void
 }
+
+export interface Deliverables {
+  name: string
+  index: number
+}
+
+export interface AddDeliverablesProps {
+  addedDeliverables: Deliverables[]
+  addDeliverable: () => void
+  updateDeliverable: (index: number, deliverable: Deliverables) => void
+}

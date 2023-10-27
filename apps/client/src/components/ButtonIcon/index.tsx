@@ -13,8 +13,8 @@ export default function ButtonIcon ({
 }: ButtonIconProps): JSX.Element {
   return (
     <Button
-    props={props}
-    className={`${styles.icon} ${className}`}
+      props={props}
+      className={`${styles.icon} ${className}`}
       style={{
         width: `${width + 10}px`,
         height: `${height + 10}px`

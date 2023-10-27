@@ -7,6 +7,8 @@ import styles from './AddIndicatorForm.module.scss'
 import { roleIndicatorOptions, roleMeasurementOptions } from '@/constants/RoleForm'
 import { type AddIndicatorFormProps, IndicatorType, IndicatorMeasurementType, type AddIndicatorFormErrors } from '@/types'
 import { AddUsersWrapper, SelectField, InputField } from '@/components/index'
+import { Draggable } from '@hello-pangea/dnd'
+import Image from 'next/image'
 
 const possibleErrors = {
   required: 'El campo es requerido',
@@ -90,96 +92,104 @@ export default function AddIndicatorForm ({
   }, [localAddedUsers])
 
   return (
-    <article
+    <Draggable draggableId={index.toString()} index={index} >
+      {(draggableProvided) => (
+      <article
+      ref={draggableProvided.innerRef}
+      {...draggableProvided.draggableProps}
       className={styles.card}
-    >
-      <div className={styles.indicator}>
-        <ButtonIcon
-          icon={'/grip_horizontal.svg'}
-          width={20}
-          height={20}
-          className={styles.indicator_icon_draggable}
-        />
-        <InputField
-          params={{
-            placeholder: 'Indicador',
-            value: indicator.name,
-            onChange: (e) => {
-              handleUpdate(e.target.value, 'name')
-              handleErrors('indicatorName', e.target.value, false, false)
-            }
-          }}
-        />
-        <ButtonIcon
-          icon={'/trash_bin.svg'}
-          width={20}
-          height={20}
-          props={{
-            disabled: !canBeDeleted,
-            onClick: () => {
-              deleteIndicator(index)
-            }
-          }}
-        />
-      </div>
-      {indicatorName !== '' && (
-        <span className={styles.error}>
-          {indicatorName}
-        </span>
-      )}
-        <div className={styles.wrapper}>
-          <label htmlFor="indicatorSelect" className={styles.label}>
-            <strong className={styles.label_text}>Tipo de indicador</strong>
-          </label>
-          <SelectField
-            options={roleIndicatorOptions}
-            name='indicatorSelect'
-            props={{
-              value: indicator.type,
+      >
+        <div className={styles.indicator}>
+          <div {...draggableProvided.dragHandleProps} className={styles.indicator_button}>
+            <Image src={'/grip_horizontal.svg'} alt='' width={20} height={20}/>
+          </div>
+          <InputField
+            params={{
+              placeholder: 'Indicador',
+              value: indicator.name,
               onChange: (e) => {
-                handleUpdate(e.target.value, 'type')
+                handleUpdate(e.target.value, 'name')
+                handleErrors('indicatorName', e.target.value, false, false)
+              }
+            }}
+          />
+          <ButtonIcon
+            icon={'/trash_bin.svg'}
+            width={20}
+            height={20}
+            props={{
+              disabled: !canBeDeleted,
+              onClick: () => {
+                deleteIndicator(index)
               }
             }}
           />
         </div>
-      {indicator.type === IndicatorType.FINANCIAL_OBJECTIVE && (
-        <div className={styles.wrapper}>
-          <label htmlFor="measurementSelect" className={styles.label}>
-            <strong className={styles.label_text}>Tipo de medición</strong>
-          </label>
-          <div className={styles.wrapper_measurement}>
+        {indicatorName !== '' && (
+          <span className={styles.error}>
+            {indicatorName}
+          </span>
+        )}
+          <div className={styles.wrapper}>
+            <label htmlFor="indicatorSelect" className={styles.label}>
+              <strong className={styles.label_text}>Tipo de indicador</strong>
+            </label>
             <SelectField
-              options={roleMeasurementOptions}
-              name='measurementSelect'
-              className={styles.wrapper_measurement_select}
+              options={roleIndicatorOptions}
+              name='indicatorSelect'
               props={{
-                value: indicator.measurementType,
+                value: indicator.type,
                 onChange: (e) => {
-                  handleUpdate(e.target.value, 'measurementType')
+                  handleUpdate(e.target.value, 'type')
                 }
               }}
             />
-            <InputField
-              params={{
-                placeholder: indicator.measurementType,
-                value: indicator.amount,
-                inputMode: 'numeric',
-                id: 'indicatorMeasurementValue',
-                onChange: (e) => {
-                  handleUpdate(e.target.value, 'amount')
-                  handleErrors('indicatorMeasurementValue', e.target.value, true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
-                }
-              }}
-              showError
-              error={indicatorMeasurementValue}
-            />
-            {Number(indicator.amount) > 0 && (
-              <span title={format} className={styles.format} style={{ width }}>{format}</span>
-            )}
           </div>
-        </div>
+        {indicator.type === IndicatorType.FINANCIAL_OBJECTIVE && (
+          <div className={styles.wrapper}>
+            <label htmlFor="measurementSelect" className={styles.label}>
+              <strong className={styles.label_text}>Tipo de medición</strong>
+            </label>
+            <div className={styles.wrapper_measurement}>
+              <SelectField
+                options={roleMeasurementOptions}
+                name='measurementSelect'
+                className={styles.wrapper_measurement_select}
+                props={{
+                  value: indicator.measurementType,
+                  onChange: (e) => {
+                    handleUpdate(e.target.value, 'measurementType')
+                  }
+                }}
+              />
+              <InputField
+                params={{
+                  placeholder: indicator.measurementType,
+                  value: indicator.amount,
+                  inputMode: 'numeric',
+                  id: 'indicatorMeasurementValue',
+                  onChange: (e) => {
+                    handleUpdate(e.target.value, 'amount')
+                    handleErrors('indicatorMeasurementValue', e.target.value, true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
+                  }
+                }}
+                showError
+                error={indicatorMeasurementValue}
+              />
+              {Number(indicator.amount) > 0 && (
+                <span title={format} className={styles.format} style={{ width }}>{format}</span>
+              )}
+            </div>
+          </div>
+        )}
+        <AddUsersWrapper
+          addedUsers={localAddedUsers}
+          setAddedUsers={setLocalAddedUsers}
+        />
+      </article>
       )}
-      <AddUsersWrapper addedUsers={localAddedUsers} setAddedUsers={setLocalAddedUsers}/>
-    </article>
+
+    </Draggable>
+
   )
 }

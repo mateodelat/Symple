@@ -2,10 +2,9 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  &_icon {
-    &_draggable {
-      cursor: grab;
-    }
+  &_button {
+    width: 20px;
+    height: 20px;
   }
   &_wrapper {
     display: flex;
@@ -20,6 +19,7 @@
   padding: 1rem;
   border: 1px solid black;
   border-radius: 10px;
+  margin-top: 2rem;
 }
 
 .label {
@@ -46,7 +46,7 @@
   font-weight: 500;
 }
 
-.format{
+.format {
   width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
