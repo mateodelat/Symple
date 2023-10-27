@@ -1,4 +1,4 @@
-import { DepartmentAdministration } from '@/components'
+import DepartmentAdministration from '@components/modules/Department/DepartmentAdministration'
 import { type DepartmentPageProps } from '@/types'
 
 export default function DepartmentPage ({

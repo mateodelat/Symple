@@ -599,3 +599,17 @@ export interface AddDeliverablesProps {
   addDeliverable: () => void
   updateDeliverable: (index: number, deliverable: Deliverables) => void
 }
+
+export interface UseCheckErrorsProps {
+  fields: Record<string, string>
+}
+
+export interface UseCheckErrors {
+  errors: Record<string, string>
+  handleErrors: (
+    name: string,
+    value: string,
+    isNumber: boolean,
+    isPercentage: boolean,
+  ) => void
+}

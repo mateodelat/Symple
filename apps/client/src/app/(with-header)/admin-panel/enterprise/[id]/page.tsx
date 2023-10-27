@@ -2,7 +2,8 @@
 import { notFound } from 'next/navigation'
 
 import { useDepartmentContext, useEnterpriseContext } from '@contexts/index'
-import { DepartmentList, Loader } from '@components/index'
+import Loader from '@components/shared/Loader'
+import DepartmentList from '@components/modules/Department/DepartmentList'
 import { useEffect, useState } from 'react'
 import { type Department, type Enterprise } from '@/types'
 import styles from './EnterprisePage.module.scss'

@@ -1,7 +1,6 @@
-'use server'
-
 import { type User } from '@/types'
-import { CardUserEdit, List } from '@components/index'
+import List from '@components/shared/List'
+import CardUserEdit from '@components/modules/User/CardUserEdit'
 import userService from '@services/users'
 
 export default async function UsersPage (): Promise<JSX.Element> {
