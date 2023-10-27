@@ -589,15 +589,24 @@ export interface FormRef {
   setIsBlocked: () => void
 }
 
-export interface Deliverables {
+export interface Deliverable {
   name: string
   index: number
 }
 
-export interface AddDeliverablesProps {
-  addedDeliverables: Deliverables[]
+export interface AddDeliverableProps {
+  addedDeliverables: Deliverable[]
   addDeliverable: () => void
-  updateDeliverable: (index: number, deliverable: Deliverables) => void
+  updateDeliverable: (index: number, deliverable: Deliverable) => void
+  deleteDeliverable: (index: number) => void
+}
+
+export interface AddDeliverableFormProps {
+  canBeDeleted: boolean
+  index: number
+  deliverable: Deliverable
+  updateDeliverable: (index: number, value: Deliverable) => void
+  deleteDeliverable: (index: number) => void
 }
 
 export interface UseCheckErrorsProps {
@@ -612,4 +621,20 @@ export interface UseCheckErrors {
     isNumber: boolean,
     isPercentage: boolean,
   ) => void
+}
+
+export interface FunctionState extends Deliverable {}
+export interface AddDeliverablesFormProps {
+  addedDeliverables: Deliverable[]
+}
+
+export interface AddFunctionProps {
+  addedFunctions: FunctionState[]
+  addFunction: () => void
+  updateFunction: (index: number, functionValue: FunctionState) => void
+  deleteFunction: (index: number) => void
+}
+
+export interface AddFunctionFormProps {
+  addedFunctions: FunctionState[]
 }

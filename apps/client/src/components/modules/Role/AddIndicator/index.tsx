@@ -24,7 +24,7 @@ export default function AddIndicator ({
     <section className={styles.container}>
       <Droppable droppableId='indicators'>
         {(droppableProvided) => (
-          <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps} className={styles.list}>
+          <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
             {addedIndicators.map((indicator, index) => (
               <AddIndicatorForm
                 key={index}

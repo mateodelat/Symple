@@ -1,3 +1,5 @@
+@use '@styles/variables';
+
 .container {
   display: grid;
   grid-template-columns: 1fr;
@@ -39,7 +41,7 @@
     font-weight: 500;
   }
   &_button {
-    background: #3c3c3b !important;
+    background: variables.$tertiary-gray-color !important;
     &:disabled {
       opacity: 0.25 !important;
     }

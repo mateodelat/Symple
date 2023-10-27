@@ -1,0 +1,27 @@
+.card {
+  margin-top: 1rem;
+}
+
+.function {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  &_button {
+    width: 20px;
+    height: 20px;
+  }
+} 
+
+.error {
+  color: red;
+  margin-top: -0.5rem;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 1024px) {
+  .error {
+    &_grid {
+      grid-area: error;
+    }
+  }
+}
