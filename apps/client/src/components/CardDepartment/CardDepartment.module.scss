@@ -1,0 +1,48 @@
+@use "@styles/variables";
+
+.department {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1.5rem;
+
+  &_wrapper {
+    position: relative;
+    &_button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &_name {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid lightgray;
+  }
+
+  &_sub {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: auto;
+    &_name {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid lightgray;
+    }
+    &_last {
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      margin-left: auto;
+      &_name {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid lightgray;
+      }
+    }
+  }
+
+  &_no_border {
+    border: none;
+  }
+}

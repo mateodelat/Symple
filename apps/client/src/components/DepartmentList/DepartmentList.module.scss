@@ -1,0 +1,78 @@
+@use "@styles/variables";
+
+.container {
+  display: grid;
+  gap: 1rem;
+  &_button {
+    width: 100%;
+    border-radius: 5px;
+    padding: 0.5rem 2rem;
+    font-size: inherit;
+  }
+  &_new {
+    text-align: center;
+  }
+  &_title {
+    text-align: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid lightgray;
+  }
+}
+
+.desktop_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.5rem 2rem;
+  border-bottom: 1px solid lightgray;
+  &_title {
+    text-align: center;
+  }
+  &_edit {
+    width: 30px;
+    height: 30px;
+  }
+  &_buttons {
+    display: flex;
+    gap: 1rem;
+    &_btn {
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 0;
+      background-color: variables.$primary-green-color;
+      border-radius: 5px;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+}
+
+.list {
+  display: grid;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    &_title {
+      text-align: left;
+    }
+  }
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

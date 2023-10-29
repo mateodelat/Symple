@@ -1,0 +1,61 @@
+@use "@styles/variables";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: variables.$primary-background-color;
+}
+
+input {
+  padding: 1rem;
+  border: 1px solid variables.$primary-gray-color;
+  border-radius: 1.5rem;
+  width: 100%;
+  &::placeholder {
+    color: variables.$tertiary-blue-color;
+  }
+}
+
+input,
+input::placeholder {
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  &:hover {
+    color: variables.$primary-green-color;
+    transition: all 0.15s ease-in-out;
+  }
+}
+
+button {
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: variables.$primary-green-color;
+}

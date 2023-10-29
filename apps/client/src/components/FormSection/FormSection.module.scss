@@ -1,0 +1,79 @@
+@use "@styles/variables";
+
+.section {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  animation: fade-in 0.5s forwards;
+
+  &_fields {
+    display: grid;
+    gap: 1rem;
+  }
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    &_label {
+      margin-bottom: 1rem;
+      color: variables.$primary-black-color;
+      &_text {
+        font-weight: 500;
+      }
+    }
+    &_input {
+      padding: 1rem;
+      border: 1px solid variables.$primary-gray-color;
+      border-radius: 1.5rem;
+      &::placeholder {
+        color: variables.$tertiary-blue-color;
+      }
+    }
+    &_textarea {
+      max-height: 6lh;
+      resize: vertical;
+    }
+    &_error {
+      color: red;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .section {
+    &_wrapper {
+      &_input {
+        padding: 1.2rem;
+        font-size: 1.5rem;
+      }
+    }
+    &_fields {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .section {
+    &_wrapper {
+      &_input {
+        font-size: 1.6rem;
+      }
+      &_error {
+        margin-top: 1rem;
+      }
+    }
+  }
+}

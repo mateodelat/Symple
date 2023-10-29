@@ -1,0 +1,106 @@
+.modal {
+  display: none;
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  &[open] {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: auto;
+    z-index: 3;
+    animation: fadein 150ms ease-in forwards;
+    border: none;
+    border-radius: 0.5rem;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: default;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &::backdrop {
+      animation: fadein 150ms ease-in forwards;
+    }
+  }
+  &_close[open] {
+    animation: fadeout 150ms ease-in forwards;
+    &::backdrop {
+      animation: fadeout 150ms ease-in forwards;
+    }
+  }
+
+  &_content {
+    display: flex;
+    width: 100%;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 4rem 2rem;
+    &_wrapper {
+      display: grid;
+      gap: 1rem;
+    }
+    &_close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 20px;
+      height: 20px;
+      background: transparent !important;
+      &_button {
+        position: relative;
+        transform: rotate(0.625turn);
+        &::before,
+        & {
+          width: 2rem;
+          height: 3px;
+          border-radius: 1rem;
+          background-color: black;
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+        }
+        &::before {
+          top: 6px;
+          transform: rotate(90deg) translateX(-6px);
+        }
+      }
+    }
+  }
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .modal {
+    &[open] {
+      width: 80%;
+    }
+    &_content {
+      &_accept {
+        width: 85%;
+      }
+    }
+  }
+}

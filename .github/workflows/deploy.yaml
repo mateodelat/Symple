@@ -1,0 +1,81 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Environment to deploy
+        required: true
+        options: 
+        - production
+        - development
+        - qa
+      branch:
+          description: Branch to deploy
+          type: string
+          default: development
+          required: true
+      
+
+jobs:
+  deploy:
+    name: Deploy 
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        env:
+          FRONT_URL : ${{ vars.FRONT_URL }}
+          CORS_URL : ${{ vars.CORS_URL }}
+          SERVER_NAME : ${{ vars.SERVER_NAME }}
+          SERVER_PORT : ${{ vars.SERVER_PORT }}
+          SERVER_URL : ${{ vars.SERVER_URL }}
+          SERVER_DB : ${{ vars.SERVER_DB }}
+          SERVER_EMAIL_USER : ${{ vars.SERVER_EMAIL_USER }}
+          SERVER_EMAIL_PASSWORD : ${{ vars.SERVER_EMAIL_PASSWORD }}
+          SERVER_SESSION : ${{ vars.SERVER_SESSION }}
+          SESSION_PASS : ${{ vars.SESSION_PASS }}
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_KEY }}
+          envs: FRONT_URL,CORS_URL,SERVER_NAME,SERVER_PORT,SERVER_URL,SERVER_DB,SERVER_EMAIL_USER,SERVER_EMAIL_PASSWORD,SERVER_SESSION,SESSION_PASS
+          script: |
+            echo "Backup assets"
+            cp -rf Backend/public/assets/uploads uploads
+           
+            echo "PM2: Stop Backend"
+            pm2 delete Backend
+            rm -rf Backend
+            
+            echo "Git: Clone repository"
+            git clone -b ${{ github.event.inputs.branch }} ${{ secrets.SCRIPT_BE }}
+            
+            echo "Replacing assets"
+            cp -rf uploads Backend/public/assets/
+            rm -rf uploads
+            echo "SSH: Creating .env file for Backend"
+            cd /home/ec2-user/Backend
+            rm -rf .env
+            echo NODE_ENV=              ${{ github.event.inputs.environment }} >> .env
+            echo FRONT_URL=             $FRONT_URL >> .env
+            echo CORS_URL=              $CORS_URL >> .env
+            echo SERVER_NAME=           $SERVER_NAME >> .env
+            echo SERVER_PORT=           $SERVER_PORT >> .env
+            echo SERVER_URL=            $SERVER_URL >> .env
+            echo SERVER_DB=             $SERVER_DB >> .env
+            echo SERVER_EMAIL_USER=     $SERVER_EMAIL_USER >> .env
+            echo SERVER_EMAIL_PASSWORD= $SERVER_EMAIL_PASSWORD >> .env
+            echo SERVER_SESSION=        $SERVER_SESSION >> .env
+            echo SESSION_PASS=          $SESSION_PASS >> .env
+            cat .env 
+
+                        
+
+            echo "NPM: Install dependencies"
+            npm install
+
+            echo "PM2: Start Backend"
+            pm2 start "npm run start" --name Backend

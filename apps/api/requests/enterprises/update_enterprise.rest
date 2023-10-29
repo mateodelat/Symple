@@ -1,0 +1,6 @@
+PUT http://localhost:3001/api/enterprises/64bad9b4a226864617061930
+Content-Type: application/json
+
+{
+  "admins": ["64bad964a226864617061927", "64bad96fa22686461706192d"]
+}

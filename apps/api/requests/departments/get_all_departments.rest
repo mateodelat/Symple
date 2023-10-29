@@ -1,0 +1,2 @@
+GET http://localhost:3001/api/departments/id
+Authorization: Bearer <token>

@@ -1,0 +1,50 @@
+@use "@styles/variables";
+
+.form {
+  gap: 2rem;
+  &_fields {
+    grid-template-areas:
+      "name"
+      "image"
+      "turn"
+      "telephone"
+      "address"
+      "amountOfEmployees"
+      "addUsers";
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .form {
+    &_fields {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "name turn"
+        "telephone address"
+        "amountOfEmployees none"
+        "image image"
+        "addUsers addUsers";
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .form {
+    &_fields {
+      grid-template-columns: repeat(3, 1fr) !important;
+      grid-template-areas:
+        "name turn telephone"
+        "address amountOfEmployees none"
+        "image addUsers none";
+    }
+  }
+}
+
+@media screen and (min-width: 2560px) {
+  .form {
+    & button[type="submit"] {
+      width: 33%;
+      margin: 0 auto;
+    }
+  }
+}
