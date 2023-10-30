@@ -1,16 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Draggable, type DraggableProvidedDragHandleProps } from '@hello-pangea/dnd'
 
-import ButtonIcon from '@components/shared/ButtonIcon'
-import styles from './AddIndicatorForm.module.scss'
+import { SelectField, InputField, DraggableInput } from '@/components/shared/'
+import AddUsersWrapper from '@components/modules/User/AddUsersWrapper'
+import useCheckErrors from '@/hooks/useCheckErrors'
 import { roleIndicatorOptions, roleMeasurementOptions } from '@/constants/RoleForm'
 import { type AddIndicatorFormProps, IndicatorType, IndicatorMeasurementType } from '@/types'
-import { SelectField, InputField } from '@/components/shared/'
-import AddUsersWrapper from '@components/modules/User/AddUsersWrapper'
-import { Draggable } from '@hello-pangea/dnd'
-import Image from 'next/image'
-import useCheckErrors from '@/hooks/useCheckErrors'
+import styles from './AddIndicatorForm.module.scss'
 
 export default function AddIndicatorForm ({
   canBeDeleted,
@@ -71,32 +69,18 @@ export default function AddIndicatorForm ({
       {...draggableProvided.draggableProps}
       className={styles.card}
       >
-        <div className={styles.indicator}>
-          <div {...draggableProvided.dragHandleProps} className={styles.indicator_button}>
-            <Image src={'/grip_horizontal.svg'} alt='' width={20} height={20}/>
-          </div>
-          <InputField
-            params={{
-              placeholder: 'Indicador',
-              value: indicator.name,
-              onChange: (e) => {
-                handleUpdate(e.target.value, 'name')
-                handleErrors('indicatorName', e.target.value, false, false)
-              }
-            }}
-          />
-          <ButtonIcon
-            icon={'/trash_bin.svg'}
-            width={20}
-            height={20}
-            props={{
-              disabled: !canBeDeleted,
-              onClick: () => {
-                deleteIndicator(index)
-              }
-            }}
-          />
-        </div>
+        <DraggableInput
+          canBeDeleted={canBeDeleted}
+          deleteElement={deleteIndicator}
+          dragHandleProps={draggableProvided.dragHandleProps as DraggableProvidedDragHandleProps}
+          errorName='indicatorName'
+          fieldName='name'
+          handleErrors={handleErrors}
+          handleUpdate={handleUpdate}
+          index={index}
+          placeholder='Indicador'
+          value={indicator.name}
+        />
         {indicatorName !== '' && (
           <span className={styles.error}>
             {indicatorName}

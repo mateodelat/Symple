@@ -3,33 +3,35 @@
 import Button from '@components/shared/Button'
 import AddFunctionForm from '@components/modules/Role/AddFunctionForm'
 import { type AddFunctionProps } from '@/types'
-import styles from './AddDeliverable.module.scss'
+import styles from './AddFunction.module.scss'
 import { Droppable } from '@hello-pangea/dnd'
 
-export default function AddDeliverable ({
-  addFunction,
+export default function AddFunction ({
   addedFunctions,
+  addFunction,
   deleteFunction,
-  updateFunction
+  updateFunction,
+  setIsBlocked
 }: AddFunctionProps
 ): JSX.Element {
-  const everyFieldsAreFilled = addedFunctions.every((f) => (
-    f.name !== ''
+  const everyFieldsAreFilled: boolean = addedFunctions.every((value) => (
+    value.name !== ''
   ))
 
   return (
     <section className={styles.container}>
-      <Droppable droppableId='deliverables'>
+      <Droppable droppableId='functions'>
         {(droppableProvided) => (
           <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
             {addedFunctions.map((deliverable, index) => (
               <AddFunctionForm
                 key={index}
                 index={index}
-                deliverable={deliverable}
-                updateDeliverable={updateDeliverable}
-                canBeDeleted={addedDeliverables.length > 1}
-                deleteDeliverable={deleteFunction}
+                functionState={deliverable}
+                updateFunction={updateFunction}
+                canBeDeleted={addedFunctions.length > 1}
+                deleteFunction={deleteFunction}
+                setIsBlocked={setIsBlocked}
               />
             ))}
             {droppableProvided.placeholder}

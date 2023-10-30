@@ -1,20 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Button, Stepper } from '@components/shared/'
-import AddIndicator from '@components/modules/Role/AddIndicator'
-import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverable } from '@/types'
 import { DragDropContext } from '@hello-pangea/dnd'
-import styles from './AddRole.module.scss'
+
+import { Button, Stepper } from '@components/shared/'
+import { AddIndicator, AddDeliverable, AddFunction } from '@components/modules/Role/'
 import { useStepper } from '@/hooks'
 import { roleSteps } from '@/constants/RoleForm'
-import AddDeliverable from '../AddDeliverable'
+import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverable, type FunctionState } from '@/types'
+import styles from './AddRole.module.scss'
 
 export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Element {
-  const { currentStep, isBlocked, nextStep, previousStep, reset, setIsBlocked } = useStepper()
+  const { currentStep, nextStep, previousStep, reset, setIsBlocked } = useStepper()
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
   const [addedUsers, setAddedUsers] = useState<IndicatorUserState[]>([])
   const [addedDeliverables, setAddedDeliverables] = useState<Deliverable[]>([])
+  const [addedFunctions, setAddedFunctions] = useState<FunctionState[]>([])
 
   const addIndicator = (): void => {
     setAddedIndicators((prev) =>
@@ -74,6 +75,32 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
     })
   }
 
+  const addFunction = (): void => {
+    setAddedFunctions((prev) => [
+      ...prev,
+      {
+        name: `Función ${prev.length + 1}`,
+        index: prev.length
+      }
+    ])
+  }
+
+  const updateFunction = (index: number, functionState: FunctionState): void => {
+    setAddedFunctions((prev) => {
+      const newFunctions = structuredClone(prev)
+      newFunctions[index] = functionState
+      return newFunctions
+    })
+  }
+
+  const deleteFunction = (index: number): void => {
+    setAddedFunctions((prev) => {
+      const newFunctions = structuredClone(prev)
+      newFunctions.splice(index, 1)
+      return newFunctions
+    })
+  }
+
   const handleSubmit = (): void => {
     const payload = {
       indicators: addedIndicators?.map((element, i) => (
@@ -82,7 +109,8 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
           associatedUsers: addedUsers.find(user => user.index === i)?.addedUsers ?? []
         }
       )),
-      deliverables: addedDeliverables.map(el => el.name)
+      deliverables: addedDeliverables.map(el => el.name),
+      functions: addedFunctions.map(el => el.name)
     }
     console.log(payload)
   }
@@ -93,6 +121,8 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
       setAddedIndicators([])
       setAddedUsers([])
       addIndicator()
+      addDeliverable()
+      addFunction()
     }
   }, [isOpen])
 
@@ -111,6 +141,13 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
         newDeliverables.splice(destination, 0, removed)
         return newDeliverables
       })
+    } else if (droppableId === 'functions') {
+      setAddedFunctions((prev) => {
+        const newFunctions = structuredClone(prev)
+        const [removed] = newFunctions.splice(source, 1)
+        newFunctions.splice(destination, 0, removed)
+        return newFunctions
+      })
     }
   }
 
@@ -118,7 +155,6 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
     <>
       {isOpen &&
         <DragDropContext onDragEnd={(result) => {
-          console.log(result)
           const { source, destination } = result
           if (destination === null) return
           if (source.index === destination.index && source.droppableId === destination.droppableId) return
@@ -141,7 +177,6 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
                   setAddedUsers={setAddedUsers}
                   deleteIndicator={deleteIndicator}
                   updateIndicator={updateIndicator}
-                  isStepperBlocked={isBlocked}
                   setIsBlocked={setIsBlocked}
                 />
               )}
@@ -151,6 +186,16 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
                   addedDeliverables={addedDeliverables}
                   updateDeliverable={updateDeliverable}
                   deleteDeliverable={deleteDeliverable}
+                  setIsBlocked={setIsBlocked}
+                />
+              )}
+              {currentStep === 2 && (
+                <AddFunction
+                  addFunction={addFunction}
+                  addedFunctions={addedFunctions}
+                  updateFunction={updateFunction}
+                  deleteFunction={deleteFunction}
+                  setIsBlocked={setIsBlocked}
                 />
               )}
               {currentStep < roleSteps.length - 1

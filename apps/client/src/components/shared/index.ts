@@ -5,6 +5,7 @@ import Button from './Button'
 import ButtonIcon from './ButtonIcon'
 import Card from './Card'
 import CardDraggable from './CardDraggable'
+import DraggableInput from './DraggableInput'
 import Form from './Form'
 import FormSection from './FormSection'
 import Header from './Header'
@@ -30,6 +31,7 @@ export {
   ButtonIcon,
   Card,
   CardDraggable,
+  DraggableInput,
   Form,
   FormSection,
   Header,

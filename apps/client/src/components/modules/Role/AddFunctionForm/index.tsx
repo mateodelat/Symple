@@ -1,25 +1,33 @@
 'use client'
 
-import Image from 'next/image'
-// import { useEffect, useState } from 'react'
-import { Draggable } from '@hello-pangea/dnd'
+import { Draggable, type DraggableProvidedDragHandleProps } from '@hello-pangea/dnd'
 
-import { ButtonIcon, InputField } from '@components/shared/'
+import DraggableInput from '@/components/shared/DraggableInput'
 import useCheckErrors from '@/hooks/useCheckErrors'
 import { type AddFunctionFormProps } from '@/types'
-import styles from './AddDeliverablesForm.module.scss'
+import styles from './AddFunctionForm.module.scss'
+import { useEffect } from 'react'
 
 export default function AddFunctionForm ({
-  addedFunctions
+  canBeDeleted,
+  index,
+  deleteFunction,
+  functionState,
+  updateFunction,
+  setIsBlocked
 }: AddFunctionFormProps): JSX.Element {
-  const { errors, handleErrors } = useCheckErrors({ fields: { deliverableName: '' } })
-  const { deliverableName } = errors
+  const { errors, handleErrors } = useCheckErrors({ fields: { functionName: '' } })
+  const { functionName } = errors
 
   const handleUpdate = (value: string): void => {
-    const deliverableAux = structuredClone(deliverable)
-    deliverableAux.name = value
-    updateDeliverable(index, deliverableAux)
+    const functionAux = structuredClone(functionState)
+    functionAux.name = value
+    updateFunction(index, functionAux)
   }
+
+  useEffect(() => {
+    if (Object.values(errors).every((val) => val === '')) { setIsBlocked(false) } else setIsBlocked(true)
+  }, [errors])
 
   return (
     <Draggable draggableId={index.toString()} index={index} >
@@ -29,35 +37,21 @@ export default function AddFunctionForm ({
       {...draggableProvided.draggableProps}
       className={styles.card}
       >
-        <div className={styles.deliverable}>
-          <div {...draggableProvided.dragHandleProps} className={styles.deliverable_button}>
-            <Image src={'/grip_horizontal.svg'} alt='' width={20} height={20}/>
-          </div>
-          <InputField
-            params={{
-              placeholder: 'Indicador',
-              value: deliverable.name,
-              onChange: (e) => {
-                handleUpdate(e.target.value)
-                handleErrors('deliverableName', e.target.value, false, false)
-              }
-            }}
-          />
-          <ButtonIcon
-            icon={'/trash_bin.svg'}
-            width={20}
-            height={20}
-            props={{
-              disabled: !canBeDeleted,
-              onClick: () => {
-                deleteDeliverable(index)
-              }
-            }}
-          />
-        </div>
-        {deliverableName !== '' && (
+        <DraggableInput
+          canBeDeleted={canBeDeleted}
+          deleteElement={deleteFunction}
+          dragHandleProps={draggableProvided.dragHandleProps as DraggableProvidedDragHandleProps}
+          errorName='functionName'
+          fieldName='name'
+          handleErrors={handleErrors}
+          handleUpdate={handleUpdate}
+          index={index}
+          placeholder='Función'
+          value={functionState.name}
+        />
+        {functionName !== '' && (
           <span className={styles.error}>
-            {deliverableName}
+            {functionName}
           </span>
         )}
       </article>

@@ -10,10 +10,11 @@ export default function AddDeliverable ({
   addedDeliverables,
   addDeliverable,
   updateDeliverable,
-  deleteDeliverable
+  deleteDeliverable,
+  setIsBlocked
 }: AddDeliverableProps
 ): JSX.Element {
-  const everyFieldsAreFilled = addedDeliverables.every((deliverable) => (
+  const everyFieldsAreFilled: boolean = addedDeliverables.every((deliverable) => (
     deliverable.name !== ''
   ))
 
@@ -30,6 +31,7 @@ export default function AddDeliverable ({
                 updateDeliverable={updateDeliverable}
                 canBeDeleted={addedDeliverables.length > 1}
                 deleteDeliverable={deleteDeliverable}
+                setIsBlocked={setIsBlocked}
               />
             ))}
             {droppableProvided.placeholder}

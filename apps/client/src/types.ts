@@ -3,6 +3,7 @@ import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
 import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes, type InputHTMLAttributes } from 'react'
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
+import { type DraggableProvidedDragHandleProps } from '@hello-pangea/dnd'
 
 export interface Field {
   name: string
@@ -549,7 +550,6 @@ export interface AddIndicatorProps {
   addIndicator: () => void
   updateIndicator: (index: number, indicator: Indicator) => void
   deleteIndicator: (index: number) => void
-  isStepperBlocked: boolean
   setIsBlocked: (value: boolean) => void
 }
 
@@ -586,7 +586,6 @@ export interface IndicatorUserState {
 export interface FormRef {
   reset: () => void
   isBlocked: boolean
-  setIsBlocked: () => void
 }
 
 export interface Deliverable {
@@ -599,6 +598,7 @@ export interface AddDeliverableProps {
   addDeliverable: () => void
   updateDeliverable: (index: number, deliverable: Deliverable) => void
   deleteDeliverable: (index: number) => void
+  setIsBlocked: (value: boolean) => void
 }
 
 export interface AddDeliverableFormProps {
@@ -607,6 +607,7 @@ export interface AddDeliverableFormProps {
   deliverable: Deliverable
   updateDeliverable: (index: number, value: Deliverable) => void
   deleteDeliverable: (index: number) => void
+  setIsBlocked: (value: boolean) => void
 }
 
 export interface UseCheckErrorsProps {
@@ -631,10 +632,29 @@ export interface AddDeliverablesFormProps {
 export interface AddFunctionProps {
   addedFunctions: FunctionState[]
   addFunction: () => void
-  updateFunction: (index: number, functionValue: FunctionState) => void
+  updateFunction: (index: number, functionState: FunctionState) => void
   deleteFunction: (index: number) => void
+  setIsBlocked: (value: boolean) => void
 }
 
 export interface AddFunctionFormProps {
-  addedFunctions: FunctionState[]
+  canBeDeleted: boolean
+  index: number
+  functionState: FunctionState
+  updateFunction: (index: number, value: FunctionState) => void
+  deleteFunction: (index: number) => void
+  setIsBlocked: (value: boolean) => void
+}
+
+export interface DraggableInputProps {
+  dragHandleProps: DraggableProvidedDragHandleProps
+  value: string | number
+  canBeDeleted: boolean
+  handleUpdate: (value: string, field: string) => void
+  handleErrors: any
+  placeholder: string
+  fieldName: string
+  errorName: string
+  deleteElement: (index: number) => void
+  index: number
 }

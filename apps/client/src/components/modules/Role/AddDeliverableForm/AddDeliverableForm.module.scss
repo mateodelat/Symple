@@ -1,16 +1,6 @@
-.card{
+.card {
   margin-top: 1rem;
 }
-
-.deliverable {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  &_button {
-    width: 20px;
-    height: 20px;
-  }
-} 
 
 .error {
   color: red;

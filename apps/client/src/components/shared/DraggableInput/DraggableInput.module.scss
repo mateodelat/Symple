@@ -1,0 +1,9 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  &_button {
+    width: 20px;
+    height: 20px;
+  }
+}

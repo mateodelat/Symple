@@ -41,7 +41,7 @@ const Form = forwardRef(({
     }
   }, [setFormMethods])
 
-  const { currentStep, nextStep, previousStep, reset, isBlocked, setIsBlocked } = useStepper()
+  const { currentStep, nextStep, previousStep, reset, isBlocked } = useStepper()
 
   const checkErrors = async (fieldsToCheck: string[]): Promise<boolean> => {
     const isValid = await trigger(fieldsToCheck)
@@ -51,8 +51,7 @@ const Form = forwardRef(({
   useImperativeHandle(ref, () => {
     return {
       reset,
-      isBlocked,
-      setIsBlocked
+      isBlocked
     }
   })
 

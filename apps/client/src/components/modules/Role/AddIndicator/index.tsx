@@ -13,7 +13,6 @@ export default function AddIndicator ({
   updateIndicator,
   addedUsers,
   setAddedUsers,
-  isStepperBlocked,
   setIsBlocked
 }: AddIndicatorProps): JSX.Element {
   const everyFieldsAreFilled = addedIndicators.every((indicator) => (
@@ -35,7 +34,6 @@ export default function AddIndicator ({
                 index={index}
                 deleteIndicator={deleteIndicator}
                 updateIndicator={updateIndicator}
-                isStepperBlocked={isStepperBlocked}
                 setIsBlocked={setIsBlocked}
               />
             ))}
