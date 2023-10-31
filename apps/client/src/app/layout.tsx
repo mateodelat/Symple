@@ -6,7 +6,8 @@ import { AuthProvider } from './AuthProvider'
 import {
   DepartmentContextProvider,
   EnterpriseContextProvider,
-  UserContextProvider
+  UserContextProvider,
+  RoleContextProvider
 } from '@contexts/index'
 import '@styles/global.scss'
 
@@ -31,8 +32,10 @@ export default function RootLayout ({
           <UserContextProvider>
             <EnterpriseContextProvider>
               <DepartmentContextProvider>
-                <Toaster />
-                {children}
+                <RoleContextProvider>
+                  <Toaster />
+                  {children}
+                </RoleContextProvider>
               </DepartmentContextProvider>
             </EnterpriseContextProvider>
           </UserContextProvider>

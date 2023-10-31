@@ -1,22 +1,31 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { Button, Modal, SearchBar } from '@components/shared/'
+import { AccordionList, Button, Modal, SearchBar } from '@components/shared/'
 import AddRole from '@components/modules/Role/AddRole'
 import { useToggle } from '@/hooks'
 import { internalLinks } from '@/constants/DepartmentAdministration'
-import { type DepartmentAdministrationProps } from '@/types'
+import { type LengthType, type DepartmentAdministrationProps } from '@/types'
 import styles from './DepartmentAdministration.module.scss'
+import { useRoleContext } from '@/contexts/Role/context'
 
 export default function DepartmentAdministration ({
   id
 }: DepartmentAdministrationProps): JSX.Element {
+  const { toggle, value } = useToggle()
+  const { toggle: toggleCancel, value: confirmCancel } = useToggle()
+
   const [filter, setFilter] = useState('')
   const [links, setLinks] = useState(internalLinks)
 
-  const { toggle, value } = useToggle()
-  const { toggle: toggleCancel, value: confirmCancel } = useToggle()
+  const { handleDepartmentChange, roles, department } = useRoleContext()
+
+  const lengths: Record<LengthType, string> = {
+    roles: roles.length.toString(),
+    members: '0', // TODO: get members length
+    positions: '0' // TODO: get positions length
+  }
 
   const handleActive = (name: string): void => {
     setLinks((prev) => {
@@ -30,15 +39,22 @@ export default function DepartmentAdministration ({
   }
 
   const element = links.find((link) => link.isActive)
+  const name = element?.label.toLowerCase() ?? ''
+  const active = element?.name ?? 'members'
+  const singularName = element?.singularLabel.toLowerCase() ?? ''
 
   const modalRef = useRef()
+
+  useEffect(() => {
+    handleDepartmentChange(id)
+  }, [id])
 
   return (
     <section className={styles.container}>
       <div className={styles.container_nav}>
         <h1>Administración</h1>
         <ul className={styles.container_nav_list}>
-          {links.map(({ label, name, isActive }) => (
+          {links.map(({ label, name, isActive, singularLabel }) => (
             <li
               key={name}
               className={`${styles.container_nav_list_item} ${
@@ -57,9 +73,22 @@ export default function DepartmentAdministration ({
         </ul>
       </div>
       <SearchBar filter={filter} handleData={() => {}} setFilter={setFilter} />
-      <Button className={styles.container_create} onClick={() => { toggle() }}>
-        Nuevo {element?.label.toLowerCase()}
-      </Button>
+      <div className={styles.container_wrapper}>
+        <span className={styles.container_wrapper_length}><strong>{`${lengths[active]} ${name ?? ''}`}</strong></span>
+        <Button className={styles.container_wrapper_create} onClick={() => { toggle() }}>
+          Nuevo {singularName}
+        </Button>
+      </div>
+      {element?.name === 'members' && (
+        <div>MembersList</div>
+      )}
+      {element?.name === 'positions' && (
+        <div>PositionsList</div>
+      )}
+      {element?.name === 'roles' && (
+        <AccordionList data={roles} cardType='role'/>
+      )}
+
       <Modal
         isOpen={value}
         onCancel={toggleCancel}
@@ -73,6 +102,8 @@ export default function DepartmentAdministration ({
             <AddRole
               isEditing={false}
               isOpen={value}
+              toggle={toggle}
+              department={department}
             />
         )}
       </Modal>

@@ -1,3 +1,4 @@
+import AccordionList from './AccordionList'
 import As from './As'
 import Aside from './Aside'
 import BackButton from './BackButton'
@@ -24,6 +25,7 @@ import UploadFile from './UploadFile'
 import VerticalButton from './VerticalButton'
 
 export {
+  AccordionList,
   As,
   Aside,
   BackButton,

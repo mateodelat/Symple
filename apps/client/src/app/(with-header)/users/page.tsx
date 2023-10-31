@@ -1,3 +1,5 @@
+'use server'
+
 import { type User } from '@/types'
 import List from '@components/shared/List'
 import CardUserEdit from '@components/modules/User/CardUserEdit'

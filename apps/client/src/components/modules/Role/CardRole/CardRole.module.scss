@@ -1,0 +1,52 @@
+.wrapper {
+  display: grid;
+  width: 100%;
+  &_icon {
+    justify-self: center;
+    border-radius: 50%;
+    background-color: white !important;
+    transition: transform 0.2s ease-in-out;
+
+    &_rotate {
+      transition: transform 0.2s ease-in-out;
+      transform: rotate(180deg);
+      z-index: 10;
+    }
+  }
+  &_hidden {
+    display: none;
+    &_title {
+      text-align: center;
+    }
+    &_indicator {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &_show {
+    display: grid;
+    gap: 1rem;
+    animation: fade-in 0.2s forwards;
+  }
+}
+
+.button {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  background: none;
+  border: none;
+  z-index: 9;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 1;
+    display: grid;
+  }
+}

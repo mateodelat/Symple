@@ -34,7 +34,7 @@ export default function CardEnterpriseEdit ({
       <VerticalButton onClick={togglePopup} className={styles.vertical} />
       {isPopupOpen && (
         <>
-          <Popup toggleModal={toggleModal}>
+          <Popup togglePopup={togglePopup}>
             <Link
               className={styles.action}
               href={`/admin-panel/enterprise/${element.id}/edit`}
@@ -45,14 +45,7 @@ export default function CardEnterpriseEdit ({
               Editar
             </Link>
           </Popup>
-          <button
-            className={styles.button}
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation()
-              togglePopup()
-            }}
-          ></button>
+
         </>
       )}
       {isModalOpen && (

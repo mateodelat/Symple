@@ -8,7 +8,8 @@ export default function Button ({
   onClick = () => {},
   children,
   type = 'button',
-  props = {}
+  props = {},
+  style
 }: ButtonProps): JSX.Element {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.stopPropagation()
@@ -21,6 +22,7 @@ export default function Button ({
       type={type}
       onClick={handleClick}
       {...props}
+      style={style}
     >
       {children}
     </button>

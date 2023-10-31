@@ -44,9 +44,16 @@
       width: 100%;
       gap: 1rem;
     }
-    &_cancel{
+    &_cancel {
       width: 65% !important;
     }
+  }
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid black;
   }
 }
 
@@ -74,6 +81,14 @@
         }
       }
     }
+    &_wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      &_create {
+        width: 50%;
+      }
+    }
   }
 }
 
@@ -90,13 +105,17 @@
         }
       }
     }
-    &_create {
-      width: 30%;
-      align-self: flex-end;
-    }
-    &_modal{
-      &_cancel{
+    &_modal {
+      &_cancel {
         width: 40% !important;
+      }
+    }
+    &_wrapper {
+      &_length {
+        font-size: 2rem;
+      }
+      &_create {
+        width: 25%;
       }
     }
   }

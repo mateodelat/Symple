@@ -1,8 +1,8 @@
 .icon {
-  width: fit-content !important;
-  height: fit-content !important;
+  width: fit-content;
+  height: fit-content;
   padding: 5px !important;
-  background: none !important;
+  background: none;
   &:disabled {
     & > img {
       opacity: 0.5;

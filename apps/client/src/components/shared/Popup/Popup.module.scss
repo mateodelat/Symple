@@ -1,6 +1,6 @@
 @use "@styles/variables";
 
-.popup{
+.popup {
   width: 100px;
   height: fit-content;
   position: absolute;
@@ -11,24 +11,32 @@
   box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
   z-index: 4;
-  &_content{
+  &_content {
     display: flex;
     align-items: center;
     flex-direction: column;
     margin-top: 1rem;
-    &_action{
+    &_action {
       width: 100%;
       padding: 0.5rem;
       font-size: 1.6rem;
       font-weight: 700;
-      text-align: start;  
+      text-align: start;
       border-radius: 0;
       background: none;
       color: black;
-      &:hover{
+      &:hover {
         color: variables.$primary-green-color;
         transition: all 0.15s ease-in-out;
       }
     }
   }
+}
+
+.button {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  background: transparent;
+  border: none;
 }

@@ -9,13 +9,19 @@ import { useStepper } from '@/hooks'
 import { roleSteps } from '@/constants/RoleForm'
 import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverable, type FunctionState } from '@/types'
 import styles from './AddRole.module.scss'
+import rolesService from '@/services/roles'
+import toast from 'react-hot-toast'
+import { useRoleContext } from '@/contexts'
 
-export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Element {
+export default function AddRole ({ isEditing, isOpen, department, toggle }: AddRoleProps): JSX.Element {
   const { currentStep, nextStep, previousStep, reset, setIsBlocked } = useStepper()
+
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
   const [addedUsers, setAddedUsers] = useState<IndicatorUserState[]>([])
   const [addedDeliverables, setAddedDeliverables] = useState<Deliverable[]>([])
   const [addedFunctions, setAddedFunctions] = useState<FunctionState[]>([])
+
+  const { addRole } = useRoleContext()
 
   const addIndicator = (): void => {
     setAddedIndicators((prev) =>
@@ -101,7 +107,7 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
     })
   }
 
-  const handleSubmit = (): void => {
+  const handleSubmit = async (): Promise<void> => {
     const payload = {
       indicators: addedIndicators?.map((element, i) => (
         {
@@ -109,10 +115,50 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
           associatedUsers: addedUsers.find(user => user.index === i)?.addedUsers ?? []
         }
       )),
-      deliverables: addedDeliverables.map(el => el.name),
-      functions: addedFunctions.map(el => el.name)
+      deliverables: addedDeliverables,
+      functions: addedFunctions,
+      department
     }
-    console.log(payload)
+
+    if (!isEditing) {
+      await toast.promise(
+        rolesService.create(payload),
+        {
+          loading: 'Creando rol...',
+          error: (err: any) => {
+            toggle()
+            return `Ocurrió un error al crear el rol: ${err.message as string}`
+          },
+          success: (response) => {
+            toggle()
+            addRole(response)
+            return 'Rol creado correctamente.'
+          }
+        }
+      )
+    } else {
+      /* await toast.promise(
+        rolesService.update(
+          enterpriseToEdit.id,
+          data as EditEnterpriseDTO
+        ),
+        {
+          loading: 'Actualizando empresa...',
+          error: (err: any) =>
+            `Ocurrió un error al actualizar la empresa: ${
+              err.message as string
+            }`,
+          success: (response) => {
+            response.admins = admins
+            if (enterpriseToEdit.id !== undefined) { updateEnterprise(enterpriseToEdit.id, response) }
+            return `Empresa ${response.name} actualizada correctamente.`
+          }
+        }
+      )
+      setTimeout(() => {
+        back()
+      }, 300) */
+    }
   }
 
   useEffect(() => {
@@ -120,6 +166,8 @@ export default function AddRole ({ isEditing, isOpen }: AddRoleProps): JSX.Eleme
       reset()
       setAddedIndicators([])
       setAddedUsers([])
+      setAddedDeliverables([])
+      setAddedFunctions([])
       addIndicator()
       addDeliverable()
       addFunction()
