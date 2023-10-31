@@ -25,26 +25,35 @@ import { CreateRoleDTO, UpdateRoleDTO } from "./roles.dto";
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
-  @Get(":departmentId")
+  @Get("")
   @ApiOperation({ summary: "Lista de roles" })
   @ApiBearerAuth()
-  async getAll(
+  async getAll(): Promise<Role[]> {
+    return await this.rolesService.getAll();
+  }
+
+
+  @Get(":departmentId")
+  @ApiOperation({ summary: "Lista de roles por departamento" })
+  @ApiBearerAuth()
+  async getAllPerDepartment(
     @Param("departmentId", CheckObjectIdPipe) department: string,
   ): Promise<any> {
-    return await this.rolesService.getAll(
+    return await this.rolesService.getAllPerDepartment(
       department
     );
   }
 
   @Get(":departmentId/:roleId")
-  @ApiOperation({ summary: "Recuperar un rol" })
+  @ApiOperation({ summary: "Recuperar un rol de un departamento" })
   @ApiBearerAuth()
   async getOne(
     @Param("departmentId", CheckObjectIdPipe) department: string,
     @Param("roleId", CheckObjectIdPipe) role: string,
   ): Promise<Role> {
-    return await this.rolesService.getOne({ department, role });
+    return await this.rolesService.getOnePerDepartment({ department, role });
   }
+
 
   @Post()
   @ApiOperation({ summary: "Crear rol" })

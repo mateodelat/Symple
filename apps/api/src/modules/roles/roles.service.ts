@@ -30,14 +30,20 @@ export class RolesService {
     return element
   }
 
-  async getAll(department: string): Promise<Role[]> {
+  async getAll(): Promise<Role[]> {
+    const roles = await this.RoleModel.find()
+
+    return roles
+  }
+
+  async getAllPerDepartment(department: string): Promise<Role[]> {
     await this.checkUserHasAccessToDepartment(department)
     const roles = await this.RoleModel.find({ department })
 
     return roles
   }
 
-  async getOne({department, role}: GetOneParams): Promise<Role> {
+  async getOnePerDepartment({department, role}: GetOneParams): Promise<Role> {
     await this.checkUserHasAccessToDepartment(department)
     return await this.checkRoleExists(role)
   }

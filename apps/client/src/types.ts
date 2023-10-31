@@ -275,7 +275,7 @@ export interface UploadFileProps {
 export type UseFile = Pick<UploadFileProps, 'file' | 'handleSelectedFile'>
 
 export interface PopupProps {
-  toggleModal?: (val?: boolean) => void
+  togglePopup: (val?: boolean) => void
   children: React.ReactNode
 }
 
@@ -323,6 +323,25 @@ export interface DepartmentContextType {
   deleteDepartment: (id: string) => void
 }
 
+export interface Role {
+  id: string
+  department: string
+  indicators: Indicator[]
+  deliverables: Deliverable[]
+  functions: FunctionState[]
+}
+
+export interface RoleContextType {
+  roles: Role[]
+  department: string
+  isLoading: boolean
+  handleDepartmentChange: (department: string) => void
+  setInitialRoles: (roles: Role[]) => void
+  addRole: (role: Role) => void
+  updateRole: (role: Role) => void
+  deleteRole: (id: string) => void
+}
+
 export interface EntepriseContextProviderProps {
   children: React.ReactNode
 }
@@ -330,6 +349,8 @@ export interface EntepriseContextProviderProps {
 export type UserContextProviderProps = EntepriseContextProviderProps
 
 export type DepartmentContextProviderProps = EntepriseContextProviderProps
+
+export type RoleContextProviderProps = EntepriseContextProviderProps
 
 export type DeleteEnterpriseProps = Omit<
 ModalProps,
@@ -367,6 +388,7 @@ export interface AppState {
   users: User[]
   departments: Department[]
   department: DepartmentStateWithId
+  roles: Role[]
 }
 
 export interface DepartmentState {
@@ -502,12 +524,15 @@ export type DepartmentAdministrationSelectedView =
 export interface InternalLink {
   name: DepartmentAdministrationSelectedView
   label: string
+  singularLabel: string
   isActive: boolean
 }
 
 export interface AddRoleProps {
   isEditing: boolean
   isOpen: boolean
+  department: string
+  toggle: (value?: boolean) => void
 }
 
 export interface Step {
@@ -657,4 +682,35 @@ export interface DraggableInputProps {
   errorName: string
   deleteElement: (index: number) => void
   index: number
+}
+
+export type CreateRoleDTO = Omit<Role, 'id'>
+
+export type EditRoleDTO = Partial<CreateRoleDTO>
+
+export enum LengthType {
+  MEMBERS = 'members',
+  POSITIONS = 'positions',
+  ROLES = 'roles',
+}
+
+export interface MenuItem {
+  icon?: string
+  label: string
+  isLink: boolean
+  navigate?: string
+}
+export interface CardEditProps {
+  children: React.ReactNode
+  menuItems: MenuItem[]
+  onClick: (values?: any) => any
+}
+
+export interface AccordionListProps {
+  data: Role[]
+  cardType: 'role' | 'position' | 'member'
+}
+
+export interface CardRoleProps {
+  role: Role
 }
