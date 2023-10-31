@@ -9,6 +9,7 @@ import { internalLinks } from '@/constants/DepartmentAdministration'
 import { type LengthType, type DepartmentAdministrationProps } from '@/types'
 import styles from './DepartmentAdministration.module.scss'
 import { useRoleContext } from '@/contexts/Role/context'
+import RoleMenuItems from '@/constants/RoleMenuItems'
 
 export default function DepartmentAdministration ({
   id
@@ -86,7 +87,11 @@ export default function DepartmentAdministration ({
         <div>PositionsList</div>
       )}
       {element?.name === 'roles' && (
-        <AccordionList data={roles} cardType='role'/>
+        <AccordionList
+          data={roles}
+          cardType='role'
+          menuItems={RoleMenuItems}
+        />
       )}
 
       <Modal

@@ -3,11 +3,11 @@ import styles from './AccordionList.module.scss'
 import { type AccordionListProps } from '@/types'
 import { CardMember, CardPosition, CardRole } from '@components/modules/Role/'
 
-export default function AccordionList ({ data, cardType }: AccordionListProps): JSX.Element {
+export default function AccordionList ({ data, cardType, menuItems }: AccordionListProps): JSX.Element {
   return (
     <ul className={styles.list}>
       {data.map(element => (
-        <CardEdit menuItems={[]} onClick={() => {}} key={element.id}>
+        <CardEdit menuItems={menuItems} key={element.id}>
           {cardType === 'member' && (
             <CardMember role={element} />
           )}

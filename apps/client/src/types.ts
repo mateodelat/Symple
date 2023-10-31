@@ -703,12 +703,13 @@ export interface MenuItem {
 export interface CardEditProps {
   children: React.ReactNode
   menuItems: MenuItem[]
-  onClick: (values?: any) => any
+  onClick?: (values?: any) => any
 }
 
 export interface AccordionListProps {
   data: Role[]
   cardType: 'role' | 'position' | 'member'
+  menuItems: MenuItem[]
 }
 
 export interface CardRoleProps {
