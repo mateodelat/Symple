@@ -1,3 +1,4 @@
+import { ENTERPRISE } from "@/constants/Entities";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 
@@ -36,7 +37,7 @@ export class User extends Document {
 
   @Prop({
     required: false,
-    type: [{ type: Types.ObjectId, ref: "Enterprise" }],
+    type: [{ type: Types.ObjectId, ref: ENTERPRISE }],
     default: [],
   })
   enterprises: Types.ObjectId[];
