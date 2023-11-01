@@ -38,7 +38,7 @@
     }
   }
   &_modal {
-    min-height: 80dvh;
+    height: calc(80dvh - 8rem) !important;
     &_buttons {
       display: flex;
       width: 100%;

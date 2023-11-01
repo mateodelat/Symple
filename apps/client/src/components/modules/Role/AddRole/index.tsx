@@ -7,7 +7,7 @@ import { Button, Stepper } from '@components/shared/'
 import { AddIndicator, AddDeliverable, AddFunction } from '@components/modules/Role/'
 import { useStepper } from '@/hooks'
 import { roleSteps } from '@/constants/RoleForm'
-import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverable, type FunctionState } from '@/types'
+import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverable, type FunctionState, type CreateRoleDTO } from '@/types'
 import styles from './AddRole.module.scss'
 import rolesService from '@/services/roles'
 import toast from 'react-hot-toast'
@@ -108,10 +108,11 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
   }
 
   const handleSubmit = async (): Promise<void> => {
-    const payload = {
-      indicators: addedIndicators?.map(({ index, ...rest }, i) => (
+    const payload: CreateRoleDTO = {
+      indicators: addedIndicators?.map(({ index, amount, ...rest }, i) => (
         {
           ...rest,
+          amount: rest.type === IndicatorType.FINANCIAL_OBJECTIVE ? Number(amount) : undefined,
           associatedUsers: addedUsers.find(user => user.index === i)?.addedUsers ?? []
         }
       )),
@@ -119,6 +120,8 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
       functions: addedFunctions,
       department
     }
+
+    console.log(payload)
 
     if (selectedElement === null) {
       await toast.promise(
@@ -174,13 +177,14 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
   }, [isOpen])
 
   useEffect(() => {
-    setAddedIndicators(selectedElement?.indicators ?? [])
+    if (selectedElement === null) return
+    setAddedIndicators(selectedElement.indicators)
     setAddedUsers(selectedElement?.indicators.map((indicator, i) => {
       const associatedUsers: IndicatorUserState = { index: i, addedUsers: indicator.associatedUsers }
       return associatedUsers
-    }) ?? [])
-    setAddedDeliverables(selectedElement?.deliverables ?? [])
-    setAddedFunctions(selectedElement?.functions ?? [])
+    }))
+    setAddedDeliverables(selectedElement?.deliverables)
+    setAddedFunctions(selectedElement?.functions)
   }, [selectedElement])
 
   const reorder = (source: number, destination: number, droppableId: string): void => {
@@ -227,6 +231,9 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
                 previousStep={previousStep}
               />
               {currentStep === 0 && (
+                <div>Details</div>
+              )}
+              {currentStep === 1 && (
                 <AddIndicator
                   addedIndicators={addedIndicators}
                   addIndicator={addIndicator}
@@ -237,7 +244,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
                   setIsBlocked={setIsBlocked}
                 />
               )}
-              {currentStep === 1 && (
+              {currentStep === 2 && (
                 <AddDeliverable
                   addDeliverable={addDeliverable}
                   addedDeliverables={addedDeliverables}
@@ -246,7 +253,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
                   setIsBlocked={setIsBlocked}
                 />
               )}
-              {currentStep === 2 && (
+              {currentStep === 3 && (
                 <AddFunction
                   addFunction={addFunction}
                   addedFunctions={addedFunctions}
@@ -255,22 +262,22 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
                   setIsBlocked={setIsBlocked}
                 />
               )}
-              {currentStep < roleSteps.length - 1
-                ? (
-                  <Button
-                      onClick={nextStep}
-                    >
-                      Siguiente
-                    </Button>
-                  )
-                : (
-                    <Button
-                      onClick={handleSubmit}
-                    >
-                      Guardar rol
-                    </Button>
-                  )}
             </div>
+          {currentStep < roleSteps.length - 1
+            ? (
+              <Button
+                  onClick={nextStep}
+                >
+                  Siguiente
+                </Button>
+              )
+            : (
+                <Button
+                  onClick={handleSubmit}
+                >
+                  Guardar rol
+                </Button>
+              )}
           </section>
         </DragDropContext>
       }

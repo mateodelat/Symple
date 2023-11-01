@@ -563,7 +563,7 @@ export interface Indicator {
   name: string
   type: IndicatorType
   measurementType?: IndicatorMeasurementType
-  amount: string
+  amount?: string
   associatedUsers: User[]
   index: number
 }
@@ -684,7 +684,9 @@ export interface DraggableInputProps {
   index: number
 }
 
-type IndicatorDTO = Omit<Indicator, 'index'>
+type IndicatorDTO = Omit<Indicator, 'index' | 'amount'> & {
+  amount?: number
+}
 
 export type CreateRoleDTO = Omit<Role, 'id' | 'indicators'> & {
   indicators: IndicatorDTO[]
