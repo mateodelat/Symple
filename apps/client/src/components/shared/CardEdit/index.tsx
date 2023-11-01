@@ -7,7 +7,14 @@ import useToggle from '@hooks/useToggle'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function CardEdit ({ children, menuItems, onClick, cardClassName = '' }: CardEditProps): JSX.Element {
+export default function CardEdit ({
+  children,
+  menuItems,
+  onClick,
+  cardClassName = '',
+  actions,
+  elementId
+}: CardEditProps): JSX.Element {
   const { toggle, value } = useToggle()
 
   return (
@@ -16,7 +23,7 @@ export default function CardEdit ({ children, menuItems, onClick, cardClassName 
       {value && (
         <Popup togglePopup={toggle}>
           <ul className={styles.card_list}>
-            {menuItems.map(({ label, icon, isLink, navigate }) => (
+            {menuItems.map(({ id, label, icon, isLink, navigate }) => (
               <li key={label} className={styles.card_list_element}>
                 <div className={styles.card_list_element_wrapper}>
                   {icon !== undefined && (
@@ -24,10 +31,20 @@ export default function CardEdit ({ children, menuItems, onClick, cardClassName 
                   )}
                   {isLink && navigate !== undefined
                     ? (
-                    <Link href={navigate}>{label}</Link>
+                    <Link href={navigate}>
+                      <strong>{label}</strong>
+                    </Link>
                       )
                     : (
-                    <button className={styles.card_list_element_wrapper_button}>{label}</button>
+                    <button
+                      className={styles.card_list_element_wrapper_button}
+                      onClick={() => {
+                        actions[id]?.(elementId)
+                        toggle()
+                      }}
+                    >
+                      <strong>{label}</strong>
+                    </button>
                       )}
                 </div>
               </li>

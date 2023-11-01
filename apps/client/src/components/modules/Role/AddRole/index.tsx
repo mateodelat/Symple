@@ -13,7 +13,7 @@ import rolesService from '@/services/roles'
 import toast from 'react-hot-toast'
 import { useRoleContext } from '@/contexts'
 
-export default function AddRole ({ isEditing, isOpen, department, toggle }: AddRoleProps): JSX.Element {
+export default function AddRole ({ selectedElement, isOpen, department, toggle }: AddRoleProps): JSX.Element {
   const { currentStep, nextStep, previousStep, reset, setIsBlocked } = useStepper()
 
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
@@ -21,7 +21,7 @@ export default function AddRole ({ isEditing, isOpen, department, toggle }: AddR
   const [addedDeliverables, setAddedDeliverables] = useState<Deliverable[]>([])
   const [addedFunctions, setAddedFunctions] = useState<FunctionState[]>([])
 
-  const { addRole } = useRoleContext()
+  const { addRole, updateRole } = useRoleContext()
 
   const addIndicator = (): void => {
     setAddedIndicators((prev) =>
@@ -109,9 +109,9 @@ export default function AddRole ({ isEditing, isOpen, department, toggle }: AddR
 
   const handleSubmit = async (): Promise<void> => {
     const payload = {
-      indicators: addedIndicators?.map((element, i) => (
+      indicators: addedIndicators?.map(({ index, ...rest }, i) => (
         {
-          ...element,
+          ...rest,
           associatedUsers: addedUsers.find(user => user.index === i)?.addedUsers ?? []
         }
       )),
@@ -120,7 +120,7 @@ export default function AddRole ({ isEditing, isOpen, department, toggle }: AddR
       department
     }
 
-    if (!isEditing) {
+    if (selectedElement === null) {
       await toast.promise(
         rolesService.create(payload),
         {
@@ -137,32 +137,31 @@ export default function AddRole ({ isEditing, isOpen, department, toggle }: AddR
         }
       )
     } else {
-      /* await toast.promise(
+      await toast.promise(
         rolesService.update(
-          enterpriseToEdit.id,
-          data as EditEnterpriseDTO
+          payload,
+          selectedElement.id
         ),
         {
-          loading: 'Actualizando empresa...',
-          error: (err: any) =>
-            `Ocurrió un error al actualizar la empresa: ${
+          loading: 'Actualizando rol...',
+          error: (err: any) => {
+            toggle()
+            return `Ocurrió un error al actualizar el rol: ${
               err.message as string
-            }`,
+            }`
+          },
           success: (response) => {
-            response.admins = admins
-            if (enterpriseToEdit.id !== undefined) { updateEnterprise(enterpriseToEdit.id, response) }
-            return `Empresa ${response.name} actualizada correctamente.`
+            toggle()
+            updateRole(response)
+            return 'Rol actualizado correctamente.'
           }
         }
       )
-      setTimeout(() => {
-        back()
-      }, 300) */
     }
   }
 
   useEffect(() => {
-    if (!isEditing && !isOpen) {
+    if (!isOpen) {
       reset()
       setAddedIndicators([])
       setAddedUsers([])
@@ -173,6 +172,16 @@ export default function AddRole ({ isEditing, isOpen, department, toggle }: AddR
       addFunction()
     }
   }, [isOpen])
+
+  useEffect(() => {
+    setAddedIndicators(selectedElement?.indicators ?? [])
+    setAddedUsers(selectedElement?.indicators.map((indicator, i) => {
+      const associatedUsers: IndicatorUserState = { index: i, addedUsers: indicator.associatedUsers }
+      return associatedUsers
+    }) ?? [])
+    setAddedDeliverables(selectedElement?.deliverables ?? [])
+    setAddedFunctions(selectedElement?.functions ?? [])
+  }, [selectedElement])
 
   const reorder = (source: number, destination: number, droppableId: string): void => {
     if (droppableId === 'indicators') {
@@ -209,7 +218,7 @@ export default function AddRole ({ isEditing, isOpen, department, toggle }: AddR
           reorder(source.index, destination.index, source.droppableId)
         }}>
           <section className={styles.modal}>
-            <h1>{!isEditing ? 'Agregar' : 'Editar'} rol</h1>
+            <h1>{selectedElement === null ? 'Agregar' : 'Editar'} rol</h1>
             <div className={styles.modal_content}>
               <Stepper
                 steps={roleSteps}

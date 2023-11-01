@@ -529,7 +529,7 @@ export interface InternalLink {
 }
 
 export interface AddRoleProps {
-  isEditing: boolean
+  selectedElement: Role | null
   isOpen: boolean
   department: string
   toggle: (value?: boolean) => void
@@ -684,7 +684,11 @@ export interface DraggableInputProps {
   index: number
 }
 
-export type CreateRoleDTO = Omit<Role, 'id'>
+type IndicatorDTO = Omit<Indicator, 'index'>
+
+export type CreateRoleDTO = Omit<Role, 'id' | 'indicators'> & {
+  indicators: IndicatorDTO[]
+}
 
 export type EditRoleDTO = Partial<CreateRoleDTO>
 
@@ -695,6 +699,7 @@ export enum LengthType {
 }
 
 export interface MenuItem {
+  id: string
   icon?: string
   label: string
   isLink: boolean
@@ -705,12 +710,15 @@ export interface CardEditProps {
   children: React.ReactNode
   menuItems: MenuItem[]
   onClick?: (values?: any) => any
+  actions: Record<string, any>
+  elementId: string
 }
 
 export interface AccordionListProps {
   data: Role[]
   cardType: 'role' | 'position' | 'member'
   menuItems: MenuItem[]
+  actions?: Record<string, any>
 }
 
 export interface CardRoleProps {

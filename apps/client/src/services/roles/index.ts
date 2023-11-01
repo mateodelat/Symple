@@ -27,7 +27,7 @@ const update = async (
   const newPayload = { ...payload }
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
-    method: 'PUT',
+    method: 'PATCH',
     body: JSON.stringify(newPayload),
     headers: {
       'Content-Type': 'application/json'

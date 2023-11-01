@@ -6,7 +6,7 @@ import { AccordionList, Button, Loader, Modal, SearchBar } from '@components/sha
 import AddRole from '@components/modules/Role/AddRole'
 import { useToggle } from '@/hooks'
 import { internalLinks } from '@/constants/DepartmentAdministration'
-import { type LengthType, type DepartmentAdministrationProps } from '@/types'
+import { type LengthType, type DepartmentAdministrationProps, type Role } from '@/types'
 import styles from './DepartmentAdministration.module.scss'
 import { useRoleContext } from '@/contexts/Role/context'
 import RoleMenuItems from '@/constants/RoleMenuItems'
@@ -19,6 +19,7 @@ export default function DepartmentAdministration ({
 
   const [filter, setFilter] = useState('')
   const [links, setLinks] = useState(internalLinks)
+  const [selectedElement, setSelectedElement] = useState<Role | null>(null)
 
   const { handleDepartmentChange, roles, department, isLoading } = useRoleContext()
 
@@ -46,9 +47,22 @@ export default function DepartmentAdministration ({
 
   const modalRef = useRef()
 
+  const handleEditRole = (id: string): void => {
+    setSelectedElement(roles.find((role) => role.id === id) ?? null)
+    toggle()
+  }
+
+  const handleDeleteRole = (id: string): void => {
+    console.log(id)
+  }
+
   useEffect(() => {
     handleDepartmentChange(id)
   }, [id])
+
+  useEffect(() => {
+    if (!value) setSelectedElement(null)
+  }, [value])
 
   return (
     <section className={styles.container}>
@@ -89,13 +103,17 @@ export default function DepartmentAdministration ({
       {element?.name === 'roles' && (
         isLoading
           ? (
-          <Loader />
+          <div className={styles.loader}>
+            <h3>Cargando...</h3>
+            <Loader />
+          </div>
             )
           : (
           <AccordionList
           data={roles}
           cardType='role'
           menuItems={RoleMenuItems}
+          actions={{ edit: handleEditRole, delete: handleDeleteRole }}
         />
             )
       )}
@@ -111,7 +129,7 @@ export default function DepartmentAdministration ({
       >
         {element?.name === 'roles' && (
             <AddRole
-              isEditing={false}
+              selectedElement={selectedElement}
               isOpen={value}
               toggle={toggle}
               department={department}
