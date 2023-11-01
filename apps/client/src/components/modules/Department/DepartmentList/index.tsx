@@ -180,7 +180,7 @@ export default function DepartmentList ({
             {!isEditing
               ? (
               <ButtonIcon
-                icon={'/pencil.svg'}
+                icon={'/pencil-white.svg'}
                 width={30}
                 height={30}
                 props={{

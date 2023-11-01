@@ -701,6 +701,7 @@ export interface MenuItem {
   navigate?: string
 }
 export interface CardEditProps {
+  cardClassName?: string
   children: React.ReactNode
   menuItems: MenuItem[]
   onClick?: (values?: any) => any

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { AccordionList, Button, Modal, SearchBar } from '@components/shared/'
+import { AccordionList, Button, Loader, Modal, SearchBar } from '@components/shared/'
 import AddRole from '@components/modules/Role/AddRole'
 import { useToggle } from '@/hooks'
 import { internalLinks } from '@/constants/DepartmentAdministration'
@@ -20,7 +20,7 @@ export default function DepartmentAdministration ({
   const [filter, setFilter] = useState('')
   const [links, setLinks] = useState(internalLinks)
 
-  const { handleDepartmentChange, roles, department } = useRoleContext()
+  const { handleDepartmentChange, roles, department, isLoading } = useRoleContext()
 
   const lengths: Record<LengthType, string> = {
     roles: roles.length.toString(),
@@ -87,11 +87,17 @@ export default function DepartmentAdministration ({
         <div>PositionsList</div>
       )}
       {element?.name === 'roles' && (
-        <AccordionList
+        isLoading
+          ? (
+          <Loader />
+            )
+          : (
+          <AccordionList
           data={roles}
           cardType='role'
           menuItems={RoleMenuItems}
         />
+            )
       )}
 
       <Modal

@@ -24,7 +24,7 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
         <h3 className={styles.wrapper_hidden_title}>Indicadores</h3>
         {role.indicators.map(({ name, type }, i) => (
           <div
-            key={`${name}-${i}`}
+            key={`indicator-${i}`}
             className={styles.wrapper_hidden_indicator}
           >
             <span>{name}</span>
@@ -34,7 +34,7 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
         <h3 className={styles.wrapper_hidden_title}>Entregables</h3>
         {role.deliverables.map(({ name }, i) => (
           <div
-            key={`${name}-${i}`}
+            key={`deliverable-${i}`}
             className={styles.wrapper_hidden_indicator}
           >
             <span>{name}</span>
@@ -43,7 +43,7 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
         <h3 className={styles.wrapper_hidden_title}>Funciones</h3>
         {role.functions.map(({ name }, i) => (
           <div
-            key={`${name}-${i}`}
+            key={`function-${i}`}
             className={styles.wrapper_hidden_indicator}
           >
             <span>{name}</span>

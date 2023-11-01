@@ -7,7 +7,7 @@ export default function AccordionList ({ data, cardType, menuItems }: AccordionL
   return (
     <ul className={styles.list}>
       {data.map(element => (
-        <CardEdit menuItems={menuItems} key={element.id}>
+        <CardEdit menuItems={menuItems} key={element.id} cardClassName={cardType === 'role' ? styles.card_role : undefined}>
           {cardType === 'member' && (
             <CardMember role={element} />
           )}

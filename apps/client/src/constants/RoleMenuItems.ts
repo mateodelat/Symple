@@ -3,7 +3,7 @@ import { type MenuItem } from '@/types'
 const RoleMenuItems: MenuItem[] = [
   {
     label: 'Editar',
-    icon: '/pencil.svg',
+    icon: '/pencil-black.svg',
     isLink: false
   },
   {
