@@ -14,7 +14,6 @@ const RoleContext = createContext<RoleContextType>({
   deleteRole: (id) => {}
 })
 
-export const useRoleContext = (): RoleContextType =>
-  useContext(RoleContext)
+export const useRoleContext = (): RoleContextType => useContext(RoleContext)
 
 export default RoleContext

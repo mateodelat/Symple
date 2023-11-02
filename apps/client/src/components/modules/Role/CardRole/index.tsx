@@ -17,9 +17,15 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
       </span>
       <ButtonIcon
         icon={'/down-arrow.svg'}
-        className={`${styles.wrapper_icon} ${value ? styles.wrapper_icon_rotate : ''}`}
+        className={`${styles.wrapper_icon} ${
+          value ? styles.wrapper_icon_rotate : ''
+        }`}
       />
-      <div className={`${styles.wrapper_hidden} ${value ? styles.wrapper_show : ''}` }>
+      <div
+        className={`${styles.wrapper_hidden} ${
+          value ? styles.wrapper_show : ''
+        }`}
+      >
         <h3 className={styles.wrapper_hidden_title}>Indicadores</h3>
         {role.indicators.map(({ name, type }, i) => (
           <div
@@ -52,8 +58,10 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
       {value && (
         <button
           className={styles.button}
-          type='button'
-          onClick={() => { toggle() }}
+          type="button"
+          onClick={() => {
+            toggle()
+          }}
         />
       )}
     </div>

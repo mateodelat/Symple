@@ -12,17 +12,19 @@ export default function AddFunction ({
   deleteFunction,
   updateFunction,
   setIsBlocked
-}: AddFunctionProps
-): JSX.Element {
-  const everyFieldsAreFilled: boolean = addedFunctions.every((value) => (
-    value.name !== ''
-  ))
+}: AddFunctionProps): JSX.Element {
+  const everyFieldsAreFilled: boolean = addedFunctions.every(
+    (value) => value.name !== ''
+  )
 
   return (
     <section className={styles.container}>
-      <Droppable droppableId='functions'>
+      <Droppable droppableId="functions">
         {(droppableProvided) => (
-          <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+          <div
+            ref={droppableProvided.innerRef}
+            {...droppableProvided.droppableProps}
+          >
             {addedFunctions.map((deliverable, index) => (
               <AddFunctionForm
                 key={index}

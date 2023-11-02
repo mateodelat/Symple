@@ -10,12 +10,7 @@ export default function SelectField ({
   const isControlled = register !== undefined ? register(name) : {}
 
   return (
-    <select
-      id={name}
-      {...props}
-      {...isControlled}
-      className={className}
-    >
+    <select id={name} {...props} {...isControlled} className={className}>
       {options?.map(({ id, label }) => {
         return (
           <option key={id} value={id}>

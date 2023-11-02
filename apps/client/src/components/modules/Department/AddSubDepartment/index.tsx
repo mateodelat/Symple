@@ -90,7 +90,7 @@ export default function AddSubDepartment ({
                   handleDepartmentChange((prev) => {
                     const newDepartment = { ...prev }
                     const aux =
-                    newDepartment.subDepartments[index].subDepartments
+                      newDepartment.subDepartments[index].subDepartments
 
                     aux.splice(i, 1)
 

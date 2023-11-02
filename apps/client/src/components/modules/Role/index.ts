@@ -14,5 +14,4 @@ export {
   CardRole,
   CardMember,
   CardPosition
-
 }

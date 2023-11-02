@@ -9,7 +9,10 @@ export const schema = yup.object({
   name: yup.string().required(required),
   lastName: yup.string().required(required),
   password: yup.string().required(required),
-  repeatPassword: yup.string().required(required).oneOf([yup.ref('password')], match)
+  repeatPassword: yup
+    .string()
+    .required(required)
+    .oneOf([yup.ref('password')], match)
 })
 
 export const sections: Section[] = [

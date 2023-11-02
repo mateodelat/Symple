@@ -16,7 +16,7 @@ import { RolesModule } from "../roles/roles.module";
       },
     ]),
     EnterprisesModule,
-    forwardRef(() => RolesModule)
+    forwardRef(() => RolesModule),
   ],
   controllers: [DepartmentsController],
   providers: [DepartmentService],

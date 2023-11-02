@@ -20,26 +20,28 @@ export default function AddRoleName ({
   }
 
   useEffect(() => {
-    if (Object.values(errors).every((val) => val === '')) { setIsBlocked(false) } else setIsBlocked(true)
+    if (Object.values(errors).every((val) => val === '')) {
+      setIsBlocked(false)
+    } else setIsBlocked(true)
   }, [errors])
 
   return (
-      <article className={styles.container}>
-        <InputField
-          params={{
-            placeholder: 'Nombre del rol',
-            value,
-            id: 'roleName',
-            onChange: (e) => {
-              handleUpdate(e.target.value)
-              handleErrors('roleName', e.target.value, false, false)
-            }
-          }}
-          showLabel
-          labelClassName={styles.container_label}
-          error={roleName}
-          showError
-        />
-      </article>
+    <article className={styles.container}>
+      <InputField
+        params={{
+          placeholder: 'Nombre del rol',
+          value,
+          id: 'roleName',
+          onChange: (e) => {
+            handleUpdate(e.target.value)
+            handleErrors('roleName', e.target.value, false, false)
+          }
+        }}
+        showLabel
+        labelClassName={styles.container_label}
+        error={roleName}
+        showError
+      />
+    </article>
   )
 }

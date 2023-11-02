@@ -13,18 +13,16 @@ export default function InputField ({
   return (
     <>
       {showLabel && (
-        <label htmlFor={params.id} className={`${styles.label} ${labelClassName}}`}>
+        <label
+          htmlFor={params.id}
+          className={`${styles.label} ${labelClassName}}`}
+        >
           <strong className={styles.label_content}>{params.placeholder}</strong>
         </label>
       )}
-      <input
-        type="text"
-        {...params}
-      />
+      <input type="text" {...params} />
       {showError && error !== '' && (
-        <span className={styles.error}>
-          {error}
-        </span>
+        <span className={styles.error}>{error}</span>
       )}
     </>
   )

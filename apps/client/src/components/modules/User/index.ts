@@ -5,11 +5,4 @@ import CardUserEdit from './CardUserEdit'
 import Login from './Login'
 import UserForm from './UserForm'
 
-export {
-  AddUsers,
-  AddUsersWrapper,
-  CardUser,
-  CardUserEdit,
-  Login,
-  UserForm
-}
+export { AddUsers, AddUsersWrapper, CardUser, CardUserEdit, Login, UserForm }

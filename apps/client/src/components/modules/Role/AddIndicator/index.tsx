@@ -15,15 +15,22 @@ export default function AddIndicator ({
   setAddedUsers,
   setIsBlocked
 }: AddIndicatorProps): JSX.Element {
-  const everyFieldsAreFilled = addedIndicators.every((indicator) => (
-    indicator.name !== '' && (indicator.type === IndicatorType.FINANCIAL_OBJECTIVE ? Number(indicator.amount) > 0 : true)
-  ))
+  const everyFieldsAreFilled = addedIndicators.every(
+    (indicator) =>
+      indicator.name !== '' &&
+      (indicator.type === IndicatorType.FINANCIAL_OBJECTIVE
+        ? Number(indicator.amount) > 0
+        : true)
+  )
 
   return (
     <section className={styles.container}>
-      <Droppable droppableId='indicators'>
+      <Droppable droppableId="indicators">
         {(droppableProvided) => (
-          <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+          <div
+            ref={droppableProvided.innerRef}
+            {...droppableProvided.droppableProps}
+          >
             {addedIndicators.map((indicator, index) => (
               <AddIndicatorForm
                 key={index}

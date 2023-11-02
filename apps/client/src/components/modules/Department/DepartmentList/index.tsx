@@ -5,13 +5,11 @@ import { useEffect, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 
+import { Button, ButtonIcon, LinkButton, Modal } from '@components/shared/'
 import {
-  Button,
-  ButtonIcon,
-  LinkButton,
-  Modal
-} from '@components/shared/'
-import { CardDepartment, CardDepartmentEdit } from '@components/modules/Department/'
+  CardDepartment,
+  CardDepartmentEdit
+} from '@components/modules/Department/'
 import { useToggle, useWindowResize } from '@/hooks'
 import { departmentsService } from '@/services'
 import { type DepartmentListProps, type Department } from '@/types'
@@ -64,9 +62,9 @@ export default function DepartmentList ({
   }, [departments])
 
   useEffect(() => {
-    const hasSameValues = Object.entries(departments).every(([key]) => (
-      departments[key as any] === departmentsState[key as any]
-    ))
+    const hasSameValues = Object.entries(departments).every(
+      ([key]) => departments[key as any] === departmentsState[key as any]
+    )
 
     if (hasSameValues) {
       setIsEditing(false)
@@ -242,27 +240,27 @@ export default function DepartmentList ({
               )
         )}
       </div>
-        <Modal
-          isOpen={isCancelOpen}
-          onConfirm={() => {
-            setDepartmentsState(departments)
-            setCancelChanges(false)
-            setIsEditing(false)
-          }}
-          onCancel={() => {
-            setDepartmentsState(departments)
-            setCancelChanges(false)
-            setIsEditing(false)
-            toggle()
-          }}
-          toggle={toggle}
-        >
-          <h3>Atención</h3>
-          <p>
-            ¿Estás seguro que quieres cancelar los cambios? Hay modificaciones
-            sin guardar.
-          </p>
-        </Modal>
+      <Modal
+        isOpen={isCancelOpen}
+        onConfirm={() => {
+          setDepartmentsState(departments)
+          setCancelChanges(false)
+          setIsEditing(false)
+        }}
+        onCancel={() => {
+          setDepartmentsState(departments)
+          setCancelChanges(false)
+          setIsEditing(false)
+          toggle()
+        }}
+        toggle={toggle}
+      >
+        <h3>Atención</h3>
+        <p>
+          ¿Estás seguro que quieres cancelar los cambios? Hay modificaciones sin
+          guardar.
+        </p>
+      </Modal>
     </div>
   )
 }

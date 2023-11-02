@@ -2,32 +2,33 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    node: true
+    node: true,
   },
   extends: [
-    'standard-with-typescript',
-    'plugin:@next/next/recommended'
+    "standard-with-typescript",
+    "plugin:@next/next/recommended",
     // "prettier",
   ],
   overrides: [
     {
       env: {
-        node: true
+        node: true,
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: [".eslintrc.{js,cjs}"],
       parserOptions: {
-        sourceType: 'script'
-      }
-    }
+        sourceType: "script",
+      },
+    },
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json'],
-    tsconfigRootDir: __dirname
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json"],
+    tsconfigRootDir: __dirname,
   },
-  plugins: ['react'],
+  plugins: ["react"],
   rules: {
-    'no-unused-vars': 'off'
-  }
-}
+    "no-unused-vars": "off",
+    "multiline-ternary": "off"
+  },
+};

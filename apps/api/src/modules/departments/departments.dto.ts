@@ -35,8 +35,7 @@ export class UpdateDepartmentDTO extends PartialType(CreateDepartmentDTO) {
   @IsArray()
   @ArrayUnique()
   @ApiProperty({
-    description:
-      "Arreglo con los ObjectIds de los roles del departamento.",
+    description: "Arreglo con los ObjectIds de los roles del departamento.",
   })
   readonly roles: Types.ObjectId[];
 }

@@ -30,17 +30,22 @@ export class DepartmentService {
 
   async checkDepartmentExistsById(id: string): Promise<Department> {
     const element = await this.DepartmentModel.findById(id).exec();
-    if(element === null) throw new BadRequestException(`Department with id #${id} not found`);
+    if (element === null)
+      throw new BadRequestException(`Department with id #${id} not found`);
     return element;
   }
 
   async getAll(): Promise<Department[]> {
-    const elements = await this.DepartmentModel.find({}).populate("roles").exec();
+    const elements = await this.DepartmentModel.find({})
+      .populate("roles")
+      .exec();
     return elements;
   }
 
   async getAllPerEnterprise(id: string): Promise<Department[]> {
-    const elements = await this.DepartmentModel.find({ enterprise: id }).populate("roles").exec();
+    const elements = await this.DepartmentModel.find({ enterprise: id })
+      .populate("roles")
+      .exec();
     return elements;
   }
 
@@ -84,15 +89,20 @@ export class DepartmentService {
     return { message: `Departamento con id #${id} eliminado con éxito` };
   }
 
-    async checkUserHasAccessToDepartment({ user, department }: CheckUserHasAccessToDepartmentProps): Promise<boolean> {
-    const elements: Department[] = []
-    
-    for(const enterprise of user?.enterprises ?? []) {
-      const data = await this.getAllPerEnterprise(enterprise.toString())
-      elements.push(...data)
+  async checkUserHasAccessToDepartment({
+    user,
+    department,
+  }: CheckUserHasAccessToDepartmentProps): Promise<boolean> {
+    const elements: Department[] = [];
+
+    for (const enterprise of user?.enterprises ?? []) {
+      const data = await this.getAllPerEnterprise(enterprise.toString());
+      elements.push(...data);
     }
 
-    const departmentIds = elements.map(department => department.id.toString())
-    return departmentIds.includes(department)
+    const departmentIds = elements.map((department) =>
+      department.id.toString(),
+    );
+    return departmentIds.includes(department);
   }
 }

@@ -21,7 +21,9 @@ export default function EnterpriseList (): JSX.Element {
             newElement="Nueva empresa"
             newElementPage={'/admin-panel/enterprise/new'}
             listEmptyMessage="No cuentas con empresas a tu cargo..."
-            canCreateElement={status === 'authenticated' && session.user.role === 'admin'}
+            canCreateElement={
+              status === 'authenticated' && session.user.role === 'admin'
+            }
             Card={CardEnterpriseEdit}
           />
         </>

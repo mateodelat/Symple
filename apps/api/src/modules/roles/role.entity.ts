@@ -1,5 +1,9 @@
 import { DEPARTMENT } from "@/constants/Entities";
-import { type Deliverable, type Indicator, type IFunction } from "@/types/models/Role";
+import {
+  type Deliverable,
+  type Indicator,
+  type IFunction,
+} from "@/types/models/Role";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 
@@ -12,14 +16,13 @@ import { Document, Types } from "mongoose";
     },
   },
 })
-
 export class Role extends Document {
   @Prop({ required: true, type: [{ type: Types.ObjectId, ref: DEPARTMENT }] })
   department: Types.ObjectId;
-  
+
   @Prop({ required: true })
   name: string;
-  
+
   @Prop({ required: true })
   indicators: Indicator[];
 

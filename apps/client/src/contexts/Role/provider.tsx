@@ -11,7 +11,9 @@ import {
 } from '@/types'
 import rolesService from '@/services/roles'
 
-export default function RoleContextProvider ({ children }: RoleContextProviderProps): JSX.Element {
+export default function RoleContextProvider ({
+  children
+}: RoleContextProviderProps): JSX.Element {
   const { status } = useSession()
 
   const [roles, setRoles] = useState<AppState['roles']>([])
@@ -41,9 +43,7 @@ export default function RoleContextProvider ({ children }: RoleContextProviderPr
   }
 
   const deleteRole = (id: string): void => {
-    const newRoles = roles.filter(
-      (role) => role.id !== id
-    )
+    const newRoles = roles.filter((role) => role.id !== id)
     setRoles(newRoles)
   }
 

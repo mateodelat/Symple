@@ -13,15 +13,26 @@ const possibleErrors = {
 
 const { max, min, numeric, percentage, required } = possibleErrors
 
-export default function useCheckErrors ({ fields }: UseCheckErrorsProps): UseCheckErrors {
+export default function useCheckErrors ({
+  fields
+}: UseCheckErrorsProps): UseCheckErrors {
   const [errors, setErrors] = useState<Record<string, string>>(fields)
 
-  const handleErrors = (name: string, value: string, isNumber: boolean, isPercentage: boolean): void => {
+  const handleErrors = (
+    name: string,
+    value: string,
+    isNumber: boolean,
+    isPercentage: boolean
+  ): void => {
     let error = ''
     if (value === '') error = required
     else if (isNaN(Number(value)) && isNumber) error = numeric
-    else if (value !== '' && !(/^-?\d+(\.\d{0,2})?$/.test(value)) && isNumber && isPercentage) error = percentage
-    else if (Number(value) <= 0 && isPercentage) error = min
+    else if (
+      value !== '' &&
+      !/^-?\d+(\.\d{0,2})?$/.test(value) &&
+      isNumber &&
+      isPercentage
+    ) { error = percentage } else if (Number(value) <= 0 && isPercentage) error = min
     else if (Number(value) > 100 && isPercentage) error = max
 
     setErrors((prev) => ({

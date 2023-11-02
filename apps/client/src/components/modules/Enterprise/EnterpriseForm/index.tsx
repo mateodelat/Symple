@@ -107,7 +107,9 @@ export default function EnterpriseForm ({
             }`,
           success: (response) => {
             response.admins = admins
-            if (enterpriseToEdit.id !== undefined) { updateEnterprise(enterpriseToEdit.id, response) }
+            if (enterpriseToEdit.id !== undefined) {
+              updateEnterprise(enterpriseToEdit.id, response)
+            }
             return `Empresa ${response.name} actualizada correctamente.`
           }
         }
@@ -130,7 +132,9 @@ export default function EnterpriseForm ({
       }
       if (formMethods !== null) {
         formMethods.reset(enterpriseToEdit)
-        if (enterpriseToEdit.admins !== undefined) { setAddedUsers(enterpriseToEdit.admins) }
+        if (enterpriseToEdit.admins !== undefined) {
+          setAddedUsers(enterpriseToEdit.admins)
+        }
       }
     } else {
       setSections((prev) => {

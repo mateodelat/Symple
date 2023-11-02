@@ -10,7 +10,7 @@ import { AuthModule } from "./auth/auth.module";
 import { MulterModule } from "@nestjs/platform-express";
 import { UploadsModule } from "./modules/uploads/uploads.module";
 import { DepartmentsModule } from "./modules/departments/departments.module";
-import { RolesModule } from './modules/roles/roles.module';
+import { RolesModule } from "./modules/roles/roles.module";
 import config from "./config";
 
 const nodeEnv: string = process.env.NODE_ENV ?? ".env";

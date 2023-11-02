@@ -21,7 +21,9 @@ export default function useStepper (): UseStepper {
     setIsBlocked(false)
   }
 
-  const reset = (): void => { setCurrentStep(0) }
+  const reset = (): void => {
+    setCurrentStep(0)
+  }
   return {
     currentStep,
     nextStep,

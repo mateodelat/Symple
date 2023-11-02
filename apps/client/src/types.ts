@@ -1,7 +1,14 @@
 import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
-import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes, type InputHTMLAttributes } from 'react'
+import {
+  type RefObject,
+  type Dispatch,
+  type SetStateAction,
+  type ButtonHTMLAttributes,
+  type SelectHTMLAttributes,
+  type InputHTMLAttributes
+} from 'react'
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
 import { type DraggableProvidedDragHandleProps } from '@hello-pangea/dnd'
 
@@ -565,7 +572,7 @@ export enum IndicatorType {
 
 export enum IndicatorMeasurementType {
   PERCENTAGE = 'Porcentaje',
-  AMOUNT = 'Monto'
+  AMOUNT = 'Monto',
 }
 
 export interface Indicator {
@@ -595,7 +602,10 @@ export interface SelectFieldProps {
   className?: string
 }
 
-export type AddIndicatorFormProps = Omit<AddIndicatorProps, 'addedIndicators' | 'addIndicator'> & {
+export type AddIndicatorFormProps = Omit<
+AddIndicatorProps,
+'addedIndicators' | 'addIndicator'
+> & {
   canBeDeleted: boolean
   indicator: Indicator
   index: number

@@ -12,7 +12,6 @@ import { Document, Types } from "mongoose";
     },
   },
 })
-
 export class Department extends Document {
   @Prop({ required: true })
   name: string;
