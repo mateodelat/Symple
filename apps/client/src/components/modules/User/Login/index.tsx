@@ -33,10 +33,13 @@ export default function Login (): JSX.Element {
   }
 
   useEffect(() => {
-    if (status === 'authenticated' && isLoggedIn && session !== null) {
-      toast.success(`Bienvenido, ${session.user.name}`, {
-        id: toastRef.current
-      })
+    console.log({ status, isLoggedIn, session })
+    if (status === 'authenticated' && session !== null) {
+      if (isLoggedIn) {
+        toast.success(`Bienvenido, ${session.user.name}`, {
+          id: toastRef.current
+        })
+      }
       if (session.user.role === 'admin') push('/admin-panel')
       else if (
         session.user.enterprises !== undefined &&
