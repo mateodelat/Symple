@@ -6,12 +6,14 @@ import Link from 'next/link'
 
 import { type NavigationProps } from '@/types'
 import styles from './Navigation.module.scss'
+import { useSession } from 'next-auth/react'
 
 export default function Navigation ({
   links,
   toggleAside
 }: NavigationProps): JSX.Element {
   const pathname = usePathname()
+  const { data: session, status } = useSession()
 
   return (
     <section className={styles.main}>
@@ -26,8 +28,8 @@ export default function Navigation ({
           />
         </div>
         <ul className={styles.main_nav_list}>
-          {links.map(({ href, label }) => (
-            <li className={styles.main_nav_list_element} key={label}>
+          {links.map(({ href, label, roleRestriction }) => (
+            <li className={`${styles.main_nav_list_element} ${(roleRestriction !== undefined && status === 'authenticated') && roleRestriction !== session?.user.role ? styles.hidden : ''}`} key={label}>
               <Link
                 href={href}
                 onClick={toggleAside}
@@ -40,7 +42,8 @@ export default function Navigation ({
                 {label}
               </Link>
             </li>
-          ))}
+          )
+          )}
         </ul>
       </nav>
     </section>

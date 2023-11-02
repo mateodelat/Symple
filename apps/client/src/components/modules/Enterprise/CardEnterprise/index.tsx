@@ -40,7 +40,7 @@ export default function CardEnterprise ({
     }
   }, [status])
 
-  const admins = element.admins.filter((admin) => admin.role !== 'admin')
+  const { admins } = element
 
   return (
     <Card onClick={onClick}>

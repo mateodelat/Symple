@@ -114,6 +114,7 @@ export interface EditUserDTO extends CreateUserDTO {
 export interface Link {
   label: string
   href: string
+  roleRestriction?: string
 }
 
 export interface NavigationProps {
