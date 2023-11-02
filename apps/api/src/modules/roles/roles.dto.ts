@@ -10,6 +10,11 @@ import { type IFunction, type Deliverable, type Indicator } from "@/types/models
 
 
 export class CreateRoleDTO {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ description: "Nombre del rol; Campo obligatorio." })
+  readonly name: string
+  
   @IsArray()
   @IsNotEmpty()
   @ApiProperty({ description: "Indicadores del rol; Campo obligatorio." })

@@ -3,3 +3,11 @@
   margin-top: -0.5rem;
   font-weight: 500;
 }
+
+.label {
+  width: 100%;
+  text-align: left;
+  &_content {
+    font-size: 500;
+  }
+}

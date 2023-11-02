@@ -132,7 +132,11 @@ export interface ButtonProps {
   props?: object
 }
 
-export type VerticalButtonProps = Omit<ButtonProps, 'children'>
+export interface VerticalButtonProps {
+  actions?: Record<string, any>
+  menuItems: MenuItem[]
+  elementId: string
+}
 
 export interface UseToggle {
   value: boolean
@@ -275,8 +279,10 @@ export interface UploadFileProps {
 export type UseFile = Pick<UploadFileProps, 'file' | 'handleSelectedFile'>
 
 export interface PopupProps {
+  menuItems: MenuItem[]
   togglePopup: (val?: boolean) => void
-  children: React.ReactNode
+  actions?: Record<string, any>
+  elementId: string
 }
 
 export interface ModalProps {
@@ -325,6 +331,7 @@ export interface DepartmentContextType {
 
 export interface Role {
   id: string
+  name: string
   department: string
   indicators: Indicator[]
   deliverables: Deliverable[]
@@ -436,6 +443,7 @@ export interface AddUsersProps {
 
 export type AddUsersWrapperProps = Pick<AddUsersProps, 'addedUsers'> & {
   setAddedUsers: (value: SetStateAction<User[]>) => void
+  modalClassName?: string
 }
 
 export type EditEnterpriseDTO = Partial<Omit<CreateEnterpriseDTO, 'admins'>> & {
@@ -598,9 +606,11 @@ export interface AddIndicatorFormErrors {
 }
 
 export interface InputFieldProps {
+  showLabel?: boolean
   params: InputHTMLAttributes<HTMLInputElement>
   showError?: boolean
   error?: string
+  labelClassName?: string
 }
 
 export interface IndicatorUserState {
@@ -626,6 +636,11 @@ export interface AddDeliverableProps {
   setIsBlocked: (value: boolean) => void
 }
 
+export interface AddRoleNameProps {
+  value: string
+  updateRoleName: (value: string) => void
+  setIsBlocked: (value: boolean) => void
+}
 export interface AddDeliverableFormProps {
   canBeDeleted: boolean
   index: number

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { DragDropContext } from '@hello-pangea/dnd'
 
 import { Button, Stepper } from '@components/shared/'
-import { AddIndicator, AddDeliverable, AddFunction } from '@components/modules/Role/'
+import { AddIndicator, AddDeliverable, AddFunction, AddRoleName } from '@components/modules/Role/'
 import { useStepper } from '@/hooks'
 import { roleSteps } from '@/constants/RoleForm'
 import { type AddRoleProps, type Indicator, IndicatorType, IndicatorMeasurementType, type IndicatorUserState, type Deliverable, type FunctionState, type CreateRoleDTO } from '@/types'
@@ -16,12 +16,17 @@ import { useRoleContext } from '@/contexts'
 export default function AddRole ({ selectedElement, isOpen, department, toggle }: AddRoleProps): JSX.Element {
   const { currentStep, nextStep, previousStep, reset, setIsBlocked } = useStepper()
 
+  const [roleName, setRoleName] = useState('Rol')
   const [addedIndicators, setAddedIndicators] = useState<Indicator[]>([])
   const [addedUsers, setAddedUsers] = useState<IndicatorUserState[]>([])
   const [addedDeliverables, setAddedDeliverables] = useState<Deliverable[]>([])
   const [addedFunctions, setAddedFunctions] = useState<FunctionState[]>([])
 
   const { addRole, updateRole } = useRoleContext()
+
+  const updateRoleName = (value: string): void => {
+    setRoleName(value)
+  }
 
   const addIndicator = (): void => {
     setAddedIndicators((prev) =>
@@ -109,6 +114,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
 
   const handleSubmit = async (): Promise<void> => {
     const payload: CreateRoleDTO = {
+      name: roleName,
       indicators: addedIndicators?.map(({ index, amount, ...rest }, i) => (
         {
           ...rest,
@@ -120,8 +126,6 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
       functions: addedFunctions,
       department
     }
-
-    console.log(payload)
 
     if (selectedElement === null) {
       await toast.promise(
@@ -231,7 +235,11 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
                 previousStep={previousStep}
               />
               {currentStep === 0 && (
-                <div>Details</div>
+                <AddRoleName
+                  value={roleName}
+                  updateRoleName={updateRoleName}
+                  setIsBlocked={setIsBlocked}
+                />
               )}
               {currentStep === 1 && (
                 <AddIndicator

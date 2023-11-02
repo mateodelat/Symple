@@ -13,7 +13,7 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
   return (
     <div className={styles.wrapper}>
       <span>
-        <strong>Nombre del rol</strong>
+        <strong>{role.name}</strong>
       </span>
       <ButtonIcon
         icon={'/down-arrow.svg'}

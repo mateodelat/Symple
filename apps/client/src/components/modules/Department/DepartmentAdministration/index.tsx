@@ -94,29 +94,31 @@ export default function DepartmentAdministration ({
           Nuevo {singularName}
         </Button>
       </div>
-      {element?.name === 'members' && (
-        <div>MembersList</div>
-      )}
-      {element?.name === 'positions' && (
-        <div>PositionsList</div>
-      )}
-      {element?.name === 'roles' && (
-        isLoading
-          ? (
-          <div className={styles.loader}>
-            <h3>Cargando...</h3>
-            <Loader />
-          </div>
-            )
-          : (
-          <AccordionList
-          data={roles}
-          cardType='role'
-          menuItems={RoleMenuItems}
-          actions={{ edit: handleEditRole, delete: handleDeleteRole }}
-        />
-            )
-      )}
+      <div className={styles.container_lists}>
+        {element?.name === 'members' && (
+          <div>MembersList</div>
+        )}
+        {element?.name === 'positions' && (
+          <div>PositionsList</div>
+        )}
+        {element?.name === 'roles' && (
+          isLoading
+            ? (
+            <div className={styles.loader}>
+              <h3>Cargando...</h3>
+              <Loader />
+            </div>
+              )
+            : (
+            <AccordionList
+            data={roles}
+            cardType='role'
+            menuItems={RoleMenuItems}
+            actions={{ edit: handleEditRole, delete: handleDeleteRole }}
+          />
+              )
+        )}
+      </div>
 
       <Modal
         isOpen={value}

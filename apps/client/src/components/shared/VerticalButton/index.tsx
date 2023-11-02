@@ -3,25 +3,38 @@
 import { type VerticalButtonProps } from '@/types'
 import styles from './VerticalButton.module.scss'
 import React from 'react'
+import { useToggle } from '@/hooks'
+import Popup from '../Popup'
 
 export default function VerticalButton ({
-  onClick = () => {},
-  className = ''
+  actions,
+  elementId,
+  menuItems
 }: VerticalButtonProps): JSX.Element {
+  const { value: isPopupOpen, toggle: togglePopup } = useToggle()
+
   const handleClick = (e: React.MouseEvent): void => {
     e.stopPropagation()
-    onClick()
+    togglePopup()
   }
   return (
     <>
       <button
-        className={`${styles.button} ${className}`}
-        onClick={(e) => {
-          handleClick(e)
-        }}
+        className={styles.button}
+        onClick={handleClick}
       >
-        <div className={styles.button_vertical} />
+        <span className={styles.button_vertical} />
       </button>
+      {isPopupOpen && (
+        <>
+          <Popup
+            actions={actions}
+            elementId={elementId}
+            menuItems={menuItems}
+            togglePopup={togglePopup}
+          />
+        </>
+      )}
     </>
   )
 }

@@ -1,21 +1,20 @@
 @use "@styles/variables";
 
 .popup {
-  width: 100px;
-  height: fit-content;
   position: absolute;
-  padding-top: 2rem;
-  top: 0;
-  right: 0;
+  top: 40px;
+  right: 25px;
   background: white;
   box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+
+  border-radius: 1rem;
   transition: all 0.3s ease-in-out;
   z-index: 4;
   &_content {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 1rem;
     &_action {
       width: 100%;
       padding: 0.5rem;
@@ -28,6 +27,30 @@
       &:hover {
         color: variables.$primary-green-color;
         transition: all 0.15s ease-in-out;
+      }
+    }
+  }
+}
+
+.card {
+  min-height: 50px;
+  &_list {
+    display: grid;
+    gap: 0.5rem;
+    &_element {
+      &_wrapper {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        &_button {
+          background: none;
+          border: none;
+          font-size: inherit;
+          &:hover {
+            color: variables.$primary-green-color;
+            transition: all 0.15s ease-in-out;
+          }
+        }
       }
     }
   }

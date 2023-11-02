@@ -1,9 +1,11 @@
+@use "@styles/variables";
+
 .card {
   display: grid;
   gap: 1.5rem;
   width: 100%;
   padding: 1rem;
-  border: 1px solid lightgrey;
+  border: 1px solid variables.$light-gray-color;
   border-radius: 10px;
   margin-top: 2rem;
 }

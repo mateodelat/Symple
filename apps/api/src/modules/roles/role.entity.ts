@@ -16,7 +16,10 @@ import { Document, Types } from "mongoose";
 export class Role extends Document {
   @Prop({ required: true, type: [{ type: Types.ObjectId, ref: DEPARTMENT }] })
   department: Types.ObjectId;
-
+  
+  @Prop({ required: true })
+  name: string;
+  
   @Prop({ required: true })
   indicators: Indicator[];
 

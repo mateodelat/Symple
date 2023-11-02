@@ -1,20 +1,20 @@
-@use '@styles/variables';
+@use "@styles/variables";
 
 .card {
   min-height: 50px;
-  &_list{
+  &_list {
     display: grid;
     gap: 1rem;
-    &_element{
-      &_wrapper{
+    &_element {
+      &_wrapper {
         display: flex;
         gap: 1rem;
         align-items: center;
-        &_button{
+        &_button {
           background: none;
           border: none;
           font-size: inherit;
-          &:hover{
+          &:hover {
             color: variables.$primary-green-color;
             transition: all 0.15s ease-in-out;
           }
@@ -22,10 +22,4 @@
       }
     }
   }
-}
-
-.vertical {
-  position: absolute;
-  right: 10px;
-  z-index: 4 !important;
 }

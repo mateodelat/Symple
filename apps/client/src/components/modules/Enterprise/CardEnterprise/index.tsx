@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react'
 
 import Card from '@components/shared/Card'
 import { type CardEnterpriseProps } from '@/types'
-import styles from './CardEnteprise.module.scss'
+import styles from './CardEnterprise.module.scss'
 import { customFetch } from '@/lib/fetch'
 
 export default function CardEnterprise ({

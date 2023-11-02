@@ -52,12 +52,15 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid black;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid variables.$light-gray-color;
+  }
+  &_lists {
+    margin-top: 1rem;
   }
 }
 
-.loader{
+.loader {
   display: grid;
   gap: 2rem;
   place-content: center;

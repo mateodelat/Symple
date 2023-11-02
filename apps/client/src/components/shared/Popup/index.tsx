@@ -1,11 +1,47 @@
-import styles from './Popup.module.scss'
-import { type PopupProps } from '@/types'
+import Image from 'next/image'
+import Link from 'next/link'
 
-export default function Popup ({ children, togglePopup }: PopupProps): JSX.Element {
+import { type PopupProps } from '@/types'
+import styles from './Popup.module.scss'
+import { ID_TO_REPLACE } from '@/constants/General'
+
+export default function Popup ({ actions, menuItems, togglePopup, elementId }: PopupProps): JSX.Element {
   return (
     <>
       <div className={styles.popup}>
-        <div className={styles.popup_content}>{children}</div>
+        <div className={styles.popup_content}>
+          <ul className={styles.card_list}>
+            {menuItems.map(({ id, label, icon, isLink, navigate }) => (
+              <li key={label} className={styles.card_list_element}>
+                <div className={styles.card_list_element_wrapper}>
+                  {icon !== undefined && (
+                      <Image src={icon} alt={label} width={30} height={30}/>
+                  )}
+                  {isLink && navigate !== undefined
+                    ? (
+                    <Link
+                      href={navigate.replace(ID_TO_REPLACE, elementId)}
+                      onClick={(e) => { e.stopPropagation() }}
+                    >
+                      <strong>{label}</strong>
+                    </Link>
+                      )
+                    : (
+                    <button
+                      className={styles.card_list_element_wrapper_button}
+                      onClick={() => {
+                        actions?.[id]?.(elementId)
+                        togglePopup()
+                      }}
+                    >
+                      <strong>{label}</strong>
+                    </button>
+                      )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <button
         className={styles.button}
