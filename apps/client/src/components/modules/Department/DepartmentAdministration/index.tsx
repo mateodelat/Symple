@@ -16,22 +16,21 @@ import rolesService from '@/services/roles'
 export default function DepartmentAdministration ({
   id
 }: DepartmentAdministrationProps): JSX.Element {
+  const deleteId = useRef<string | null>(null)
   const { toggle, value } = useToggle()
   const { toggle: toggleCancel, value: confirmCancel } = useToggle()
   const { toggle: toggleDelete, value: confirmDelete } = useToggle()
 
   const { deleteRole } = useRoleContext()
-
-  const deleteId = useRef<string | null>(null)
+  const { handleDepartmentChange, roles, department, isLoading } = useRoleContext()
 
   const [filter, setFilter] = useState('')
   const [links, setLinks] = useState(internalLinks)
   const [selectedElement, setSelectedElement] = useState<Role | null>(null)
-
-  const { handleDepartmentChange, roles, department, isLoading } = useRoleContext()
+  const [filteredRoles, setFilteredRoles] = useState<Role[]>([])
 
   const lengths: Record<LengthType, string> = {
-    roles: roles.length.toString(),
+    roles: filteredRoles.length.toString(),
     members: '0', // TODO: get members length
     positions: '0' // TODO: get positions length
   }
@@ -64,6 +63,16 @@ export default function DepartmentAdministration ({
     deleteId.current = id
   }
 
+  const handleData = (filter: string): void => {
+    if (filter === '') { return }
+    setFilteredRoles(() => roles.filter(({ name }) => {
+      const nameToLower = name.toLowerCase()
+      const filterToLower = filter.toLowerCase()
+
+      return nameToLower.startsWith(filterToLower) || nameToLower.endsWith(filterToLower)
+    }))
+  }
+
   const handleDeleteRole = async (): Promise<void> => {
     const roleId = deleteId.current
     if (roleId !== null) {
@@ -92,6 +101,10 @@ export default function DepartmentAdministration ({
     if (!value) setSelectedElement(null)
   }, [value])
 
+  useEffect(() => {
+    if (!isLoading) { setFilteredRoles(roles) }
+  }, [isLoading, roles])
+
   return (
     <section className={styles.container}>
       <div className={styles.container_nav}>
@@ -115,7 +128,7 @@ export default function DepartmentAdministration ({
           ))}
         </ul>
       </div>
-      <SearchBar filter={filter} handleData={() => {}} setFilter={setFilter} />
+      <SearchBar filter={filter} handleData={handleData} setFilter={setFilter} />
       <div className={styles.container_wrapper}>
         <span className={styles.container_wrapper_length}><strong>{`${lengths[active]} ${name ?? ''}`}</strong></span>
         <Button className={styles.container_wrapper_create} onClick={() => { toggle() }}>
@@ -139,7 +152,7 @@ export default function DepartmentAdministration ({
               )
             : (
             <AccordionList
-            data={roles}
+            data={filteredRoles}
             cardType='role'
             menuItems={RoleMenuItems}
             actions={{ edit: handleEditRole, delete: handleDeleteRoleModal }}

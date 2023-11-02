@@ -283,6 +283,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
             : (
                 <Button
                   onClick={handleSubmit}
+                  className={styles.modal_next}
                 >
                   Guardar rol
                 </Button>
