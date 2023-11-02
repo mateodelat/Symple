@@ -13,7 +13,8 @@ import toast from 'react-hot-toast'
 
 export default function AddUsersWrapper ({
   addedUsers,
-  setAddedUsers
+  setAddedUsers,
+  modalClassName = ''
 }: AddUsersWrapperProps): JSX.Element {
   const { value, toggle } = useToggle()
 
@@ -66,6 +67,7 @@ export default function AddUsersWrapper ({
         toggle={toggle}
         onConfirm={confirmModal}
         onCancel={cancelModal}
+        className={modalClassName}
       >
         <AddUsers
           addedUsers={addedUsers}

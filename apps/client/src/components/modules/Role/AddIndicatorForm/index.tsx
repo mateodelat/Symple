@@ -37,14 +37,11 @@ export default function AddIndicatorForm ({
 
   const { indicatorName, indicatorMeasurementValue } = errors
 
-  const format = formatValue(indicator.measurementType ?? IndicatorMeasurementType.PERCENTAGE, indicator.amount.toString())
+  const format = formatValue(indicator.measurementType ?? IndicatorMeasurementType.PERCENTAGE, indicator?.amount?.toString() ?? '')
 
   useEffect(() => {
-    handleUpdate('1', 'amount')
-  }, [indicator.type])
-
-  useEffect(() => {
-    handleErrors('indicatorMeasurementValue', indicator.amount.toString(), true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
+    if (indicator.type !== IndicatorType.FINANCIAL_OBJECTIVE) return
+    handleErrors('indicatorMeasurementValue', indicator?.amount?.toString() ?? '', true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
   }, [indicator.measurementType])
 
   useEffect(() => {
@@ -141,6 +138,7 @@ export default function AddIndicatorForm ({
         <AddUsersWrapper
           addedUsers={localAddedUsers}
           setAddedUsers={setLocalAddedUsers}
+          modalClassName={styles.users}
         />
       </article>
       )}

@@ -3,7 +3,7 @@
   gap: 1.5rem;
   width: 100%;
   padding: 1rem;
-  border: 1px solid black;
+  border: 1px solid lightgrey;
   border-radius: 10px;
   margin-top: 2rem;
 }
@@ -38,6 +38,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.users {
+  width: 70% !important;
 }
 
 @media screen and (min-width: 1024px) {

@@ -267,6 +267,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
             ? (
               <Button
                   onClick={nextStep}
+                  className={styles.modal_next}
                 >
                   Siguiente
                 </Button>
