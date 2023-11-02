@@ -1,3 +1,5 @@
-export default function AdminPanelPage(): JSX.Element {
-  return <div>Admin Panel</div>;
+import EnterpriseList from '@components/modules/Enterprise/EnterpriseList'
+
+export default function EnterprisesPage (): JSX.Element {
+  return <EnterpriseList />
 }

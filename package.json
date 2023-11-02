@@ -1,5 +1,5 @@
 {
-  "name": "growtogo",
+  "name": "symple",
   "version": "1.0.0",
   "private": true,
   "description": "Symple es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.",
@@ -13,6 +13,7 @@
     "lint:fix": "turbo lint:fix",
     "format": "turbo format",
     "format:check": "turbo format:check",
+    "start": "turbo start",
     "clean": "turbo clean"
   },
   "keywords": [],
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.10",
     "@s-ui/mono": "2.35.0",
+    "@types/uuid": "^9.0.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
@@ -31,8 +33,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.0",
     "jsdom": "^22.1.0",
-    "ts-standard": "12.0.2",
-    "turbo": "1.10.7",
+    "turbo": "^1.10.13",
     "typescript": "^5.1.6",
     "vitest": "^0.33.0"
   },
@@ -42,6 +43,7 @@
   "dependencies": {
     "@vitejs/plugin-react": "^4.0.3",
     "prettier": "^3.0.0",
+    "uuid": "^9.0.1",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest-fetch-mock": "^0.2.2"
   }

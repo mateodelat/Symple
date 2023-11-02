@@ -1,15 +1,18 @@
-import { Header } from "@components/index";
-import React from "react";
+import React from 'react'
 
-export default function WithHeaderLayout({
-  children,
+import { BackButton, Header } from '@components/shared/'
+import styles from '@styles/WithHeader.module.scss'
+
+export default function WithHeaderLayout ({
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }): JSX.Element {
   return (
-    <div>
+    <main className={styles.main}>
       <Header />
+      <BackButton />
       {children}
-    </div>
-  );
+    </main>
+  )
 }

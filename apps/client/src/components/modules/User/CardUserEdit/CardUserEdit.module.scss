@@ -1,0 +1,27 @@
+.add {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  background-color: black;
+  width: 20px;
+  height: 4px;
+  &::before {
+    content: "";
+    display: flex;
+    align-items: center;
+    position: absolute;
+    background-color: black;
+    width: 20px;
+    height: 4px;
+    transform: rotate(90deg);
+  }
+}
+
+.remove {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  background-color: black;
+  width: 20px;
+  height: 4px;
+}

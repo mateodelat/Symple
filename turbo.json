@@ -5,42 +5,29 @@
       "cache": false
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dis/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dis/**"]
     },
     "format": {
-      "dependsOn": [
-        "^format"
-      ]
+      "dependsOn": ["^format"]
     },
     "format:check": {
-      "dependsOn": [
-        "^format:check"
-      ]
+      "dependsOn": ["^format:check"]
     },
     "test": {
-      "dependsOn": [
-        "^test"
-      ]
+      "dependsOn": ["^test"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "lint:fix": {
-      "dependsOn": [
-        "^lint:fix"
-      ]
+      "dependsOn": ["^lint:fix"]
     },
     "clean": {
-      "dependsOn": [
-        "^clean"
-      ]
+      "dependsOn": ["^clean"]
+    },
+    "start": {
+      "dependsOn": ["^start"]
     }
   }
 }

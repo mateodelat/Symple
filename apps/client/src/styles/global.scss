@@ -12,13 +12,39 @@ html {
 
 body {
   font-size: 1.6rem;
-  padding: 1rem;
   background-color: variables.$primary-background-color;
+}
+
+input, select, textarea {
+  padding: 1rem;
+  border: 1px solid variables.$primary-gray-color;
+  border-radius: 1.5rem;
+  width: 100%;
+  &::placeholder {
+    color: variables.$tertiary-blue-color;
+  }
+}
+
+input,
+input::placeholder,
+select,
+select::placeholder,
+textarea,
+textarea::placeholder {
+  font-family: inherit;
 }
 
 a {
   text-decoration: none;
   color: black;
+  &:hover {
+    color: variables.$primary-green-color;
+    transition: all 0.15s ease-in-out;
+  }
+}
+
+button {
+  font-family: inherit;
 }
 
 ul {
@@ -29,21 +55,24 @@ button {
   cursor: pointer;
 }
 
-@media screen and (min-width: 768px) {
-  body {
-    padding: 2rem;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: variables.$primary-green-color;
 }
 
 @media screen and (min-width: 1024px) {
-  body {
-    padding: 2rem 4rem;
+  input, select, textarea {
+    padding: 1.2rem;
+    font-size: 1.5rem;
   }
 }
 
-@media screen and (min-width: 2560px) {
-  body {
-    padding: 4rem 8rem;
-    font-size: 2rem;
-  }
+@media screen and (min-width: 1920px) {
+  input, select, textarea {
+    font-size: 1.6rem;
+  } 
 }

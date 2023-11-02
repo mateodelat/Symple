@@ -1,0 +1,66 @@
+@use "@styles/variables";
+
+.popup {
+  position: absolute;
+  top: 40px;
+  right: 25px;
+  background: white;
+  box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+
+  border-radius: 1rem;
+  transition: all 0.3s ease-in-out;
+  z-index: 4;
+  &_content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    &_action {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: start;
+      border-radius: 0;
+      background: none;
+      color: black;
+      &:hover {
+        color: variables.$primary-green-color;
+        transition: all 0.15s ease-in-out;
+      }
+    }
+  }
+}
+
+.card {
+  min-height: 50px;
+  &_list {
+    display: grid;
+    gap: 0.5rem;
+    &_element {
+      &_wrapper {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        &_button {
+          background: none;
+          border: none;
+          font-size: inherit;
+          &:hover {
+            color: variables.$primary-green-color;
+            transition: all 0.15s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}
+
+.button {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  background: transparent;
+  border: none;
+  cursor: default;
+}

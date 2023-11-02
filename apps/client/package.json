@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "clean": "rm -rf .next",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
@@ -13,26 +14,23 @@
     "test": "vitest --run"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^16.3.0",
+    "@hookform/resolvers": "^3.3.1",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "browser-image-compression": "^2.0.2",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "next": "13.4.9",
+    "next-auth": "^4.23.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.4",
+    "react-hot-toast": "^2.4.1",
     "sass": "^1.63.6",
-    "typescript": "5.1.6"
-  },
-  "eslintConfig": {
-    "parserOptions": {
-      "project": "apps/client/tsconfig.json",
-      "sourceType": "module"
-    },
-    "extends": [
-      "../../node_modules/ts-standard/eslintrc.json",
-      "next/core-web-vitals"
-    ]
+    "typescript": "5.1.6",
+    "yup": "^1.2.0"
   }
 }
