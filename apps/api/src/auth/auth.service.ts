@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 
 import { UsersService } from "@modules/users/users.service";
 import { type User } from "@/modules/users/user.entity";
+import { type UserToken } from "@/types/Auth";
 @Injectable()
 export class AuthService {
   constructor(
@@ -19,7 +20,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User): Promise<any> {
+  async login(user: User): Promise<UserToken> {
     const { id: sub, email, name, lastName, role, enterprises, avatar } = user;
 
     const userPayload = { email, name, lastName, role, enterprises, avatar };

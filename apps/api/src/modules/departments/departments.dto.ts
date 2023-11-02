@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsArray } from "class-validator";
+import { IsString, IsNotEmpty, IsArray, ArrayUnique } from "class-validator";
 import { PartialType, ApiProperty } from "@nestjs/swagger";
 import { type Types } from "mongoose";
 import { type SubDepartment } from "@/types/models/Department";
@@ -31,4 +31,12 @@ export class CreateDepartmentDTO {
   readonly subDepartments: SubDepartment[];
 }
 
-export class UpdateDepartmentDTO extends PartialType(CreateDepartmentDTO) {}
+export class UpdateDepartmentDTO extends PartialType(CreateDepartmentDTO) {
+  @IsArray()
+  @ArrayUnique()
+  @ApiProperty({
+    description:
+      "Arreglo con los ObjectIds de los roles del departamento.",
+  })
+  readonly roles: Types.ObjectId[];
+}

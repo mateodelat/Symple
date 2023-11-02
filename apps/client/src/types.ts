@@ -1,8 +1,9 @@
 import type React from 'react'
 import { type ErrorCode } from './constants/Errors'
 import type * as yup from 'yup'
-import { type RefObject, type Dispatch, type SetStateAction } from 'react'
+import { type RefObject, type Dispatch, type SetStateAction, type ButtonHTMLAttributes, type SelectHTMLAttributes, type InputHTMLAttributes } from 'react'
 import { type FieldErrors, type UseFormRegister } from 'react-hook-form'
+import { type DraggableProvidedDragHandleProps } from '@hello-pangea/dnd'
 
 export interface Field {
   name: string
@@ -34,12 +35,12 @@ export interface Title {
 export interface FormField {
   name: string
   type?: 'text' | 'email' | 'password' | 'date' | 'numeric'
-  label: string
+  label?: string
   placeholder?: string
   props?: Record<string, string | boolean>
   options?: Option[]
   fileProps?: FileProps
-  elementType?: 'select' | 'file' | 'custom' | 'textarea'
+  elementType?: 'select' | 'file' | 'custom' | 'textarea' | 'none'
   style?: React.CSSProperties
   required?: boolean
 }
@@ -113,6 +114,7 @@ export interface EditUserDTO extends CreateUserDTO {
 export interface Link {
   label: string
   href: string
+  roleRestriction?: string
 }
 
 export interface NavigationProps {
@@ -124,14 +126,18 @@ export type AsideProps = Omit<NavigationProps, 'toggleAside'>
 
 export interface ButtonProps {
   children: React.ReactNode
-  onClick?: () => any
+  onClick?: any
   className?: string
   type?: 'button' | 'submit' | 'reset'
-  style?: Record<string, string | boolean>
+  style?: React.CSSProperties
   props?: object
 }
 
-export type VerticalButtonProps = Omit<ButtonProps, 'children'>
+export interface VerticalButtonProps {
+  actions?: Record<string, any>
+  menuItems: MenuItem[]
+  elementId: string
+}
 
 export interface UseToggle {
   value: boolean
@@ -146,6 +152,9 @@ export interface UseStepper {
   currentStep: number
   nextStep: () => void
   previousStep: (index?: number) => void
+  reset: () => void
+  isBlocked: boolean
+  setIsBlocked: (value: boolean) => void
 }
 
 export interface UseModal {
@@ -271,15 +280,18 @@ export interface UploadFileProps {
 export type UseFile = Pick<UploadFileProps, 'file' | 'handleSelectedFile'>
 
 export interface PopupProps {
-  toggleModal?: (val?: boolean) => void
-  children: React.ReactNode
+  menuItems: MenuItem[]
+  togglePopup: (val?: boolean) => void
+  actions?: Record<string, any>
+  elementId: string
 }
 
 export interface ModalProps {
   isOpen: boolean
   toggle: (value?: boolean) => void
   children: React.ReactNode
-  onConfirm: () => any
+  showCancelConfirmation?: boolean
+  onConfirm?: () => any
   onCancel?: () => any
   className?: string
   confirmText?: string
@@ -318,6 +330,26 @@ export interface DepartmentContextType {
   deleteDepartment: (id: string) => void
 }
 
+export interface Role {
+  id: string
+  name: string
+  department: string
+  indicators: Indicator[]
+  deliverables: Deliverable[]
+  functions: FunctionState[]
+}
+
+export interface RoleContextType {
+  roles: Role[]
+  department: string
+  isLoading: boolean
+  handleDepartmentChange: (department: string) => void
+  setInitialRoles: (roles: Role[]) => void
+  addRole: (role: Role) => void
+  updateRole: (role: Role) => void
+  deleteRole: (id: string) => void
+}
+
 export interface EntepriseContextProviderProps {
   children: React.ReactNode
 }
@@ -325,6 +357,8 @@ export interface EntepriseContextProviderProps {
 export type UserContextProviderProps = EntepriseContextProviderProps
 
 export type DepartmentContextProviderProps = EntepriseContextProviderProps
+
+export type RoleContextProviderProps = EntepriseContextProviderProps
 
 export type DeleteEnterpriseProps = Omit<
 ModalProps,
@@ -362,6 +396,7 @@ export interface AppState {
   users: User[]
   departments: Department[]
   department: DepartmentStateWithId
+  roles: Role[]
 }
 
 export interface DepartmentState {
@@ -409,6 +444,7 @@ export interface AddUsersProps {
 
 export type AddUsersWrapperProps = Pick<AddUsersProps, 'addedUsers'> & {
   setAddedUsers: (value: SetStateAction<User[]>) => void
+  modalClassName?: string
 }
 
 export type EditEnterpriseDTO = Partial<Omit<CreateEnterpriseDTO, 'admins'>> & {
@@ -474,9 +510,9 @@ export interface ButtonIconProps {
   icon: any
   width?: number
   height?: number
-  onClick: () => void
   className?: string
   style?: Record<string, string | boolean>
+  props?: ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 export interface DepartmentPageProps {
@@ -497,12 +533,15 @@ export type DepartmentAdministrationSelectedView =
 export interface InternalLink {
   name: DepartmentAdministrationSelectedView
   label: string
+  singularLabel: string
   isActive: boolean
 }
 
 export interface AddRoleProps {
-  isEditing: boolean
+  selectedElement: Role | null
   isOpen: boolean
+  department: string
+  toggle: (value?: boolean) => void
 }
 
 export interface Step {
@@ -516,4 +555,191 @@ export interface StepperProps {
   previousStep: (index?: number) => void
   checkErrors?: (fieldsToCheck: string[]) => Promise<boolean>
   fieldNames?: string[]
+}
+
+export enum IndicatorType {
+  FINANCIAL_OBJECTIVE = 'Objetivo financiero',
+  MEASUREMENT = 'Calificación 1 al 10',
+  MEETS_EXPECTATION = 'Cumple (sí o no)',
+}
+
+export enum IndicatorMeasurementType {
+  PERCENTAGE = 'Porcentaje',
+  AMOUNT = 'Monto'
+}
+
+export interface Indicator {
+  name: string
+  type: IndicatorType
+  measurementType?: IndicatorMeasurementType
+  amount?: string
+  associatedUsers: User[]
+  index: number
+}
+
+export interface AddIndicatorProps {
+  addedIndicators: Indicator[]
+  addedUsers: IndicatorUserState[]
+  setAddedUsers: Dispatch<SetStateAction<IndicatorUserState[]>>
+  addIndicator: () => void
+  updateIndicator: (index: number, indicator: Indicator) => void
+  deleteIndicator: (index: number) => void
+  setIsBlocked: (value: boolean) => void
+}
+
+export interface SelectFieldProps {
+  name: string
+  options: Option[]
+  register?: UseFormRegister<any>
+  props?: SelectHTMLAttributes<HTMLSelectElement>
+  className?: string
+}
+
+export type AddIndicatorFormProps = Omit<AddIndicatorProps, 'addedIndicators' | 'addIndicator'> & {
+  canBeDeleted: boolean
+  indicator: Indicator
+  index: number
+}
+
+export interface AddIndicatorFormErrors {
+  indicatorName: string
+  indicatorMeasurementValue: string
+}
+
+export interface InputFieldProps {
+  showLabel?: boolean
+  params: InputHTMLAttributes<HTMLInputElement>
+  showError?: boolean
+  error?: string
+  errorClassName?: string
+  labelClassName?: string
+}
+
+export interface IndicatorUserState {
+  index: number
+  addedUsers: User[]
+}
+
+export interface FormRef {
+  reset: () => void
+  isBlocked: boolean
+}
+
+export interface Deliverable {
+  name: string
+  index: number
+}
+
+export interface AddDeliverableProps {
+  addedDeliverables: Deliverable[]
+  addDeliverable: () => void
+  updateDeliverable: (index: number, deliverable: Deliverable) => void
+  deleteDeliverable: (index: number) => void
+  setIsBlocked: (value: boolean) => void
+}
+
+export interface AddRoleNameProps {
+  value: string
+  updateRoleName: (value: string) => void
+  setIsBlocked: (value: boolean) => void
+}
+export interface AddDeliverableFormProps {
+  canBeDeleted: boolean
+  index: number
+  deliverable: Deliverable
+  updateDeliverable: (index: number, value: Deliverable) => void
+  deleteDeliverable: (index: number) => void
+  setIsBlocked: (value: boolean) => void
+}
+
+export interface UseCheckErrorsProps {
+  fields: Record<string, string>
+}
+
+export interface UseCheckErrors {
+  errors: Record<string, string>
+  handleErrors: (
+    name: string,
+    value: string,
+    isNumber: boolean,
+    isPercentage: boolean,
+  ) => void
+}
+
+export interface FunctionState extends Deliverable {}
+export interface AddDeliverablesFormProps {
+  addedDeliverables: Deliverable[]
+}
+
+export interface AddFunctionProps {
+  addedFunctions: FunctionState[]
+  addFunction: () => void
+  updateFunction: (index: number, functionState: FunctionState) => void
+  deleteFunction: (index: number) => void
+  setIsBlocked: (value: boolean) => void
+}
+
+export interface AddFunctionFormProps {
+  canBeDeleted: boolean
+  index: number
+  functionState: FunctionState
+  updateFunction: (index: number, value: FunctionState) => void
+  deleteFunction: (index: number) => void
+  setIsBlocked: (value: boolean) => void
+}
+
+export interface DraggableInputProps {
+  dragHandleProps: DraggableProvidedDragHandleProps
+  value: string | number
+  canBeDeleted: boolean
+  handleUpdate: (value: string, field: string) => void
+  handleErrors: any
+  placeholder: string
+  fieldName: string
+  errorName: string
+  deleteElement: (index: number) => void
+  index: number
+}
+
+type IndicatorDTO = Omit<Indicator, 'index' | 'amount'> & {
+  amount?: number
+}
+
+export type CreateRoleDTO = Omit<Role, 'id' | 'indicators'> & {
+  indicators: IndicatorDTO[]
+}
+
+export type EditRoleDTO = Partial<CreateRoleDTO>
+
+export enum LengthType {
+  MEMBERS = 'members',
+  POSITIONS = 'positions',
+  ROLES = 'roles',
+}
+
+export interface MenuItem {
+  id: string
+  icon?: string
+  label: string
+  isLink: boolean
+  navigate?: string
+}
+export interface CardEditProps {
+  cardClassName?: string
+  children: React.ReactNode
+  menuItems: MenuItem[]
+  onClick?: (values?: any) => any
+  actions: Record<string, any>
+  elementId: string
+}
+
+export interface AccordionListProps {
+  data: Role[]
+  cardType: 'role' | 'position' | 'member'
+  menuItems: MenuItem[]
+  actions?: Record<string, any>
+}
+
+export interface CardRoleProps {
+  role: Role
 }

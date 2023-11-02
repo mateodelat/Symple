@@ -33,6 +33,22 @@ export class EnterprisesService {
     return isValidObjectId(id);
   }
 
+  async checkUserHasEnterprise(admins: Types.ObjectId[], enterpriseId?: string): Promise<void> {
+    for (const id of admins) {
+      const enterprise = await this.EnterpriseModel.findOne({
+        admins: id,
+      }).exec();
+      
+      if(enterprise !== null) {
+        if(enterpriseId !== undefined && enterprise.id === enterpriseId) continue;
+        const user = await this.usersService.checkUserExits(id);
+        throw new BadRequestException(
+          `Usuario con correo ${user.email} ya se encuentra registrado a una empresa.`,
+        );
+      }
+    }
+  }
+
   async getAll({ limit, offset, user }: QueryGetAll): Promise<Enterprise[]> {
     let filter = {};
     if (user.role !== "admin") {
@@ -80,15 +96,7 @@ export class EnterprisesService {
     if (!areValidObjectIds)
       throw new BadRequestException("Invalid or malformed ObjectId.");
 
-    for (const id of payload.admins) {
-      const enterprise = await this.EnterpriseModel.findOne({
-        admins: id,
-      }).exec();
-      if (enterprise !== null)
-        throw new BadRequestException(
-          `User with id #${id.toString()} already has an enterprise`,
-        );
-    }
+    await this.checkUserHasEnterprise(payload.admins)
 
     const object = { ...payload, createdAt: new Date() };
     const element = new this.EnterpriseModel(object);
@@ -117,6 +125,8 @@ export class EnterprisesService {
     payload: UpdateEnterpriseDTO;
   }): Promise<Enterprise> {
     const elementToUpdate = await this.checkEnterpriseExists(id);
+    await this.checkUserHasEnterprise(payload.admins ?? [], id)
+
     elementToUpdate.$set(payload);
     if (payload?.admins != null && payload.admins.length > 0) {
       for (const id of payload.admins) {

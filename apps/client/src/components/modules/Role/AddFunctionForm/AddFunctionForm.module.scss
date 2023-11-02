@@ -1,0 +1,17 @@
+.card {
+  margin-top: 1rem;
+}
+
+.error {
+  color: red;
+  margin-top: -0.5rem;
+  font-weight: 500;
+}
+
+@media screen and (min-width: 1024px) {
+  .error {
+    &_grid {
+      grid-area: error;
+    }
+  }
+}

@@ -12,7 +12,7 @@ export const returnResponse = async (
       const { message, statusCode } = data as ErrorObject
       const handler = errors[statusCode]
       throw new Error(
-        `Ocurrió un error al realizar la petición: ${message ?? handler}`
+        `${message ?? 'Ocurrió un error al realizar la petición: ' + handler}`
       )
     }
     return data

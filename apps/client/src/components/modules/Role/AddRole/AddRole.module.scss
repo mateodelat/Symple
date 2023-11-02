@@ -1,0 +1,33 @@
+.modal {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+  &_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    &_form {
+      padding-top: 0.25rem;
+      gap: 3rem !important;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .modal {
+    &_content {
+      flex-direction: row;
+      &_form {
+        width: 100% !important;
+      }
+    }
+    &_next {
+      width: 20%;
+      margin: 0 auto;
+    }
+  }
+}

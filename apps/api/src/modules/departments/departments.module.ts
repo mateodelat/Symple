@@ -1,10 +1,11 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 
 import { DepartmentsController } from "./departments.controller";
 import { DepartmentService } from "./departments.service";
 import { DepartmentSchema, Department } from "./department.entity";
 import { EnterprisesModule } from "@modules/enterprises/enterprises.module";
+import { RolesModule } from "../roles/roles.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { EnterprisesModule } from "@modules/enterprises/enterprises.module";
       },
     ]),
     EnterprisesModule,
+    forwardRef(() => RolesModule)
   ],
   controllers: [DepartmentsController],
   providers: [DepartmentService],

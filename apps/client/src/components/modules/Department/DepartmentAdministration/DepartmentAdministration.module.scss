@@ -1,0 +1,127 @@
+@use "@styles/variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  &_nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    &_list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      place-items: center;
+      max-width: fit-content;
+      place-self: center;
+      &_item {
+        width: 100px;
+        padding: 0.5rem 1rem;
+        text-align: center;
+        border-bottom: 2px solid variables.$primary-gray-color;
+        cursor: pointer;
+        &:hover {
+          border-bottom: 2px solid variables.$primary-green-color;
+          transition: 0.2s ease-in-out;
+        }
+        & > button {
+          width: 100%;
+          font-size: inherit;
+          background-color: transparent;
+          border: none;
+        }
+        &_active {
+          border-bottom: 2px solid variables.$primary-green-color;
+        }
+      }
+    }
+  }
+  &_modal {
+    height: calc(80dvh - 8rem) !important;
+    &_buttons {
+      display: flex;
+      width: 100%;
+      gap: 1rem;
+    }
+    &_cancel {
+      width: 65% !important;
+    }
+  }
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid variables.$light-gray-color;
+  }
+  &_lists {
+    margin-top: 1rem;
+  }
+}
+
+.loader {
+  display: grid;
+  gap: 2rem;
+  place-content: center;
+  place-items: center;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    &_nav {
+      &_list {
+        max-width: max-content;
+        &_item {
+          width: 220px;
+        }
+      }
+    }
+    &_wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      &_create {
+        width: 50%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    &_nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      &_list {
+        max-width: fit-content;
+        &_item {
+          width: 220px;
+        }
+      }
+    }
+    &_modal {
+      &_cancel {
+        width: 40% !important;
+      }
+    }
+    &_wrapper {
+      &_length {
+        font-size: 2rem;
+      }
+      &_create {
+        width: 25%;
+      }
+    }
+  }
+}

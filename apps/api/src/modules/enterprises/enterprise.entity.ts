@@ -1,3 +1,4 @@
+import { DEPARTMENT, USER } from "@/constants/Entities";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 
@@ -29,10 +30,10 @@ export class Enterprise extends Document {
   @Prop({ required: true })
   amountOfEmployees: string;
 
-  @Prop({ required: true, type: [{ type: Types.ObjectId, ref: "User" }] })
+  @Prop({ required: true, type: [{ type: Types.ObjectId, ref: USER }] })
   admins: Types.ObjectId[];
 
-  @Prop({ default: [], type: [{ type: Types.ObjectId, ref: "Department" }] })
+  @Prop({ default: [], type: [{ type: Types.ObjectId, ref: DEPARTMENT }] })
   departments: Types.ObjectId[];
 
   @Prop({ required: true })

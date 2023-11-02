@@ -1,7 +1,7 @@
 'use client'
 
 import { type EditEnterpriseDTO } from '@/types'
-import { EnterpriseForm } from '@components/index'
+import EnterpriseForm from '@components/modules/Enterprise/EnterpriseForm'
 import { useEnterpriseContext } from '@contexts/index'
 
 export default function EnterpriseEditPage ({ params }: any): JSX.Element {

@@ -1,0 +1,25 @@
+@use "@styles/variables";
+
+.card {
+  min-height: 50px;
+  &_list {
+    display: grid;
+    gap: 1rem;
+    &_element {
+      &_wrapper {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        &_button {
+          background: none;
+          border: none;
+          font-size: inherit;
+          &:hover {
+            color: variables.$primary-green-color;
+            transition: all 0.15s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}

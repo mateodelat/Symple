@@ -1,4 +1,4 @@
-import { Login } from '@components/index'
+import Login from '@components/modules/User/Login'
 
 export default function HomePage (): JSX.Element {
   return (
