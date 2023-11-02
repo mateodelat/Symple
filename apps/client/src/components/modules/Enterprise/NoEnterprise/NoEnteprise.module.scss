@@ -2,11 +2,10 @@
 
 .container {
   display: flex;
-  height: 100dvh;
+  height: calc(100dvh - 2rem - 90px);
   flex-direction: column;
   gap: 2rem;
   padding: 1rem;
-  justify-content: center;
   align-items: center;
   &_title {
     text-align: center;

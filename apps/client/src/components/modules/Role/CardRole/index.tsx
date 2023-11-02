@@ -11,14 +11,13 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={toggleAccordion}>
       <span>
         <strong>{role.name}</strong>
       </span>
       <ButtonIcon
         icon={'/down-arrow.svg'}
         className={`${styles.wrapper_icon} ${value ? styles.wrapper_icon_rotate : ''}`}
-        props={{ onClick: toggleAccordion }}
       />
       <div className={`${styles.wrapper_hidden} ${value ? styles.wrapper_show : ''}` }>
         <h3 className={styles.wrapper_hidden_title}>Indicadores</h3>
