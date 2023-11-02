@@ -20,8 +20,9 @@ export class RolesService {
 
   async checkUserHasAccessToDepartment(department: string): Promise<void> {
     const user: UserAuth = this.request.user as UserAuth
+    if(user.role === 'admin') return
     const hasAccess = await this.departmentsService.checkUserHasAccessToDepartment({user, department})
-    if(user.role !== 'admin' || hasAccess) throw new ForbiddenException('No tienes permisos para acceder a este recurso')
+    if(!hasAccess) throw new ForbiddenException('No tienes permisos para acceder a este recurso')
   }
 
   async checkRoleExists (id: string): Promise<Role> {

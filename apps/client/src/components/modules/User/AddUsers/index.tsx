@@ -38,7 +38,7 @@ export default function AddUsers ({
   }
 
   const handleFilter = (user: User, filter: string): boolean => {
-    const { email, id, lastName, name, role } = user
+    const { email, id, lastName, name } = user
 
     const aux = filter.toLowerCase()
     const emailLoweredCase = email.toLowerCase()
@@ -52,7 +52,6 @@ export default function AddUsers ({
         nameLoweredCase.endsWith(aux) ||
         lastNameLoweredCase.startsWith(aux) ||
         lastNameLoweredCase.endsWith(aux)) &&
-      role !== 'admin' &&
       !addedUsers.some((addedUser) => addedUser.id === id)
     )
   }
