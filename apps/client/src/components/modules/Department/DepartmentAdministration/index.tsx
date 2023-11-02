@@ -10,12 +10,19 @@ import { type LengthType, type DepartmentAdministrationProps, type Role } from '
 import styles from './DepartmentAdministration.module.scss'
 import { useRoleContext } from '@/contexts/Role/context'
 import RoleMenuItems from '@/constants/RoleMenuItems'
+import toast from 'react-hot-toast'
+import rolesService from '@/services/roles'
 
 export default function DepartmentAdministration ({
   id
 }: DepartmentAdministrationProps): JSX.Element {
   const { toggle, value } = useToggle()
   const { toggle: toggleCancel, value: confirmCancel } = useToggle()
+  const { toggle: toggleDelete, value: confirmDelete } = useToggle()
+
+  const { deleteRole } = useRoleContext()
+
+  const deleteId = useRef<string | null>(null)
 
   const [filter, setFilter] = useState('')
   const [links, setLinks] = useState(internalLinks)
@@ -52,8 +59,29 @@ export default function DepartmentAdministration ({
     toggle()
   }
 
-  const handleDeleteRole = (id: string): void => {
-    console.log(id)
+  const handleDeleteRoleModal = (id: string): void => {
+    toggleDelete()
+    deleteId.current = id
+  }
+
+  const handleDeleteRole = async (): Promise<void> => {
+    const roleId = deleteId.current
+    if (roleId !== null) {
+      await toast.promise(
+        rolesService.deleteRole(roleId),
+        {
+          loading: 'Creando rol...',
+          error: (err: any) => {
+            toggle()
+            return `Ocurrió un error al eliminar el rol: ${err.message as string}`
+          },
+          success: (response) => {
+            deleteRole(roleId)
+            return response.message
+          }
+        }
+      )
+    }
   }
 
   useEffect(() => {
@@ -69,7 +97,7 @@ export default function DepartmentAdministration ({
       <div className={styles.container_nav}>
         <h1>Administración</h1>
         <ul className={styles.container_nav_list}>
-          {links.map(({ label, name, isActive, singularLabel }) => (
+          {links.map(({ label, name, isActive }) => (
             <li
               key={name}
               className={`${styles.container_nav_list_item} ${
@@ -114,7 +142,7 @@ export default function DepartmentAdministration ({
             data={roles}
             cardType='role'
             menuItems={RoleMenuItems}
-            actions={{ edit: handleEditRole, delete: handleDeleteRole }}
+            actions={{ edit: handleEditRole, delete: handleDeleteRoleModal }}
           />
               )
         )}
@@ -146,6 +174,15 @@ export default function DepartmentAdministration ({
         className={styles.container_modal_cancel}
       >
         ¿Seguro que quieres salir?
+      </Modal>
+      <Modal
+        isOpen={confirmDelete}
+        onConfirm={handleDeleteRole}
+        toggle={toggleDelete}
+        hasConfirmButton={true}
+        className={styles.container_modal_cancel}
+      >
+        ¿Seguro que quieres eliminar el elemento?
       </Modal>
     </section>
   )

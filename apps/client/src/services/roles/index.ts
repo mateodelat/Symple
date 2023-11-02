@@ -45,16 +45,11 @@ const getAll = async (departmentId: string): Promise<Role[]> => {
 }
 
 const deleteRole = async (
-  id: string,
-  enterprise: string
+  id: string
 ): Promise<ErrorObject> => {
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
-    method: 'DELETE',
-    body: JSON.stringify({ enterprise }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    method: 'DELETE'
   })
   return response
 }
