@@ -64,7 +64,10 @@ export default function DepartmentAdministration ({
   }
 
   const handleData = (filter: string): void => {
-    if (filter === '') { return }
+    if (filter === '') {
+      setFilteredRoles(roles)
+      return
+    }
     setFilteredRoles(() => roles.filter(({ name }) => {
       const nameToLower = name.toLowerCase()
       const filterToLower = filter.toLowerCase()

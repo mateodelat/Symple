@@ -29,7 +29,9 @@ export class CreateDepartmentDTO {
     description: "Arreglo con subdepartamentos; Campo opcional.",
   })
   readonly subDepartments: SubDepartment[];
+}
 
+export class UpdateDepartmentDTO extends PartialType(CreateDepartmentDTO) {
   @IsArray()
   @ArrayUnique()
   @ApiProperty({
@@ -38,5 +40,3 @@ export class CreateDepartmentDTO {
   })
   readonly roles: Types.ObjectId[];
 }
-
-export class UpdateDepartmentDTO extends PartialType(CreateDepartmentDTO) {}

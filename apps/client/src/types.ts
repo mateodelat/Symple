@@ -610,6 +610,7 @@ export interface InputFieldProps {
   params: InputHTMLAttributes<HTMLInputElement>
   showError?: boolean
   error?: string
+  errorClassName?: string
   labelClassName?: string
 }
 

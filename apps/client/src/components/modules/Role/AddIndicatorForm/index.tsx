@@ -115,22 +115,27 @@ export default function AddIndicatorForm ({
                   }
                 }}
               />
-              <InputField
-                params={{
-                  placeholder: indicator.measurementType,
-                  value: indicator.amount,
-                  inputMode: 'numeric',
-                  id: 'indicatorMeasurementValue',
-                  onChange: (e) => {
-                    handleUpdate(e.target.value, 'amount')
-                    handleErrors('indicatorMeasurementValue', e.target.value, true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
-                  }
-                }}
-                showError
-                error={indicatorMeasurementValue}
-              />
-              {Number(indicator.amount) > 0 && (
-                <span title={format} className={styles.format}>{format}</span>
+              <div className={styles.wrapper_measurement_input}>
+                <InputField
+                  params={{
+                    placeholder: indicator.measurementType,
+                    value: indicator.amount,
+                    inputMode: 'numeric',
+                    id: 'indicatorMeasurementValue',
+                    onChange: (e) => {
+                      handleUpdate(e.target.value, 'amount')
+                      handleErrors('indicatorMeasurementValue', e.target.value, true, indicator.measurementType === IndicatorMeasurementType.PERCENTAGE)
+                    }
+                  }}
+                />
+                {Number(indicator.amount) > 0 && (
+                  <span title={format} className={styles.format}>{format}</span>
+                )}
+              </div>
+              {indicatorMeasurementValue !== '' && (
+                <span className={`${styles.error} ${styles.error_grid}`}>
+                  {indicatorMeasurementValue}
+                </span>
               )}
             </div>
           </div>
