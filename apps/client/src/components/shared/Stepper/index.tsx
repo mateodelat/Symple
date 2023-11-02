@@ -1,27 +1,27 @@
-'use client'
+"use client";
 
-import { type StepperProps } from '@/types'
-import styles from './Stepper.module.scss'
-import { Fragment } from 'react'
-import { useWindowResize } from '@hooks/index'
+import { type StepperProps } from "@/types";
+import styles from "./Stepper.module.scss";
+import { Fragment } from "react";
+import { useWindowResize } from "@hooks/index";
 
-export default function Stepper ({
+export default function Stepper({
   steps,
   currentStep,
   nextStep,
   previousStep,
   checkErrors,
-  fieldNames
+  fieldNames,
 }: StepperProps): JSX.Element {
-  const { windowSize } = useWindowResize()
+  const { windowSize } = useWindowResize();
   const handleSteps = async (index: number): Promise<void> => {
     if (checkErrors !== undefined && index > currentStep) {
-      const isValid = await checkErrors(fieldNames ?? [])
-      if (!isValid) return
+      const isValid = await checkErrors(fieldNames ?? []);
+      if (!isValid) return;
     }
-    if (index < currentStep) previousStep(index)
-    else if (index > currentStep) nextStep()
-  }
+    if (index < currentStep) previousStep(index);
+    else if (index > currentStep) nextStep();
+  };
 
   return (
     <div className={styles.stepper}>
@@ -30,8 +30,7 @@ export default function Stepper ({
           {steps[currentStep].name}
         </span>
       )}
-      {windowSize < 1024
-        ? (
+      {windowSize < 1024 ? (
         <div className={styles.stepper_container}>
           {steps.map(({ index }) => {
             return (
@@ -40,12 +39,12 @@ export default function Stepper ({
                   className={`${styles.stepper_container_button} ${
                     index <= currentStep
                       ? styles.stepper_container_button_active
-                      : ''
+                      : ""
                   }`}
                   onClick={() => {
                     handleSteps(index)
                       .then(() => {})
-                      .catch(() => {})
+                      .catch(() => {});
                   }}
                   disabled={currentStep + 1 < index}
                   type="button"
@@ -55,16 +54,15 @@ export default function Stepper ({
                     className={`${styles.stepper_container_connector} ${
                       index < currentStep
                         ? styles.stepper_container_button_active
-                        : ''
+                        : ""
                     }`}
                   />
                 )}
               </Fragment>
-            )
+            );
           })}
         </div>
-          )
-        : (
+      ) : (
         <aside className={styles.stepper_container}>
           {steps.map(({ index }) => {
             return (
@@ -73,7 +71,7 @@ export default function Stepper ({
                   className={styles.wrapper}
                   disabled={currentStep + 1 < index}
                   onClick={() => {
-                    void handleSteps(index)
+                    void handleSteps(index);
                   }}
                   type="button"
                 >
@@ -81,7 +79,7 @@ export default function Stepper ({
                     className={`${styles.stepper_container_button} ${
                       index <= currentStep
                         ? styles.stepper_container_button_active
-                        : ''
+                        : ""
                     }`}
                   />
                   <span className={styles.stepper_container_title}>
@@ -92,16 +90,16 @@ export default function Stepper ({
                       className={`${styles.stepper_container_connector} ${
                         index < currentStep
                           ? styles.stepper_container_button_active
-                          : ''
+                          : ""
                       }`}
                     />
                   )}
                 </button>
               </Fragment>
-            )
+            );
           })}
         </aside>
-          )}
+      )}
     </div>
-  )
+  );
 }

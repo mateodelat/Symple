@@ -1,14 +1,14 @@
-import { type CardRoleProps } from '@/types'
-import styles from './CardRole.module.scss'
-import { ButtonIcon } from '@/components/shared'
-import { useToggle } from '@/hooks'
+import { type CardRoleProps } from "@/types";
+import styles from "./CardRole.module.scss";
+import { ButtonIcon } from "@/components/shared";
+import { useToggle } from "@/hooks";
 
-export default function CardRole ({ role }: CardRoleProps): JSX.Element {
-  const { value, toggle } = useToggle()
+export default function CardRole({ role }: CardRoleProps): JSX.Element {
+  const { value, toggle } = useToggle();
 
   const toggleAccordion = (): void => {
-    toggle()
-  }
+    toggle();
+  };
 
   return (
     <div className={styles.wrapper} onClick={toggleAccordion}>
@@ -16,14 +16,14 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
         <strong>{role.name}</strong>
       </span>
       <ButtonIcon
-        icon={'/down-arrow.svg'}
+        icon={"/down-arrow.svg"}
         className={`${styles.wrapper_icon} ${
-          value ? styles.wrapper_icon_rotate : ''
+          value ? styles.wrapper_icon_rotate : ""
         }`}
       />
       <div
         className={`${styles.wrapper_hidden} ${
-          value ? styles.wrapper_show : ''
+          value ? styles.wrapper_show : ""
         }`}
       >
         <h3 className={styles.wrapper_hidden_title}>Indicadores</h3>
@@ -60,10 +60,10 @@ export default function CardRole ({ role }: CardRoleProps): JSX.Element {
           className={styles.button}
           type="button"
           onClick={() => {
-            toggle()
+            toggle();
           }}
         />
       )}
     </div>
-  )
+  );
 }

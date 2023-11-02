@@ -1,15 +1,15 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
 
-import { type PopupProps } from '@/types'
-import styles from './Popup.module.scss'
-import { ID_TO_REPLACE } from '@/constants/General'
+import { type PopupProps } from "@/types";
+import styles from "./Popup.module.scss";
+import { ID_TO_REPLACE } from "@/constants/General";
 
-export default function Popup ({
+export default function Popup({
   actions,
   menuItems,
   togglePopup,
-  elementId
+  elementId,
 }: PopupProps): JSX.Element {
   return (
     <>
@@ -18,13 +18,12 @@ export default function Popup ({
           <ul className={styles.card_list}>
             {menuItems.map(({ id, label, icon, isLink, navigate }) => (
               <li key={label} className={styles.card_list_element}>
-                {isLink && navigate !== undefined
-                  ? (
+                {isLink && navigate !== undefined ? (
                   <Link
                     className={styles.card_list_element_wrapper}
                     href={navigate.replace(ID_TO_REPLACE, elementId)}
                     onClick={(e) => {
-                      e.stopPropagation()
+                      e.stopPropagation();
                     }}
                   >
                     {icon !== undefined && (
@@ -32,14 +31,13 @@ export default function Popup ({
                     )}
                     <strong>{label}</strong>
                   </Link>
-                    )
-                  : (
+                ) : (
                   <button
                     className={`${styles.card_list_element_wrapper} ${styles.card_list_element_wrapper_button}`}
                     type="button"
                     onClick={() => {
-                      actions?.[id]?.(elementId)
-                      togglePopup()
+                      actions?.[id]?.(elementId);
+                      togglePopup();
                     }}
                   >
                     {icon !== undefined && (
@@ -49,7 +47,7 @@ export default function Popup ({
                       <strong>{label}</strong>
                     </span>
                   </button>
-                    )}
+                )}
               </li>
             ))}
           </ul>
@@ -59,10 +57,10 @@ export default function Popup ({
         className={styles.button}
         type="button"
         onClick={(e) => {
-          e.stopPropagation()
-          togglePopup()
+          e.stopPropagation();
+          togglePopup();
         }}
       ></button>
     </>
-  )
+  );
 }

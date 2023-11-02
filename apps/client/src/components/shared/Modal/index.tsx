@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
-import Button from '@components/shared/Button'
+import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import Button from "@components/shared/Button";
 
-import { type ModalProps } from '@/types'
-import styles from './Modal.module.scss'
+import { type ModalProps } from "@/types";
+import styles from "./Modal.module.scss";
 
 const Modal = forwardRef(
   (
@@ -15,68 +15,68 @@ const Modal = forwardRef(
       onCancel = () => {},
       showCancelConfirmation = false,
       children,
-      className = '',
-      confirmText = 'Confirmar',
-      hasConfirmButton = true
+      className = "",
+      confirmText = "Confirmar",
+      hasConfirmButton = true,
     }: ModalProps,
-    ref: any
+    ref: any,
   ): JSX.Element => {
-    const dialogRef = useRef<HTMLDialogElement>(null)
+    const dialogRef = useRef<HTMLDialogElement>(null);
 
     const handleConfirm = (): void => {
-      handleClick()
+      handleClick();
       if (onConfirm !== undefined) {
         setTimeout(() => {
-          onConfirm()
-        }, 150)
+          onConfirm();
+        }, 150);
       }
-    }
+    };
 
     const handleCancel = (): void => {
       if (!showCancelConfirmation) {
-        handleClick()
-        onCancel()
+        handleClick();
+        onCancel();
       } else {
-        onCancel()
+        onCancel();
       }
-    }
+    };
 
     const handleClick = (): void => {
-      dialogRef.current?.classList.toggle(styles.modal_close)
+      dialogRef.current?.classList.toggle(styles.modal_close);
       setTimeout(() => {
-        toggle()
-        dialogRef.current?.close()
-      }, 300)
-    }
+        toggle();
+        dialogRef.current?.close();
+      }, 300);
+    };
 
     const handleDialogClick = (
-      e: React.MouseEvent<HTMLDialogElement>
+      e: React.MouseEvent<HTMLDialogElement>,
     ): void => {
-      e.stopPropagation()
-      if (e.target === dialogRef.current) handleCancel()
-    }
+      e.stopPropagation();
+      if (e.target === dialogRef.current) handleCancel();
+    };
 
     useImperativeHandle(ref, () => {
       return {
-        handleConfirm
-      }
-    })
+        handleConfirm,
+      };
+    });
 
     useEffect(() => {
       if (isOpen) {
-        dialogRef.current?.showModal()
-        dialogRef.current?.classList.remove(styles.modal_close)
-      } else dialogRef.current?.close()
-    }, [isOpen])
+        dialogRef.current?.showModal();
+        dialogRef.current?.classList.remove(styles.modal_close);
+      } else dialogRef.current?.close();
+    }, [isOpen]);
     return (
       <dialog
         ref={dialogRef}
         className={`${styles.modal} ${className}`}
         onClick={handleDialogClick}
         onKeyDown={(e) => {
-          if (e.key === 'Escape') {
-            e.stopPropagation()
-            handleCancel()
+          if (e.key === "Escape") {
+            e.stopPropagation();
+            handleCancel();
           }
         }}
       >
@@ -95,8 +95,8 @@ const Modal = forwardRef(
           )}
         </div>
       </dialog>
-    )
-  }
-)
+    );
+  },
+);
 
-export default Modal
+export default Modal;

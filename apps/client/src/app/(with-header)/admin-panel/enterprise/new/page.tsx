@@ -1,5 +1,5 @@
-import EnterpriseForm from '@components/modules/Enterprise/EnterpriseForm'
+import EnterpriseForm from "@components/modules/Enterprise/EnterpriseForm";
 
-export default function NewEnterprisePage (): JSX.Element {
-  return <EnterpriseForm />
+export default function NewEnterprisePage(): JSX.Element {
+  return <EnterpriseForm />;
 }

@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
-import CardDraggable from '@components/shared/CardDraggable'
-import { type CardDepartmentProps } from '@/types'
-import styles from './CardDepartment.module.scss'
+import CardDraggable from "@components/shared/CardDraggable";
+import { type CardDepartmentProps } from "@/types";
+import styles from "./CardDepartment.module.scss";
 
-export default function CardDepartment ({
+export default function CardDepartment({
   element,
-  onClick = () => {}
+  onClick = () => {},
 }: CardDepartmentProps): JSX.Element {
   return (
     <CardDraggable onClick={onClick}>
@@ -15,7 +15,7 @@ export default function CardDepartment ({
           className={`${styles.department_name} ${
             element.subDepartments.length === 0
               ? styles.department_no_border
-              : ''
+              : ""
           }`}
         >
           {element.name}
@@ -27,7 +27,7 @@ export default function CardDepartment ({
                 className={`${styles.department_sub_name} ${
                   i === self.length - 1 && sub.subDepartments?.length === 0
                     ? styles.department_no_border
-                    : ''
+                    : ""
                 }`}
               >
                 {sub.name}
@@ -35,14 +35,14 @@ export default function CardDepartment ({
               {sub?.subDepartments !== undefined &&
                 sub.subDepartments.map((lastSub, j, lastSelf) => (
                   <div
-                    key={`${lastSub.name ?? ''}-${j}`}
+                    key={`${lastSub.name ?? ""}-${j}`}
                     className={styles.department_sub_last}
                   >
                     <span
                       className={`${styles.department_sub_last_name} ${
                         i === self.length - 1 && j === lastSelf?.length - 1
                           ? styles.department_no_border
-                          : ''
+                          : ""
                       }`}
                     >
                       {lastSub.name}
@@ -53,5 +53,5 @@ export default function CardDepartment ({
           ))}
       </div>
     </CardDraggable>
-  )
+  );
 }

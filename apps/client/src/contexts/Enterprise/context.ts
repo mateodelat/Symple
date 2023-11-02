@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { createContext, useContext } from 'react'
-import { type EnterpriseContextType } from '@/types'
+import { createContext, useContext } from "react";
+import { type EnterpriseContextType } from "@/types";
 
 const EnterpriseContext = createContext<EnterpriseContextType>({
   enterprises: [],
@@ -9,10 +9,10 @@ const EnterpriseContext = createContext<EnterpriseContextType>({
   isLoading: true,
   addEnterprise: (enterprise) => {},
   updateEnterprise: (id, enterprise) => {},
-  deleteEnterprise: (id) => {}
-})
+  deleteEnterprise: (id) => {},
+});
 
 export const useEnterpriseContext = (): EnterpriseContextType =>
-  useContext(EnterpriseContext)
+  useContext(EnterpriseContext);
 
-export default EnterpriseContext
+export default EnterpriseContext;

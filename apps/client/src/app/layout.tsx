@@ -1,33 +1,33 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Toaster } from 'react-hot-toast'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
-import { AuthProvider } from './AuthProvider'
+import { AuthProvider } from "./AuthProvider";
 import {
   DepartmentContextProvider,
   EnterpriseContextProvider,
   UserContextProvider,
-  RoleContextProvider
-} from '@contexts/index'
-import '@styles/global.scss'
+  RoleContextProvider,
+} from "@contexts/index";
+import "@styles/global.scss";
 
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  adjustFontFallback: false
-})
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
-  title: 'Symple',
+  title: "Symple",
   description:
-    'Symple es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.',
-  robots: 'noindex, nofollow'
-}
+    "Symple es una aplicacion web para las empresas que quieren calificar a sus empleados por medio de mentorias.",
+  robots: "noindex, nofollow",
+};
 
-export default function RootLayout ({
-  children
+export default function RootLayout({
+  children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }): JSX.Element {
   return (
     <AuthProvider>
@@ -46,5 +46,5 @@ export default function RootLayout ({
         </body>
       </html>
     </AuthProvider>
-  )
+  );
 }

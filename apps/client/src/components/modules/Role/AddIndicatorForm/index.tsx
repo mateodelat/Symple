@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import {
   Draggable,
-  type DraggableProvidedDragHandleProps
-} from '@hello-pangea/dnd'
+  type DraggableProvidedDragHandleProps,
+} from "@hello-pangea/dnd";
 
-import { SelectField, InputField, DraggableInput } from '@/components/shared/'
-import AddUsersWrapper from '@components/modules/User/AddUsersWrapper'
-import useCheckErrors from '@/hooks/useCheckErrors'
+import { SelectField, InputField, DraggableInput } from "@/components/shared/";
+import AddUsersWrapper from "@components/modules/User/AddUsersWrapper";
+import useCheckErrors from "@/hooks/useCheckErrors";
 import {
   roleIndicatorOptions,
-  roleMeasurementOptions
-} from '@/constants/RoleForm'
+  roleMeasurementOptions,
+} from "@/constants/RoleForm";
 import {
   type AddIndicatorFormProps,
   IndicatorType,
-  IndicatorMeasurementType
-} from '@/types'
-import styles from './AddIndicatorForm.module.scss'
+  IndicatorMeasurementType,
+} from "@/types";
+import styles from "./AddIndicatorForm.module.scss";
 
-export default function AddIndicatorForm ({
+export default function AddIndicatorForm({
   canBeDeleted,
   deleteIndicator,
   updateIndicator,
@@ -28,61 +28,63 @@ export default function AddIndicatorForm ({
   index,
   addedUsers,
   setAddedUsers,
-  setIsBlocked
+  setIsBlocked,
 }: AddIndicatorFormProps): JSX.Element {
   const { errors, handleErrors } = useCheckErrors({
-    fields: { indicatorName: '', indicatorMeasurementValue: '' }
-  })
+    fields: { indicatorName: "", indicatorMeasurementValue: "" },
+  });
   const [localAddedUsers, setLocalAddedUsers] = useState(
-    addedUsers.find((user) => user.index === index)?.addedUsers ?? []
-  )
+    addedUsers.find((user) => user.index === index)?.addedUsers ?? [],
+  );
 
   const handleUpdate = (value: string, name: string): void => {
     updateIndicator(index, {
       ...indicator,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   const formatValue = (
     type: IndicatorMeasurementType,
-    value: string
+    value: string,
   ): string => {
-    if (type === IndicatorMeasurementType.PERCENTAGE) return `${value}%`
-    return `$${value.match(/.{1,3}/g)?.join("'") ?? ''}`
-  }
+    if (type === IndicatorMeasurementType.PERCENTAGE) return `${value}%`;
+    return `$${value.match(/.{1,3}/g)?.join("'") ?? ""}`;
+  };
 
-  const { indicatorName, indicatorMeasurementValue } = errors
+  const { indicatorName, indicatorMeasurementValue } = errors;
 
   const format = formatValue(
     indicator.measurementType ?? IndicatorMeasurementType.PERCENTAGE,
-    indicator?.amount?.toString() ?? ''
-  )
+    indicator?.amount?.toString() ?? "",
+  );
 
   useEffect(() => {
-    if (indicator.type !== IndicatorType.FINANCIAL_OBJECTIVE) return
+    if (indicator.type !== IndicatorType.FINANCIAL_OBJECTIVE) return;
     handleErrors(
-      'indicatorMeasurementValue',
-      indicator?.amount?.toString() ?? '',
+      "indicatorMeasurementValue",
+      indicator?.amount?.toString() ?? "",
       true,
-      indicator.measurementType === IndicatorMeasurementType.PERCENTAGE
-    )
-  }, [indicator.measurementType])
+      indicator.measurementType === IndicatorMeasurementType.PERCENTAGE,
+    );
+  }, [indicator.measurementType]);
 
   useEffect(() => {
-    if (Object.values(errors).every((val) => val === '')) {
-      setIsBlocked(false)
-    } else setIsBlocked(true)
-  }, [errors])
+    if (Object.values(errors).every((val) => val === "")) {
+      setIsBlocked(false);
+    } else setIsBlocked(true);
+  }, [errors]);
 
   useEffect(() => {
     setAddedUsers((prev) => {
-      const newAddedUsers = structuredClone(prev)
-      const userIndex = newAddedUsers.findIndex((user) => user.index === index)
-      if (userIndex !== -1) { newAddedUsers[userIndex].addedUsers = localAddedUsers } else newAddedUsers.push({ index, addedUsers: localAddedUsers })
-      return newAddedUsers
-    })
-  }, [localAddedUsers])
+      const newAddedUsers = structuredClone(prev);
+      const userIndex = newAddedUsers.findIndex((user) => user.index === index);
+      if (userIndex !== -1) {
+        newAddedUsers[userIndex].addedUsers = localAddedUsers;
+      } else newAddedUsers.push({ index, addedUsers: localAddedUsers });
+      return newAddedUsers;
+    });
+  }, [localAddedUsers]);
 
   return (
     <Draggable draggableId={index.toString()} index={index}>
@@ -106,7 +108,7 @@ export default function AddIndicatorForm ({
             placeholder="Indicador"
             value={indicator.name}
           />
-          {indicatorName !== '' && (
+          {indicatorName !== "" && (
             <span className={styles.error}>{indicatorName}</span>
           )}
           <div className={styles.wrapper}>
@@ -119,8 +121,8 @@ export default function AddIndicatorForm ({
               props={{
                 value: indicator.type,
                 onChange: (e) => {
-                  handleUpdate(e.target.value, 'type')
-                }
+                  handleUpdate(e.target.value, "type");
+                },
               }}
             />
           </div>
@@ -137,8 +139,8 @@ export default function AddIndicatorForm ({
                   props={{
                     value: indicator.measurementType,
                     onChange: (e) => {
-                      handleUpdate(e.target.value, 'measurementType')
-                    }
+                      handleUpdate(e.target.value, "measurementType");
+                    },
                   }}
                 />
                 <div className={styles.wrapper_measurement_input}>
@@ -146,18 +148,18 @@ export default function AddIndicatorForm ({
                     params={{
                       placeholder: indicator.measurementType,
                       value: indicator.amount,
-                      inputMode: 'numeric',
-                      id: 'indicatorMeasurementValue',
+                      inputMode: "numeric",
+                      id: "indicatorMeasurementValue",
                       onChange: (e) => {
-                        handleUpdate(e.target.value, 'amount')
+                        handleUpdate(e.target.value, "amount");
                         handleErrors(
-                          'indicatorMeasurementValue',
+                          "indicatorMeasurementValue",
                           e.target.value,
                           true,
                           indicator.measurementType ===
-                            IndicatorMeasurementType.PERCENTAGE
-                        )
-                      }
+                            IndicatorMeasurementType.PERCENTAGE,
+                        );
+                      },
                     }}
                   />
                   {Number(indicator.amount) > 0 && (
@@ -166,7 +168,7 @@ export default function AddIndicatorForm ({
                     </span>
                   )}
                 </div>
-                {indicatorMeasurementValue !== '' && (
+                {indicatorMeasurementValue !== "" && (
                   <span className={`${styles.error} ${styles.error_grid}`}>
                     {indicatorMeasurementValue}
                   </span>
@@ -182,5 +184,5 @@ export default function AddIndicatorForm ({
         </article>
       )}
     </Draggable>
-  )
+  );
 }

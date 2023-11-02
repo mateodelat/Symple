@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import Button from '@components/shared/Button'
-import AddFunctionForm from '@components/modules/Role/AddFunctionForm'
-import { type AddFunctionProps } from '@/types'
-import styles from './AddFunction.module.scss'
-import { Droppable } from '@hello-pangea/dnd'
+import Button from "@components/shared/Button";
+import AddFunctionForm from "@components/modules/Role/AddFunctionForm";
+import { type AddFunctionProps } from "@/types";
+import styles from "./AddFunction.module.scss";
+import { Droppable } from "@hello-pangea/dnd";
 
-export default function AddFunction ({
+export default function AddFunction({
   addedFunctions,
   addFunction,
   deleteFunction,
   updateFunction,
-  setIsBlocked
+  setIsBlocked,
 }: AddFunctionProps): JSX.Element {
   const everyFieldsAreFilled: boolean = addedFunctions.every(
-    (value) => value.name !== ''
-  )
+    (value) => value.name !== "",
+  );
 
   return (
     <section className={styles.container}>
@@ -42,15 +42,15 @@ export default function AddFunction ({
       </Droppable>
       <Button
         onClick={() => {
-          addFunction()
+          addFunction();
         }}
         props={{
-          disabled: !everyFieldsAreFilled
+          disabled: !everyFieldsAreFilled,
         }}
         className={styles.container_button}
       >
         Nueva Función
       </Button>
     </section>
-  )
+  );
 }

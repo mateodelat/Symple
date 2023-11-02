@@ -1,19 +1,19 @@
-'use client'
+"use client";
 
-import { createContext, useContext } from 'react'
-import { type RoleContextType } from '@/types'
+import { createContext, useContext } from "react";
+import { type RoleContextType } from "@/types";
 
 const RoleContext = createContext<RoleContextType>({
   roles: [],
-  department: '',
+  department: "",
   handleDepartmentChange: (department) => {},
   setInitialRoles: (roles) => {},
   isLoading: true,
   addRole: (role) => {},
   updateRole: (role) => {},
-  deleteRole: (id) => {}
-})
+  deleteRole: (id) => {},
+});
 
-export const useRoleContext = (): RoleContextType => useContext(RoleContext)
+export const useRoleContext = (): RoleContextType => useContext(RoleContext);
 
-export default RoleContext
+export default RoleContext;

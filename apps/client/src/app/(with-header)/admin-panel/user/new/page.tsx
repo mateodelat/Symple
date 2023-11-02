@@ -1,9 +1,9 @@
-import UserForm from '@components/modules/User/UserForm'
+import UserForm from "@components/modules/User/UserForm";
 
-export default function UserFormPage (): JSX.Element {
+export default function UserFormPage(): JSX.Element {
   return (
     <div>
       <UserForm />
     </div>
-  )
+  );
 }

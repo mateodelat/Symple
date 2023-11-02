@@ -29,6 +29,6 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "no-unused-vars": "off",
-    "multiline-ternary": "off"
+    "multiline-ternary": "off",
   },
 };

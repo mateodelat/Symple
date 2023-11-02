@@ -1,17 +1,17 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
-import styles from './LinkButton.module.scss'
-import { type LinkButtonProps } from '@/types'
+import styles from "./LinkButton.module.scss";
+import { type LinkButtonProps } from "@/types";
 
-export default function LinkButton ({
+export default function LinkButton({
   href,
   children,
-  className = ''
+  className = "",
 }: LinkButtonProps): JSX.Element {
   return (
     <Link href={href} className={`${styles.link} ${className}`}>
       {children}
     </Link>
-  )
+  );
 }
