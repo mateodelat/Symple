@@ -42,7 +42,7 @@ export default function Header (): JSX.Element {
         </Button>
         <Button
           className={`${styles.header_buttons_btn} ${styles.header_buttons_btn_text}`}
-          onClick={signOut}
+          onClick={async () => { await signOut({ callbackUrl: '/' }) }}
         >
           Cerrar sesión
         </Button>
