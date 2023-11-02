@@ -158,6 +158,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
             }`
           },
           success: (response) => {
+            console.log(response)
             toggle()
             updateRole(response)
             return 'Rol actualizado correctamente.'
@@ -182,6 +183,7 @@ export default function AddRole ({ selectedElement, isOpen, department, toggle }
 
   useEffect(() => {
     if (selectedElement === null) return
+    setRoleName(selectedElement.name)
     setAddedIndicators(selectedElement.indicators)
     setAddedUsers(selectedElement?.indicators.map((indicator, i) => {
       const associatedUsers: IndicatorUserState = { index: i, addedUsers: indicator.associatedUsers }

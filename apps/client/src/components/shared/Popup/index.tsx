@@ -13,31 +13,36 @@ export default function Popup ({ actions, menuItems, togglePopup, elementId }: P
           <ul className={styles.card_list}>
             {menuItems.map(({ id, label, icon, isLink, navigate }) => (
               <li key={label} className={styles.card_list_element}>
-                <div className={styles.card_list_element_wrapper}>
+                {isLink && navigate !== undefined
+                  ? (
+                  <Link
+                    className={styles.card_list_element_wrapper}
+                    href={navigate.replace(ID_TO_REPLACE, elementId)}
+                    onClick={(e) => { e.stopPropagation() }}
+                  >
+                    {icon !== undefined && (
+                      <Image src={icon} alt={label} width={30} height={30}/>
+                    )}
+                      <strong>{label}</strong>
+                  </Link>
+                    )
+                  : (
+                  <button
+                  className={`${styles.card_list_element_wrapper} ${styles.card_list_element_wrapper_button}`}
+                  type='button' onClick={() => {
+                    actions?.[id]?.(elementId)
+                    togglePopup()
+                  }}
+                >
                   {icon !== undefined && (
                       <Image src={icon} alt={label} width={30} height={30}/>
                   )}
-                  {isLink && navigate !== undefined
-                    ? (
-                    <Link
-                      href={navigate.replace(ID_TO_REPLACE, elementId)}
-                      onClick={(e) => { e.stopPropagation() }}
-                    >
-                      <strong>{label}</strong>
-                    </Link>
-                      )
-                    : (
-                    <button
-                      className={styles.card_list_element_wrapper_button}
-                      onClick={() => {
-                        actions?.[id]?.(elementId)
-                        togglePopup()
-                      }}
-                    >
-                      <strong>{label}</strong>
-                    </button>
-                      )}
-                </div>
+                  <span>
+                    <strong>{label}</strong>
+                  </span>
+                </button>
+                    )}
+
               </li>
             ))}
           </ul>

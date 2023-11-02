@@ -36,7 +36,7 @@ export default function RoleContextProvider ({ children }: RoleContextProviderPr
       const newRoles = [...prev]
       const index = newRoles.findIndex((e) => e.id === role.id)
       newRoles[index] = role
-      return prev
+      return newRoles
     })
   }
 

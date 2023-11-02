@@ -105,6 +105,7 @@ export default function DepartmentAdministration ({
   }, [value])
 
   useEffect(() => {
+    console.log(roles)
     if (!isLoading) { setFilteredRoles(roles) }
   }, [isLoading, roles])
 
