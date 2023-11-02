@@ -29,7 +29,16 @@ export default function Navigation ({
         </div>
         <ul className={styles.main_nav_list}>
           {links.map(({ href, label, roleRestriction }) => (
-            <li className={`${styles.main_nav_list_element} ${(roleRestriction !== undefined && status === 'authenticated') && roleRestriction !== session?.user.role ? styles.hidden : ''}`} key={label}>
+            <li
+              className={`${styles.main_nav_list_element} ${
+                roleRestriction !== undefined &&
+                status === 'authenticated' &&
+                roleRestriction !== session?.user.role
+                  ? styles.hidden
+                  : ''
+              }`}
+              key={label}
+            >
               <Link
                 href={href}
                 onClick={toggleAside}
@@ -42,8 +51,7 @@ export default function Navigation ({
                 {label}
               </Link>
             </li>
-          )
-          )}
+          ))}
         </ul>
       </nav>
     </section>

@@ -11,7 +11,11 @@ import {
 } from '@contexts/index'
 import '@styles/global.scss'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', adjustFontFallback: false })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  adjustFontFallback: false
+})
 
 export const metadata: Metadata = {
   title: 'Symple',

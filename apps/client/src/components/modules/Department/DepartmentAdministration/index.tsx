@@ -2,11 +2,21 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { AccordionList, Button, Loader, Modal, SearchBar } from '@components/shared/'
+import {
+  AccordionList,
+  Button,
+  Loader,
+  Modal,
+  SearchBar
+} from '@components/shared/'
 import AddRole from '@components/modules/Role/AddRole'
 import { useToggle } from '@/hooks'
 import { internalLinks } from '@/constants/DepartmentAdministration'
-import { type LengthType, type DepartmentAdministrationProps, type Role } from '@/types'
+import {
+  type LengthType,
+  type DepartmentAdministrationProps,
+  type Role
+} from '@/types'
 import styles from './DepartmentAdministration.module.scss'
 import { useRoleContext } from '@/contexts/Role/context'
 import RoleMenuItems from '@/constants/RoleMenuItems'
@@ -22,7 +32,8 @@ export default function DepartmentAdministration ({
   const { toggle: toggleDelete, value: confirmDelete } = useToggle()
 
   const { deleteRole } = useRoleContext()
-  const { handleDepartmentChange, roles, department, isLoading } = useRoleContext()
+  const { handleDepartmentChange, roles, department, isLoading } =
+    useRoleContext()
 
   const [filter, setFilter] = useState('')
   const [links, setLinks] = useState(internalLinks)
@@ -68,31 +79,35 @@ export default function DepartmentAdministration ({
       setFilteredRoles(roles)
       return
     }
-    setFilteredRoles(() => roles.filter(({ name }) => {
-      const nameToLower = name.toLowerCase()
-      const filterToLower = filter.toLowerCase()
+    setFilteredRoles(() =>
+      roles.filter(({ name }) => {
+        const nameToLower = name.toLowerCase()
+        const filterToLower = filter.toLowerCase()
 
-      return nameToLower.startsWith(filterToLower) || nameToLower.endsWith(filterToLower)
-    }))
+        return (
+          nameToLower.startsWith(filterToLower) ||
+          nameToLower.endsWith(filterToLower)
+        )
+      })
+    )
   }
 
   const handleDeleteRole = async (): Promise<void> => {
     const roleId = deleteId.current
     if (roleId !== null) {
-      await toast.promise(
-        rolesService.deleteRole(roleId),
-        {
-          loading: 'Creando rol...',
-          error: (err: any) => {
-            toggle()
-            return `Ocurrió un error al eliminar el rol: ${err.message as string}`
-          },
-          success: (response) => {
-            deleteRole(roleId)
-            return response.message
-          }
+      await toast.promise(rolesService.deleteRole(roleId), {
+        loading: 'Creando rol...',
+        error: (err: any) => {
+          toggle()
+          return `Ocurrió un error al eliminar el rol: ${
+            err.message as string
+          }`
+        },
+        success: (response) => {
+          deleteRole(roleId)
+          return response.message
         }
-      )
+      })
     }
   }
 
@@ -106,7 +121,9 @@ export default function DepartmentAdministration ({
 
   useEffect(() => {
     console.log(roles)
-    if (!isLoading) { setFilteredRoles(roles) }
+    if (!isLoading) {
+      setFilteredRoles(roles)
+    }
   }, [isLoading, roles])
 
   return (
@@ -132,22 +149,29 @@ export default function DepartmentAdministration ({
           ))}
         </ul>
       </div>
-      <SearchBar filter={filter} handleData={handleData} setFilter={setFilter} />
+      <SearchBar
+        filter={filter}
+        handleData={handleData}
+        setFilter={setFilter}
+      />
       <div className={styles.container_wrapper}>
-        <span className={styles.container_wrapper_length}><strong>{`${lengths[active]} ${name ?? ''}`}</strong></span>
-        <Button className={styles.container_wrapper_create} onClick={() => { toggle() }}>
+        <span className={styles.container_wrapper_length}>
+          <strong>{`${lengths[active]} ${name ?? ''}`}</strong>
+        </span>
+        <Button
+          className={styles.container_wrapper_create}
+          onClick={() => {
+            toggle()
+          }}
+        >
           Nuevo {singularName}
         </Button>
       </div>
       <div className={styles.container_lists}>
-        {element?.name === 'members' && (
-          <div>MembersList</div>
-        )}
-        {element?.name === 'positions' && (
-          <div>PositionsList</div>
-        )}
-        {element?.name === 'roles' && (
-          isLoading
+        {element?.name === 'members' && <div>MembersList</div>}
+        {element?.name === 'positions' && <div>PositionsList</div>}
+        {element?.name === 'roles' &&
+          (isLoading
             ? (
             <div className={styles.loader}>
               <h3>Cargando...</h3>
@@ -156,13 +180,12 @@ export default function DepartmentAdministration ({
               )
             : (
             <AccordionList
-            data={filteredRoles}
-            cardType='role'
-            menuItems={RoleMenuItems}
-            actions={{ edit: handleEditRole, delete: handleDeleteRoleModal }}
-          />
-              )
-        )}
+              data={filteredRoles}
+              cardType="role"
+              menuItems={RoleMenuItems}
+              actions={{ edit: handleEditRole, delete: handleDeleteRoleModal }}
+            />
+              ))}
       </div>
 
       <Modal
@@ -175,12 +198,12 @@ export default function DepartmentAdministration ({
         showCancelConfirmation
       >
         {element?.name === 'roles' && (
-            <AddRole
-              selectedElement={selectedElement}
-              isOpen={value}
-              toggle={toggle}
-              department={department}
-            />
+          <AddRole
+            selectedElement={selectedElement}
+            isOpen={value}
+            toggle={toggle}
+            department={department}
+          />
         )}
       </Modal>
       <Modal

@@ -1,4 +1,9 @@
-import { IndicatorMeasurementType, IndicatorType, type Option, type Section } from '@/types'
+import {
+  IndicatorMeasurementType,
+  IndicatorType,
+  type Option,
+  type Section
+} from '@/types'
 import { formErrors } from '@/constants/Errors'
 import styles from '@styles/RoleForm.module.scss'
 import * as yup from 'yup'
@@ -93,16 +98,16 @@ export const roleSteps = [
   { index: 3, name: 'Funciones' }
 ]
 
-export const roleIndicatorOptions: Option[] = Object.values(IndicatorType).map((value) => (
-  {
+export const roleIndicatorOptions: Option[] = Object.values(IndicatorType).map(
+  (value) => ({
     id: value,
     label: value
-  }
-))
+  })
+)
 
-export const roleMeasurementOptions: Option[] = Object.values(IndicatorMeasurementType).map((value) => (
-  {
-    id: value,
-    label: value
-  }
-))
+export const roleMeasurementOptions: Option[] = Object.values(
+  IndicatorMeasurementType
+).map((value) => ({
+  id: value,
+  label: value
+}))

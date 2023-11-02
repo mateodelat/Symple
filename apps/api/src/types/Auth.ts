@@ -5,7 +5,10 @@ export interface ValidateUserProps {
   password: string;
 }
 
-export type UserAuth = Pick<User, 'email' | 'name' | 'lastName' | 'role' | 'enterprises' | 'avatar'>
+export type UserAuth = Pick<
+  User,
+  "email" | "name" | "lastName" | "role" | "enterprises" | "avatar"
+>;
 export interface UserToken {
   accessToken: string;
   user: UserAuth;

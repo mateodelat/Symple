@@ -15,7 +15,11 @@
   &::before {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(0deg, variables.$primary-green-color 0%, variables.$secondary-green-color 100%);
+    background-image: linear-gradient(
+      0deg,
+      variables.$primary-green-color 0%,
+      variables.$secondary-green-color 100%
+    );
   }
 
   &::after {

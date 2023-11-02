@@ -12,17 +12,19 @@ export default function AddDeliverable ({
   updateDeliverable,
   deleteDeliverable,
   setIsBlocked
-}: AddDeliverableProps
-): JSX.Element {
-  const everyFieldsAreFilled: boolean = addedDeliverables.every((deliverable) => (
-    deliverable.name !== ''
-  ))
+}: AddDeliverableProps): JSX.Element {
+  const everyFieldsAreFilled: boolean = addedDeliverables.every(
+    (deliverable) => deliverable.name !== ''
+  )
 
   return (
     <section className={styles.container}>
-      <Droppable droppableId='deliverables'>
+      <Droppable droppableId="deliverables">
         {(droppableProvided) => (
-          <div ref={droppableProvided.innerRef} {...droppableProvided.droppableProps}>
+          <div
+            ref={droppableProvided.innerRef}
+            {...droppableProvided.droppableProps}
+          >
             {addedDeliverables.map((deliverable, index) => (
               <AddDeliverableForm
                 key={index}

@@ -19,10 +19,7 @@ export default function VerticalButton ({
   }
   return (
     <>
-      <button
-        className={styles.button}
-        onClick={handleClick}
-      >
+      <button className={styles.button} onClick={handleClick}>
         <span className={styles.button_vertical} />
       </button>
       {isPopupOpen && (

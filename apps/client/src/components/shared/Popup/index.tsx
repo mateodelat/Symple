@@ -5,7 +5,12 @@ import { type PopupProps } from '@/types'
 import styles from './Popup.module.scss'
 import { ID_TO_REPLACE } from '@/constants/General'
 
-export default function Popup ({ actions, menuItems, togglePopup, elementId }: PopupProps): JSX.Element {
+export default function Popup ({
+  actions,
+  menuItems,
+  togglePopup,
+  elementId
+}: PopupProps): JSX.Element {
   return (
     <>
       <div className={styles.popup}>
@@ -18,31 +23,33 @@ export default function Popup ({ actions, menuItems, togglePopup, elementId }: P
                   <Link
                     className={styles.card_list_element_wrapper}
                     href={navigate.replace(ID_TO_REPLACE, elementId)}
-                    onClick={(e) => { e.stopPropagation() }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}
                   >
                     {icon !== undefined && (
-                      <Image src={icon} alt={label} width={30} height={30}/>
+                      <Image src={icon} alt={label} width={30} height={30} />
                     )}
-                      <strong>{label}</strong>
+                    <strong>{label}</strong>
                   </Link>
                     )
                   : (
                   <button
-                  className={`${styles.card_list_element_wrapper} ${styles.card_list_element_wrapper_button}`}
-                  type='button' onClick={() => {
-                    actions?.[id]?.(elementId)
-                    togglePopup()
-                  }}
-                >
-                  {icon !== undefined && (
-                      <Image src={icon} alt={label} width={30} height={30}/>
-                  )}
-                  <span>
-                    <strong>{label}</strong>
-                  </span>
-                </button>
+                    className={`${styles.card_list_element_wrapper} ${styles.card_list_element_wrapper_button}`}
+                    type="button"
+                    onClick={() => {
+                      actions?.[id]?.(elementId)
+                      togglePopup()
+                    }}
+                  >
+                    {icon !== undefined && (
+                      <Image src={icon} alt={label} width={30} height={30} />
                     )}
-
+                    <span>
+                      <strong>{label}</strong>
+                    </span>
+                  </button>
+                    )}
               </li>
             ))}
           </ul>

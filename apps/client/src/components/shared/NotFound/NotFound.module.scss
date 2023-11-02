@@ -1,6 +1,6 @@
 @use "@styles/variables";
 
-.container{
+.container {
   display: flex;
   height: 100dvh;
   flex-direction: column;
@@ -8,7 +8,7 @@
   padding: 1rem;
   justify-content: center;
   align-items: center;
-  &_title{
+  &_title {
     text-align: center;
   }
 }

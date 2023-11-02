@@ -16,9 +16,7 @@ export default function FormSection ({
   return (
     <div key={title.name} className={styles.section}>
       <As name={title.name} as={title.as} style={title.style} />
-      <div
-        className={`${styles.section_fields} ${fieldsClassName}`}
-      >
+      <div className={`${styles.section_fields} ${fieldsClassName}`}>
         {fields.map(
           ({
             name,
@@ -35,22 +33,13 @@ export default function FormSection ({
               className={styles.section_wrapper}
               style={{ ...style }}
             >
-              {
-                label !== undefined && (
-                  <label
-                    htmlFor={name}
-                    className={styles.section_wrapper_label}
-                  >
-                    <strong
-                      className={
-                        styles.section_wrapper_label_text
-                      }
-                    >
-                      {label}
-                    </strong>
-                  </label>
-                )
-              }
+              {label !== undefined && (
+                <label htmlFor={name} className={styles.section_wrapper_label}>
+                  <strong className={styles.section_wrapper_label_text}>
+                    {label}
+                  </strong>
+                </label>
+              )}
               {elementType === 'select'
                 ? (
                 <SelectField
@@ -63,11 +52,7 @@ export default function FormSection ({
                 : elementType === 'file'
                   ? (
                 <UploadFile
-                  file={
-                    files?.find(
-                      (file) => file.name === name
-                    ) as FileState
-                  }
+                  file={files?.find((file) => file.name === name) as FileState}
                   handleSelectedFile={handleFiles ?? (() => {})}
                   id={name}
                   props={props ?? {}}
@@ -75,13 +60,13 @@ export default function FormSection ({
                     )
                   : elementType === 'textarea'
                     ? (
-                        <textarea
-                          id={name}
-                          placeholder={placeholder}
-                          {...register(name)}
-                          {...props}
-                          className={styles.section_wrapper_textarea}
-                        />
+                <textarea
+                  id={name}
+                  placeholder={placeholder}
+                  {...register(name)}
+                  {...props}
+                  className={styles.section_wrapper_textarea}
+                />
                       )
                     : elementType === 'custom'
                       ? (
@@ -90,23 +75,20 @@ export default function FormSection ({
                       : elementType === 'none'
                         ? null
                         : (
-                          <input
-                            id={name}
-                            type={type}
-                            placeholder={placeholder}
-                            {...register(name)}
-                            {...props}
-                          />
-                          )
-              }
-              {errors[name] !== null && elementType !== 'custom' && elementType !== 'none' && (
-                <span
-                  className={
-                    styles.section_wrapper_error
-                  }
-                >
-                  {errors[name]?.message as string}
-                </span>
+                <input
+                  id={name}
+                  type={type}
+                  placeholder={placeholder}
+                  {...register(name)}
+                  {...props}
+                />
+                          )}
+              {errors[name] !== null &&
+                elementType !== 'custom' &&
+                elementType !== 'none' && (
+                  <span className={styles.section_wrapper_error}>
+                    {errors[name]?.message as string}
+                  </span>
               )}
             </div>
           )

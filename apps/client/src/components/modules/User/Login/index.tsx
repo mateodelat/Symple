@@ -43,8 +43,10 @@ export default function Login (): JSX.Element {
       if (session.user.role === 'admin') push('/admin-panel')
       else if (
         session.user.enterprises !== undefined &&
-          session.user.enterprises.length > 0
-      ) { push(`/admin-panel/enterprise/${session.user.enterprises[0]}`) } else push('/not-assigned')
+        session.user.enterprises.length > 0
+      ) {
+        push(`/admin-panel/enterprise/${session.user.enterprises[0]}`)
+      } else push('/not-assigned')
     }
   }, [status, isLoggedIn, session])
 

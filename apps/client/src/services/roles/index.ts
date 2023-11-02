@@ -20,10 +20,7 @@ const create = async (payload: CreateRoleDTO): Promise<Role> => {
   return response
 }
 
-const update = async (
-  payload: EditRoleDTO,
-  id: string
-): Promise<Role> => {
+const update = async (payload: EditRoleDTO, id: string): Promise<Role> => {
   const newPayload = { ...payload }
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
@@ -44,9 +41,7 @@ const getAll = async (departmentId: string): Promise<Role[]> => {
   return response
 }
 
-const deleteRole = async (
-  id: string
-): Promise<ErrorObject> => {
+const deleteRole = async (id: string): Promise<ErrorObject> => {
   const response = await customFetch({
     baseUrl: `${baseUrl}/${id}`,
     method: 'DELETE'

@@ -50,5 +50,4 @@ export {
   Stepper,
   UploadFile,
   VerticalButton
-
 }

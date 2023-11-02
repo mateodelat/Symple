@@ -69,9 +69,15 @@ export default function AddUsers ({
   useEffect(() => {
     let finalMessage = ''
     if (data.length === 0) finalMessage = listEmptyMessages.noData
-    if (isFiltering && users.length === 0) { finalMessage = listEmptyMessages.notFound }
-    if (addedUsers.length > 0 && isFiltering && users.length === 0) { finalMessage = listEmptyMessages.noUsers }
-    if (!isFiltering && users.length === 0) { finalMessage = listEmptyMessages.startState }
+    if (isFiltering && users.length === 0) {
+      finalMessage = listEmptyMessages.notFound
+    }
+    if (addedUsers.length > 0 && isFiltering && users.length === 0) {
+      finalMessage = listEmptyMessages.noUsers
+    }
+    if (!isFiltering && users.length === 0) {
+      finalMessage = listEmptyMessages.startState
+    }
 
     setMessage(finalMessage)
   }, [filter, users, addedUsers, data])

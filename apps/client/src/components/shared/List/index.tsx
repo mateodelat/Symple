@@ -25,13 +25,10 @@ export default function List ({
             {newElement}
           </LinkButton>
       )}
-      {beforeListContent !== undefined && typeof beforeListContent === 'function'
-        ? (
-            beforeListContent()
-          )
-        : (
-            beforeListContent
-          )}
+      {beforeListContent !== undefined &&
+      typeof beforeListContent === 'function'
+        ? beforeListContent()
+        : beforeListContent}
       {list.length > 0
         ? (
         <>
@@ -46,12 +43,8 @@ export default function List ({
         <h2>{listEmptyMessage}</h2>
           )}
       {afterListContent !== undefined && typeof afterListContent === 'function'
-        ? (
-            afterListContent()
-          )
-        : (
-            afterListContent
-          )}
+        ? afterListContent()
+        : afterListContent}
     </section>
   )
 }
