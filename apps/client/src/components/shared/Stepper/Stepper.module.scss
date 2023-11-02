@@ -20,7 +20,7 @@
       &_active {
         background-color: variables.$primary-green-color !important;
       }
-      &:disabled{
+      &:disabled {
         cursor: not-allowed;
       }
     }
@@ -49,10 +49,13 @@
   }
 
   .wrapper {
-    align-self: flex-start;
     display: grid;
     grid-template-columns: 30px 2fr;
+    align-self: flex-start;
     place-items: center;
     gap: 0 1rem;
+    border: none;
+    background: none;
+    font-size: inherit;
   }
 }

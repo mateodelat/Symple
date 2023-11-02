@@ -69,18 +69,20 @@ export default function Stepper ({
           {steps.map(({ index }) => {
             return (
               <Fragment key={index}>
-                <div className={styles.wrapper}>
-                  <button
+                <button
+                  className={styles.wrapper}
+                  disabled={currentStep + 1 < index}
+                  onClick={() => {
+                    void handleSteps(index)
+                  }}
+                  type="button"
+                >
+                  <span
                     className={`${styles.stepper_container_button} ${
                       index <= currentStep
                         ? styles.stepper_container_button_active
                         : ''
                     }`}
-                    onClick={() => {
-                      void handleSteps(index)
-                    }}
-                    disabled={currentStep + 1 < index}
-                    type="button"
                   />
                   <span className={styles.stepper_container_title}>
                     {steps[index].name}
@@ -94,7 +96,7 @@ export default function Stepper ({
                       }`}
                     />
                   )}
-                </div>
+                </button>
               </Fragment>
             )
           })}
