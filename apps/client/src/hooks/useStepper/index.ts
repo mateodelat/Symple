@@ -1,35 +1,35 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react'
 
-import { type UseStepper } from "@/types";
+import { type UseStepper } from '@/types'
 
-export default function useStepper(): UseStepper {
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
+export default function useStepper (): UseStepper {
+  const [isBlocked, setIsBlocked] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0)
 
   const toggleBlocked = (value: boolean): void => {
-    setIsBlocked(value);
-  };
+    setIsBlocked(value)
+  }
 
   const nextStep = (): void => {
-    if (!isBlocked) setCurrentStep((prev) => prev + 1);
-  };
+    if (!isBlocked) setCurrentStep((prev) => prev + 1)
+  }
 
   const previousStep = (index?: number): void => {
-    setCurrentStep((prev) => index ?? prev - 1);
-    setIsBlocked(false);
-  };
+    setCurrentStep((prev) => index ?? prev - 1)
+    setIsBlocked(false)
+  }
 
   const reset = (): void => {
-    setCurrentStep(0);
-  };
+    setCurrentStep(0)
+  }
   return {
     currentStep,
     nextStep,
     previousStep,
     reset,
     isBlocked,
-    setIsBlocked: toggleBlocked,
-  };
+    setIsBlocked: toggleBlocked
+  }
 }

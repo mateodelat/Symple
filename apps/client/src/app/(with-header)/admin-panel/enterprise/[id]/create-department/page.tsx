@@ -1,5 +1,5 @@
-import DepartmentForm from "@components/modules/Department/DepartmentForm";
+import DepartmentForm from '@components/modules/Department/DepartmentForm'
 
-export default function CreateDepartmentPage(): JSX.Element {
-  return <DepartmentForm />;
+export default function CreateDepartmentPage (): JSX.Element {
+  return <DepartmentForm />
 }

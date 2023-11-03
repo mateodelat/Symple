@@ -1,13 +1,13 @@
-import { getSession } from "next-auth/react";
-import { returnResponse } from "@utils/response";
+import { getSession } from 'next-auth/react'
+import { returnResponse } from '@utils/response'
 
 interface FetchParams {
-  baseUrl: string;
-  method: string;
-  hasParser?: boolean;
-  options?: Record<string, any>;
-  body?: BodyInit;
-  headers?: HeadersInit;
+  baseUrl: string
+  method: string
+  hasParser?: boolean
+  options?: Record<string, any>
+  body?: BodyInit
+  headers?: HeadersInit
 }
 
 export const customFetch = async ({
@@ -16,18 +16,18 @@ export const customFetch = async ({
   body,
   hasParser,
   headers = {},
-  options = {},
+  options = {}
 }: FetchParams): Promise<any> => {
-  const session = await getSession();
+  const session = await getSession()
   const response = await fetch(baseUrl, {
     method,
     ...options,
     body: body ?? null,
     headers: {
       Authorization: `Bearer ${session?.accessToken as string}`,
-      ...headers,
-    },
-  });
+      ...headers
+    }
+  })
 
-  return await returnResponse(response, hasParser);
-};
+  return await returnResponse(response, hasParser)
+}

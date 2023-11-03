@@ -1,22 +1,22 @@
-"use client";
+'use client'
 
-import { type VerticalButtonProps } from "@/types";
-import styles from "./VerticalButton.module.scss";
-import React from "react";
-import { useToggle } from "@/hooks";
-import Popup from "../Popup";
+import { type VerticalButtonProps } from '@/types'
+import styles from './VerticalButton.module.scss'
+import React from 'react'
+import { useToggle } from '@/hooks'
+import Popup from '../Popup'
 
-export default function VerticalButton({
+export default function VerticalButton ({
   actions,
   elementId,
-  menuItems,
+  menuItems
 }: VerticalButtonProps): JSX.Element {
-  const { value: isPopupOpen, toggle: togglePopup } = useToggle();
+  const { value: isPopupOpen, toggle: togglePopup } = useToggle()
 
   const handleClick = (e: React.MouseEvent): void => {
-    e.stopPropagation();
-    togglePopup();
-  };
+    e.stopPropagation()
+    togglePopup()
+  }
   return (
     <>
       <button className={styles.button} onClick={handleClick}>
@@ -33,5 +33,5 @@ export default function VerticalButton({
         </>
       )}
     </>
-  );
+  )
 }

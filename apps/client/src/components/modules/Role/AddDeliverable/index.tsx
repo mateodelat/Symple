@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import Button from "@components/shared/Button";
-import AddDeliverableForm from "@components/modules/Role/AddDeliverableForm";
-import { type AddDeliverableProps } from "@/types";
-import styles from "./AddDeliverable.module.scss";
-import { Droppable } from "@hello-pangea/dnd";
+import Button from '@components/shared/Button'
+import AddDeliverableForm from '@components/modules/Role/AddDeliverableForm'
+import { type AddDeliverableProps } from '@/types'
+import styles from './AddDeliverable.module.scss'
+import { Droppable } from '@hello-pangea/dnd'
 
-export default function AddDeliverable({
+export default function AddDeliverable ({
   addedDeliverables,
   addDeliverable,
   updateDeliverable,
   deleteDeliverable,
-  setIsBlocked,
+  setIsBlocked
 }: AddDeliverableProps): JSX.Element {
   const everyFieldsAreFilled: boolean = addedDeliverables.every(
-    (deliverable) => deliverable.name !== "",
-  );
+    (deliverable) => deliverable.name !== ''
+  )
 
   return (
     <section className={styles.container}>
@@ -42,15 +42,15 @@ export default function AddDeliverable({
       </Droppable>
       <Button
         onClick={() => {
-          addDeliverable();
+          addDeliverable()
         }}
         props={{
-          disabled: !everyFieldsAreFilled,
+          disabled: !everyFieldsAreFilled
         }}
         className={styles.container_button}
       >
         Nuevo Entregable
       </Button>
     </section>
-  );
+  )
 }

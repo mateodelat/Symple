@@ -1,9 +1,9 @@
-import Login from "@components/modules/User/Login";
+import Login from '@components/modules/User/Login'
 
-export default function HomePage(): JSX.Element {
+export default function HomePage (): JSX.Element {
   return (
     <div>
       <Login />
     </div>
-  );
+  )
 }

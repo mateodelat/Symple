@@ -1,11 +1,11 @@
-import { type CardProps } from "@/types";
-import styles from "./CardDragabble.module.scss";
+import { type CardProps } from '@/types'
+import styles from './CardDragabble.module.scss'
 
-export default function CardDraggable({
+export default function CardDraggable ({
   children,
-  className = "",
+  className = '',
   onClick = () => {},
-  title = "Ir a detalle",
+  title = 'Ir a detalle'
 }: CardProps): JSX.Element {
   return (
     <article
@@ -15,5 +15,5 @@ export default function CardDraggable({
     >
       {children}
     </article>
-  );
+  )
 }

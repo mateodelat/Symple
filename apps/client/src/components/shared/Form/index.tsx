@@ -1,64 +1,64 @@
-"use client";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { forwardRef, useEffect, useImperativeHandle } from "react";
+'use client'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { forwardRef, useEffect, useImperativeHandle } from 'react'
 
-import { Button, FormSection, Stepper } from "@components/shared/";
-import { type FormProps } from "@/types";
-import styles from "./Form.module.scss";
-import { useStepper } from "@/hooks";
+import { Button, FormSection, Stepper } from '@components/shared/'
+import { type FormProps } from '@/types'
+import styles from './Form.module.scss'
+import { useStepper } from '@/hooks'
 
 const Form = forwardRef(
   (
     {
       sections,
       schema,
-      buttonSubmit = "Enviar",
+      buttonSubmit = 'Enviar',
       onSubmit,
-      className = "",
-      fieldsClassName = "",
+      className = '',
+      fieldsClassName = '',
       children,
       setFormMethods,
       files,
       handleFiles,
       customFields,
       isStepper = false,
-      steps = [],
+      steps = []
     }: FormProps,
-    ref,
+    ref
   ): JSX.Element => {
     const formMethods = useForm({
       resolver: yupResolver(schema),
-      mode: "all",
-    });
+      mode: 'all'
+    })
 
     const {
       register,
       handleSubmit,
       formState: { errors },
-      trigger,
-    } = formMethods;
+      trigger
+    } = formMethods
 
     useEffect(() => {
       if (setFormMethods !== undefined) {
-        setFormMethods(formMethods);
+        setFormMethods(formMethods)
       }
-    }, [setFormMethods]);
+    }, [setFormMethods])
 
     const { currentStep, nextStep, previousStep, reset, isBlocked } =
-      useStepper();
+      useStepper()
 
     const checkErrors = async (fieldsToCheck: string[]): Promise<boolean> => {
-      const isValid = await trigger(fieldsToCheck);
-      return isValid;
-    };
+      const isValid = await trigger(fieldsToCheck)
+      return isValid
+    }
 
     useImperativeHandle(ref, () => {
       return {
         reset,
-        isBlocked,
-      };
-    });
+        isBlocked
+      }
+    })
 
     return (
       <div className={styles.container}>
@@ -66,7 +66,7 @@ const Form = forwardRef(
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={handleSubmit(onSubmit)}
           className={`${styles.container_form} ${
-            isStepper ? styles.container_form_stepper : ""
+            isStepper ? styles.container_form_stepper : ''
           } ${className}`}
         >
           {isStepper && (
@@ -81,7 +81,7 @@ const Form = forwardRef(
                 ?.fields.map(({ name }) => name)}
             />
           )}
-          {sections.map(({ title, fields, className = "" }, i) => {
+          {sections.map(({ title, fields, className = '' }, i) => {
             return isStepper ? (
               currentStep === i && (
                 <FormSection
@@ -108,9 +108,9 @@ const Form = forwardRef(
                       onClick={async () => {
                         // if(fields.some(({elementType}) => elementType === 'custom'))
                         const isValid = await checkErrors(
-                          fields.map(({ name }) => name),
-                        );
-                        if (isValid) nextStep();
+                          fields.map(({ name }) => name)
+                        )
+                        if (isValid) nextStep()
                       }}
                     >
                       Siguiente
@@ -130,7 +130,7 @@ const Form = forwardRef(
                 handleFiles={handleFiles}
                 key={title.name}
               />
-            );
+            )
           })}
           {children}
           {!isStepper && (
@@ -140,8 +140,8 @@ const Form = forwardRef(
           )}
         </form>
       </div>
-    );
-  },
-);
+    )
+  }
+)
 
-export default Form;
+export default Form

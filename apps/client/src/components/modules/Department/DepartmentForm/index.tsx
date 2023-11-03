@@ -1,27 +1,27 @@
-"use client";
+'use client'
 
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-import { type CreateDepartmentDTO, type AppState } from "@/types";
-import Form from "@components/shared/Form";
-import AddDepartment from "@components/modules/Department/AddDepartment";
-import { sections, schema } from "@constants/DepartmentForm";
-import toast from "react-hot-toast";
-import departmentsService from "@/services/departments";
-import { useDepartmentContext } from "@/contexts";
-import styles from "./DepartmentForm.module.scss";
+import { type CreateDepartmentDTO, type AppState } from '@/types'
+import Form from '@components/shared/Form'
+import AddDepartment from '@components/modules/Department/AddDepartment'
+import { sections, schema } from '@constants/DepartmentForm'
+import toast from 'react-hot-toast'
+import departmentsService from '@/services/departments'
+import { useDepartmentContext } from '@/contexts'
+import styles from './DepartmentForm.module.scss'
 
-export default function DepartmentForm(): JSX.Element {
-  const { back } = useRouter();
-  const pathname = usePathname();
+export default function DepartmentForm (): JSX.Element {
+  const { back } = useRouter()
+  const pathname = usePathname()
 
-  const { addDepartment } = useDepartmentContext();
-  const enterprise = pathname.split("/")[3];
-  const [department, setDepartment] = useState<AppState["department"]>({
-    name: "",
-    subDepartments: [],
-  });
+  const { addDepartment } = useDepartmentContext()
+  const enterprise = pathname.split('/')[3]
+  const [department, setDepartment] = useState<AppState['department']>({
+    name: '',
+    subDepartments: []
+  })
 
   const [customFields, setCustomFields] = useState({
     department: () => (
@@ -29,8 +29,8 @@ export default function DepartmentForm(): JSX.Element {
         department={department}
         handleDepartmentChange={setDepartment}
       />
-    ),
-  });
+    )
+  })
 
   useEffect(() => {
     setCustomFields({
@@ -39,37 +39,37 @@ export default function DepartmentForm(): JSX.Element {
           department={department}
           handleDepartmentChange={setDepartment}
         />
-      ),
-    });
-  }, [department]);
+      )
+    })
+  }, [department])
 
   const handleSubmit = async (): Promise<void> => {
-    let isSuccess = false;
+    let isSuccess = false
     try {
-      const payload = structuredClone(department);
+      const payload = structuredClone(department)
       if (payload !== null) {
-        if (payload.subDepartments === undefined) payload.subDepartments = [];
+        if (payload.subDepartments === undefined) payload.subDepartments = []
         if (payload?.subDepartments !== undefined) {
           for (const subDepartment of payload.subDepartments) {
-            if (subDepartment.name === "") {
+            if (subDepartment.name === '') {
               toast.error(
-                "El nombre del subdepartamento no puede estar vacío.",
-              );
-              return;
+                'El nombre del subdepartamento no puede estar vacío.'
+              )
+              return
             }
             if (subDepartment.subDepartments !== undefined) {
               for (const lastSubDepartment of subDepartment.subDepartments) {
-                if (lastSubDepartment.name === "") {
+                if (lastSubDepartment.name === '') {
                   toast.error(
-                    "El nombre del subdepartamento no puede estar vacío.",
-                  );
-                  return;
+                    'El nombre del subdepartamento no puede estar vacío.'
+                  )
+                  return
                 }
               }
             }
           }
         }
-        const { ...rest } = payload;
+        const { ...rest } = payload
 
         const cleanPayload: CreateDepartmentDTO = {
           name: rest.name,
@@ -78,29 +78,29 @@ export default function DepartmentForm(): JSX.Element {
             name: subDepartment.name,
             subDepartments: subDepartment.subDepartments.map((last) => ({
               name: last.name,
-              subDepartments: [],
-            })),
-          })),
-        };
+              subDepartments: []
+            }))
+          }))
+        }
 
         await toast.promise(departmentsService.create(cleanPayload), {
-          loading: "Creando departamento...",
+          loading: 'Creando departamento...',
           error: (err: any) => err.message,
           success: (response) => {
-            addDepartment(response);
-            isSuccess = true;
-            return `Departamento ${response.name} creado con éxito.`;
-          },
-        });
+            addDepartment(response)
+            isSuccess = true
+            return `Departamento ${response.name} creado con éxito.`
+          }
+        })
       }
     } catch {}
 
     if (isSuccess) {
       setTimeout(() => {
-        back();
-      }, 300);
+        back()
+      }, 300)
     }
-  };
+  }
 
   return (
     <Form
@@ -110,5 +110,5 @@ export default function DepartmentForm(): JSX.Element {
       customFields={customFields}
       fieldsClassName={styles.fields}
     />
-  );
+  )
 }

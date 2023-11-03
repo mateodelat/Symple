@@ -1,10 +1,10 @@
-import AddDeliverable from "./AddDeliverable";
-import AddFunction from "./AddFunction";
-import AddIndicator from "./AddIndicator";
-import AddRoleName from "./AddRoleName";
-import CardRole from "./CardRole";
-import CardMember from "./CardMember";
-import CardPosition from "./CardPosition";
+import AddDeliverable from './AddDeliverable'
+import AddFunction from './AddFunction'
+import AddIndicator from './AddIndicator'
+import AddRoleName from './AddRoleName'
+import CardRole from './CardRole'
+import CardMember from './CardMember'
+import CardPosition from './CardPosition'
 
 export {
   AddDeliverable,
@@ -13,5 +13,5 @@ export {
   AddRoleName,
   CardRole,
   CardMember,
-  CardPosition,
-};
+  CardPosition
+}

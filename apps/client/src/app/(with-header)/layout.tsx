@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 
-import { BackButton, Header } from "@components/shared/";
-import styles from "@styles/WithHeader.module.scss";
+import { BackButton, Header } from '@components/shared/'
+import styles from '@styles/WithHeader.module.scss'
 
-export default function WithHeaderLayout({
-  children,
+export default function WithHeaderLayout ({
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }): JSX.Element {
   return (
     <main className={styles.main}>
@@ -14,5 +14,5 @@ export default function WithHeaderLayout({
       <BackButton />
       {children}
     </main>
-  );
+  )
 }

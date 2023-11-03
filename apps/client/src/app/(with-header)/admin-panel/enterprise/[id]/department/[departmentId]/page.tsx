@@ -1,8 +1,8 @@
-import DepartmentAdministration from "@components/modules/Department/DepartmentAdministration";
-import { type DepartmentPageProps } from "@/types";
+import DepartmentAdministration from '@components/modules/Department/DepartmentAdministration'
+import { type DepartmentPageProps } from '@/types'
 
-export default function DepartmentPage({
-  params,
+export default function DepartmentPage ({
+  params
 }: DepartmentPageProps): JSX.Element {
-  return <DepartmentAdministration id={params.departmentId} />;
+  return <DepartmentAdministration id={params.departmentId} />
 }

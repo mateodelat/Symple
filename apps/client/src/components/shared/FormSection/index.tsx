@@ -1,8 +1,8 @@
-import { As, UploadFile, SelectField } from "@components/shared/";
-import { type FileState, type FormSectionProps } from "@/types";
-import styles from "./FormSection.module.scss";
+import { As, UploadFile, SelectField } from '@components/shared/'
+import { type FileState, type FormSectionProps } from '@/types'
+import styles from './FormSection.module.scss'
 
-export default function FormSection({
+export default function FormSection ({
   title,
   fields,
   fieldsClassName,
@@ -11,7 +11,7 @@ export default function FormSection({
   files,
   handleFiles,
   customFields,
-  children,
+  children
 }: FormSectionProps): JSX.Element {
   return (
     <div key={title.name} className={styles.section}>
@@ -20,13 +20,13 @@ export default function FormSection({
         {fields.map(
           ({
             name,
-            type = "text",
+            type = 'text',
             label,
             placeholder,
             elementType,
             options,
             props,
-            style = {},
+            style = {}
           }) => (
             <div
               key={name}
@@ -40,21 +40,21 @@ export default function FormSection({
                   </strong>
                 </label>
               )}
-              {elementType === "select" ? (
+              {elementType === 'select' ? (
                 <SelectField
                   name={name}
                   options={options ?? []}
                   props={props}
                   register={register}
                 />
-              ) : elementType === "file" ? (
+              ) : elementType === 'file' ? (
                 <UploadFile
                   file={files?.find((file) => file.name === name) as FileState}
                   handleSelectedFile={handleFiles ?? (() => {})}
                   id={name}
                   props={props ?? {}}
                 />
-              ) : elementType === "textarea" ? (
+              ) : elementType === 'textarea' ? (
                 <textarea
                   id={name}
                   placeholder={placeholder}
@@ -62,9 +62,9 @@ export default function FormSection({
                   {...props}
                   className={styles.section_wrapper_textarea}
                 />
-              ) : elementType === "custom" ? (
+              ) : elementType === 'custom' ? (
                 customFields?.[name]()
-              ) : elementType === "none" ? null : (
+              ) : elementType === 'none' ? null : (
                 <input
                   id={name}
                   type={type}
@@ -74,17 +74,17 @@ export default function FormSection({
                 />
               )}
               {errors[name] !== null &&
-                elementType !== "custom" &&
-                elementType !== "none" && (
+                elementType !== 'custom' &&
+                elementType !== 'none' && (
                   <span className={styles.section_wrapper_error}>
                     {errors[name]?.message as string}
                   </span>
-                )}
+              )}
             </div>
-          ),
+          )
         )}
       </div>
       {children}
     </div>
-  );
+  )
 }

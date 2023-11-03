@@ -1,40 +1,40 @@
-"use client";
+'use client'
 
 import {
   Draggable,
-  type DraggableProvidedDragHandleProps,
-} from "@hello-pangea/dnd";
+  type DraggableProvidedDragHandleProps
+} from '@hello-pangea/dnd'
 
-import DraggableInput from "@/components/shared/DraggableInput";
-import useCheckErrors from "@/hooks/useCheckErrors";
-import { type AddFunctionFormProps } from "@/types";
-import styles from "./AddFunctionForm.module.scss";
-import { useEffect } from "react";
+import DraggableInput from '@/components/shared/DraggableInput'
+import useCheckErrors from '@/hooks/useCheckErrors'
+import { type AddFunctionFormProps } from '@/types'
+import styles from './AddFunctionForm.module.scss'
+import { useEffect } from 'react'
 
-export default function AddFunctionForm({
+export default function AddFunctionForm ({
   canBeDeleted,
   index,
   deleteFunction,
   functionState,
   updateFunction,
-  setIsBlocked,
+  setIsBlocked
 }: AddFunctionFormProps): JSX.Element {
   const { errors, handleErrors } = useCheckErrors({
-    fields: { functionName: "" },
-  });
-  const { functionName } = errors;
+    fields: { functionName: '' }
+  })
+  const { functionName } = errors
 
   const handleUpdate = (value: string): void => {
-    const functionAux = structuredClone(functionState);
-    functionAux.name = value;
-    updateFunction(index, functionAux);
-  };
+    const functionAux = structuredClone(functionState)
+    functionAux.name = value
+    updateFunction(index, functionAux)
+  }
 
   useEffect(() => {
-    if (Object.values(errors).every((val) => val === "")) {
-      setIsBlocked(false);
-    } else setIsBlocked(true);
-  }, [errors]);
+    if (Object.values(errors).every((val) => val === '')) {
+      setIsBlocked(false)
+    } else setIsBlocked(true)
+  }, [errors])
 
   return (
     <Draggable draggableId={index.toString()} index={index}>
@@ -58,11 +58,11 @@ export default function AddFunctionForm({
             placeholder="Función"
             value={functionState.name}
           />
-          {functionName !== "" && (
+          {functionName !== '' && (
             <span className={styles.error}>{functionName}</span>
           )}
         </article>
       )}
     </Draggable>
-  );
+  )
 }

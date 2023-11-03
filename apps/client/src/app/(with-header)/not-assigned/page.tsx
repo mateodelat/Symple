@@ -1,5 +1,5 @@
-import NoEnterprise from "@components/modules/Enterprise/NoEnterprise";
+import NoEnterprise from '@components/modules/Enterprise/NoEnterprise'
 
-export default function NotAssignedPage(): JSX.Element {
-  return <NoEnterprise />;
+export default function NotAssignedPage (): JSX.Element {
+  return <NoEnterprise />
 }

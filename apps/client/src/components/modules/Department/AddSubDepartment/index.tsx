@@ -1,15 +1,15 @@
-"use client";
+'use client'
 
-import { type AddSubdepartmentProps } from "@/types";
-import styles from "./AddSubDepartment.module.scss";
-import ButtonIcon from "@components/shared/ButtonIcon";
-import { v4 as uuidv4 } from "uuid";
+import { type AddSubdepartmentProps } from '@/types'
+import styles from './AddSubDepartment.module.scss'
+import ButtonIcon from '@components/shared/ButtonIcon'
+import { v4 as uuidv4 } from 'uuid'
 
-export default function AddSubDepartment({
+export default function AddSubDepartment ({
   handleDepartmentChange,
   index,
   department,
-  isEditMode = false,
+  isEditMode = false
 }: AddSubdepartmentProps): JSX.Element {
   return (
     <div className={styles.container}>
@@ -23,28 +23,28 @@ export default function AddSubDepartment({
           }
           onChange={(e) => {
             handleDepartmentChange((prev) => {
-              const newDepartment = { ...prev };
-              newDepartment.subDepartments[index].name = e.target.value;
-              return newDepartment;
-            });
+              const newDepartment = { ...prev }
+              newDepartment.subDepartments[index].name = e.target.value
+              return newDepartment
+            })
           }}
         />
         <ButtonIcon
-          icon={"/trash_bin.svg"}
+          icon={'/trash_bin.svg'}
           className={styles.container_wrapper_button}
           props={{
             onClick: () => {
               handleDepartmentChange((prev) => {
-                const newDepartment = { ...prev };
-                const aux = newDepartment.subDepartments;
+                const newDepartment = { ...prev }
+                const aux = newDepartment.subDepartments
                 const subDepartments = [
                   ...aux?.slice(0, index),
-                  ...aux?.slice(index + 1, aux.length),
-                ];
-                newDepartment.subDepartments = subDepartments;
-                return newDepartment;
-              });
-            },
+                  ...aux?.slice(index + 1, aux.length)
+                ]
+                newDepartment.subDepartments = subDepartments
+                return newDepartment
+              })
+            }
           }}
         />
       </div>
@@ -53,15 +53,15 @@ export default function AddSubDepartment({
         type="button"
         onClick={() => {
           handleDepartmentChange((prev) => {
-            const newDepartment = { ...prev };
+            const newDepartment = { ...prev }
 
             newDepartment.subDepartments[index].subDepartments?.push({
-              name: "",
+              name: '',
               subDepartments: [],
-              id: uuidv4(),
-            });
-            return newDepartment;
-          });
+              id: uuidv4()
+            })
+            return newDepartment
+          })
         }}
         className={styles.container_button}
       >
@@ -76,28 +76,28 @@ export default function AddSubDepartment({
               value={isEditMode ? last.name : undefined}
               onChange={(e) => {
                 handleDepartmentChange((prev: any) => {
-                  const newDepartment = { ...prev };
+                  const newDepartment = { ...prev }
                   newDepartment.subDepartments[index].subDepartments[i].name =
-                    e.target.value;
-                  return newDepartment;
-                });
+                    e.target.value
+                  return newDepartment
+                })
               }}
             />
             <ButtonIcon
-              icon={"/trash_bin.svg"}
+              icon={'/trash_bin.svg'}
               props={{
                 onClick: () => {
                   handleDepartmentChange((prev) => {
-                    const newDepartment = { ...prev };
+                    const newDepartment = { ...prev }
                     const aux =
-                      newDepartment.subDepartments[index].subDepartments;
+                      newDepartment.subDepartments[index].subDepartments
 
-                    aux.splice(i, 1);
+                    aux.splice(i, 1)
 
-                    newDepartment.subDepartments[index].subDepartments = aux;
-                    return newDepartment;
-                  });
-                },
+                    newDepartment.subDepartments[index].subDepartments = aux
+                    return newDepartment
+                  })
+                }
               }}
               className={styles.container_wrapper_button}
             />
@@ -105,5 +105,5 @@ export default function AddSubDepartment({
         </div>
       ))}
     </div>
-  );
+  )
 }

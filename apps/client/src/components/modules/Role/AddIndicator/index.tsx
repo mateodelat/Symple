@@ -1,27 +1,27 @@
-"use client";
+'use client'
 
-import Button from "@components/shared/Button";
-import AddIndicatorForm from "@components/modules/Role/AddIndicatorForm";
-import { type AddIndicatorProps, IndicatorType } from "@/types";
-import styles from "./AddIndicator.module.scss";
-import { Droppable } from "@hello-pangea/dnd";
+import Button from '@components/shared/Button'
+import AddIndicatorForm from '@components/modules/Role/AddIndicatorForm'
+import { type AddIndicatorProps, IndicatorType } from '@/types'
+import styles from './AddIndicator.module.scss'
+import { Droppable } from '@hello-pangea/dnd'
 
-export default function AddIndicator({
+export default function AddIndicator ({
   addedIndicators,
   addIndicator,
   deleteIndicator,
   updateIndicator,
   addedUsers,
   setAddedUsers,
-  setIsBlocked,
+  setIsBlocked
 }: AddIndicatorProps): JSX.Element {
   const everyFieldsAreFilled = addedIndicators.every(
     (indicator) =>
-      indicator.name !== "" &&
+      indicator.name !== '' &&
       (indicator.type === IndicatorType.FINANCIAL_OBJECTIVE
         ? Number(indicator.amount) > 0
-        : true),
-  );
+        : true)
+  )
 
   return (
     <section className={styles.container}>
@@ -50,15 +50,15 @@ export default function AddIndicator({
       </Droppable>
       <Button
         onClick={() => {
-          addIndicator();
+          addIndicator()
         }}
         props={{
-          disabled: !everyFieldsAreFilled,
+          disabled: !everyFieldsAreFilled
         }}
         className={styles.container_button}
       >
         Nuevo indicador
       </Button>
     </section>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import LinkButton from "@components/shared/LinkButton";
-import { type ListProps } from "@/types";
-import styles from "./List.module.scss";
+import LinkButton from '@components/shared/LinkButton'
+import { type ListProps } from '@/types'
+import styles from './List.module.scss'
 
-export default function List({
+export default function List ({
   list,
   canCreateElement,
   newElement,
@@ -14,7 +14,7 @@ export default function List({
   afterListContent,
   Card,
   cardProps = {},
-  className = "",
+  className = ''
 }: ListProps): JSX.Element {
   return (
     <section className={styles.list}>
@@ -24,9 +24,9 @@ export default function List({
           <LinkButton className={styles.list_button} href={newElementPage}>
             {newElement}
           </LinkButton>
-        )}
+      )}
       {beforeListContent !== undefined &&
-      typeof beforeListContent === "function"
+      typeof beforeListContent === 'function'
         ? beforeListContent()
         : beforeListContent}
       {list.length > 0 ? (
@@ -40,9 +40,9 @@ export default function List({
       ) : (
         <h2>{listEmptyMessage}</h2>
       )}
-      {afterListContent !== undefined && typeof afterListContent === "function"
+      {afterListContent !== undefined && typeof afterListContent === 'function'
         ? afterListContent()
         : afterListContent}
     </section>
-  );
+  )
 }
