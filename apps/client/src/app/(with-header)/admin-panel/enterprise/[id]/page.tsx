@@ -38,8 +38,7 @@ export default function EnterprisePage ({
     }
   }, [isLoading, departmentsAreLoading, departments])
 
-  return enterprise !== undefined
-    ? (
+  return enterprise !== undefined ? (
     <DepartmentList
       departments={filteredDepartments}
       enterpriseId={params.id}
@@ -47,10 +46,9 @@ export default function EnterprisePage ({
       updateDepartment={updateDepartment}
       deleteDepartment={deleteDepartment}
     />
-      )
-    : (
+  ) : (
     <div className={styles.container}>
       <Loader className={styles.container_loader} />
     </div>
-      )
+  )
 }

@@ -18,8 +18,7 @@ export default function Popup ({
           <ul className={styles.card_list}>
             {menuItems.map(({ id, label, icon, isLink, navigate }) => (
               <li key={label} className={styles.card_list_element}>
-                {isLink && navigate !== undefined
-                  ? (
+                {isLink && navigate !== undefined ? (
                   <Link
                     className={styles.card_list_element_wrapper}
                     href={navigate.replace(ID_TO_REPLACE, elementId)}
@@ -32,8 +31,7 @@ export default function Popup ({
                     )}
                     <strong>{label}</strong>
                   </Link>
-                    )
-                  : (
+                ) : (
                   <button
                     className={`${styles.card_list_element_wrapper} ${styles.card_list_element_wrapper_button}`}
                     type="button"
@@ -49,7 +47,7 @@ export default function Popup ({
                       <strong>{label}</strong>
                     </span>
                   </button>
-                    )}
+                )}
               </li>
             ))}
           </ul>

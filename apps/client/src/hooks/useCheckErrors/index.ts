@@ -32,7 +32,9 @@ export default function useCheckErrors ({
       !/^-?\d+(\.\d{0,2})?$/.test(value) &&
       isNumber &&
       isPercentage
-    ) { error = percentage } else if (Number(value) <= 0 && isPercentage) error = min
+    ) {
+      error = percentage
+    } else if (Number(value) <= 0 && isPercentage) error = min
     else if (Number(value) > 100 && isPercentage) error = max
 
     setErrors((prev) => ({

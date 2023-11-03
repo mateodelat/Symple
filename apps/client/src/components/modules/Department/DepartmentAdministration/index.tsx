@@ -171,21 +171,19 @@ export default function DepartmentAdministration ({
         {element?.name === 'members' && <div>MembersList</div>}
         {element?.name === 'positions' && <div>PositionsList</div>}
         {element?.name === 'roles' &&
-          (isLoading
-            ? (
+          (isLoading ? (
             <div className={styles.loader}>
               <h3>Cargando...</h3>
               <Loader />
             </div>
-              )
-            : (
+          ) : (
             <AccordionList
               data={filteredRoles}
               cardType="role"
               menuItems={RoleMenuItems}
               actions={{ edit: handleEditRole, delete: handleDeleteRoleModal }}
             />
-              ))}
+          ))}
       </div>
 
       <Modal

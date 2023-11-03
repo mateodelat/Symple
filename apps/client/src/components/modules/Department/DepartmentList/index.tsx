@@ -140,12 +140,9 @@ export default function DepartmentList ({
           Crear departamento
         </LinkButton>
       )}
-      {departments.length === 0
-        ? (
+      {departments.length === 0 ? (
         <h3>No existen departamentos en esta empresa...</h3>
-          )
-        : canCreate && windowSize < 1024
-          ? (
+      ) : canCreate && windowSize < 1024 ? (
         <>
           <Button
             onClick={() => {
@@ -170,13 +167,11 @@ export default function DepartmentList ({
           )}
           <h3 className={styles.container_title}>{title}</h3>
         </>
-            )
-          : (
+      ) : (
         <>
           <div className={styles.desktop_wrapper}>
             <h2 className={styles.desktop_wrapper_title}>{title}</h2>
-            {!isEditing
-              ? (
+            {!isEditing ? (
               <ButtonIcon
                 icon={'/pencil-white.svg'}
                 width={30}
@@ -188,8 +183,7 @@ export default function DepartmentList ({
                 }}
                 className={styles.desktop_wrapper_buttons_btn}
               />
-                )
-              : (
+            ) : (
               <div className={styles.desktop_wrapper_buttons}>
                 <ButtonIcon
                   icon={'/x.svg'}
@@ -214,14 +208,13 @@ export default function DepartmentList ({
                   className={styles.desktop_wrapper_buttons_btn}
                 />
               </div>
-                )}
+            )}
           </div>
         </>
-            )}
+      )}
       <div className={styles.list}>
         {departmentsState.map((department) =>
-          !isEditing
-            ? (
+          !isEditing ? (
             <CardDepartment
               element={department}
               key={department.id}
@@ -229,15 +222,14 @@ export default function DepartmentList ({
                 handleCardClick(department.id)
               }}
             />
-              )
-            : (
+          ) : (
             <CardDepartmentEdit
               element={department}
               key={department.id}
               updateDepartment={handleDepartmentChanges}
               deleteDepartment={handleDepartmentDelete}
             />
-              )
+          )
         )}
       </div>
       <Modal

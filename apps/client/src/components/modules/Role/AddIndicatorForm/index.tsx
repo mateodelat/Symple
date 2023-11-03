@@ -79,7 +79,9 @@ export default function AddIndicatorForm ({
     setAddedUsers((prev) => {
       const newAddedUsers = structuredClone(prev)
       const userIndex = newAddedUsers.findIndex((user) => user.index === index)
-      if (userIndex !== -1) { newAddedUsers[userIndex].addedUsers = localAddedUsers } else newAddedUsers.push({ index, addedUsers: localAddedUsers })
+      if (userIndex !== -1) {
+        newAddedUsers[userIndex].addedUsers = localAddedUsers
+      } else newAddedUsers.push({ index, addedUsers: localAddedUsers })
       return newAddedUsers
     })
   }, [localAddedUsers])

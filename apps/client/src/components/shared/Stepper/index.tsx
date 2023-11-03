@@ -30,8 +30,7 @@ export default function Stepper ({
           {steps[currentStep].name}
         </span>
       )}
-      {windowSize < 1024
-        ? (
+      {windowSize < 1024 ? (
         <div className={styles.stepper_container}>
           {steps.map(({ index }) => {
             return (
@@ -63,8 +62,7 @@ export default function Stepper ({
             )
           })}
         </div>
-          )
-        : (
+      ) : (
         <aside className={styles.stepper_container}>
           {steps.map(({ index }) => {
             return (
@@ -101,7 +99,7 @@ export default function Stepper ({
             )
           })}
         </aside>
-          )}
+      )}
     </div>
   )
 }

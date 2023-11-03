@@ -40,26 +40,21 @@ export default function FormSection ({
                   </strong>
                 </label>
               )}
-              {elementType === 'select'
-                ? (
+              {elementType === 'select' ? (
                 <SelectField
                   name={name}
                   options={options ?? []}
                   props={props}
                   register={register}
                 />
-                  )
-                : elementType === 'file'
-                  ? (
+              ) : elementType === 'file' ? (
                 <UploadFile
                   file={files?.find((file) => file.name === name) as FileState}
                   handleSelectedFile={handleFiles ?? (() => {})}
                   id={name}
                   props={props ?? {}}
                 />
-                    )
-                  : elementType === 'textarea'
-                    ? (
+              ) : elementType === 'textarea' ? (
                 <textarea
                   id={name}
                   placeholder={placeholder}
@@ -67,14 +62,9 @@ export default function FormSection ({
                   {...props}
                   className={styles.section_wrapper_textarea}
                 />
-                      )
-                    : elementType === 'custom'
-                      ? (
-                          customFields?.[name]()
-                        )
-                      : elementType === 'none'
-                        ? null
-                        : (
+              ) : elementType === 'custom' ? (
+                customFields?.[name]()
+              ) : elementType === 'none' ? null : (
                 <input
                   id={name}
                   type={type}
@@ -82,7 +72,7 @@ export default function FormSection ({
                   {...register(name)}
                   {...props}
                 />
-                          )}
+              )}
               {errors[name] !== null &&
                 elementType !== 'custom' &&
                 elementType !== 'none' && (

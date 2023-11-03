@@ -251,7 +251,9 @@ export default function AddRole ({
             if (
               source.index === destination.index &&
               source.droppableId === destination.droppableId
-            ) { return }
+            ) {
+              return
+            }
             reorder(source.index, destination.index, source.droppableId)
           }}
         >
@@ -301,17 +303,15 @@ export default function AddRole ({
                 />
               )}
             </div>
-            {currentStep < roleSteps.length - 1
-              ? (
+            {currentStep < roleSteps.length - 1 ? (
               <Button onClick={nextStep} className={styles.modal_next}>
                 Siguiente
               </Button>
-                )
-              : (
+            ) : (
               <Button onClick={handleSubmit} className={styles.modal_next}>
                 Guardar rol
               </Button>
-                )}
+            )}
           </section>
         </DragDropContext>
       )}

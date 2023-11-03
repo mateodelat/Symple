@@ -10,11 +10,9 @@ export default function EnterpriseList (): JSX.Element {
   const { data: session, status } = useSession()
   return (
     <>
-      {isLoading
-        ? (
+      {isLoading ? (
         <h2>Cargando empresas...</h2>
-          )
-        : (
+      ) : (
         <>
           <List
             list={enterprises}
@@ -27,7 +25,7 @@ export default function EnterpriseList (): JSX.Element {
             Card={CardEnterpriseEdit}
           />
         </>
-          )}
+      )}
     </>
   )
 }

@@ -61,13 +61,11 @@ export default function UploadFile ({
         {text}
       </Button>
 
-      {file?.file === undefined
-        ? (
+      {file?.file === undefined ? (
         <span className={styles.container_text}>
           No hay archivos seleccionados...
         </span>
-          )
-        : (
+      ) : (
         <>
           {image !== '' && (
             <div className={styles.image}>
@@ -80,7 +78,7 @@ export default function UploadFile ({
             </div>
           )}
         </>
-          )}
+      )}
     </div>
   )
 }

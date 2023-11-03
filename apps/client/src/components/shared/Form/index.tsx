@@ -65,8 +65,9 @@ const Form = forwardRef(
         <form
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={handleSubmit(onSubmit)}
-          className={`${styles.container_form} ${isStepper ? styles.container_form_stepper : ''
-            } ${className}`}
+          className={`${styles.container_form} ${
+            isStepper ? styles.container_form_stepper : ''
+          } ${className}`}
         >
           {isStepper && (
             <Stepper
@@ -94,28 +95,27 @@ const Form = forwardRef(
                   handleFiles={handleFiles}
                   key={title.name}
                 >
-                  {currentStep === steps.length - 1
-                    ? (
-                      <Button
-                        className={styles.container_form_button}
-                        type="submit"
-                      >
-                        {buttonSubmit}
-                      </Button>
-                      ) : (
-                      <Button
-                        className={styles.container_form_button}
-                        onClick={async () => {
-                          // if(fields.some(({elementType}) => elementType === 'custom'))
-                          const isValid = await checkErrors(
-                            fields.map(({ name }) => name)
-                          )
-                          if (isValid) nextStep()
-                        }}
-                      >
-                        Siguiente
-                      </Button>
-                      )}
+                  {currentStep === steps.length - 1 ? (
+                    <Button
+                      className={styles.container_form_button}
+                      type="submit"
+                    >
+                      {buttonSubmit}
+                    </Button>
+                  ) : (
+                    <Button
+                      className={styles.container_form_button}
+                      onClick={async () => {
+                        // if(fields.some(({elementType}) => elementType === 'custom'))
+                        const isValid = await checkErrors(
+                          fields.map(({ name }) => name)
+                        )
+                        if (isValid) nextStep()
+                      }}
+                    >
+                      Siguiente
+                    </Button>
+                  )}
                 </FormSection>
               )
             ) : (

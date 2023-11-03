@@ -29,8 +29,7 @@ export default function List ({
       typeof beforeListContent === 'function'
         ? beforeListContent()
         : beforeListContent}
-      {list.length > 0
-        ? (
+      {list.length > 0 ? (
         <>
           <div className={`${styles.list_wrapper} ${className}`}>
             {list.map((element) => (
@@ -38,10 +37,9 @@ export default function List ({
             ))}
           </div>
         </>
-          )
-        : (
+      ) : (
         <h2>{listEmptyMessage}</h2>
-          )}
+      )}
       {afterListContent !== undefined && typeof afterListContent === 'function'
         ? afterListContent()
         : afterListContent}
