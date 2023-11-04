@@ -18,8 +18,8 @@
     "build:client": "turbo build --filter=client",
     "build:api": "turbo build --filter=api",
     "heroku-postbuild": "if [ $CLIENT_ENV ]; then npm run prod-client; elif [ $SERVER_ENV ]; then npm run prod-api; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
-    "prod-client": "npm build:client",
-    "prod-api": "npm build:api"
+    "prod-client": "npm run build:client",
+    "prod-api": "npm run build:api"
   },
   "keywords": [],
   "author": "",
