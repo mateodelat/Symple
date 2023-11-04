@@ -4,7 +4,7 @@ const nextConfig = {
     domains: ["unavatar.io", "localhost"],
   },
   env: {
-    SERVER_URL: "http://localhost:3001/api",
+    SERVER_URL: process.env.SERVER_URL + "/api",
   },
   experimental: {
     serverActions: true,
