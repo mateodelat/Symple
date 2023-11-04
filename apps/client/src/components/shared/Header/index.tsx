@@ -5,7 +5,7 @@ import { headerNavLinks } from '@/constants/Links'
 import styles from './Header.module.scss'
 import { signOut } from 'next-auth/react'
 
-export default function Header(): JSX.Element {
+export default function Header (): JSX.Element {
   return (
     <header className={styles.header}>
       <Aside links={headerNavLinks} />
