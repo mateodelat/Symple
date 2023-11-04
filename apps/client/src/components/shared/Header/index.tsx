@@ -5,7 +5,7 @@ import { headerNavLinks } from '@/constants/Links'
 import styles from './Header.module.scss'
 import { signOut } from 'next-auth/react'
 
-export default function Header (): JSX.Element {
+export default function Header(): JSX.Element {
   return (
     <header className={styles.header}>
       <Aside links={headerNavLinks} />
@@ -43,7 +43,8 @@ export default function Header (): JSX.Element {
         <Button
           className={`${styles.header_buttons_btn} ${styles.header_buttons_btn_text}`}
           onClick={async () => {
-            await signOut({ callbackUrl: '/' })
+            // Navegar al incio de la aplicación
+            await signOut({ callbackUrl: process.env.CLIENT_URL ?? '/' })
           }}
         >
           Cerrar sesión
