@@ -14,7 +14,12 @@
     "format": "turbo format",
     "format:check": "turbo format:check",
     "start": "turbo start",
-    "clean": "turbo clean"
+    "clean": "turbo clean",
+    "build:client": "turbo build --filter=client",
+    "build:api": "turbo build --filter=api",
+    "heroku-postbuild": "if [ $CLIENT_ENV ]; then npm run prod-client; elif [ $SERVER_ENV ]; then npm run prod-api; else echo no environment detected, please set CLIENT_ENV or SERVER_ENV; fi",
+    "prod-client": "npm build:client",
+    "prod-api": "npm build:api"
   },
   "keywords": [],
   "author": "",
